@@ -44,7 +44,7 @@ class MyApp  {
         document.body.appendChild(this.stats.dom)
 
         this.initCameras();
-        this.setActiveCamera('Perspective')
+        this.setActiveCamera('Perspective1')
 
         // Create a renderer with Antialiasing
         this.renderer = new THREE.WebGLRenderer({antialias:true});
@@ -68,9 +68,16 @@ class MyApp  {
         const aspect = window.innerWidth / window.innerHeight;
 
         // Create a basic perspective camera
+        //The first attribute of the perspective camera is the fov
+        //The third and fourth one, are the near and far rendering conditions, anything less than the third element won't be rendered, just like anything after the forth one 
         const perspective1 = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 )
         perspective1.position.set(10,10,3)
-        this.cameras['Perspective'] = perspective1
+        this.cameras['Perspective1'] = perspective1
+
+        //Second perspective camera
+        const perspective2 = new THREE.PerspectiveCamera(100, aspect, 0.1 , 1000)
+        perspective2.position.set(-10,10,3)
+        this.cameras['Perspective2'] = perspective2
 
         // defines the frustum size for the orthographic cameras
         const left = -this.frustumSize / 2 * aspect
@@ -100,6 +107,20 @@ class MyApp  {
         orthoFront.position.set(0,0, this.frustumSize /4) 
         orthoFront.lookAt( new THREE.Vector3(0,0,0) );
         this.cameras['Front'] = orthoFront
+
+        // create a right view orthographic camera
+        const orthoRight = new THREE.OrthographicCamera( left, right, top, bottom, near, far);
+        orthoRight.up = new THREE.Vector3(0,1,0);
+        orthoRight.position.set(this.frustumSize/4,0,0)
+        orthoRight.lookAt( new THREE.Vector3(0,0,0));
+        this.cameras['Right'] = orthoRight
+
+        // create aback view ortographic camera
+        const orthoBack = new THREE.OrthographicCamera(left, right, top, bottom, near, far);
+        orthoBack.up = new THREE.Vector3(0,1,0);
+        orthoBack.position.set(0,0, -this.frustumSize / 4)
+        orthoBack.lookAt( new THREE.Vector3(0,0,0))
+        this.cameras['Back'] = orthoBack
     }
 
     /**

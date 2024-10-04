@@ -15,6 +15,10 @@ class MyContents  {
         this.axis = null
 
         // box related attributes
+        this.coneMesh = null
+        this.coneMeshSize = 1.0
+        this.coneEnabled = true
+        this.lastConeEnabled = null
         this.boxMesh = null
         this.boxMeshSize = 1.0
         this.boxEnabled = true
@@ -41,6 +45,16 @@ class MyContents  {
         this.boxMesh = new THREE.Mesh( box, boxMaterial );
         this.boxMesh.rotation.x = -Math.PI / 2;
         this.boxMesh.position.y = this.boxDisplacement.y;
+    }
+
+    buildCone() {
+        let coneMaterial = new THREE.MeshPhongMaterial({color: "#ff0077", 
+        specular: "#000000", emissive: "#00F0F0", shininess: 90})
+        
+
+        let cone = new THREE.ConeGeometry( this.coneMeshSize, 2,50);
+        this.coneMesh = new THREE.Mesh(cone, coneMaterial);
+        this.coneMesh.position.y = 5
     }
 
     /**
@@ -70,6 +84,7 @@ class MyContents  {
         this.app.scene.add( ambientLight );
 
         this.buildBox()
+        this.buildCone()
         
         // Create a Plane Mesh with basic material
         
@@ -105,6 +120,15 @@ class MyContents  {
         this.planeMaterial.shininess = this.planeShininess
     }
     
+
+    rebuildCone(){
+        
+        if (this.coneMesh !== undefined && this.coneMesh !== null) {  
+            this.app.scene.remove(this.coneMesh)
+        }
+        this.buildCone();
+        this.lastConeEnabled = null
+    }
     /**
      * rebuilds the box mesh if required
      * this method is called from the gui interface
@@ -118,6 +142,17 @@ class MyContents  {
         this.lastBoxEnabled = null
     }
     
+    updateCone() {
+        if (this.coneEnabled !== this.lastConeEnabled) {
+            this.lastConeEnabled = this.coneEnabled
+            if(this.coneEnabled){
+                this.app.scene.add(this.coneMesh)
+            }
+            else {
+                this.app.scene.remove(this.coneMesh)
+            }
+        }
+    }
     /**
      * updates the box mesh if required
      * this method is called from the render method of the app
@@ -143,6 +178,7 @@ class MyContents  {
     update() {
         // check if box mesh needs to be updated
         this.updateBoxIfRequired()
+        this.updateCone()
 
         // sets the box mesh position based on the displacement vector
         this.boxMesh.position.x = this.boxDisplacement.x
