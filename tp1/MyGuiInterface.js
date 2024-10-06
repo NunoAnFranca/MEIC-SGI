@@ -40,16 +40,16 @@ class MyGuiInterface  {
         boxFolder.open()
         
         const data = {  
-            'diffuse color': this.contents.diffusePlaneColor,
-            'specular color': this.contents.specularPlaneColor,
+            'diffuse color': this.contents.diffuseFloorColor,
+            'specular color': this.contents.specularFloorColor,
         };
 
-        // adds a folder to the gui interface for the plane
-        const planeFolder = this.datgui.addFolder( 'Plane' );
-        planeFolder.addColor( data, 'diffuse color' ).onChange( (value) => { this.contents.updateDiffusePlaneColor(value) } );
-        planeFolder.addColor( data, 'specular color' ).onChange( (value) => { this.contents.updateSpecularPlaneColor(value) } );
-        planeFolder.add(this.contents, 'planeShininess', 0, 1000).name("shininess").onChange( (value) => { this.contents.updatePlaneShininess(value) } );
-        planeFolder.open();
+        // adds a folder to the gui interface for the floor
+        const floorFolder = this.datgui.addFolder( 'Floor' );
+        floorFolder.addColor( data, 'diffuse color' ).onChange( (value) => { this.contents.updatediffuseFloorColor(value) } );
+        floorFolder.addColor( data, 'specular color' ).onChange( (value) => { this.contents.updatespecularFloorColor(value) } );
+        floorFolder.add(this.contents, 'floorShininess', 0, 1000).name("shininess").onChange( (value) => { this.contents.updateFloorShininess(value) } );
+        floorFolder.open();
 
         // adds a folder to the gui interface for the camera
         const cameraFolder = this.datgui.addFolder('Camera')
