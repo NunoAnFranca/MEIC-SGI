@@ -40,7 +40,7 @@ class MyContents  {
 			shininess: 200,
 		});
 	
-		let wallWidth = 20;
+		let wallWidth = 25;
 		let wallHeight = 10;
 	
 		for (let i = 0; i < 4; i += 1) {
@@ -82,10 +82,15 @@ class MyContents  {
         const materials = {
             brown: new THREE.MeshPhongMaterial({ color: "#3B1D14", specular: "#000000", emissive: "#000000", shininess: 90 }),
             pink: new THREE.MeshPhongMaterial({ color: "#FFC0CB", specular: "#000000", emissive: "#000000", shininess: 90 }),
-            plate: new THREE.MeshPhongMaterial({ color: "#D3D3D3", specular: "#000000", emissive: "#000000", shininess: 90 })
+            plate: new THREE.MeshPhongMaterial({ color: "#D3D3D3", specular: "#000000", emissive: "#000000", shininess: 90 }),
+            flame: new THREE.MeshPhongMaterial({ color: "#FFA500", specular: "#000000", emissive: "#FFFF00", shininess: 0}),
+            base: new THREE.MeshPhongMaterial({ color: "#FFFFFF", specular: "#000000", emissive: "#000000", shininess: 40})
         };
 
         this.cakeMesh = new THREE.Group();
+
+        const candleRadius = 0.02;
+        const candleHeight = 0.25;
 
 		const cakeRadius = 0.5;
 		const cakeThickness = 0.15;
@@ -97,6 +102,9 @@ class MyContents  {
 
         const cake = new THREE.CylinderGeometry(cakeRadius, cakeRadius, cakeThickness, radialSegments, 1, false, 0, cakeAngle);
 		const endCake = new THREE.PlaneGeometry(cakeRadius, cakeThickness);
+        const coneFlame = new THREE.ConeGeometry(candleRadius, candleHeight/5, radialSegments);
+        const candleBase = new THREE.CylinderGeometry(candleRadius,candleRadius,candleHeight,radialSegments);
+        const candleRope = new THREE.CylinderGeometry(candleRadius/5,candleRadius/5,candleHeight/5,radialSegments);
 
         this.cakeMesh = new THREE.Group();
 
@@ -115,6 +123,25 @@ class MyContents  {
             endMesh2.rotation.y = Math.PI / 4;
             this.cakeMesh.add(endMesh2);
         })
+
+        for (let i = 0; i < 5; i += 1) {
+            const candle = new THREE.Object3D();
+
+            const cFlame = new THREE.Mesh(coneFlame, materials.flame);
+            cFlame.position.set(3*cakeRadius/5,tableHeight + plateThickness + cakeThickness*3.5+candleHeight/1.5,0);
+            candle.add(cFlame);
+
+            const cBase = new THREE.Mesh(candleBase, materials.base);
+            cBase.position.set(3*cakeRadius/5,tableHeight + plateThickness + cakeThickness*3.5,0);
+            candle.add(cBase);
+
+            const cRope = new THREE.Mesh(candleRope, materials.base);
+            cRope.position.set(3*cakeRadius/5,tableHeight + plateThickness + cakeThickness*3.5+candleHeight/2,0);
+            candle.add(cRope);
+
+            this.cakeMesh.add(candle);
+            candle.rotation.y = -Math.PI/3 + i*(Math.PI/3);
+        }
 
         const plate = new THREE.CylinderGeometry(plateRadius, plateRadius, plateThickness, radialSegments);
         const plateMesh = new THREE.Mesh(plate, materials.plate);
@@ -190,7 +217,7 @@ class MyContents  {
         this.buildCake()
 
         // Create a Floor Mesh with basic material
-        let floor = new THREE.PlaneGeometry(20, 20);
+        let floor = new THREE.PlaneGeometry(25, 25);
         this.firstFloorMesh = new THREE.Mesh(floor, this.floorMaterial);
 		this.secondFloorMesh = new THREE.Mesh(floor, this.floorMaterial);
         this.firstFloorMesh.rotation.x = -Math.PI / 2;
