@@ -14,37 +14,22 @@ class MyContents  {
         this.app = app;
         this.axis = null;
 
-		// this.coneMesh = null
-        // this.coneMeshSize = 1.0
-        // this.coneEnabled = true
-        // this.lastConeEnabled = null
+        // table related attributes
+        this.tableMesh = null;
+        this.tableEnabled = true;
+        this.lastTableEnabled = null;
 
-        // box related attributes
-        this.boxMesh = null;
-        this.boxMeshSize = 1.0;
-        this.boxEnabled = true;
-        this.lastBoxEnabled = null;
-        this.boxDisplacement = new THREE.Vector3(0,2,0);
+        // cake related attributes
+        this.cakeMesh = null;
+        this.cakeEnabled = true;
+        this.lastCakeEnabled = null;
 
         // floor related attributes
-        this.diffuseFloorColor = "#00000";
+        this.diffuseFloorColor = "#ffffff";
         this.specularFloorColor = "#777777";
         this.floorShininess = 30;
         this.floorMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseFloorColor, 
             specular: this.specularFloorColor, emissive: "#000000", shininess: this.floorShininess });
-    }
-
-    /**
-     * builds the box mesh with material assigned
-     */
-    buildBox() {    
-        let boxMaterial = new THREE.MeshPhongMaterial({ color: "#ffff77",  specular: "#000000", emissive: "#000000", shininess: 90 });
-
-        // Create a Cube Mesh with basic material
-        let box = new THREE.BoxGeometry(  this.boxMeshSize,  this.boxMeshSize,  this.boxMeshSize );
-        this.boxMesh = new THREE.Mesh( box, boxMaterial );
-        this.boxMesh.rotation.x = -Math.PI / 2;
-        this.boxMesh.position.y = this.boxDisplacement.y;
     }
 
 	buildWalls() {
@@ -93,14 +78,86 @@ class MyContents  {
 		}
 	}
 
-    /*buildCone() {
-        let coneMaterial = new THREE.MeshPhongMaterial({color: "#ff0077", 
-        	specular: "#000000", emissive: "#00F0F0", shininess: 90});
+    buildCake() {
+        const materials = {
+            brown: new THREE.MeshPhongMaterial({ color: "#3B1D14", specular: "#000000", emissive: "#000000", shininess: 90 }),
+            pink: new THREE.MeshPhongMaterial({ color: "#FFC0CB", specular: "#000000", emissive: "#000000", shininess: 90 }),
+            plate: new THREE.MeshPhongMaterial({ color: "#D3D3D3", specular: "#000000", emissive: "#000000", shininess: 90 })
+        };
 
-        let cone = new THREE.ConeGeometry( this.coneMeshSize, 2,50);
-        this.coneMesh = new THREE.Mesh(cone, coneMaterial);
-        this.coneMesh.position.y = 5
-    }*/
+        this.cakeMesh = new THREE.Group();
+
+		const cakeRadius = 0.5;
+		const cakeThickness = 0.15;
+		const radialSegments = 32;
+		const cakeAngle = 2 * Math.PI - Math.PI / 4;
+		const plateRadius = 0.7;
+		const plateThickness = 0.04;
+		const tableHeight = 2.5 + 0.3 / 2; // legHeight + tableThickness / 2
+
+        const cake = new THREE.CylinderGeometry(cakeRadius, cakeRadius, cakeThickness, radialSegments, 1, false, 0, cakeAngle);
+		const endCake = new THREE.PlaneGeometry(cakeRadius, cakeThickness);
+
+        this.cakeMesh = new THREE.Group();
+
+        ['brown', 'pink', 'brown'].forEach((color, i) => {
+            const mesh = new THREE.Mesh(cake, materials[color]);
+            mesh.position.set(0, tableHeight + plateThickness + cakeThickness * (1 + 2 * i) / 2, 0);
+            this.cakeMesh.add(mesh);
+
+            const endMesh1 = new THREE.Mesh(endCake, materials[color]);
+            endMesh1.position.set(0, tableHeight + plateThickness + cakeThickness * (1 + 2 * i) / 2, cakeRadius / 2);
+            endMesh1.rotation.y = -Math.PI / 2;
+            this.cakeMesh.add(endMesh1);
+
+            const endMesh2 = new THREE.Mesh(endCake, materials[color]);
+            endMesh2.position.set(- cakeRadius / Math.sqrt(2) / 2, tableHeight + plateThickness + cakeThickness * (1 + 2 * i) / 2, cakeRadius / Math.sqrt(2) / 2);
+            endMesh2.rotation.y = Math.PI / 4;
+            this.cakeMesh.add(endMesh2);
+        })
+
+        const plate = new THREE.CylinderGeometry(plateRadius, plateRadius, plateThickness, radialSegments);
+        const plateMesh = new THREE.Mesh(plate, materials.plate);
+        plateMesh.position.set(0, tableHeight + plateThickness / 2, 0);
+
+        this.cakeMesh.add(plateMesh);
+    }
+
+    /**
+     * builds the table mesh with material assigned
+     */
+    buildTable() {
+        let tableMaterial = new THREE.MeshPhongMaterial({color: "#A1662F", specular: "#000000", emissive: "#000000", shininess: 10});
+
+        let legRadius = 0.15;
+        let legHeight = 2.5;
+        let radialSegments = 32;
+
+        let tableWidth = 5;
+        let tableLength = 3;
+        let tableThickness = 0.3;
+
+        this.tableMesh = new THREE.Group();
+
+        let tableTop = new THREE.BoxGeometry(tableWidth + tableThickness, tableThickness, tableLength + tableThickness);
+        this.topMesh = new THREE.Mesh(tableTop, tableMaterial);
+        this.topMesh.position.set(0, legHeight, 0);
+        this.tableMesh.add(this.topMesh);
+
+        let legPositions = [
+            {x: tableWidth / 2, y: legHeight / 2, z: tableLength / 2},
+            {x: -tableWidth / 2, y: legHeight / 2, z: tableLength / 2},
+            {x: tableWidth / 2, y: legHeight / 2, z: -tableLength / 2},
+            {x: -tableWidth / 2, y: legHeight / 2, z: -tableLength / 2}
+        ];
+
+        for (let i = 0; i < 4; i++) {
+            let leg = new THREE.CylinderGeometry(legRadius, legRadius, legHeight, radialSegments);
+            let legMesh = new THREE.Mesh(leg, tableMaterial);
+            legMesh.position.set(legPositions[i].x, legPositions[i].y, legPositions[i].z);
+            this.tableMesh.add(legMesh);
+        }
+    }
 
     /**
      * initializes the contents
@@ -128,12 +185,11 @@ class MyContents  {
         const ambientLight = new THREE.AmbientLight(0x555555);
         this.app.scene.add(ambientLight);
 
-        this.buildBox();
         this.buildWalls();
-		// this.buildCone()
-        
+		this.buildTable()
+        this.buildCake()
+
         // Create a Floor Mesh with basic material
-        
         let floor = new THREE.PlaneGeometry(20, 20);
         this.firstFloorMesh = new THREE.Mesh(floor, this.floorMaterial);
 		this.secondFloorMesh = new THREE.Mesh(floor, this.floorMaterial);
@@ -164,57 +220,31 @@ class MyContents  {
      * updates the floor shininess and the material
      * @param {number} value 
      */
-    updatefloorShininess(value) {
+    updateFloorShininess(value) {
         this.floorShininess = value;
         this.floorMaterial.shininess = this.floorShininess;
     }
-    
-    /*rebuildCone(){
-        if (this.coneMesh !== undefined && this.coneMesh !== null) {  
-            this.app.scene.remove(this.coneMesh)
-        }
-        this.buildCone();
-        this.lastConeEnabled = null
-    }*/
 
-    /**
-     * rebuilds the box mesh if required
-     * this method is called from the gui interface
-     */
-    rebuildBox() {
-        // remove boxMesh if exists
-        if (this.boxMesh !== undefined && this.boxMesh !== null) {  
-            this.app.scene.remove(this.boxMesh);
+    updateCake() {
+        if (this.cakeEnabled !== this.lastCakeEnabled) {
+            this.lastCakeEnabled = this.cakeEnabled
+            if(this.cakeEnabled){
+                this.app.scene.add(this.cakeMesh)
+            }
+            else {
+                this.app.scene.remove(this.cakeMesh)
+            }
         }
-        this.buildBox();
-        this.lastBoxEnabled = null;
     }
     
-    /*updateCone() {
-        if (this.coneEnabled !== this.lastConeEnabled) {
-            this.lastConeEnabled = this.coneEnabled
-            if(this.coneEnabled){
-                this.app.scene.add(this.coneMesh)
+    updateTable() {
+        if (this.tableEnabled !== this.lasttableEnabled) {
+            this.lasttableEnabled = this.tableEnabled
+            if(this.tableEnabled){
+                this.app.scene.add(this.tableMesh)
             }
             else {
-                this.app.scene.remove(this.coneMesh)
-            }
-        }
-    }*/
-
-    /**
-     * updates the box mesh if required
-     * this method is called from the render method of the app
-     * updates are trigered by boxEnabled property changes
-     */
-    updateBoxIfRequired() {
-        if (this.boxEnabled !== this.lastBoxEnabled) {
-            this.lastBoxEnabled = this.boxEnabled
-            if (this.boxEnabled) {
-                this.app.scene.add(this.boxMesh);
-            }
-            else {
-                this.app.scene.remove(this.boxMesh);
+                this.app.scene.remove(this.tableMesh)
             }
         }
     }
@@ -225,16 +255,8 @@ class MyContents  {
      * 
      */
     update() {
-        // check if box mesh needs to be updated
-        this.updateBoxIfRequired();
-        
-		// this.updateCone()
-
-        // sets the box mesh position based on the displacement vector
-        this.boxMesh.position.x = this.boxDisplacement.x;
-        this.boxMesh.position.y = this.boxDisplacement.y;
-        this.boxMesh.position.z = this.boxDisplacement.z;
-        
+        this.updateTable()
+        this.updateCake()
     }
 }
 
