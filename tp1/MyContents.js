@@ -83,7 +83,7 @@ class MyContents  {
             brown: new THREE.MeshPhongMaterial({ color: "#3B1D14", specular: "#000000", emissive: "#000000", shininess: 90 }),
             pink: new THREE.MeshPhongMaterial({ color: "#FFC0CB", specular: "#000000", emissive: "#000000", shininess: 90 }),
             plate: new THREE.MeshPhongMaterial({ color: "#D3D3D3", specular: "#000000", emissive: "#000000", shininess: 90 }),
-            flame: new THREE.MeshPhongMaterial({ color: "#FFA500", specular: "#000000", emissive: "#FFFF00", shininess: 0}),
+            flame: new THREE.MeshPhongMaterial({ color: "#FFA500", specular: "#111111", emissive: "#FFFF00", shininess: 30, transparent:true, opacity:0.8 }),
             base: new THREE.MeshPhongMaterial({ color: "#FFFFFF", specular: "#000000", emissive: "#000000", shininess: 40})
         };
 
@@ -102,9 +102,9 @@ class MyContents  {
 
         const cake = new THREE.CylinderGeometry(cakeRadius, cakeRadius, cakeThickness, radialSegments, 1, false, 0, cakeAngle);
 		const endCake = new THREE.PlaneGeometry(cakeRadius, cakeThickness);
-        const coneFlame = new THREE.ConeGeometry(candleRadius, candleHeight/5, radialSegments);
+        const coneFlame = new THREE.ConeGeometry(candleRadius/2, candleHeight/5, radialSegments);
         const candleBase = new THREE.CylinderGeometry(candleRadius,candleRadius,candleHeight,radialSegments);
-        const candleRope = new THREE.CylinderGeometry(candleRadius/5,candleRadius/5,candleHeight/5,radialSegments);
+        const candleRope = new THREE.CylinderGeometry(candleRadius/8,candleRadius/8,candleHeight/5,radialSegments);
 
         this.cakeMesh = new THREE.Group();
 
