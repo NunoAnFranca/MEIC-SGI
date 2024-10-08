@@ -91,7 +91,7 @@ class MyContents  {
 
         const candleRadius = 0.02;
         const candleHeight = 0.25;
-
+        const slicePosition = 1.5;
 		const cakeRadius = 0.5;
 		const cakeThickness = 0.15;
 		const radialSegments = 32;
@@ -105,8 +105,10 @@ class MyContents  {
         const coneFlame = new THREE.ConeGeometry(candleRadius/2, candleHeight/5, radialSegments);
         const candleBase = new THREE.CylinderGeometry(candleRadius,candleRadius,candleHeight,radialSegments);
         const candleRope = new THREE.CylinderGeometry(candleRadius/8,candleRadius/8,candleHeight/5,radialSegments);
+        const slicecake = new THREE.CylinderGeometry(cakeRadius, cakeRadius, cakeThickness, radialSegments, 1, false, 0, Math.PI / 4);
 
         this.cakeMesh = new THREE.Group();
+        this.sliceCakeMesh = new THREE.Group();
 
         ['brown', 'pink', 'brown'].forEach((color, i) => {
             const mesh = new THREE.Mesh(cake, materials[color]);
@@ -122,8 +124,41 @@ class MyContents  {
             endMesh2.position.set(- cakeRadius / Math.sqrt(2) / 2, tableHeight + plateThickness + cakeThickness * (1 + 2 * i) / 2, cakeRadius / Math.sqrt(2) / 2);
             endMesh2.rotation.y = Math.PI / 4;
             this.cakeMesh.add(endMesh2);
+
+            //Slice creation
+            const meshSlice = new THREE.Mesh(slicecake, materials[color]);
+            meshSlice.position.set(0,cakeThickness * (1 + 2 * i) / 2,0);
+            this.sliceCakeMesh.add(meshSlice);
+
+            const endSlice1 = new THREE.Mesh(endCake, materials[color]);
+            endSlice1.position.set(0,cakeThickness * (1 + 2 * i) / 2, cakeRadius / 2);
+            endSlice1.rotation.y = -Math.PI / 2;
+            this.sliceCakeMesh.add(endSlice1);
+
+            const endSlice2 = new THREE.Mesh(endCake, materials[color]);
+            endSlice2.position.set(cakeRadius / Math.sqrt(2) / 2,cakeThickness * (1 + 2 * i) / 2, cakeRadius / Math.sqrt(2) / 2);
+            endSlice2.rotation.y = (3*Math.PI) / 4;
+            this.sliceCakeMesh.add(endSlice2);
         })
 
+        const plate = new THREE.CylinderGeometry(plateRadius, plateRadius, plateThickness, radialSegments);
+        const plateMesh = new THREE.Mesh(plate, materials.plate);
+        plateMesh.position.set(0, tableHeight + plateThickness / 2, 0);
+        this.cakeMesh.add(plateMesh);
+
+        //Slice position
+        this.sliceCakeMesh.position.set(slicePosition - cakeRadius/2, tableHeight + plateThickness, slicePosition/2 - cakeRadius/2);
+        this.sliceCakeMesh.rotation.z = Math.PI/2;
+        this.sliceCakeMesh.rotation.y = Math.PI/2;
+        this.cakeMesh.add(this.sliceCakeMesh);
+
+        //Slice plate position
+        const smallPlate = new THREE.CylinderGeometry(3*plateRadius/5, 3*plateRadius/5, plateThickness, radialSegments);
+        const smallPlateMesh = new THREE.Mesh(smallPlate, materials.plate);
+        smallPlateMesh.position.set(slicePosition, tableHeight + plateThickness / 2, slicePosition/2);
+        this.cakeMesh.add(smallPlateMesh);        
+
+        //Candle creation
         for (let i = 0; i < 5; i += 1) {
             const candle = new THREE.Object3D();
 
@@ -142,12 +177,6 @@ class MyContents  {
             this.cakeMesh.add(candle);
             candle.rotation.y = -Math.PI/3 + i*(Math.PI/3);
         }
-
-        const plate = new THREE.CylinderGeometry(plateRadius, plateRadius, plateThickness, radialSegments);
-        const plateMesh = new THREE.Mesh(plate, materials.plate);
-        plateMesh.position.set(0, tableHeight + plateThickness / 2, 0);
-
-        this.cakeMesh.add(plateMesh);
     }
 
     /**
