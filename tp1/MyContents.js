@@ -179,11 +179,10 @@ class MyContents  {
      */
     buildTable() {
         const loader = new THREE.TextureLoader();
-        const woodTexture = loader .load('textures/wood.jpg');
+        const woodTexture = loader.load('textures/wood.jpg');
         woodTexture.colorSpace = THREE.SRGBColorSpace;
 
         const woodMaterial = new THREE.MeshBasicMaterial({color: "#FF8844", map: woodTexture});
-
         let legMaterial = new THREE.MeshPhongMaterial({color: "#A1662F", specular: "#ffffff", emissive: "#000000", shininess: 100});
 
         let legRadius = 0.15;
@@ -216,6 +215,23 @@ class MyContents  {
         }
     }
 
+    buildFloor() {
+        const loader = new THREE.TextureLoader();
+        const floorTexture = loader.load('textures/floor.jpg');
+        floorTexture.colorSpace = THREE.SRGBColorSpace;
+
+        const floorMaterial = new THREE.MeshBasicMaterial({color: "#ffffff", map: floorTexture});
+
+        let floor = new THREE.PlaneGeometry(25, 25);
+        let firstFloorMesh = new THREE.Mesh(floor, floorMaterial);
+		let secondFloorMesh = new THREE.Mesh(floor, floorMaterial);
+        firstFloorMesh.rotation.x = -Math.PI / 2;
+        firstFloorMesh.position.y = -0;
+		secondFloorMesh.rotation.x = Math.PI / 2;
+        this.app.scene.add(firstFloorMesh);
+		this.app.scene.add(secondFloorMesh);
+    }
+
     /**
      * initializes the contents
      */
@@ -242,19 +258,10 @@ class MyContents  {
         const ambientLight = new THREE.AmbientLight(0x555555);
         this.app.scene.add(ambientLight);
 
+        this.buildFloor();
         this.buildWalls();
 		this.buildTable()
         this.buildCake()
-
-        // Create a Floor Mesh with basic material
-        let floor = new THREE.PlaneGeometry(25, 25);
-        this.firstFloorMesh = new THREE.Mesh(floor, this.floorMaterial);
-		this.secondFloorMesh = new THREE.Mesh(floor, this.floorMaterial);
-        this.firstFloorMesh.rotation.x = -Math.PI / 2;
-        this.firstFloorMesh.position.y = -0;
-		this.secondFloorMesh.rotation.x = Math.PI / 2;
-        this.app.scene.add(this.firstFloorMesh);
-		this.app.scene.add(this.secondFloorMesh);
     }
     
     /**
