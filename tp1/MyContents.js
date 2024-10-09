@@ -31,14 +31,9 @@ class MyContents  {
         this.floorMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseFloorColor, 
             specular: this.specularFloorColor, emissive: "#000000", shininess: this.floorShininess });
     }
-
+0
 	buildWalls() {
-		let wallMaterial = new THREE.MeshPhongMaterial({
-			color: "#80573e",
-			specular: "#000000",
-			emissive: "#241811",
-			shininess: 200,
-		});
+		let wallMaterial = new THREE.MeshPhongMaterial({color: "#80573e", specular: "#80573e", emissive: "#80573e", shininess: 0});
 	
 		let wallWidth = 25;
 		let wallHeight = 10;
@@ -183,7 +178,13 @@ class MyContents  {
      * builds the table mesh with material assigned
      */
     buildTable() {
-        let tableMaterial = new THREE.MeshPhongMaterial({color: "#A1662F", specular: "#000000", emissive: "#000000", shininess: 10});
+        const loader = new THREE.TextureLoader();
+        const woodTexture = loader .load('textures/wood.jpg');
+        woodTexture.colorSpace = THREE.SRGBColorSpace;
+
+        const woodMaterial = new THREE.MeshBasicMaterial({color: "#FF8844", map: woodTexture});
+
+        let legMaterial = new THREE.MeshPhongMaterial({color: "#A1662F", specular: "#ffffff", emissive: "#000000", shininess: 100});
 
         let legRadius = 0.15;
         let legHeight = 2.5;
@@ -196,7 +197,7 @@ class MyContents  {
         this.tableMesh = new THREE.Group();
 
         let tableTop = new THREE.BoxGeometry(tableWidth + tableThickness, tableThickness, tableLength + tableThickness);
-        this.topMesh = new THREE.Mesh(tableTop, tableMaterial);
+        this.topMesh = new THREE.Mesh(tableTop, woodMaterial);
         this.topMesh.position.set(0, legHeight, 0);
         this.tableMesh.add(this.topMesh);
 
@@ -209,7 +210,7 @@ class MyContents  {
 
         for (let i = 0; i < 4; i++) {
             let leg = new THREE.CylinderGeometry(legRadius, legRadius, legHeight, radialSegments);
-            let legMesh = new THREE.Mesh(leg, tableMaterial);
+            let legMesh = new THREE.Mesh(leg, legMaterial);
             legMesh.position.set(legPositions[i].x, legPositions[i].y, legPositions[i].z);
             this.tableMesh.add(legMesh);
         }
