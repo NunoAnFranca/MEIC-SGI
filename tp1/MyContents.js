@@ -28,84 +28,111 @@ class MyContents  {
         this.diffuseFloorColor = "#ffffff";
         this.specularFloorColor = "#777777";
         this.floorShininess = 30;
-        this.floorMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseFloorColor, 
-            specular: this.specularFloorColor, emissive: "#000000", shininess: this.floorShininess });
+        this.floorMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseFloorColor, specular: this.specularFloorColor, emissive: "#000000", shininess: this.floorShininess });
+
+        // room related attributes
+        this.roomWidth = 25;
+        this.roomHeight = 10;
+
+        // texture loader
+        this.loader = new THREE.TextureLoader();
     }
 
-    buildPaintings() {
-    	const loader = new THREE.TextureLoader();
-		const luisTexture = loader.load('textures/luis.jpg');
-        const nunoTexture = loader.load('textures/nuno.jpg');
-		luisTexture.colorSpace = THREE.SRGBColorSpace;
-        nunoTexture.colorSpace = THREE.SRGBColorSpace;
+    buildFrame(frameThickness, frameWidth, frameHeight, frameDepth, horizontalDisp, verticalDisp, hasFrame, imagePath, color, side) {
+        const frameTexture = this.loader.load('textures/frame.jpg');
+        frameTexture.colorSpace = THREE.SRGBColorSpace;
+        const frameMaterial = new THREE.MeshPhongMaterial({color: color, map: frameTexture});
 
-        const blankMaterial = new THREE.MeshBasicMaterial({color: "#b87f49"});
-
-		const luisPaintingMaterial = [
-            blankMaterial,
-            blankMaterial,
-            blankMaterial,
-            blankMaterial,
-            new THREE.MeshBasicMaterial({color: "#ffffff", map: luisTexture}),
-            blankMaterial
+        let frameParts = [
+            {name: 'Left', geometry: new THREE.BoxGeometry(frameThickness, frameHeight, frameDepth), position: new THREE.Vector3(frameWidth / 2, 0, 0)},
+            {name: 'Right', geometry: new THREE.BoxGeometry(frameThickness, frameHeight, frameDepth), position: new THREE.Vector3(- frameWidth / 2, 0, 0)},
+            {name: 'Front', geometry: new THREE.BoxGeometry(frameWidth + frameThickness, frameThickness, frameDepth), position: new THREE.Vector3(0, frameHeight / 2, 0)},
+            {name: 'Back', geometry: new THREE.BoxGeometry(frameWidth + frameThickness, frameThickness, frameDepth), position: new THREE.Vector3(0, - frameHeight / 2, 0)}
         ];
 
-        const nunoPaintingMaterial = [
-            blankMaterial,
-            blankMaterial,
-            blankMaterial,
-            blankMaterial,
-            new THREE.MeshBasicMaterial({color: "#ffffff", map: nunoTexture}),
-            blankMaterial
-        ];
+        let frameGroup = new THREE.Group();
 
-		let painting = new THREE.BoxGeometry(2, 3, 0.1);
-		let luisPaintingMesh = new THREE.Mesh(painting, luisPaintingMaterial);
-        let nunoPaintingMesh = new THREE.Mesh(painting, nunoPaintingMaterial);
-		luisPaintingMesh.position.set(2, 5, -12.5);
-        nunoPaintingMesh.position.set(-2, 5, -12.5);
-		this.app.scene.add(luisPaintingMesh);
-        this.app.scene.add(nunoPaintingMesh);
+        for (let framePart of frameParts) {
+            let frameMesh = new THREE.Mesh(framePart.geometry, frameMaterial);
+            frameMesh.position.copy(framePart.position);
+            frameGroup.add(frameMesh);
+        }
+
+        switch (side) {
+            case 'left':
+                frameGroup.position.set(- this.roomWidth / 2, verticalDisp, horizontalDisp);
+                frameGroup.rotation.y = Math.PI / 2;
+                break;
+            case 'right':
+                frameGroup.position.set(this.roomWidth / 2, verticalDisp, horizontalDisp);
+                frameGroup.rotation.y = Math.PI / 2;
+                break;
+            case 'front':
+                frameGroup.position.set(horizontalDisp, verticalDisp, this.roomWidth / 2);
+                break;
+            case 'back':
+                frameGroup.position.set(horizontalDisp, verticalDisp, - this.roomWidth / 2);
+                frameGroup.rotation.y = Math.PI;
+                break;
+        }
+
+        if (hasFrame) {
+            let verticalStripe = new THREE.BoxGeometry(frameThickness, frameHeight, frameDepth);
+            let horizontalStripe = new THREE.BoxGeometry(frameWidth + frameThickness, frameThickness, frameDepth);
+            let verticalStripeMesh = new THREE.Mesh(verticalStripe, frameMaterial);
+            let horizontalStripeMesh = new THREE.Mesh(horizontalStripe, frameMaterial);
+            verticalStripeMesh.position.set(0, 0, 0);
+            horizontalStripeMesh.position.set(0, 0, 0);
+            frameGroup.add(verticalStripeMesh, horizontalStripeMesh);  
+        }
+
+        const imageTexture = this.loader.load(imagePath);
+        imageTexture.colorSpace = THREE.SRGBColorSpace;
+
+        const imageMaterial = new THREE.MeshBasicMaterial({color: "ffffff", map: imageTexture});
+        let image = new THREE.BoxGeometry(frameWidth, frameHeight, frameDepth / 2);
+        let imageMesh = new THREE.Mesh(image, imageMaterial);
+        frameGroup.add(imageMesh);      
+
+        this.app.scene.add(frameGroup);
     }
 
 	buildWalls() {
-		let wallMaterial = new THREE.MeshPhongMaterial({color: "#80573e", specular: "#80573e", emissive: "#80573e", shininess: 0});
-	
-		let wallWidth = 25;
-		let wallHeight = 10;
+        const wallTexture = this.loader.load('textures/wall.jpg');
+        wallTexture.colorSpace = THREE.SRGBColorSpace;
+        const wallMaterial = new THREE.MeshBasicMaterial({color: "#80573e", map: wallTexture});
 	
 		for (let i = 0; i < 4; i += 1) {
-			let wall = new THREE.PlaneGeometry(wallWidth, wallHeight);
+			let wall = new THREE.PlaneGeometry(this.roomWidth, this.roomHeight);
 			let firstWallMesh = new THREE.Mesh(wall, wallMaterial);
 			let secondWallMesh = new THREE.Mesh(wall, wallMaterial);
 	
 			switch (i) {
 				case 0:
-					firstWallMesh.position.set(0, wallHeight / 2, wallWidth / 2);
-					secondWallMesh.position.set(0, wallHeight / 2, -wallWidth / 2);
+					firstWallMesh.position.set(0, this.roomHeight / 2, this.roomWidth / 2);
+					secondWallMesh.position.set(0, this.roomHeight / 2, -this.roomWidth / 2);
 					firstWallMesh.rotation.x = Math.PI;
 					break;
 				case 1:
-					firstWallMesh.position.set(wallWidth / 2, wallHeight / 2, 0);
-					secondWallMesh.position.set(-wallWidth / 2, wallHeight / 2, 0);
+					firstWallMesh.position.set(this.roomWidth / 2, this.roomHeight / 2, 0);
+					secondWallMesh.position.set(-this.roomWidth / 2, this.roomHeight / 2, 0);
 					firstWallMesh.rotation.y = Math.PI / 2;
 					secondWallMesh.rotation.y = -Math.PI / 2;
 					break;
 				case 2:
-					firstWallMesh.position.set(0, wallHeight / 2, -wallWidth / 2);
-					secondWallMesh.position.set(0, wallHeight / 2, wallWidth / 2);
+					firstWallMesh.position.set(0, this.roomHeight / 2, -this.roomWidth / 2);
+					secondWallMesh.position.set(0, this.roomHeight / 2, this.roomWidth / 2);
 					firstWallMesh.rotation.x = Math.PI;
 					break;
 				case 3:
-					firstWallMesh.position.set(-wallWidth / 2, wallHeight / 2, 0);
-					secondWallMesh.position.set(wallWidth / 2, wallHeight / 2, 0);
+					firstWallMesh.position.set(-this.roomWidth / 2, this.roomHeight / 2, 0);
+					secondWallMesh.position.set(this.roomWidth / 2, this.roomHeight / 2, 0);
 					firstWallMesh.rotation.y = Math.PI / 2;
 					secondWallMesh.rotation.y = -Math.PI / 2;
 					break;
 			}
 
-			this.app.scene.add(firstWallMesh);
-			this.app.scene.add(secondWallMesh);
+			this.app.scene.add(firstWallMesh, secondWallMesh);
 		}
 	}
 
@@ -214,8 +241,7 @@ class MyContents  {
      * builds the table mesh with material assigned
      */
     buildTable() {
-        const loader = new THREE.TextureLoader();
-        const woodTexture = loader.load('textures/wood.jpg');
+        const woodTexture = this.loader.load('textures/wood.jpg');
         woodTexture.colorSpace = THREE.SRGBColorSpace;
 
         const woodMaterial = new THREE.MeshBasicMaterial({color: "#FF8844", map: woodTexture});
@@ -252,8 +278,7 @@ class MyContents  {
     }
 
     buildFloor() {
-        const loader = new THREE.TextureLoader();
-        const floorTexture = loader.load('textures/floor.jpg');
+        const floorTexture = this.loader.load('textures/floor.jpg');
         floorTexture.colorSpace = THREE.SRGBColorSpace;
 
         const floorMaterial = new THREE.MeshBasicMaterial({color: "#ffffff", map: floorTexture});
@@ -298,7 +323,10 @@ class MyContents  {
         this.buildWalls();
 		this.buildTable();
         this.buildCake();
-        this.buildPaintings();
+        this.buildFrame(0.1, 2, 3, 0.1, 3.5, 6, false, 'textures/luis.jpg',"#ffffff", 'back');
+        this.buildFrame(0.1, 2, 3, 0.1, -3.5, 6, false, 'textures/nuno.jpg',"#ffffff", 'back');
+        this.buildFrame(0.1, 6, 3, 0.1, 5, 6, true, 'textures/landscape1.jpg',"#423721", 'left');
+        this.buildFrame(0.1, 6, 3, 0.1, -5, 6, true, 'textures/landscape2.jpg', "#423721", 'left');
     }
     
     /**
