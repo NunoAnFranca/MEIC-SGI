@@ -31,7 +31,43 @@ class MyContents  {
         this.floorMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseFloorColor, 
             specular: this.specularFloorColor, emissive: "#000000", shininess: this.floorShininess });
     }
-0
+
+    buildPaintings() {
+    	const loader = new THREE.TextureLoader();
+		const luisTexture = loader.load('textures/luis.jpg');
+        const nunoTexture = loader.load('textures/nuno.jpg');
+		luisTexture.colorSpace = THREE.SRGBColorSpace;
+        nunoTexture.colorSpace = THREE.SRGBColorSpace;
+
+        const blankMaterial = new THREE.MeshBasicMaterial({color: "#b87f49"});
+
+		const luisPaintingMaterial = [
+            blankMaterial,
+            blankMaterial,
+            blankMaterial,
+            blankMaterial,
+            new THREE.MeshBasicMaterial({color: "#ffffff", map: luisTexture}),
+            blankMaterial
+        ];
+
+        const nunoPaintingMaterial = [
+            blankMaterial,
+            blankMaterial,
+            blankMaterial,
+            blankMaterial,
+            new THREE.MeshBasicMaterial({color: "#ffffff", map: nunoTexture}),
+            blankMaterial
+        ];
+
+		let painting = new THREE.BoxGeometry(2, 3, 0.1);
+		let luisPaintingMesh = new THREE.Mesh(painting, luisPaintingMaterial);
+        let nunoPaintingMesh = new THREE.Mesh(painting, nunoPaintingMaterial);
+		luisPaintingMesh.position.set(2, 5, -12.5);
+        nunoPaintingMesh.position.set(-2, 5, -12.5);
+		this.app.scene.add(luisPaintingMesh);
+        this.app.scene.add(nunoPaintingMesh);
+    }
+
 	buildWalls() {
 		let wallMaterial = new THREE.MeshPhongMaterial({color: "#80573e", specular: "#80573e", emissive: "#80573e", shininess: 0});
 	
@@ -260,8 +296,9 @@ class MyContents  {
 
         this.buildFloor();
         this.buildWalls();
-		this.buildTable()
-        this.buildCake()
+		this.buildTable();
+        this.buildCake();
+        this.buildPaintings();
     }
     
     /**
