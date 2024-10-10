@@ -41,7 +41,7 @@ class MyContents  {
     buildFrame(frameThickness, frameWidth, frameHeight, frameDepth, horizontalDisp, verticalDisp, hasFrame, imagePath, color, side) {
         const frameTexture = this.loader.load('textures/frame.jpg');
         frameTexture.colorSpace = THREE.SRGBColorSpace;
-        const frameMaterial = new THREE.MeshPhongMaterial({color: color, map: frameTexture});
+        const frameMaterial = new THREE.MeshPhongMaterial({color: color, map: frameTexture, specular: "#000000", shininess: 0});
 
         let frameParts = [
             {name: 'Left', geometry: new THREE.BoxGeometry(frameThickness, frameHeight, frameDepth), position: new THREE.Vector3(frameWidth / 2, 0, 0)},
@@ -100,7 +100,7 @@ class MyContents  {
 	buildWalls() {
         const wallTexture = this.loader.load('textures/wall.jpg');
         wallTexture.colorSpace = THREE.SRGBColorSpace;
-        const wallMaterial = new THREE.MeshBasicMaterial({color: "#80573e", map: wallTexture});
+        const wallMaterial = new THREE.MeshPhongMaterial({color: "#80573e", map: wallTexture});
 	
 		for (let i = 0; i < 4; i += 1) {
 			let wall = new THREE.PlaneGeometry(this.roomWidth, this.roomHeight);
@@ -281,7 +281,7 @@ class MyContents  {
         const floorTexture = this.loader.load('textures/floor.jpg');
         floorTexture.colorSpace = THREE.SRGBColorSpace;
 
-        const floorMaterial = new THREE.MeshBasicMaterial({color: "#ffffff", map: floorTexture});
+        const floorMaterial = new THREE.MeshPhongMaterial({color: "#ffffff", map: floorTexture});
 
         let floor = new THREE.PlaneGeometry(25, 25);
         let firstFloorMesh = new THREE.Mesh(floor, floorMaterial);
@@ -306,9 +306,14 @@ class MyContents  {
         }
 
         // add a point light on top of the model
-        const pointLight = new THREE.PointLight(0xffffff, 500, 0);
+        const pointLight = new THREE.PointLight(0xffffff, 400, 0);
         pointLight.position.set(0, 20, 0);
         this.app.scene.add(pointLight);
+
+        // add another point light on top of the cake
+        const pointLight2 = new THREE.PointLight(0xffff00, 400, 0);
+        pointLight2.position.set(0, 10, 0);
+        this.app.scene.add(pointLight2);
 
         // add a point light helper for the previous point light
         const sphereSize = 0.5;
