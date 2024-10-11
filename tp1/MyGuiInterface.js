@@ -47,6 +47,18 @@ class MyGuiInterface  {
         // note that we are using a property from the app 
         cameraFolder.add(this.app.activeCamera.position, 'x', 0, 10).name("x coord");
         cameraFolder.open();
+
+        // adds a folder to the gui interface for the Lights
+        const LightsFolder = this.datgui.addFolder('Lights');
+        LightsFolder.add(this.contents, 'spotLightEnabled', true).name("Spotlight");
+        LightsFolder.open();
+
+        const SubFolder = LightsFolder.addFolder('Spotlight Settings');
+        SubFolder.add(this.contents.spotLight, 'intensity', 0, 40).name("intensity (cd)");
+        SubFolder.add(this.contents.spotLight, 'distance', 0, 20).name("distance");
+        SubFolder.add(this.contents.spotLight.position, 'x', 1,10).name("Position X");
+        //continue
+        SubFolder.open();
     }
 }
 

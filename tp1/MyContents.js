@@ -34,6 +34,11 @@ class MyContents  {
         this.roomWidth = 25;
         this.roomHeight = 10;
 
+        // lights related attributes
+        this.spotLightEnabled = true;
+        this.spotLight = null;
+        this.lastSpotLightEnabled = null;
+
         // texture loader
         this.loader = new THREE.TextureLoader();
     }
@@ -244,7 +249,7 @@ class MyContents  {
         const woodTexture = this.loader.load('textures/wood.jpg');
         woodTexture.colorSpace = THREE.SRGBColorSpace;
 
-        const woodMaterial = new THREE.MeshBasicMaterial({color: "#FF8844", map: woodTexture});
+        const woodMaterial = new THREE.MeshPhongMaterial({color: "#FF8844", map: woodTexture}); //Phong material instead of basic material, otherwise the texture absorbs all light ## check this. light goes through, transparent:false, opacity:1
         let legMaterial = new THREE.MeshPhongMaterial({color: "#A1662F", specular: "#ffffff", emissive: "#000000", shininess: 100});
 
         let legRadius = 0.15;
@@ -315,13 +320,26 @@ class MyContents  {
         pointLight2.position.set(0, 10, 0);
         this.app.scene.add(pointLight2);
 
+        // add a spotlight to spot a specific object
+        this.spotLight = new THREE.SpotLight(0xffffff,8,5,(2*Math.PI)/20,0,0);
+        this.spotLight.position.set(1,5,1);
+        
+        // Object target for the spotLight
+        const targetSpot = new THREE.Object3D();
+        targetSpot.position.set(0,2.65,0);
+        this.spotLight.target = targetSpot;
+
+        // add the Spot Ligh and it's respective target to the scene
+        this.app.scene.add(this.spotLight);
+        this.app.scene.add(targetSpot);
+
         // add a point light helper for the previous point light
         const sphereSize = 0.5;
         const pointLightHelper = new THREE.PointLightHelper(pointLight, sphereSize);
         this.app.scene.add(pointLightHelper);
 
         // add an ambient light
-        const ambientLight = new THREE.AmbientLight(0x555555);
+        const ambientLight = new THREE.AmbientLight(0x555555, 4);
         this.app.scene.add(ambientLight);
 
         this.buildFloor();
@@ -383,6 +401,18 @@ class MyContents  {
         }
     }
 
+    updateSpotLight() {
+        if (this.spotLightEnabled !== this.lastSpotLightEnabled) {
+            this.lastSpotLightEnabled = this.spotLightEnabled
+            if(this.spotLightEnabled){
+                this.app.scene.add(this.spotLight)
+            }
+            else {
+                this.app.scene.remove(this.spotLight)
+            }
+        }
+    }
+
     /**
      * updates the contents
      * this method is called from the render method of the app
@@ -391,6 +421,7 @@ class MyContents  {
     update() {
         this.updateTable()
         this.updateCake()
+        this.updateSpotLight()
     }
 }
 
