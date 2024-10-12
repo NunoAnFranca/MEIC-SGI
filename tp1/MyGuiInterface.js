@@ -54,10 +54,18 @@ class MyGuiInterface  {
         LightsFolder.open();
 
         const SubFolder = LightsFolder.addFolder('Spotlight Settings');
-        SubFolder.add(this.contents.spotLight, 'intensity', 0, 40).name("intensity (cd)");
-        SubFolder.add(this.contents.spotLight, 'distance', 0, 20).name("distance");
-        SubFolder.add(this.contents.spotLight.position, 'x', 1,10).name("Position X");
-        //continue
+        //SubFolder.add(this.contents.spotLight, 'color').name("Color");
+        SubFolder.add(this.contents.spotLight, 'intensity', 0, 40).name("Intensity (cd)");
+        SubFolder.add(this.contents.spotLight, 'distance', 0, 20).name("Distance");
+        SubFolder.add(this.contents.spotLight, 'angle', 0, Math.PI/2).name("Spot angle");
+        SubFolder.add(this.contents.spotLight, 'penumbra', 0, 1).name("Penumbra");
+        SubFolder.add(this.contents.spotLight, 'decay', 0, 2).name("Decay");
+        SubFolder.add(this.contents.spotLight.position, 'x', -12.5, 12.5).name("Position X");
+        SubFolder.add(this.contents.spotLight.position, 'y', 0, 20).name("Position Y");
+        SubFolder.add(this.contents.spotLight.position, 'z', -12.5, 12.5).name("Position Z");
+        SubFolder.add(this.contents.targetSpot.position, 'x', -12.5, 12.5).name("Target X");
+        SubFolder.add(this.contents.targetSpot.position, 'y', 0, 20).name("Target Y");
+        SubFolder.add(this.contents.targetSpot.position, 'z', -12.5, 12.5).name("Target Z");
         SubFolder.open();
     }
 }

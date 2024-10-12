@@ -38,6 +38,7 @@ class MyContents  {
         this.spotLightEnabled = true;
         this.spotLight = null;
         this.lastSpotLightEnabled = null;
+        this.targetSpot = null;
 
         // texture loader
         this.loader = new THREE.TextureLoader();
@@ -249,7 +250,7 @@ class MyContents  {
         const woodTexture = this.loader.load('textures/wood.jpg');
         woodTexture.colorSpace = THREE.SRGBColorSpace;
 
-        const woodMaterial = new THREE.MeshPhongMaterial({color: "#FF8844", map: woodTexture}); //Phong material instead of basic material, otherwise the texture absorbs all light ## check this. light goes through, transparent:false, opacity:1
+        const woodMaterial = new THREE.MeshPhongMaterial({color: "#FF8844", map: woodTexture, opacity:1}); // otherwise the texture absorbs all light ## check this. light goes through, transparent:false, opacity:1
         let legMaterial = new THREE.MeshPhongMaterial({color: "#A1662F", specular: "#ffffff", emissive: "#000000", shininess: 100});
 
         let legRadius = 0.15;
@@ -299,6 +300,108 @@ class MyContents  {
     }
 
     /**
+     * Creates a radio in the corner of the living room
+     */
+    buildRadio(){
+
+        // grill texture for radio
+        const radioTexture = this.loader.load('textures/radio.jpg');
+        radioTexture.colorSpace = THREE.SRGBColorSpace;
+
+        const materials = {
+            box: new THREE.MeshPhongMaterial({ color: "#545454", specular: "#ffffff", emissive: "#000000", shininess: 40 }),
+            black: new THREE.MeshPhongMaterial({ color: "#000000", specular: "#545454", emissive: "#000000", shininess: 100 }),
+            brown: new THREE.MeshPhongMaterial({ color: "#3B1D14", specular: "#000000", emissive: "#000000", shininess: 20 }),
+            antena: new THREE.MeshPhongMaterial({ color:"0f0f0f", specular: "#000000", emissive: "#000000", shininess: 90 }),
+            grillMaterial: new THREE.MeshPhongMaterial({color: "#e1bf44", specular: "#545454", map: radioTexture})
+        }
+
+        let radio = new THREE.Group();
+
+        const boxWidth = 1;
+        const boxHeight = 0.6;
+        const boxdepth = 0.3;
+        const topSize = 0.75;
+        const radialSegments = 32;
+        const legSize = 0.05;
+        const legHeight = 1.5;
+        const antenaRadius = 0.01;   
+        const antenaHeight = 1;
+        const baseRadius = 0.05;
+        const baseHeight = 0.02;   
+
+        // radio box construction
+        const radioBox = new THREE.BoxGeometry(boxWidth, boxHeight,boxdepth);
+        const boxMesh = new THREE.Mesh(radioBox, materials.box);
+
+        // antenas for radio
+        const antena = new THREE.CylinderGeometry(antenaRadius, antenaRadius/4, antenaHeight, radialSegments);
+        const antena1Mesh = new THREE.Mesh(antena, materials.antena);
+        antena1Mesh.position.set(-boxWidth*3/8 + (Math.sin(Math.PI/3))/2, legHeight/2-(legHeight/2-(Math.cos(Math.PI/3)*legHeight/2))/2,0);
+        antena1Mesh.rotation.x = Math.PI;
+        antena1Mesh.rotation.z = Math.PI/3;
+        radio.add(antena1Mesh);
+        
+        const antena2Mesh = new THREE.Mesh(antena, materials.antena);
+        antena2Mesh.position.set(-boxWidth*3/8 - (Math.sin(Math.PI/6))/2, legHeight/2,0);
+        antena2Mesh.rotation.x = Math.PI;
+        antena2Mesh.rotation.z = 11*Math.PI/6;
+        radio.add(antena2Mesh);
+
+        const antenasBase = new THREE.CylinderGeometry(baseRadius, baseRadius, baseHeight, radialSegments);
+        const antenasBaseMesh = new THREE.Mesh(antenasBase, materials.antena);
+        antenasBaseMesh.position.set(-boxWidth*3/8, boxHeight/2 + baseHeight/2,0);
+        radio.add(antenasBaseMesh);
+
+        // Plane for radio grill
+        const grillDepth = 0.01;
+        const planeGrill = new THREE.BoxGeometry(4*boxWidth/5, 3*boxHeight/5, grillDepth);
+        const planeMesh = new THREE.Mesh(planeGrill, materials.grillMaterial);
+        planeMesh.position.set(0,boxHeight/6,-boxdepth/2-grillDepth/2)
+        radio.add(planeMesh);
+
+
+        // buttons
+        for(let i = 0; i < 2; i++){
+            const buttonRadius = 0.05;
+            const radialSegments = 16;
+
+            const button = new THREE.CylinderGeometry(buttonRadius, buttonRadius, buttonRadius/2, radialSegments);
+            const buttonMesh = new THREE.Mesh(button, materials.black);
+            buttonMesh.position.set(-1*boxWidth/4+i*boxWidth/2,-1*boxHeight/3,-boxdepth/2 - buttonRadius/4);
+            buttonMesh.rotation.x = -Math.PI/2
+            radio.add(buttonMesh);
+        }
+
+        // stool construction 
+        let stool = new THREE.Group();
+
+        // legs construction for stool
+        for(let i = 0; i < 4; i++){
+            const leg = new THREE.CylinderGeometry(legSize, legSize, legHeight,radialSegments);
+            const legMesh = new THREE.Mesh(leg, materials.brown);
+            legMesh.position.set(0,legHeight/2-(legHeight/2-Math.cos(Math.PI/4)*legHeight/2),0);
+            legMesh.rotation.z = Math.PI/4;
+            legMesh.rotation.y = i*Math.PI/2;
+            stool.add(legMesh);
+        }
+
+        // top construction for stool
+        const top = new THREE.CylinderGeometry(topSize, topSize, topSize/7, radialSegments);
+        const topMesh = new THREE.Mesh(top, materials.brown);
+        topMesh.position.set(0,legHeight/2-(legHeight/2-Math.cos(Math.PI/4)*legHeight/2) + legHeight*Math.sin(Math.PI/4)/2,0);
+        stool.add(topMesh);
+
+        stool.position.set(2*this.roomWidth/5,0,2*this.roomWidth/5);
+        //stool.position.set(2*this.roomWidth/5,legHeight*Math.sin(Math.PI/4)/2,2*this.roomWidth/5);
+        this.app.scene.add(stool);
+
+        radio.add(boxMesh);
+        radio.position.set(2*this.roomWidth/5,boxHeight/2+legHeight/2-(legHeight/2-Math.cos(Math.PI/4)*legHeight/2) + legHeight*Math.sin(Math.PI/4)/2+(topSize/7)/2,2*this.roomWidth/5);
+        this.app.scene.add(radio);
+    }
+
+    /**
      * initializes the contents
      */
     init() {
@@ -315,23 +418,22 @@ class MyContents  {
         pointLight.position.set(0, 20, 0);
         this.app.scene.add(pointLight);
 
-        // add another point light on top of the cake
-        const pointLight2 = new THREE.PointLight(0xffff00, 400, 0);
-        pointLight2.position.set(0, 10, 0);
-        this.app.scene.add(pointLight2);
-
         // add a spotlight to spot a specific object
         this.spotLight = new THREE.SpotLight(0xffffff,8,5,(2*Math.PI)/20,0,0);
         this.spotLight.position.set(1,5,1);
         
         // Object target for the spotLight
-        const targetSpot = new THREE.Object3D();
-        targetSpot.position.set(0,2.65,0);
-        this.spotLight.target = targetSpot;
+        this.targetSpot = new THREE.Object3D();
+        this.targetSpot.position.set(0,2.65,0);
+        this.spotLight.target = this.targetSpot;
 
         // add the Spot Ligh and it's respective target to the scene
         this.app.scene.add(this.spotLight);
-        this.app.scene.add(targetSpot);
+        this.app.scene.add(this.targetSpot);
+
+        const spotLightHelper = new THREE.SpotLightHelper( this.spotLight );
+        spotLightHelper.target = this.targetSpot; 
+        this.app.scene.add( spotLightHelper );
 
         // add a point light helper for the previous point light
         const sphereSize = 0.5;
@@ -346,6 +448,7 @@ class MyContents  {
         this.buildWalls();
 		this.buildTable();
         this.buildCake();
+        this.buildRadio();
         this.buildFrame(0.1, 2, 3, 0.1, 3.5, 6, false, 'textures/luis.jpg',"#ffffff", 'back');
         this.buildFrame(0.1, 2, 3, 0.1, -3.5, 6, false, 'textures/nuno.jpg',"#ffffff", 'back');
         this.buildFrame(0.1, 6, 3, 0.1, 5, 6, true, 'textures/landscape1.jpg',"#423721", 'left');
