@@ -43,6 +43,55 @@ class MyContents  {
         this.loader = new THREE.TextureLoader();
     }
 
+    buildLampSticks(angleX, angleZ, x, z) {
+        const lampStick = new THREE.CylinderGeometry(0.1, 0.1, 1.6, 32, 32);
+        const lampStickMaterial = new THREE.MeshPhongMaterial({color: "#d9af25"});
+        const lampStickMesh = new THREE.Mesh(lampStick, lampStickMaterial);
+        lampStickMesh.position.set(x, 2.5, z);
+        lampStickMesh.rotation.set(angleX, 0, angleZ);
+        
+        return lampStickMesh;
+    }
+
+    buildLamp() {
+        const lamp = new THREE.Group();
+        const outerPart = new THREE.CylinderGeometry(0.8, 2.1, 2, 32, 32, true);
+        const innerPart = new THREE.CylinderGeometry(0.7, 2, 2, 32, 32, true);
+        const topRing = new THREE.RingGeometry(0.7, 0.8, 32);
+        const bottomRing = new THREE.RingGeometry(2, 2.1, 32);
+        const lampSupport = new THREE.CylinderGeometry(0.2, 0.2, 3, 32, 32);
+        const lampMaterial = new THREE.MeshPhongMaterial({color: "#993240"});
+        const lampSupportMaterial = new THREE.MeshPhongMaterial({color: "#8f6b1d"});
+        lampMaterial.side = THREE.DoubleSide; 
+        const outerPartMesh = new THREE.Mesh(outerPart, lampMaterial);
+        const innerPartMesh = new THREE.Mesh(innerPart, lampMaterial);
+        const topRingMesh = new THREE.Mesh(topRing, lampMaterial);
+        const bottomRingMesh = new THREE.Mesh(bottomRing, lampMaterial);
+        const lampSupportMesh = new THREE.Mesh(lampSupport, lampSupportMaterial);
+        outerPartMesh.position.set(0, 3, 0);
+        innerPartMesh.position.set(0, 3, 0);
+        topRingMesh.position.set(0, 4, 0);
+        topRingMesh.rotation.set(Math.PI / 2, 0, 0);
+        bottomRingMesh.position.set(0, 2, 0);
+        bottomRingMesh.rotation.set(Math.PI / 2, 0, 0);
+        lampSupportMesh.position.set(0, 1, 0);
+
+        lamp.add(outerPartMesh);
+        lamp.add(innerPartMesh);
+        lamp.add(topRingMesh);
+        lamp.add(bottomRingMesh);
+        lamp.add(lampSupportMesh);
+        lamp.add(this.buildLampSticks(0, - Math.PI / 4, 0.7, 0));
+        lamp.add(this.buildLampSticks(0, Math.PI / 4, -0.7, 0));
+        lamp.add(this.buildLampSticks(Math.PI / 4, 0, 0, 0.7));
+        lamp.add(this.buildLampSticks(- Math.PI / 4, 0, 0, -0.7));
+
+        lamp.position.set(9, 0, 9);
+
+        this.app.scene.add(lamp);
+        
+    }
+
     buildFrame(frameThickness, frameWidth, frameHeight, frameDepth, horizontalDisp, verticalDisp, hasFrame, imagePath, color, side) {
         const frameTexture = this.loader.load('textures/frame.jpg');
         frameTexture.colorSpace = THREE.SRGBColorSpace;
@@ -316,17 +365,17 @@ class MyContents  {
         this.app.scene.add(pointLight);
 
         // add another point light on top of the cake
-        const pointLight2 = new THREE.PointLight(0xffff00, 400, 0);
-        pointLight2.position.set(0, 10, 0);
+        const pointLight2 = new THREE.PointLight(0xffff00, 100, 0);
+        pointLight2.position.set(9, 3.8, 9);
         this.app.scene.add(pointLight2);
 
         // add a spotlight to spot a specific object
-        this.spotLight = new THREE.SpotLight(0xffffff,8,5,(2*Math.PI)/20,0,0);
+        this.spotLight = new THREE.SpotLight(0xffffff, 8, 5, (2 * Math.PI) / 20, 0, 0);
         this.spotLight.position.set(1,5,1);
         
         // Object target for the spotLight
         const targetSpot = new THREE.Object3D();
-        targetSpot.position.set(0,2.65,0);
+        targetSpot.position.set(0, 2.65, 0);
         this.spotLight.target = targetSpot;
 
         // add the Spot Ligh and it's respective target to the scene
@@ -350,6 +399,7 @@ class MyContents  {
         this.buildFrame(0.1, 2, 3, 0.1, -3.5, 6, false, 'textures/nuno.jpg',"#ffffff", 'back');
         this.buildFrame(0.1, 6, 3, 0.1, 5, 6, true, 'textures/landscape1.jpg',"#423721", 'left');
         this.buildFrame(0.1, 6, 3, 0.1, -5, 6, true, 'textures/landscape2.jpg', "#423721", 'left');
+        this.buildLamp();
     }
     
     /**
