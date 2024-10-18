@@ -217,8 +217,8 @@ class MyContents  {
         const cake = new THREE.CylinderGeometry(cakeRadius, cakeRadius, cakeThickness, radialSegments, 1, false, 0, cakeAngle);
 		const endCake = new THREE.PlaneGeometry(cakeRadius, cakeThickness);
         const coneFlame = new THREE.ConeGeometry(candleRadius/2, candleHeight/5, radialSegments);
-        const candleBase = new THREE.CylinderGeometry(candleRadius,candleRadius,candleHeight,radialSegments);
-        const candleRope = new THREE.CylinderGeometry(candleRadius/8,candleRadius/8,candleHeight/5,radialSegments);
+        const candleBase = new THREE.CylinderGeometry(candleRadius, candleRadius, candleHeight, radialSegments);
+        const candleRope = new THREE.CylinderGeometry(candleRadius/8 ,candleRadius/8, candleHeight/5, radialSegments);
         const slicecake = new THREE.CylinderGeometry(cakeRadius, cakeRadius, cakeThickness, radialSegments, 1, false, 0, Math.PI / 4);
 
         this.cakeMesh = new THREE.Group();
@@ -260,25 +260,37 @@ class MyContents  {
         plateMesh.position.set(0, tableHeight + plateThickness / 2, 0);
         this.cakeMesh.add(plateMesh);
 
-        //Slice position
+        // Slice position
         this.sliceCakeMesh.position.set(slicePosition - cakeRadius/2, tableHeight + plateThickness, slicePosition/2 - cakeRadius/2);
         this.sliceCakeMesh.rotation.z = Math.PI/2;
         this.sliceCakeMesh.rotation.y = Math.PI/2;
         this.cakeMesh.add(this.sliceCakeMesh);
 
-        //Slice plate position
+        // Slice plate position
         const smallPlate = new THREE.CylinderGeometry(3 * plateRadius / 5, 3 * plateRadius / 5, plateThickness, radialSegments);
         const smallPlateMesh = new THREE.Mesh(smallPlate, materials.plate);
         smallPlateMesh.position.set(slicePosition, tableHeight + plateThickness / 2, slicePosition / 2);
-        this.cakeMesh.add(smallPlateMesh);        
+        this.cakeMesh.add(smallPlateMesh);
 
-        //Candle creation
+        // Candle creation
         for (let i = 0; i < 5; i += 1) {
             const candle = new THREE.Object3D();
 
             const cFlame = new THREE.Mesh(coneFlame, materials.flame);
             cFlame.position.set(3 * cakeRadius / 5, tableHeight + plateThickness + cakeThickness * 3.5 + candleHeight / 1.5, 0);
             candle.add(cFlame);
+
+            // add a point light on top of each flame
+            let flameLight = new THREE.PointLight(0xffff00, 1, 0);
+            flameLight.position.set(3 * cakeRadius / 5, tableHeight + plateThickness + cakeThickness * 3.5 + candleHeight / 1.5, 0);
+            candle.add(flameLight);
+
+            // add flame sphere
+            const flameSphere = new THREE.SphereGeometry(0.004, 32, 32);
+            const material = new THREE.MeshPhongMaterial({color: "#FFA500", specular: "#111111", emissive: "#000000", shininess: 30});
+            const sphereMesh = new THREE.Mesh(flameSphere, material);
+            sphereMesh.position.set(3 * cakeRadius / 5, tableHeight + plateThickness + cakeThickness * 3.5 + candleHeight / 1.5, 0);
+            candle.add(sphereMesh);
 
             const cSmallFlame = new THREE.Mesh(coneFlame, materials.smallFlame);
             cSmallFlame.position.set(3 * cakeRadius / 5, tableHeight + plateThickness + cakeThickness * 3.5 + candleHeight / 1.5 - candleHeight / 20, 0);
@@ -530,10 +542,10 @@ class MyContents  {
         pointLight.position.set(0, 20, 0);
         this.app.scene.add(pointLight);
 
-        // add another point light on top of the cake
-        const pointLight2 = new THREE.PointLight(0xffff00, 100, 0);
-        pointLight2.position.set(9, 3.8, -9);
-        this.app.scene.add(pointLight2);
+        // add another point light on the lamp
+        const lampLight = new THREE.PointLight(0xffff00, 100, 0);
+        lampLight.position.set(9, 3.8, -9);
+        this.app.scene.add(lampLight);
 
         // add a spotlight to spot a specific object
         this.spotLight = new THREE.SpotLight(0xffffff, 8, 5, (2 * Math.PI) / 20, 0, 0);
@@ -548,9 +560,9 @@ class MyContents  {
         this.app.scene.add(this.spotLight);
         this.app.scene.add(this.targetSpot);
 
-        const spotLightHelper = new THREE.SpotLightHelper( this.spotLight );
-        spotLightHelper.target = this.targetSpot; 
-        //this.app.scene.add( spotLightHelper );
+        // const spotLightHelper = new THREE.SpotLightHelper( this.spotLight );
+        // spotLightHelper.target = this.targetSpot; 
+        // this.app.scene.add( spotLightHelper );
 
         // add a point light helper for the previous point light
         const sphereSize = 0.5;
