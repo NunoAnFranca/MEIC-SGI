@@ -450,6 +450,66 @@ class MyContents  {
         this.app.scene.add(radio);
     }
 
+    buildBeetle(){
+        let beetle = new THREE.Group()
+        const materialBeetle = new THREE.LineBasicMaterial({color: "#ffffff"});
+
+        let pointsCurve1 = [
+            new THREE.Vector3(0,5,0),
+            new THREE.Vector3(0,5+0.5*(4/3),0),
+            new THREE.Vector3(1,5+0.5*(4/3),0),
+            new THREE.Vector3(1,5,0)
+        ];
+
+        let pointsCurve2 = [
+            new THREE.Vector3(0,5,0),
+            new THREE.Vector3(0,6,0),
+            new THREE.Vector3(-1,6,0)
+        ]
+
+        let points = [
+            new THREE.Vector3(-1.5,0,0),            // Left wheel & Left hull
+            new THREE.Vector3(-1.5,0.5*(4/3),0),    // Left wheel
+            new THREE.Vector3(-0.5,0.5*(4/3),0),    // Left wheel
+            new THREE.Vector3(-0.5,0,0),            // Left wheel
+            new THREE.Vector3(-1.5,1.5,0),          // Left hull
+            new THREE.Vector3(0,1.5,0)              // Left hull
+        ]
+
+
+        //Left wheel
+        const curve1 = new THREE.CubicBezierCurve3(points[0], points[1], points[2], points[3]);
+        const geometry1 = new THREE.BufferGeometry().setFromPoints(curve1.getPoints(50));
+        const curve1Mesh = new THREE.Line(geometry1, materialBeetle);
+        beetle.add(curve1Mesh);
+
+        //Left hull
+        const curve2 = new THREE.QuadraticBezierCurve3(points[0],points[4], points[5]);
+        const geometry2 = new THREE.BufferGeometry().setFromPoints(curve2.getPoints(50));
+        const curve2Mesh = new THREE.Line(geometry2, materialBeetle);
+        beetle.add(curve2Mesh);
+
+        ////Cubic Bezier Curve
+        //const curve1 = new THREE.CubicBezierCurve3(pointsCurve1[0],pointsCurve1[1],pointsCurve1[2],pointsCurve1[3]);
+        //const points1 = curve1.getPoints(50);
+        //const geometry = new THREE.BufferGeometry().setFromPoints(points1);
+        //const material = new THREE.LineBasicMaterial({color: "#ff0000"});
+
+        ////Quadratic Bezier Curve
+        //const curve2 = new THREE.QuadraticBezierCurve3(pointsCurve2[0], pointsCurve2[1],pointsCurve2[2]);
+        //const points2 = curve2.getPoints(50);
+        //const geometry2 = new THREE.BufferGeometry().setFromPoints(points2);
+        //const material2 = new THREE.LineBasicMaterial({color: "#00ff00"});
+        //        
+        //const curve1Mesh = new THREE.Line(geometry,material);
+        //const curve2Mesh = new THREE.Line(geometry2, material2);
+        //
+        //this.app.scene.add(curve1Mesh);
+        //this.app.scene.add(curve2Mesh);       
+
+        this.app.scene.add(beetle);
+    }
+
     /**
      * initializes the contents
      */
@@ -503,6 +563,7 @@ class MyContents  {
 		this.buildTable();
         this.buildCake();
         this.buildRadio();
+        this.buildBeetle();
         this.buildFrame(0.1, 2, 3, 0.1, 3.5, 6, false, 'textures/luis.jpg',"#ffffff", 'back');
         this.buildFrame(0.1, 2, 3, 0.1, -3.5, 6, false, 'textures/nuno.jpg',"#ffffff", 'back');
         this.buildFrame(0.1, 6, 3, 0.1, 5, 6, true, 'textures/landscape1.jpg',"#423721", 'left');
