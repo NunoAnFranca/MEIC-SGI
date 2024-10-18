@@ -196,7 +196,8 @@ class MyContents  {
             brown: new THREE.MeshPhongMaterial({ color: "#3B1D14", specular: "#000000", emissive: "#000000", shininess: 90 }),
             pink: new THREE.MeshPhongMaterial({ color: "#FFC0CB", specular: "#000000", emissive: "#000000", shininess: 90 }),
             plate: new THREE.MeshPhongMaterial({ color: "#D3D3D3", specular: "#000000", emissive: "#000000", shininess: 90 }),
-            flame: new THREE.MeshPhongMaterial({ color: "#FFA500", specular: "#111111", emissive: "#FFFF00", shininess: 30, transparent:true, opacity:0.8 }),
+            flame: new THREE.MeshPhongMaterial({ color: "#FFA500", specular: "#111111", emissive: "#FFFF00", shininess: 30, transparent: true, opacity: 0.5 }),
+            smallFlame: new THREE.MeshPhongMaterial({ color: "#FF0000", specular: "#FF0000", emissive: "#000000", shininess: 30}),
             base: new THREE.MeshPhongMaterial({ color: "#FFFFFF", specular: "#000000", emissive: "#000000", shininess: 40})
         };
 
@@ -266,9 +267,9 @@ class MyContents  {
         this.cakeMesh.add(this.sliceCakeMesh);
 
         //Slice plate position
-        const smallPlate = new THREE.CylinderGeometry(3*plateRadius/5, 3*plateRadius/5, plateThickness, radialSegments);
+        const smallPlate = new THREE.CylinderGeometry(3 * plateRadius / 5, 3 * plateRadius / 5, plateThickness, radialSegments);
         const smallPlateMesh = new THREE.Mesh(smallPlate, materials.plate);
-        smallPlateMesh.position.set(slicePosition, tableHeight + plateThickness / 2, slicePosition/2);
+        smallPlateMesh.position.set(slicePosition, tableHeight + plateThickness / 2, slicePosition / 2);
         this.cakeMesh.add(smallPlateMesh);        
 
         //Candle creation
@@ -276,15 +277,20 @@ class MyContents  {
             const candle = new THREE.Object3D();
 
             const cFlame = new THREE.Mesh(coneFlame, materials.flame);
-            cFlame.position.set(3*cakeRadius/5,tableHeight + plateThickness + cakeThickness*3.5+candleHeight/1.5,0);
+            cFlame.position.set(3 * cakeRadius / 5, tableHeight + plateThickness + cakeThickness * 3.5 + candleHeight / 1.5, 0);
             candle.add(cFlame);
 
+            const cSmallFlame = new THREE.Mesh(coneFlame, materials.smallFlame);
+            cSmallFlame.position.set(3 * cakeRadius / 5, tableHeight + plateThickness + cakeThickness * 3.5 + candleHeight / 1.5 - candleHeight / 20, 0);
+            cSmallFlame.scale.set(0.5, 0.5, 0.5);
+            candle.add(cSmallFlame);
+
             const cBase = new THREE.Mesh(candleBase, materials.base);
-            cBase.position.set(3*cakeRadius/5,tableHeight + plateThickness + cakeThickness*3.5,0);
+            cBase.position.set(3 * cakeRadius / 5, tableHeight + plateThickness + cakeThickness * 3.5, 0);
             candle.add(cBase);
 
             const cRope = new THREE.Mesh(candleRope, materials.base);
-            cRope.position.set(3*cakeRadius/5,tableHeight + plateThickness + cakeThickness*3.5+candleHeight/2,0);
+            cRope.position.set(3 * cakeRadius / 5, tableHeight + plateThickness + cakeThickness * 3.5 + candleHeight / 2, 0);
             candle.add(cRope);
 
             this.cakeMesh.add(candle);
