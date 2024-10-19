@@ -147,7 +147,7 @@ class MyContents  {
         const imageTexture = this.loader.load(imagePath);
         imageTexture.colorSpace = THREE.SRGBColorSpace;
 
-        const imageMaterial = new THREE.MeshBasicMaterial({color: "ffffff", map: imageTexture});
+        const imageMaterial = new THREE.MeshBasicMaterial({color: "#ffffff", map: imageTexture});
         let image = new THREE.BoxGeometry(frameWidth, frameHeight, frameDepth / 2);
         let imageMesh = new THREE.Mesh(image, imageMaterial);
         frameGroup.add(imageMesh);      
@@ -454,7 +454,7 @@ class MyContents  {
     }
 
     buildBeetle(){
-        const materialBeetle = new THREE.LineBasicMaterial({color: "#000000", lineWidth: 100});
+        const materialBeetle = new THREE.LineBasicMaterial({color: "#000000"});
 
         for(let i = 0; i<30;i++){
 
@@ -593,6 +593,65 @@ class MyContents  {
         
     }
 
+    buildSpring() {
+        //let materials = [
+        //    new THREE.MeshPhongMaterial({ color: "#4CF038" }),
+        //    new THREE.MeshPhongMaterial({color: "#FF1D8D"}),
+        //    new THREE.MeshPhongMaterial({color: "#0096FF"}),
+        //    new THREE.MeshPhongMaterial({color: "#FFEA00"}),
+        //];
+
+        let materials = [
+            new THREE.MeshPhongMaterial({color: "#ff0000" }),
+            new THREE.MeshPhongMaterial({color: "#ffa500"}),
+            new THREE.MeshPhongMaterial({color: "#ffff00"}),
+            new THREE.MeshPhongMaterial({color: "#008000"}),
+            new THREE.MeshPhongMaterial({color: "#0000ff"}),
+            new THREE.MeshPhongMaterial({color: "#4b0082"}),
+            new THREE.MeshPhongMaterial({color: "#ee82ee"})
+        ];
+
+        let spring = new THREE.Group();
+    
+        for (let i = 0; i < 28; i++) {
+            let points = [
+                new THREE.Vector3(-1, 0, 0 + 0.6 * i),
+                new THREE.Vector3(-1, 4 / 3, 0.1 + 0.6 * i),
+                new THREE.Vector3(1, 4 / 3, 0.2 + 0.6 * i),
+                new THREE.Vector3(1, 0, 0.3 + 0.6 * i),
+                new THREE.Vector3(1, -4 / 3, 0.4 + 0.6 * i),
+                new THREE.Vector3(-1, -4 / 3, 0.5 + 0.6 * i),
+                new THREE.Vector3(-1, 0, 0.6 + 0.6 * i),
+            ];
+
+            let colorMaterial = i%7;
+            
+            const topCircle = new THREE.CubicBezierCurve3(points[0], points[1], points[2], points[3]);
+            const topCirclePoints = topCircle.getPoints(50);
+            const topCurvePath = new THREE.CurvePath();
+            topCurvePath.add(new THREE.CatmullRomCurve3(topCirclePoints));
+            
+            const topTubeGeometry = new THREE.TubeGeometry(topCurvePath, 25, 0.075, 8, false);
+            const topTubeMesh = new THREE.Mesh(topTubeGeometry, materials[colorMaterial]);
+            spring.add(topTubeMesh);
+    
+            const downCircle = new THREE.CubicBezierCurve3(points[3], points[4], points[5], points[6]);
+            const downCirclePoints = downCircle.getPoints(50);
+            const downCurvePath = new THREE.CurvePath();
+            downCurvePath.add(new THREE.CatmullRomCurve3(downCirclePoints));
+    
+            const downTubeGeometry = new THREE.TubeGeometry(downCurvePath, 25, 0.075, 8, false);
+            const downTubeMesh = new THREE.Mesh(downTubeGeometry, materials[colorMaterial]);
+            spring.add(downTubeMesh);
+        }
+    
+        spring.position.set(-2, 2.5 + 0.3 / 2, 1);
+        spring.rotation.x = -Math.PI / 2;
+        spring.scale.set(0.1, 0.1, 0.02);
+        this.app.scene.add(spring);
+    }
+    
+
     /**
      * initializes the contents
      */
@@ -648,6 +707,7 @@ class MyContents  {
         this.buildRadio();
         this.buildBeetle();
         this.buildFlower();
+        this.buildSpring();
         this.buildFrame(0.1, 2, 3, 0.1, 3.5, 6, false, 'textures/luis.jpg',"#ffffff", 'back');
         this.buildFrame(0.1, 2, 3, 0.1, -3.5, 6, false, 'textures/nuno.jpg',"#ffffff", 'back');
         this.buildFrame(0.1, 6, 3, 0.1, 5, 6, true, 'textures/landscape1.jpg',"#423721", 'left');
