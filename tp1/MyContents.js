@@ -522,18 +522,18 @@ class MyContents  {
     buildFlower(){
         const materials = {
             center: new THREE.LineBasicMaterial({color: "#4CF038"}),
-            petals: new THREE.LineBasicMaterial({color: "FF1D8D"})
+            petals: new THREE.LineBasicMaterial({color: "#FF1D8D"})
         }
         
         let flower = new THREE.Group();
         
         let pointsCircle = [
-            new THREE.Vector3(-1,0,0),
-            new THREE.Vector3(-1,(4/3),0),
-            new THREE.Vector3(1,(4/3),0),
-            new THREE.Vector3(1,0,0),
-            new THREE.Vector3(-1,-(4/3),0),
-            new THREE.Vector3(1, (4/3), 0)
+            new THREE.Vector3(-1, 0,  0),
+            new THREE.Vector3(-1, (4/3), 0),
+            new THREE.Vector3(1, (4/3), 0),
+            new THREE.Vector3(1, 0, 0),
+            new THREE.Vector3(-1, -(4/3), 0),
+            new THREE.Vector3(1, -(4/3), 0)
         ];
         
         const topCircle = new THREE.CubicBezierCurve3(pointsCircle[0], pointsCircle[1], pointsCircle[2], pointsCircle[3]);
@@ -541,13 +541,41 @@ class MyContents  {
         const topCircleMesh = new THREE.Line(topCircleGeometry, materials.center);
         flower.add(topCircleMesh);
 
-        const downCircle = new THREE.CubicBezierCurve3(pointsCircle[0], pointsCircle[4], pointsCircle[5], pointsCircle[3]);
+        const downCircle = new THREE.CubicBezierCurve3(pointsCircle[0],pointsCircle[4],pointsCircle[5], pointsCircle[3]);
         const downCircleGeometry = new THREE.BufferGeometry().setFromPoints(downCircle.getPoints(50));
         const downCircleMesh = new THREE.Line(downCircleGeometry, materials.center);
         flower.add(downCircleMesh);
+        
+        
+        //draw petals
+        for(let i = 0; i < 12; i++){
+            
+            let angle = i*Math.PI/6;
+            
+            let points = [
+                new THREE.Vector3(Math.cos(Math.PI/2 - angle),Math.sin(Math.PI/2 + angle),0), // DONE
+                new THREE.Vector3(Math.cos(Math.PI/2 - angle)+0.2*Math.cos(Math.PI/2- angle),Math.sin(Math.PI/2+ angle)+0.2*Math.sin(Math.PI/2+ angle),0), // DONE
+                new THREE.Vector3(-3*Math.cos(5*(Math.PI/12) + angle),3*Math.sin(5*(Math.PI/12) +angle ),0), // DONE
+                new THREE.Vector3(-3*Math.cos(5*(Math.PI/12) + angle)+(Math.cos(Math.PI/6+angle)),3*Math.sin(5*(Math.PI/12)+ angle)-(Math.sin(Math.PI/6+angle)),0), // DONE
+                new THREE.Vector3(-Math.cos(Math.PI/3+angle),Math.sin(Math.PI/3+angle),0),
+                new THREE.Vector3(-Math.cos(Math.PI/3+angle)-0.2*Math.sin(Math.PI/6+angle),Math.sin(Math.PI/3+angle)-0.2*Math.cos(Math.PI/6+angle),0),
+                new THREE.Vector3(-3*Math.cos(5*(Math.PI/12)+ angle)-Math.sin(Math.PI/6+ angle),3*Math.sin(5*(Math.PI/12)+ angle)-Math.cos(Math.PI/6+ angle),0)
+            ];
+            
+            const topPetal = new THREE.CubicBezierCurve3(points[0], points[1], points[3], points[2]);
+            const topPetalGeometry = new THREE.BufferGeometry().setFromPoints(topPetal.getPoints(50));
+            const topPetalMesh = new THREE.Line(topPetalGeometry, materials.petals);
+            flower.add(topPetalMesh);
+
+            const bottomPetal = new THREE.CubicBezierCurve3(points[4], points[5], points[6], points[2]);
+            const bottomPetalGeometry = new THREE.BufferGeometry().setFromPoints(bottomPetal.getPoints(50));
+            const bottomPetalMesh = new THREE.Line(bottomPetalGeometry, materials.petals);
+            flower.add(bottomPetalMesh);
+        }
 
 
-        flower.position.set(-5,5.5,this.roomWidth/2-0.05);
+        flower.position.set(-5,6,this.roomWidth/2-0.05);
+        flower.scale.set(0.25,0.25,0.25);
         this.app.scene.add(flower);
     }
 
