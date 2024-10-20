@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { MyAxis } from './MyAxis.js';
+import { MySpringGuy } from './springGuy.js';
 import { NURBSSurface } from 'three/addons/curves/NURBSSurface.js';
 import { ParametricGeometry } from 'three/addons/geometries/ParametricGeometry.js';
 import { MyNurbsBuilder } from './MyNurbsBuilder.js';
@@ -516,8 +517,6 @@ class MyContents  {
         }
     }
 
-    // Line2 for sprig
-
     // 
     buildFlower(){
         const materials = {
@@ -594,12 +593,6 @@ class MyContents  {
     }
 
     buildSpring() {
-        //let materials = [
-        //    new THREE.MeshPhongMaterial({ color: "#4CF038" }),
-        //    new THREE.MeshPhongMaterial({color: "#FF1D8D"}),
-        //    new THREE.MeshPhongMaterial({color: "#0096FF"}),
-        //    new THREE.MeshPhongMaterial({color: "#FFEA00"}),
-        //];
 
         let materials = [
             new THREE.MeshPhongMaterial({color: "#ff0000" }),
@@ -651,6 +644,19 @@ class MyContents  {
         this.app.scene.add(spring);
     }
     
+    buildCarpet(){
+
+        const carpetTexture = this.loader.load('textures/carpet.jpg');
+        carpetTexture.colorSpace = THREE.SRGBColorSpace;
+        const carpetMaterial = new THREE.MeshPhongMaterial({color: "#FFFFFF", map: carpetTexture, opacity:1}); 
+
+        const carpet = new THREE.CylinderGeometry(6, 6, 0.01, 64);
+        const carpetMesh = new THREE.Mesh(carpet, carpetMaterial);
+        carpetMesh.position.set(0,0.01,0);
+        carpetMesh.scale.set(1,1,0.8);
+        this.app.scene.add(carpetMesh);
+
+    }
 
     /**
      * initializes the contents
@@ -700,6 +706,9 @@ class MyContents  {
         const ambientLight = new THREE.AmbientLight(0x555555, 4);
         this.app.scene.add(ambientLight);
 
+        const springGuy = new MySpringGuy();
+        springGuy.buildBase(this.roomHeight, this.roomWidth);
+
         this.buildFloor();
         this.buildWalls();
 		this.buildTable();
@@ -707,13 +716,15 @@ class MyContents  {
         this.buildRadio();
         this.buildBeetle();
         this.buildFlower();
+        this.buildCarpet();
         this.buildSpring();
         this.buildFrame(0.1, 2, 3, 0.1, 3.5, 6, false, 'textures/luis.jpg',"#ffffff", 'back');
         this.buildFrame(0.1, 2, 3, 0.1, -3.5, 6, false, 'textures/nuno.jpg',"#ffffff", 'back');
         this.buildFrame(0.1, 6, 3, 0.1, 5, 6, true, 'textures/landscape1.jpg',"#423721", 'left');
         this.buildFrame(0.1, 6, 3, 0.1, -5, 6, true, 'textures/landscape2.jpg', "#423721", 'left');
         this.buildFrame(0.1, 3, 2, 0.1, 5, 6, false, 'textures/cork.jpg', "#ffffff", 'front');
-        this.buildFrame(0.1, 3, 3.5, 0.1, -5, 6, false, 'textures/cork.jpg', "#ffffff", 'front')
+        this.buildFrame(0.1, 3, 3.5, 0.1, -5, 6, false, 'textures/cork.jpg', "#ffffff", 'front');
+        springGuy.buildSpringGuy(this.roomHeight, this.roomWidth);
         this.buildLamp();
     }
     
