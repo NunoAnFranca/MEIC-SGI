@@ -13,6 +13,7 @@ class MySpringGuy  {
         this.roomHeight = null;
         this.roomWidth = null;
         this.springGuyLegsHeight = null;
+        this.springGuyTorsoHeight = null;
         this.loader = new THREE.TextureLoader();
 
         const textures = {
@@ -141,29 +142,64 @@ class MySpringGuy  {
     }
 
     buildTorso() {
-        const torsoWidth = 0.75;
-        const torsoHeight = 0.1;
-        const torsoDepth = 2;
+        const bottomWidth = 0.75;
+        const bottomHeight = 0.1;
+        const bottomDepth = 2;
+        const torsoBase = 0.7;
+        const torsoTop = 1.1;
+        const torsoHeight = 2.5;
+        const radialSegments = 32;
         const centerBaseX = 3-this.roomWidth/2;
         const centerBaseZ = 3-this.roomWidth/2;
         let top = new THREE.Group();
 
-        const torso = new THREE.BoxGeometry(torsoWidth, torsoHeight,torsoDepth);
+        const bottom = new THREE.BoxGeometry(bottomWidth, bottomHeight,bottomDepth);
+        const bottomMesh = new THREE.Mesh(bottom, this.materials.wood);
+        bottomMesh.position.set(0,this.springGuyLegsHeight,0);
+        top.add(bottomMesh);
+
+        let spring = this.buildSpring(0,this.springGuyLegsHeight+0.05,0);
+        spring.scale.set(0.2,0.2,0.05);
+        top.add(spring);
+
+        const torso = new THREE.CylinderGeometry(torsoTop,torsoBase, torsoHeight, radialSegments);
         const torsoMesh = new THREE.Mesh(torso, this.materials.wood);
-        torsoMesh.position.set(0,this.springGuyLegsHeight,0);
+        torsoMesh.position.set(0,this.springGuyLegsHeight+0.25+torsoHeight/2,0);
         top.add(torsoMesh);
+
+        let springNeck = this.buildSpring(0,this.springGuyLegsHeight+0.25+torsoHeight,0);
+        springNeck.scale.set(0.2,0.2,0.15);
+        top.add(springNeck);
+
+        this.springGuyTorsoHeight = this.springGuyLegsHeight+0.25+torsoHeight + 0.7;
 
         top.position.set(centerBaseX,0,centerBaseZ);
         this.app.scene.add(top);
-
     }
 
+    buildHead() {
+        const headRadius = 0.75;
+        const radialSegments = 32;
+        const centerBaseX = 3-this.roomWidth/2;
+        const centerBaseZ = 3-this.roomWidth/2;
+        let head = new THREE.Group();
+
+
+        const headBall = new THREE.SphereGeometry(headRadius,radialSegments,radialSegments);
+        const headMesh = new THREE.Mesh(headBall, this.materials.wood);
+        headMesh.position.set(0,this.springGuyTorsoHeight+headRadius/2,0);
+        head.add(headMesh);
+        
+        head.position.set(centerBaseX,0,centerBaseZ);
+        this.app.scene.add(head);
+    }
     buildSpringGuy(roomHeight, roomWidth) {
         this.roomHeight = roomHeight;
         this.roomWidth = roomWidth;
 
         this.buildLegs();
         this.buildTorso();
+        this.buildHead();
 
     }
 }
