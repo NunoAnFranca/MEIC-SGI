@@ -706,8 +706,7 @@ class MyContents  {
         const ambientLight = new THREE.AmbientLight(0x555555, 4);
         this.app.scene.add(ambientLight);
 
-        const springGuy = new MySpringGuy();
-        springGuy.buildBase(this.roomHeight, this.roomWidth);
+        const springGuy = new MySpringGuy(this.app);
 
         this.buildFloor();
         this.buildWalls();
