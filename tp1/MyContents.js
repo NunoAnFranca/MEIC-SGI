@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { MyAxis } from './MyAxis.js';
+import { MyNurbsBuilder } from './MyNurbsBuilder.js';
 
 /**
  *  This class contains the contents of out application
@@ -14,6 +15,18 @@ class MyContents  {
         this.app = app;
         this.axis = null;
 
+        const map = new THREE.TextureLoader().load('textures/newspaper.png');
+        map.wrapS = map.wrapT = THREE.RepeatWrapping;
+        map.anisotropy = 16;
+        map.colorSpace = THREE.SRGBColorSpace;
+        this.material = new THREE.MeshLambertMaterial({ map: map, side: THREE.DoubleSide});
+        this.builder = new MyNurbsBuilder();
+        this.meshes = [];
+        this.samplesU = 8;
+        this.samplesV = 8;
+
+        this.createNurbsSurfaces();
+        
         // table related attributes
         this.tableMesh = null;
         this.tableEnabled = true;
@@ -144,7 +157,7 @@ class MyContents  {
         const imageTexture = this.loader.load(imagePath);
         imageTexture.colorSpace = THREE.SRGBColorSpace;
 
-        const imageMaterial = new THREE.MeshBasicMaterial({color: "ffffff", map: imageTexture});
+        const imageMaterial = new THREE.MeshBasicMaterial({color: "#ffffff", map: imageTexture});
         let image = new THREE.BoxGeometry(frameWidth, frameHeight, frameDepth / 2);
         let imageMesh = new THREE.Mesh(image, imageMaterial);
         frameGroup.add(imageMesh);      
@@ -324,7 +337,7 @@ class MyContents  {
         let legHeight = 2.5;
         let radialSegments = 32;
 
-        let tableWidth = 5;
+        let tableWidth = 6;
         let tableLength = 3;
         let tableThickness = 0.3;
 
@@ -379,7 +392,7 @@ class MyContents  {
             box: new THREE.MeshPhongMaterial({ color: "#545454", specular: "#ffffff", emissive: "#000000", shininess: 40 }),
             black: new THREE.MeshPhongMaterial({ color: "#000000", specular: "#545454", emissive: "#000000", shininess: 100 }),
             brown: new THREE.MeshPhongMaterial({ color: "#3B1D14", specular: "#000000", emissive: "#000000", shininess: 20 }),
-            antena: new THREE.MeshPhongMaterial({ color:"0f0f0f", specular: "#000000", emissive: "#000000", shininess: 90 }),
+            antena: new THREE.MeshPhongMaterial({ color:"#0f0f0f", specular: "#000000", emissive: "#000000", shininess: 90 }),
             grillMaterial: new THREE.MeshPhongMaterial({color: "#e1bf44", specular: "#545454", map: radioTexture})
         }
 
@@ -584,6 +597,55 @@ class MyContents  {
         this.buildFrame(0.1, 6, 3, 0.1, 5, 6, true, 'textures/landscape1.jpg',"#423721", 'left');
         this.buildFrame(0.1, 6, 3, 0.1, -5, 6, true, 'textures/landscape2.jpg', "#423721", 'left');
         this.buildLamp();
+    }
+
+    createNurbsSurfaces() {  
+        // are there any meshes to remove?
+        if (this.meshes !== null) {
+            // traverse mesh array
+            for (let i=0; i<this.meshes.length; i++) {
+                // remove all meshes from the scene
+                this.app.scene.remove(this.meshes[i]);
+            }
+            this.meshes = []; // empty the array  
+        }
+
+        // declare local variables
+        let controlPoints;
+        let surfaceData;
+        let mesh;
+        let orderU = 2;
+        let orderV = 1;
+        let offset = 0.02; // offset for each surface
+
+        // build multiple NURBS surfaces
+        for (let n = 0; n < 5; n++) { // create 5 surfaces
+            controlPoints = [
+                // U = 0
+                [ // V = 0..1
+                    [-4.0, -2.0, 0.0, 1],
+                    [-4.0, 2.0, 0.0, 1]
+                ],
+                // U = 1
+                [ // V = 0..1
+                    [2.0, -2.0, 0.0, 1],
+                    [2.0, 2.0, 0.0, 1]
+                ],
+                // U = 2
+                [ // V = 0..1
+                    [-4.0, -2.0, 1.0, 1],
+                    [-4.0, 2.0, 1.0, 1]
+                ],
+            ];
+
+            surfaceData = this.builder.build(controlPoints, orderU, orderV, this.samplesU, this.samplesV, this.material);
+            mesh = new THREE.Mesh(surfaceData, this.material);
+            mesh.rotation.set(Math.PI / 2, -Math.PI / 12, 0);
+            mesh.scale.set(0.5, 0.5, 0.5);
+            mesh.position.set(- 0.7, 2.7 + n * offset, 0);
+            this.app.scene.add(mesh);
+            this.meshes.push(mesh);
+        }
     }
     
     /**
