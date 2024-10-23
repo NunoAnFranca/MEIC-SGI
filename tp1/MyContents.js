@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { MyAxis } from './MyAxis.js';
-import { MySpringGuy } from './springGuy.js';
+import { MySpringGuy } from './contents/springGuy.js';
 import { NURBSSurface } from 'three/addons/curves/NURBSSurface.js';
 import { ParametricGeometry } from 'three/addons/geometries/ParametricGeometry.js';
 import { MyNurbsBuilder } from './MyNurbsBuilder.js';
@@ -48,7 +48,7 @@ class MyContents  {
 
         // room related attributes
         this.roomWidth = 25;
-        this.roomHeight = 10;
+        this.roomHeight = 12;
 
         // lights related attributes
         this.spotLightEnabled = true;
@@ -177,7 +177,10 @@ class MyContents  {
 			let wall = new THREE.PlaneGeometry(this.roomWidth, this.roomHeight);
 			let firstWallMesh = new THREE.Mesh(wall, wallMaterial);
 			let secondWallMesh = new THREE.Mesh(wall, wallMaterial);
-	
+            let wall2 = new THREE.Mesh(wall, wallMaterial);
+            let side1Mesh = new THREE.Mesh(wall, wallMaterial);
+            let side2Mesh = new THREE.Mesh(wall, wallMaterial);
+
 			switch (i) {
 				case 0:
 					firstWallMesh.position.set(0, this.roomHeight / 2, this.roomWidth / 2);
@@ -185,10 +188,25 @@ class MyContents  {
 					firstWallMesh.rotation.x = Math.PI;
 					break;
 				case 1:
+                    secondWallMesh.scale.set(1,(1/3),1);
 					firstWallMesh.position.set(this.roomWidth / 2, this.roomHeight / 2, 0);
-					secondWallMesh.position.set(-this.roomWidth / 2, this.roomHeight / 2, 0);
+					secondWallMesh.position.set(-this.roomWidth / 2, (this.roomHeight / 2)*(1/3), 0);
 					firstWallMesh.rotation.y = Math.PI / 2;
 					secondWallMesh.rotation.y = -Math.PI / 2;
+                    
+                    wall2.scale.set(1,(1/3),1);
+                    wall2.rotation.y = -Math.PI / 2;
+                    wall2.position.set(-this.roomWidth / 2, this.roomHeight-(1/3)*(this.roomHeight / 2), 0);
+
+                    side1Mesh.scale.set((1/3),(1/3),1);
+                    side1Mesh.rotation.y = -Math.PI / 2;
+                    side1Mesh.position.set(-this.roomWidth / 2, this.roomHeight / 2, this.roomWidth/2-(1/3)*(this.roomWidth / 2));
+
+                    side2Mesh.scale.set((1/3),(1/3),1);
+                    side2Mesh.rotation.y = -Math.PI / 2;
+                    side2Mesh.position.set(-this.roomWidth / 2, this.roomHeight / 2, -this.roomWidth/2+(1/3)*(this.roomWidth / 2));
+
+                    this.app.scene.add(wall2, side1Mesh,side2Mesh);
 					break;
 				case 2:
 					firstWallMesh.position.set(0, this.roomHeight / 2, -this.roomWidth / 2);
@@ -196,13 +214,27 @@ class MyContents  {
 					firstWallMesh.rotation.x = Math.PI;
 					break;
 				case 3:
-					firstWallMesh.position.set(-this.roomWidth / 2, this.roomHeight / 2, 0);
+                    firstWallMesh.scale.set(1,(1/3),1);
+					firstWallMesh.position.set(-this.roomWidth / 2, this.roomHeight-(1/3)*(this.roomHeight / 2), 0);
 					secondWallMesh.position.set(this.roomWidth / 2, this.roomHeight / 2, 0);
 					firstWallMesh.rotation.y = Math.PI / 2;
 					secondWallMesh.rotation.y = -Math.PI / 2;
+
+                    wall2.scale.set(1,(1/3),1);
+                    wall2.rotation.y = Math.PI / 2;
+                    wall2.position.set(-this.roomWidth / 2, (1/3)*(this.roomHeight / 2), 0);
+
+                    side1Mesh.scale.set((1/3),(1/3),1);
+                    side1Mesh.rotation.y = Math.PI / 2;
+                    side1Mesh.position.set(-this.roomWidth / 2, this.roomHeight / 2, this.roomWidth/2-(1/3)*(this.roomWidth / 2));
+
+                    side2Mesh.scale.set((1/3),(1/3),1);
+                    side2Mesh.rotation.y = Math.PI / 2;
+                    side2Mesh.position.set(-this.roomWidth / 2, this.roomHeight / 2, -this.roomWidth/2+(1/3)*(this.roomWidth / 2));
+
+                    this.app.scene.add(wall2, side1Mesh,side2Mesh);
 					break;
 			}
-
 			this.app.scene.add(firstWallMesh, secondWallMesh);
 		}
 	}
@@ -604,7 +636,7 @@ class MyContents  {
 
             //draw Steem
             let pointsSteem = [
-                new THREE.Vector3(0, -1,  0),
+                new THREE.Vector3(0, -1, 0),
                 new THREE.Vector3(1,-2,0),
                 new THREE.Vector3(-1,-4,0),
                 new THREE.Vector3(0,-6,0),
@@ -688,6 +720,30 @@ class MyContents  {
 
     }
 
+    buildLandscapeSphere(){
+        const landscapeTexture = this.loader.load('textures/landscape.jpg');
+        landscapeTexture.colorSpace = THREE.SRGBColorSpace;
+        
+        const landscapeMaterial = new THREE.MeshPhongMaterial({color: "#FFFFFF", map: landscapeTexture, opacity:1, side: THREE.BackSide}); 
+        const sphereMaterial = new THREE.SphereGeometry(100,64,64);
+        const sphere = new THREE.Mesh(sphereMaterial, landscapeMaterial);
+
+        this.app.scene.add(sphere);
+    }
+
+    buildLandscapePlane(){
+        const landscapeTexture = this.loader.load('textures/landscape.jpg');
+        landscapeTexture.colorSpace = THREE.SRGBColorSpace;
+        
+        const landscapeMaterial = new THREE.MeshPhongMaterial({color: "#FFFFFF", map: landscapeTexture, opacity:1, side: THREE.BackSide}); 
+        const planeMaterial = new THREE.PlaneGeometry(150,150);
+        const plane = new THREE.Mesh(planeMaterial, landscapeMaterial);
+        plane.rotation.y = -Math.PI/2;
+        plane.position.set(-50,0,0);
+
+        this.app.scene.add(plane);
+    }
+
     /**
      * initializes the contents
      */
@@ -747,10 +803,12 @@ class MyContents  {
         this.buildFlower();
         this.buildCarpet();
         this.buildSpring();
+        //this.buildLandscapePlane();
+        this.buildLandscapeSphere();
         this.buildFrame(0.1, 2, 3, 0.1, 3.5, 6, false, 'textures/luis.jpg',"#ffffff", 'back');
         this.buildFrame(0.1, 2, 3, 0.1, -3.5, 6, false, 'textures/nuno.jpg',"#ffffff", 'back');
-        this.buildFrame(0.1, 6, 3, 0.1, 5, 6, true, 'textures/landscape1.jpg',"#423721", 'left');
-        this.buildFrame(0.1, 6, 3, 0.1, -5, 6, true, 'textures/landscape2.jpg', "#423721", 'left');
+        //this.buildFrame(0.1, 6, 3, 0.1, 5, 6, true, 'textures/landscape1.jpg',"#423721", 'left');
+        //this.buildFrame(0.1, 6, 3, 0.1, -5, 6, true, 'textures/landscape2.jpg', "#423721", 'left');
         this.buildFrame(0.1, 3, 2, 0.1, 5, 6, false, 'textures/cork.jpg', "#ffffff", 'front');
         this.buildFrame(0.1, 3, 3.5, 0.1, -5, 6, false, 'textures/cork.jpg', "#ffffff", 'front');
         springGuy.buildSpringGuy(this.roomHeight, this.roomWidth);

@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { MyAxis } from './MyAxis.js';
+import { MyAxis } from '../MyAxis.js';
 
 
 
@@ -86,7 +86,7 @@ class MySpringGuy  {
         const tibiaHeight = 1.3;
         const tibiaWidth = shoesWidth/2;
         const femurHeight = tibiaHeight*0.9;
-        const femurWidth = tibiaWidth*0.9;
+        const femurWidth = tibiaWidth*1.2;
         const radialSegments = 64;
         const centerBaseX = 3-this.roomWidth/2;
         const centerBaseZ = 3-this.roomWidth/2;
@@ -138,6 +138,7 @@ class MySpringGuy  {
         this.springGuyLegsHeight = tibiaHeight+femurHeight+tibiaWidth+shoesHeight/2+baseHeight+1;
 
         legs.position.set(centerBaseX,0,centerBaseZ)
+        legs.scale.set(0.75,0.75,0.75);
         this.app.scene.add(legs);
     }
 
@@ -149,6 +150,13 @@ class MySpringGuy  {
         const torsoTop = 1.1;
         const torsoHeight = 2.5;
         const radialSegments = 32;
+        const shoulderRadius = 0.35;
+        const armRadius = 0.3;
+        const armHeight = 1.5;
+        const forearmRadius = 0.28;
+        const forearmHeight = 1.8;
+        const thumbRadius = 0.2;
+        const thumbHeight = 0.2;
         const centerBaseX = 3-this.roomWidth/2;
         const centerBaseZ = 3-this.roomWidth/2;
         let top = new THREE.Group();
@@ -173,7 +181,48 @@ class MySpringGuy  {
 
         this.springGuyTorsoHeight = this.springGuyLegsHeight+0.25+torsoHeight + 0.7;
 
+        for(let i = 0; i <2;i++){
+
+            const shoulder = new THREE.SphereGeometry(shoulderRadius, radialSegments, radialSegments);
+            const shoulderMesh = new THREE.Mesh(shoulder, this.materials.joints);
+            shoulderMesh.position.set(0,this.springGuyLegsHeight+torsoHeight-shoulderRadius/2,torsoTop-i*2*torsoTop);
+            top.add(shoulderMesh);
+
+            const arm = new THREE.CylinderGeometry(armRadius,armRadius,armHeight,radialSegments);
+            const armMesh = new THREE.Mesh(arm, this.materials.wood);
+            armMesh.rotation.x = -Math.PI/12+2*i*Math.PI/12;
+            armMesh.position.set(0,this.springGuyLegsHeight+torsoHeight-shoulderRadius/2-armHeight/2,torsoTop+3*shoulderRadius/4-i*2*(torsoTop+3*shoulderRadius/4));            
+            top.add(armMesh);
+
+            const elbow = new THREE.SphereGeometry(shoulderRadius, radialSegments, radialSegments);
+            const elbowMesh = new THREE.Mesh(elbow, this.materials.joints);
+            elbowMesh.position.set(0,this.springGuyLegsHeight+torsoHeight-shoulderRadius/2-armHeight,torsoTop+4*shoulderRadius/3-i*2*(torsoTop+4*shoulderRadius/3));            
+            top.add(elbowMesh);
+
+            const forearm = new THREE.CylinderGeometry(forearmRadius,forearmRadius,forearmHeight,radialSegments);
+            const forearmMesh = new THREE.Mesh(forearm, this.materials.wood);
+            forearmMesh.rotation.z = Math.PI/2;
+            forearmMesh.position.set(forearmHeight/2,this.springGuyLegsHeight+torsoHeight-shoulderRadius/2-armHeight,torsoTop+4*shoulderRadius/3-i*2*(torsoTop+4*shoulderRadius/3));      
+            top.add(forearmMesh);
+
+            const hands = new THREE.SphereGeometry(forearmRadius, radialSegments, radialSegments);
+            const handsMesh = new THREE.Mesh(hands, this.materials.wood);
+            handsMesh.rotation.x = Math.PI/2;
+            handsMesh.position.set(forearmHeight+forearmRadius,this.springGuyLegsHeight+torsoHeight-shoulderRadius/2-armHeight,torsoTop+4*shoulderRadius/3-i*2*(torsoTop+4*shoulderRadius/3));
+            handsMesh.scale.set(1.5,1,0.5);      
+            top.add(handsMesh);
+
+            const thumb = new THREE.CylinderGeometry(thumbRadius, thumbRadius/2, thumbHeight, radialSegments);
+            const thumbMesh = new THREE.Mesh(thumb, this.materials.wood);
+            thumbMesh.rotation.z = Math.PI/2;
+            thumbMesh.rotation.y = -Math.PI/6 + 2*i*Math.PI/6;
+            thumbMesh.position.set(forearmHeight+forearmRadius,this.springGuyLegsHeight+torsoHeight-shoulderRadius/2-armHeight,torsoTop+4*shoulderRadius/3+0.2-i*2*(torsoTop+4*shoulderRadius/3+0.2));
+            thumbMesh.scale.set(0.3,3,0.6);      
+            top.add(thumbMesh);
+        }
+
         top.position.set(centerBaseX,0,centerBaseZ);
+        top.scale.set(0.75,0.75,0.75);
         this.app.scene.add(top);
     }
 
@@ -191,6 +240,7 @@ class MySpringGuy  {
         head.add(headMesh);
         
         head.position.set(centerBaseX,0,centerBaseZ);
+        head.scale.set(0.75,0.75,0.75);
         this.app.scene.add(head);
     }
     buildSpringGuy(roomHeight, roomWidth) {
