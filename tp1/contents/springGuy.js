@@ -18,11 +18,13 @@ class MySpringGuy  {
 
         const textures = {
             woodTexture : this.loader.load('textures/springGuy.jpg'),
+            faceTexture : this.loader.load('textures/nuno.jpg'),
             shoesTexture :  this.loader.load('textures/springGuyShoes.jpg'),
             jointsTexture :  this.loader.load('textures/springGuyJoints.jpg')
         }
 
         textures.woodTexture.colorSpace = THREE.SRGBColorSpace;
+        textures.faceTexture.colorSpace = THREE.SRGBColorSpace;
         textures.shoesTexture.colorSpace = THREE.SRGBColorSpace;
         textures.jointsTexture.colorSpace = THREE.SRGBColorSpace;
 
@@ -31,6 +33,7 @@ class MySpringGuy  {
             wood: new THREE.MeshPhongMaterial({color: "#ffffff", specular: "#ffffff", map: textures.woodTexture}),
             shoes: new THREE.MeshPhongMaterial({color: "#ffffff", specular: "#545454", map: textures.shoesTexture}),
             joints: new THREE.MeshPhongMaterial({color: "#fff0f0", specular: "#545454", map: textures.jointsTexture}),
+            face: new THREE.MeshPhongMaterial({color: "#fff0f0", specular: "#545454", map: textures.faceTexture}),
             black: new THREE.MeshPhongMaterial({ color: "#000000", specular: "#000000", emissive: "#000000", shininess: 90 }),
             gray: new THREE.MeshPhongMaterial({ color: "#545454", specular: "#000000", emissive: "#000000", shininess: 90 }),
 
@@ -235,8 +238,9 @@ class MySpringGuy  {
 
 
         const headBall = new THREE.SphereGeometry(headRadius,radialSegments,radialSegments);
-        const headMesh = new THREE.Mesh(headBall, this.materials.wood);
+        const headMesh = new THREE.Mesh(headBall, this.materials.face);
         headMesh.position.set(0,this.springGuyTorsoHeight+headRadius/2,0);
+        headMesh.scale.set(0.75,1.2,1);
         head.add(headMesh);
         
         head.position.set(centerBaseX,0,centerBaseZ);
