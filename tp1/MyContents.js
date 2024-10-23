@@ -131,18 +131,18 @@ class MyContents  {
 
         switch (side) {
             case 'left':
-                frameGroup.position.set(- this.roomWidth / 2, verticalDisp, horizontalDisp);
+                frameGroup.position.set(- this.roomWidth / 2 + frameThickness, verticalDisp, horizontalDisp);
                 frameGroup.rotation.y = Math.PI / 2;
                 break;
             case 'right':
-                frameGroup.position.set(this.roomWidth / 2, verticalDisp, horizontalDisp);
+                frameGroup.position.set(this.roomWidth / 2 - frameThickness, verticalDisp, horizontalDisp);
                 frameGroup.rotation.y = Math.PI / 2;
                 break;
             case 'front':
-                frameGroup.position.set(horizontalDisp, verticalDisp, this.roomWidth / 2);
+                frameGroup.position.set(horizontalDisp, verticalDisp, this.roomWidth / 2-frameThickness);
                 break;
             case 'back':
-                frameGroup.position.set(horizontalDisp, verticalDisp, - this.roomWidth / 2);
+                frameGroup.position.set(horizontalDisp, verticalDisp, - this.roomWidth / 2+frameThickness);
                 frameGroup.rotation.y = Math.PI;
                 break;
         }
@@ -470,7 +470,7 @@ class MyContents  {
             beetle.add(curve5Mesh);
     
             beetle.scale.set(0.5,0.5,0.5);
-            beetle.position.set(5,5.5-i*0.002,this.roomWidth/2-0.05);
+            beetle.position.set(5,5.5-i*0.002,this.roomWidth/2-0.15);
             beetle.rotation.y = Math.PI;
             this.app.scene.add(beetle);
 
@@ -545,7 +545,7 @@ class MyContents  {
             const steemMesh = new THREE.Line(steemGeometry, materials.center);
             flower.add(steemMesh);
 
-            flower.position.set(-5-num*0.001, 6.5,this.roomWidth/2-0.05);
+            flower.position.set(-5-num*0.001, 6.5,this.roomWidth/2-0.15);
             flower.scale.set(0.25,0.25,0.25);
             this.app.scene.add(flower);
         }
