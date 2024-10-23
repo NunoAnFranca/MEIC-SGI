@@ -1,10 +1,10 @@
 import * as THREE from 'three';
 import { MyAxis } from './MyAxis.js';
 import { MySpringGuy } from './contents/springGuy.js';
+import { MyRadio } from './contents/radio.js';
 import { NURBSSurface } from 'three/addons/curves/NURBSSurface.js';
 import { ParametricGeometry } from 'three/addons/geometries/ParametricGeometry.js';
 import { MyNurbsBuilder } from './MyNurbsBuilder.js';
-
 /**
  *  This class contains the contents of out application
  */
@@ -188,23 +188,23 @@ class MyContents  {
 					firstWallMesh.rotation.x = Math.PI;
 					break;
 				case 1:
-                    secondWallMesh.scale.set(1,(1/3),1);
+                    secondWallMesh.scale.set(1,(1/4),1);
 					firstWallMesh.position.set(this.roomWidth / 2, this.roomHeight / 2, 0);
-					secondWallMesh.position.set(-this.roomWidth / 2, (this.roomHeight / 2)*(1/3), 0);
+					secondWallMesh.position.set(-this.roomWidth / 2, (this.roomHeight / 2)*(1/4), 0);
 					firstWallMesh.rotation.y = Math.PI / 2;
 					secondWallMesh.rotation.y = -Math.PI / 2;
                     
-                    wall2.scale.set(1,(1/3),1);
+                    wall2.scale.set(1,(1/4),1);
                     wall2.rotation.y = -Math.PI / 2;
-                    wall2.position.set(-this.roomWidth / 2, this.roomHeight-(1/3)*(this.roomHeight / 2), 0);
+                    wall2.position.set(-this.roomWidth / 2, this.roomHeight-(1/4)*(this.roomHeight / 2), 0);
 
-                    side1Mesh.scale.set((1/3),(1/3),1);
+                    side1Mesh.scale.set((1/4),(1/2),1);
                     side1Mesh.rotation.y = -Math.PI / 2;
-                    side1Mesh.position.set(-this.roomWidth / 2, this.roomHeight / 2, this.roomWidth/2-(1/3)*(this.roomWidth / 2));
+                    side1Mesh.position.set(-this.roomWidth / 2, this.roomHeight / 2, this.roomWidth/2-(1/4)*(this.roomWidth / 2));
 
-                    side2Mesh.scale.set((1/3),(1/3),1);
+                    side2Mesh.scale.set((1/4),(1/2),1);
                     side2Mesh.rotation.y = -Math.PI / 2;
-                    side2Mesh.position.set(-this.roomWidth / 2, this.roomHeight / 2, -this.roomWidth/2+(1/3)*(this.roomWidth / 2));
+                    side2Mesh.position.set(-this.roomWidth / 2, this.roomHeight / 2, -this.roomWidth/2+(1/4)*(this.roomWidth / 2));
 
                     this.app.scene.add(wall2, side1Mesh,side2Mesh);
 					break;
@@ -214,23 +214,23 @@ class MyContents  {
 					firstWallMesh.rotation.x = Math.PI;
 					break;
 				case 3:
-                    firstWallMesh.scale.set(1,(1/3),1);
-					firstWallMesh.position.set(-this.roomWidth / 2, this.roomHeight-(1/3)*(this.roomHeight / 2), 0);
+                    firstWallMesh.scale.set(1,(1/4),1);
+					firstWallMesh.position.set(-this.roomWidth / 2, this.roomHeight-(1/4)*(this.roomHeight / 2), 0);
 					secondWallMesh.position.set(this.roomWidth / 2, this.roomHeight / 2, 0);
 					firstWallMesh.rotation.y = Math.PI / 2;
 					secondWallMesh.rotation.y = -Math.PI / 2;
 
-                    wall2.scale.set(1,(1/3),1);
+                    wall2.scale.set(1,(1/4),1);
                     wall2.rotation.y = Math.PI / 2;
-                    wall2.position.set(-this.roomWidth / 2, (1/3)*(this.roomHeight / 2), 0);
+                    wall2.position.set(-this.roomWidth / 2, (1/4)*(this.roomHeight / 2), 0);
 
-                    side1Mesh.scale.set((1/3),(1/3),1);
+                    side1Mesh.scale.set((1/4),(1/2),1);
                     side1Mesh.rotation.y = Math.PI / 2;
-                    side1Mesh.position.set(-this.roomWidth / 2, this.roomHeight / 2, this.roomWidth/2-(1/3)*(this.roomWidth / 2));
+                    side1Mesh.position.set(-this.roomWidth / 2, this.roomHeight / 2, this.roomWidth/2-(1/4)*(this.roomWidth / 2));
 
-                    side2Mesh.scale.set((1/3),(1/3),1);
+                    side2Mesh.scale.set((1/4),(1/2),1);
                     side2Mesh.rotation.y = Math.PI / 2;
-                    side2Mesh.position.set(-this.roomWidth / 2, this.roomHeight / 2, -this.roomWidth/2+(1/3)*(this.roomWidth / 2));
+                    side2Mesh.position.set(-this.roomWidth / 2, this.roomHeight / 2, -this.roomWidth/2+(1/4)*(this.roomWidth / 2));
 
                     this.app.scene.add(wall2, side1Mesh,side2Mesh);
 					break;
@@ -414,108 +414,6 @@ class MyContents  {
 		this.app.scene.add(secondFloorMesh);
     }
 
-    /**
-     * Creates a radio in the corner of the living room
-     */
-    buildRadio(){
-
-        // grill texture for radio
-        const radioTexture = this.loader.load('textures/radio.jpg');
-        radioTexture.colorSpace = THREE.SRGBColorSpace;
-
-        const materials = {
-            box: new THREE.MeshPhongMaterial({ color: "#545454", specular: "#ffffff", emissive: "#000000", shininess: 40 }),
-            black: new THREE.MeshPhongMaterial({ color: "#000000", specular: "#545454", emissive: "#000000", shininess: 100 }),
-            brown: new THREE.MeshPhongMaterial({ color: "#3B1D14", specular: "#000000", emissive: "#000000", shininess: 20 }),
-            antena: new THREE.MeshPhongMaterial({ color:"#0f0f0f", specular: "#000000", emissive: "#000000", shininess: 90 }),
-            grillMaterial: new THREE.MeshPhongMaterial({color: "#e1bf44", specular: "#545454", map: radioTexture})
-        }
-
-        let radio = new THREE.Group();
-
-        const boxWidth = 2;
-        const boxHeight = 1.2;
-        const boxdepth = 0.6;
-        const topSize = 1.5;
-        const radialSegments = 32;
-        const legSize = 0.1;
-        const legHeight = 3;
-        const antenaRadius = 0.02;   
-        const antenaHeight = 2;
-        const baseRadius = 0.1;
-        const baseHeight = 0.04;   
-
-        // radio box construction
-        const radioBox = new THREE.BoxGeometry(boxWidth, boxHeight,boxdepth);
-        const boxMesh = new THREE.Mesh(radioBox, materials.box);
-
-        // antenas for radio
-        const antena = new THREE.CylinderGeometry(antenaRadius, antenaRadius/4, antenaHeight, radialSegments);
-        const antena1Mesh = new THREE.Mesh(antena, materials.antena);
-        antena1Mesh.position.set(-boxWidth*3/8 + (Math.sin(Math.PI/3)), legHeight/2-(legHeight/2-(Math.cos(Math.PI/3)*legHeight/2))/2,0);
-        antena1Mesh.rotation.x = Math.PI;
-        antena1Mesh.rotation.z = Math.PI/3;
-        radio.add(antena1Mesh);
-        
-        const antena2Mesh = new THREE.Mesh(antena, materials.antena);
-        antena2Mesh.position.set(-boxWidth*3/8 - (Math.sin(Math.PI/6)), legHeight/2,0);
-        antena2Mesh.rotation.x = Math.PI;
-        antena2Mesh.rotation.z = 11*Math.PI/6;
-        radio.add(antena2Mesh);
-
-        const antenasBase = new THREE.CylinderGeometry(baseRadius, baseRadius, baseHeight, radialSegments);
-        const antenasBaseMesh = new THREE.Mesh(antenasBase, materials.antena);
-        antenasBaseMesh.position.set(-boxWidth*3/8, boxHeight/2 + baseHeight/2,0);
-        radio.add(antenasBaseMesh);
-
-        // Plane for radio grill
-        const grillDepth = 0.01;
-        const planeGrill = new THREE.BoxGeometry(4*boxWidth/5, 3*boxHeight/5, grillDepth);
-        const planeMesh = new THREE.Mesh(planeGrill, materials.grillMaterial);
-        planeMesh.position.set(0,boxHeight/6,-boxdepth/2-grillDepth/2)
-        radio.add(planeMesh);
-
-
-        // buttons
-        for(let i = 0; i < 2; i++){
-            const buttonRadius = 0.1;
-            const radialSegments = 16;
-
-            const button = new THREE.CylinderGeometry(buttonRadius, buttonRadius, buttonRadius/2, radialSegments);
-            const buttonMesh = new THREE.Mesh(button, materials.black);
-            buttonMesh.position.set(-1*boxWidth/4+i*boxWidth/2,-1*boxHeight/3,-boxdepth/2 - buttonRadius/4);
-            buttonMesh.rotation.x = -Math.PI/2
-            radio.add(buttonMesh);
-        }
-
-        // stool construction 
-        let stool = new THREE.Group();
-
-        // legs construction for stool
-        for(let i = 0; i < 4; i++){
-            const leg = new THREE.CylinderGeometry(legSize, legSize, legHeight,radialSegments);
-            const legMesh = new THREE.Mesh(leg, materials.brown);
-            legMesh.position.set(0,legHeight/2-(legHeight/2-Math.cos(Math.PI/4)*legHeight/2),0);
-            legMesh.rotation.z = Math.PI/4;
-            legMesh.rotation.y = i*Math.PI/2;
-            stool.add(legMesh);
-        }
-
-        // top construction for stool
-        const top = new THREE.CylinderGeometry(topSize, topSize, topSize/7, radialSegments);
-        const topMesh = new THREE.Mesh(top, materials.brown);
-        topMesh.position.set(0,legHeight/2-(legHeight/2-Math.cos(Math.PI/4)*legHeight/2) + legHeight*Math.sin(Math.PI/4)/2,0);
-        stool.add(topMesh);
-
-        stool.position.set(2*this.roomWidth/5,0,2*this.roomWidth/5);
-        //stool.position.set(2*this.roomWidth/5,legHeight*Math.sin(Math.PI/4)/2,2*this.roomWidth/5);
-        this.app.scene.add(stool);
-
-        radio.add(boxMesh);
-        radio.position.set(2*this.roomWidth/5,boxHeight/2+legHeight/2-(legHeight/2-Math.cos(Math.PI/4)*legHeight/2) + legHeight*Math.sin(Math.PI/4)/2+(topSize/7)/2,2*this.roomWidth/5);
-        this.app.scene.add(radio);
-    }
-
     buildBeetle(){
         const materialBeetle = new THREE.LineBasicMaterial({color: "#000000"});
 
@@ -654,6 +552,32 @@ class MyContents  {
         
     }
 
+    buildWindow(height, width){
+        let frameWidth = 0.2;
+        
+        const frameTexture = this.loader.load('textures/frame.jpg');
+        frameTexture.colorSpace = THREE.SRGBColorSpace;
+        const frameMaterial = new THREE.MeshPhongMaterial({color: "#423721", map: frameTexture, specular: "#000000", shininess: 0});
+        let frame = new THREE.Group();
+        
+        for(let i = -1; i < 2;i++){
+            const frameCenter = new THREE.BoxGeometry(frameWidth,height/2,frameWidth);
+            const centerMesh = new THREE.Mesh(frameCenter, frameMaterial);
+            centerMesh.position.set(0,0,i*width/4);
+            frame.add(centerMesh);
+        }
+
+        for(let i = -1; i < 2;i++){
+            const frameCenter = new THREE.BoxGeometry(frameWidth,frameWidth,width/2);
+            const centerMesh = new THREE.Mesh(frameCenter, frameMaterial);
+            centerMesh.position.set(0,i*height/4,0);
+            frame.add(centerMesh);
+        }
+
+        frame.position.set(-width/2,height/2,0);
+        this.app.scene.add(frame);
+    }
+
     buildSpring() {
 
         let materials = [
@@ -721,7 +645,7 @@ class MyContents  {
     }
 
     buildLandscapeSphere(){
-        const landscapeTexture = this.loader.load('textures/landscape.jpg');
+        const landscapeTexture = this.loader.load('textures/landscapefinal.jpg');
         landscapeTexture.colorSpace = THREE.SRGBColorSpace;
         
         const landscapeMaterial = new THREE.MeshPhongMaterial({color: "#FFFFFF", map: landscapeTexture, opacity:1, side: THREE.BackSide}); 
@@ -729,19 +653,6 @@ class MyContents  {
         const sphere = new THREE.Mesh(sphereMaterial, landscapeMaterial);
 
         this.app.scene.add(sphere);
-    }
-
-    buildLandscapePlane(){
-        const landscapeTexture = this.loader.load('textures/landscape.jpg');
-        landscapeTexture.colorSpace = THREE.SRGBColorSpace;
-        
-        const landscapeMaterial = new THREE.MeshPhongMaterial({color: "#FFFFFF", map: landscapeTexture, opacity:1, side: THREE.BackSide}); 
-        const planeMaterial = new THREE.PlaneGeometry(150,150);
-        const plane = new THREE.Mesh(planeMaterial, landscapeMaterial);
-        plane.rotation.y = -Math.PI/2;
-        plane.position.set(-50,0,0);
-
-        this.app.scene.add(plane);
     }
 
     /**
@@ -793,25 +704,24 @@ class MyContents  {
         this.app.scene.add(ambientLight);
 
         const springGuy = new MySpringGuy(this.app);
+        const radio = new MyRadio(this.app);
 
         this.buildFloor();
         this.buildWalls();
 		this.buildTable();
         this.buildCake();
-        this.buildRadio();
         this.buildBeetle();
         this.buildFlower();
         this.buildCarpet();
         this.buildSpring();
-        //this.buildLandscapePlane();
+        this.buildWindow(this.roomHeight, this.roomWidth);
         this.buildLandscapeSphere();
         this.buildFrame(0.1, 2, 3, 0.1, 3.5, 6, false, 'textures/luis.jpg',"#ffffff", 'back');
         this.buildFrame(0.1, 2, 3, 0.1, -3.5, 6, false, 'textures/nuno.jpg',"#ffffff", 'back');
-        //this.buildFrame(0.1, 6, 3, 0.1, 5, 6, true, 'textures/landscape1.jpg',"#423721", 'left');
-        //this.buildFrame(0.1, 6, 3, 0.1, -5, 6, true, 'textures/landscape2.jpg', "#423721", 'left');
         this.buildFrame(0.1, 3, 2, 0.1, 5, 6, false, 'textures/cork.jpg', "#ffffff", 'front');
         this.buildFrame(0.1, 3, 3.5, 0.1, -5, 6, false, 'textures/cork.jpg', "#ffffff", 'front');
         springGuy.buildSpringGuy(this.roomHeight, this.roomWidth);
+        radio.buildRadio(this.roomHeight, this.roomWidth);
         this.buildLamp();
     }
 
