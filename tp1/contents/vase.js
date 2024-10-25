@@ -74,7 +74,7 @@ class MyVase  {
 
 
         vase.position.set(positionX, 5,positionZ);
-        vase.scale(0.25,0.25,0.25);
+        vase.scale.set(0.25,0.25,0.25);
         this.app.scene.add(vase);
     }
 
