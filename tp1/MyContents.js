@@ -1,10 +1,12 @@
 import * as THREE from 'three';
 import { MyAxis } from './MyAxis.js';
-import { MySpringGuy } from './contents/springGuy.js';
-import { MyRadio } from './contents/radio.js';
 import { NURBSSurface } from 'three/addons/curves/NURBSSurface.js';
 import { ParametricGeometry } from 'three/addons/geometries/ParametricGeometry.js';
 import { MyNurbsBuilder } from './MyNurbsBuilder.js';
+
+import { MySpringGuy } from './contents/springGuy.js';
+import { MyRadio } from './contents/radio.js';
+import { MyVase } from './contents/vase.js';
 /**
  *  This class contains the contents of out application
  */
@@ -25,8 +27,8 @@ class MyContents  {
         this.material = new THREE.MeshLambertMaterial({ map: map, side: THREE.DoubleSide});
         this.builder = new MyNurbsBuilder();
         this.meshes = [];
-        this.samplesU = 8;
-        this.samplesV = 8;
+        this.samplesU = 32;
+        this.samplesV = 32;
 
         this.createNurbsSurfaces();
         
@@ -705,6 +707,7 @@ class MyContents  {
 
         const springGuy = new MySpringGuy(this.app);
         const radio = new MyRadio(this.app);
+        const vase = new MyVase(this.app);
 
         this.buildFloor();
         this.buildWalls();
@@ -722,6 +725,7 @@ class MyContents  {
         this.buildFrame(0.1, 3, 3.5, 0.1, -5, 6, false, 'textures/cork.jpg', "#ffffff", 'front');
         springGuy.buildSpringGuy(this.roomHeight, this.roomWidth);
         radio.buildRadio(this.roomHeight, this.roomWidth);
+        vase.buildVase(2,2);
         this.buildLamp();
     }
 

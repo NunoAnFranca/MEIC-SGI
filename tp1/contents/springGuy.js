@@ -60,7 +60,7 @@ class MySpringGuy  {
             const topCurvePath = new THREE.CurvePath();
             topCurvePath.add(new THREE.CatmullRomCurve3(topCirclePoints));
             
-            const topTubeGeometry = new THREE.TubeGeometry(topCurvePath, 25, 0.075, 8, false);
+            const topTubeGeometry = new THREE.TubeGeometry(topCurvePath, 25, 0.2, 8, false);
             const topTubeMesh = new THREE.Mesh(topTubeGeometry, this.materials.black);
             spring.add(topTubeMesh);
     
@@ -69,7 +69,7 @@ class MySpringGuy  {
             const downCurvePath = new THREE.CurvePath();
             downCurvePath.add(new THREE.CatmullRomCurve3(downCirclePoints));
     
-            const downTubeGeometry = new THREE.TubeGeometry(downCurvePath, 25, 0.075, 8, false);
+            const downTubeGeometry = new THREE.TubeGeometry(downCurvePath, 25, 0.2, 8, false);
             const downTubeMesh = new THREE.Mesh(downTubeGeometry, this.materials.black);
             spring.add(downTubeMesh);
         }
