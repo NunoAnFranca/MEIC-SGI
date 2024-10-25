@@ -725,9 +725,9 @@ class MyContents  {
         this.buildFrame(0.1, 3, 3.5, 0.1, -5, 6, false, 'textures/cork.jpg', "#ffffff", 'front');
         springGuy.buildSpringGuy(this.roomHeight, this.roomWidth);
         radio.buildRadio(this.roomHeight, this.roomWidth);
-        vase.buildVase(-4,this.roomWidth/2-1);
-        vase.buildVase(-5.5,this.roomWidth/2-2);
-        vase.buildVase(-7,this.roomWidth/2-1);
+        vase.buildVase(-4,this.roomWidth/2-1,3);
+        vase.buildVase(-5.5,this.roomWidth/2-2,2);
+        vase.buildVase(-7,this.roomWidth/2-1,4);
         this.buildLamp();
     }
 

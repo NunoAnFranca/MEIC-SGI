@@ -13,33 +13,40 @@ class MyVase  {
         this.loader = new THREE.TextureLoader();
         this.builder = new MyNurbsBuilder();
         this.meshes = [];
-        this.samplesU = 32;
-        this.samplesV = 32;
+        this.samplesU = 64;
+        this.samplesV = 64;
 
         const textures = {
             vase1 : this.loader.load('textures/vase1.jpg'),
-            clay : this.loader.load('textures/clay.jpg')
+            vase2 : this.loader.load('textures/vase2.jpg'),
+            vase3 : this.loader.load('textures/vase3.jpg'),
+            clay : this.loader.load('textures/clay.jpg'),
+            dirt : this.loader.load('textures/dirt.jpg'),
         }
 
         textures.vase1.colorSpace = THREE.SRGBColorSpace;
+        textures.vase2.colorSpace = THREE.SRGBColorSpace;
+        textures.vase3.colorSpace = THREE.SRGBColorSpace;
         textures.clay.colorSpace = THREE.SRGBColorSpace;
+        textures.dirt.colorSpace = THREE.SRGBColorSpace;
 
-
-        this.materials = {
-            vase1: new THREE.MeshPhongMaterial({color: "#ffffff", specular: "#ffffff", map: textures.vase1}),
-            clay:  new THREE.MeshPhongMaterial({color: "#ffffff", specular: "#111111", map: textures.clay}),
-        }
+        this.materials = [
+            new THREE.MeshPhongMaterial({color: "#ffffff", specular: "#111111", map: textures.clay}),
+            new THREE.MeshPhongMaterial({color: "#ffffff", specular: "#111111", map: textures.dirt, side: THREE.DoubleSide}), 
+            new THREE.MeshPhongMaterial({color: "#ffffff", specular: "#ffffff", map: textures.vase1, side: THREE.DoubleSide}),
+            new THREE.MeshPhongMaterial({color: "#ffffff", specular: "#ffffff", map: textures.vase2, side: THREE.DoubleSide}),
+            new THREE.MeshPhongMaterial({color: "#ffffff", specular: "#ffffff", map: textures.vase3, side: THREE.DoubleSide}),
+        ];
     }
 
     /**
      * Function that takes position x and y in order to create a vase
      */
-    buildVase(positionX, positionZ){
-        this.materials.vase1.side = THREE.DoubleSide;
+    buildVase(positionX, positionZ,tex){
         
-        let radialSegments = 32;
+        let radialSegments = 64;
         let plateHeight = 0.2;
-        let platewidth = 2;
+        let platewidth = 1.75;
         let vase = new THREE.Group();
         let controlPoints;
         let surfaceData;
@@ -84,21 +91,26 @@ class MyVase  {
             ]
         ];
 
-        surfaceData = this.builder.build(controlPoints, orderU, orderV, this.samplesU, this.samplesV, this.materials.vase1);
-        mesh = new THREE.Mesh(surfaceData, this.materials.vase1);
+        surfaceData = this.builder.build(controlPoints, orderU, orderV, this.samplesU, this.samplesV, this.materials[tex]);
+        mesh = new THREE.Mesh(surfaceData, this.materials[tex]);
         mesh.position.set(0,plateHeight/2,0);
         vase.add(mesh);
         this.meshes.push(mesh);
 
-        surfaceData = this.builder.build(controlPoints, orderU, orderV, this.samplesU, this.samplesV, this.materials.vase1);
-        mesh = new THREE.Mesh(surfaceData, this.materials.vase1);
+        surfaceData = this.builder.build(controlPoints, orderU, orderV, this.samplesU, this.samplesV, this.materials[tex]);
+        mesh = new THREE.Mesh(surfaceData, this.materials[tex]);
         mesh.rotation.y = Math.PI;
         mesh.position.set(0,plateHeight/2,0);
         vase.add(mesh);
         this.meshes.push(mesh);
 
+        const dirt = new THREE.CylinderGeometry(1.47, 1.47, 0.01, radialSegments, radialSegments);
+        const dirtMesh = new THREE.Mesh(dirt, this.materials[1]);
+        dirtMesh.position.set(0,6,0);
+        vase.add(dirtMesh);
+
         const plate = new THREE.CylinderGeometry(platewidth, platewidth, plateHeight, radialSegments, radialSegments);
-        const plateMesh = new THREE.Mesh(plate, this.materials.clay);
+        const plateMesh = new THREE.Mesh(plate, this.materials[0]);
         plateMesh.position.set(0,plateHeight/2,0);
         vase.add(plateMesh);
 
