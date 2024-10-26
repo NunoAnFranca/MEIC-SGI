@@ -7,6 +7,7 @@ import { MyNurbsBuilder } from './MyNurbsBuilder.js';
 import { MySpringGuy } from './contents/springGuy.js';
 import { MyRadio } from './contents/radio.js';
 import { MyVase } from './contents/vase.js';
+import { MyFlower } from './contents/flower.js';
 /**
  *  This class contains the contents of out application
  */
@@ -404,7 +405,7 @@ class MyContents  {
         const floorTexture = this.loader.load('textures/floor.jpg');
         floorTexture.colorSpace = THREE.SRGBColorSpace;
 
-        const floorMaterial = new THREE.MeshPhongMaterial({color: "#ffffff", map: floorTexture});
+        const floorMaterial = new THREE.MeshPhongMaterial({color: "#BCA89F", map: floorTexture});
 
         let floor = new THREE.PlaneGeometry(25, 25);
         let firstFloorMesh = new THREE.Mesh(floor, floorMaterial);
@@ -708,6 +709,7 @@ class MyContents  {
         const springGuy = new MySpringGuy(this.app);
         const radio = new MyRadio(this.app);
         const vase = new MyVase(this.app);
+        const flower = new MyFlower(this.app);
 
         this.buildFloor();
         this.buildWalls();
@@ -728,6 +730,9 @@ class MyContents  {
         vase.buildVase(-4,this.roomWidth/2-1,3);
         vase.buildVase(-5.5,this.roomWidth/2-2,2);
         vase.buildVase(-7,this.roomWidth/2-1,4);
+        flower.buildFlower(-4,this.roomWidth/2-1,2);
+        flower.buildFlower(-5.5,this.roomWidth/2-2,3);
+        flower.buildFlower(-7,this.roomWidth/2-1,4);
         this.buildLamp();
     }
 
