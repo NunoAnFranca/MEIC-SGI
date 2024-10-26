@@ -374,8 +374,8 @@ class MyContents  {
         let legHeight = 2.5;
         let radialSegments = 32;
 
-        let tableWidth = 6;
-        let tableLength = 3;
+        let tableWidth = 7;
+        let tableLength = 4;
         let tableThickness = 0.3;
 
         this.tableMesh = new THREE.Group();
@@ -626,7 +626,7 @@ class MyContents  {
             spring.add(downTubeMesh);
         }
     
-        spring.position.set(-2, 2.5 + 0.3 / 2, 1);
+        spring.position.set(-2, 2.5 + 0.3 / 2, 1.5);
         spring.rotation.x = -Math.PI / 2;
         spring.scale.set(0.1, 0.1, 0.02);
         this.app.scene.add(spring);
@@ -741,40 +741,76 @@ class MyContents  {
         }
 
         // declare local variables
-        let controlPoints;
-        let surfaceData;
-        let mesh;
-        let orderU = 2;
-        let orderV = 1;
-        let offset = 0.02; // offset for each surface
+        let firstControlPoints, secondControlPoints;
+        let firstSurfaceData, secondSurfaceData;
+        let firstMesh, secondMesh;
+        let offset = 0.2; // offset for each surface
 
-        // build multiple NURBS surfaces
-        for (let n = 0; n < 5; n++) { // create 5 surfaces
-            controlPoints = [
-                // U = 0
-                [ // V = 0..1
-                    [-4.0, -2.0, 0.0, 1],
-                    [-4.0, 2.0, 0.0, 1]
+        for (let n = 0; n < 5; n++) {
+            firstControlPoints = [
+                [
+                    [4.0, -2.0, 0.0, 1],
+                    [4.0, 2.0, 0.0, 1]
                 ],
-                // U = 1
-                [ // V = 0..1
-                    [2.0, -2.0, 0.0, 1],
-                    [2.0, 2.0, 0.0, 1]
+                [
+                    [0.0, -2.0, 0.0, 1],
+                    [0.0, 2.0, 0.0, 1]
                 ],
-                // U = 2
-                [ // V = 0..1
-                    [-4.0, -2.0, 1.0, 1],
-                    [-4.0, 2.0, 1.0, 1]
+                [
+                    [-2.0 + n * offset * 2, -2.0, -2.0 + n * offset, 1],
+                    [-2.0 + n * offset * 2, 2.0, -2.0 + n * offset, 1]
+                ],
+                [
+                    [-2.0, -2.0, 2.0 - n * offset, 1],
+                    [-2.0, 2.0, 2.0 - n * offset, 1]
+                ],
+                [
+                    [2.0 - n * offset, -2.0, 2.0 - n * offset, 1],
+                    [2.0 - n * offset, 2.0, 2.0 - n * offset, 1]
+                ],
+                [
+                    [2.0, -2.0, 0.0 + n * offset, 1],
+                    [2.0, 2.0, 0.0 + n * offset, 1]
+                ],
+                [
+                    [0.0, -2.0, 0.0, 1],
+                    [0.0, 2.0, 0.0, 1]
                 ],
             ];
 
-            surfaceData = this.builder.build(controlPoints, orderU, orderV, this.samplesU, this.samplesV, this.material);
-            mesh = new THREE.Mesh(surfaceData, this.material);
-            mesh.rotation.set(Math.PI / 2, -Math.PI / 12, 0);
-            mesh.scale.set(0.5, 0.5, 0.5);
-            mesh.position.set(- 0.7, 2.7 + n * offset, - 0.2);
-            this.app.scene.add(mesh);
-            this.meshes.push(mesh);
+            let firstOrderU = firstControlPoints.length - 1;
+            let firstOrderV = firstControlPoints[0].length - 1;
+
+            firstSurfaceData = this.builder.build(firstControlPoints, firstOrderU, firstOrderV, this.samplesU, this.samplesV, this.material);
+            firstMesh = new THREE.Mesh(firstSurfaceData, this.material);
+            
+            secondControlPoints = [
+                [
+                    [4.0, -2.0, 0.0 + n * offset * 0.2, 1],
+                    [4.0, 2.0, 0.0 + n * offset * 0.2, 1]
+                ],
+                [
+                    [0.0, -2.0, 0.0, 1],
+                    [0.0, 2.0, 0.0, 1]
+                ]
+            ]
+
+            let secondOrderU = secondControlPoints.length - 1;
+            let secondOrderV = secondControlPoints[0].length - 1;
+
+            secondSurfaceData = this.builder.build(secondControlPoints, secondOrderU, secondOrderV, this.samplesU, this.samplesV, this.material);
+            secondMesh = new THREE.Mesh(secondSurfaceData, this.material);
+
+            firstMesh.rotation.set(- Math.PI / 2, Math.PI / 30, 0);
+            secondMesh.rotation.set(- Math.PI / 2, Math.PI / 30, 0);
+            firstMesh.scale.set(0.5, 0.5, 0.5);
+            secondMesh.scale.set(0.5, 0.5, 0.5);
+            firstMesh.position.set(-3, 2.85, -0.2);
+            secondMesh.position.set(-3, 2.85, -0.2);
+            this.app.scene.add(firstMesh);
+            this.app.scene.add(secondMesh);
+            this.meshes.push(firstMesh);
+            this.meshes.push(secondMesh);
         }
     }
     
