@@ -54,7 +54,6 @@ class MyGuiInterface  {
         LightsFolder.open();
 
         const SubFolder = LightsFolder.addFolder('Spotlight Cake');
-        //SubFolder.add(this.contents.spotLight, 'color').name("Color");
         SubFolder.add(this.contents.spotLight, 'intensity', 0, 40).name("Intensity (cd)");
         SubFolder.add(this.contents.spotLight, 'distance', 0, 20).name("Distance");
         SubFolder.add(this.contents.spotLight, 'angle', 0, Math.PI/2).name("Spot angle");
@@ -62,19 +61,29 @@ class MyGuiInterface  {
         SubFolder.add(this.contents.spotLight, 'decay', 0, 2).name("Decay");
         SubFolder.open();
 
+        // Interface for Students Spotlights
         const spotLightFolder = this.datgui.addFolder('Spotlights Students');
         spotLightFolder.add(this.contents.spotStudent.spotLights[0], 'visible').name("Spotlight Stu0");
-        spotLightFolder.add(this.contents.spotStudent.spotLights[0], 'distance', 0.1, 100).name("Distance Stu0");
+        spotLightFolder.add(this.contents.spotStudent.spotLights[0], 'distance', 0.1, 100).name("Distance Stu0").onChange(() => {
+            this.contents.spotStudent.updateSpotLightHelper();
+        });
         spotLightFolder.add(this.contents.spotStudent.spotLights[0], 'intensity', 1, 1000).name("Intensity Stu0");
-        spotLightFolder.add(this.contents.spotStudent.spotLights[0], 'angle', 0, Math.PI/2).name("Angle Stu0");
+        spotLightFolder.add(this.contents.spotStudent.spotLights[0], 'angle', 0, Math.PI/2).name("Angle Stu0").onChange(() => {
+            this.contents.spotStudent.updateSpotLightHelper();
+        });
         spotLightFolder.add(this.contents.spotStudent.spotLights[0], 'penumbra', 0, 1).name("Penumbra Stu0");
         spotLightFolder.add(this.contents.spotStudent.spotLights[0], 'decay', 0, 5).name("Decay Stu0");
         spotLightFolder.add(this.contents.spotStudent.spotLights[1], 'visible').name("Spotlight Stu1");
-        spotLightFolder.add(this.contents.spotStudent.spotLights[1], 'distance', 1, 100).name("Distance Stu1");
+        spotLightFolder.add(this.contents.spotStudent.spotLights[1], 'distance', 1, 100).name("Distance Stu1").onChange(() => {
+            this.contents.spotStudent.updateSpotLightHelper();
+        });
         spotLightFolder.add(this.contents.spotStudent.spotLights[1], 'intensity', 1, 1000).name("Intensity Stu1");
-        spotLightFolder.add(this.contents.spotStudent.spotLights[1], 'angle', 0, Math.PI/2).name("Angle Stu1");
+        spotLightFolder.add(this.contents.spotStudent.spotLights[1], 'angle', 0, Math.PI/2).name("Angle Stu1").onChange(() => {
+            this.contents.spotStudent.updateSpotLightHelper();
+        });
         spotLightFolder.add(this.contents.spotStudent.spotLights[1], 'penumbra', 0, 1).name("Penumbra Stu1");
         spotLightFolder.add(this.contents.spotStudent.spotLights[1], 'decay', 0, 5).name("Decay Stu1");
+        spotLightFolder.add({ 'Show Helpers': false }, 'Show Helpers').onChange((value) => {this.contents.spotStudent.toggleSpotLightHelpers(value);});
         spotLightFolder.close();
     }
 }

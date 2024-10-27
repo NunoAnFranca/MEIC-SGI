@@ -11,6 +11,7 @@ class MySpotStudent  {
         this.app = app;
         this.spotLight = null;
         this.spotLights = [];
+        this.spotLightHelpers = [];
 
         this.materials = [
             new THREE.MeshPhongMaterial({color: "#000000", specular: "#AAAAAA"}), // black
@@ -53,7 +54,7 @@ class MySpotStudent  {
         this.app.scene.add(spot);
 
         this.spotLight = new THREE.SpotLight(0xFFFFFF, 50);
-        this.spotLight.position.set(x,y-tubeHeight,z-tubeHeight/2);
+        this.spotLight.position.set(x,y-3*tubeHeight/4,z-tubeHeight/2);
         this.spotLight.decay = 0;
         this.spotLight.penumbra = 1;
         this.spotLight.angle = 0.20; 
@@ -63,6 +64,26 @@ class MySpotStudent  {
         this.app.scene.add(this.spotLight);
         this.app.scene.add(this.spotLight.target);
         this.spotLights.push(this.spotLight);
+
+        //Spotlight Helpers for Spotlights
+        const spotLightHelper = new THREE.SpotLightHelper(this.spotLight, 0.2);
+        spotLightHelper.visible = false;
+        this.app.scene.add(spotLightHelper);
+        this.spotLightHelpers.push(spotLightHelper); 
+    }
+
+    toggleSpotLightHelpers(visible) {
+        this.spotLightHelpers.forEach(helper => {
+            helper.visible = visible;
+        });
+    }
+
+    updateSpotLightHelper() {
+        this.spotLightHelpers.forEach(helper => {
+            if (helper.visible) {
+                helper.update();
+            }
+        });
     }
 }
 export { MySpotStudent };
