@@ -650,6 +650,11 @@ class MyContents  {
         // spotLightHelper.target = this.targetSpot; 
         // this.app.scene.add( spotLightHelper );
 
+        // add another point light on the lamp
+        const lampLight = new THREE.PointLight(0xffff00, 100, 0);
+        lampLight.position.set(9, 3.8, -9);
+        this.app.scene.add(lampLight);
+
         const springGuy = new MySpringGuy(this.app);
         const radio = new MyRadio(this.app);
         const vase = new MyVase(this.app);
