@@ -41,6 +41,14 @@ class MyGuiInterface  {
         floorFolder.add(this.contents, 'floorShininess', 0, 1000).name("shininess").onChange( (value) => { this.contents.updateFloorShininess(value) } );
         floorFolder.open();
 
+        const tableFolder = this.datgui.addFolder('Table');
+        tableFolder.add(this.contents, 'tableEnabled').onChange((value) => { this.contents.updateTable(value); }).name('visible');
+        tableFolder.open();
+
+        const axisFolder = this.datgui.addFolder('Axis');
+        axisFolder.add(this.contents, 'axisVisible').onChange((value) => { this.contents.toggleAxis(value); }).name('visible');
+        axisFolder.open();
+
         // adds a folder to the gui interface for the camera
         const cameraFolder = this.datgui.addFolder('Camera');
         cameraFolder.add(this.app, 'activeCameraName', [ 'Perspective1', 'Perspective2', 'Left', 'Right', 'Top', 'Front', 'Back' ] ).name("active camera");

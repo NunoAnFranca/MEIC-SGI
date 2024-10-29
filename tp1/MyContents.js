@@ -4,11 +4,12 @@ import { NURBSSurface } from 'three/addons/curves/NURBSSurface.js';
 import { ParametricGeometry } from 'three/addons/geometries/ParametricGeometry.js';
 import { MyNurbsBuilder } from './MyNurbsBuilder.js';
 
-import { MySpringGuy } from './contents/springGuy.js';
-import { MyRadio } from './contents/radio.js';
-import { MyVase } from './contents/vase.js';
-import { MyFlower } from './contents/flower.js';
-import { MySpotStudent } from './contents/spotStudent.js';
+import { MySpringGuy } from './contents/MySpringGuy.js';
+import { MyRadio } from './contents/MyRadio.js';
+import { MyVase } from './contents/MyVase.js';
+import { MyFlower } from './contents/MyFlower.js';
+import { MySpotStudent } from './contents/MySpotStudent.js';
+import { MyCake } from './contents/MyCake.js';
 /**
  *  This class contains the contents of out application
  */
@@ -21,8 +22,9 @@ class MyContents  {
     constructor(app) {
         this.app = app;
         this.axis = null;
+        this.axisVisible = false;
 
-        this.spotStudent=null;
+        this.spotStudent = null;
 
         const map = new THREE.TextureLoader().load('textures/newspaper.png');
         map.wrapS = map.wrapT = THREE.RepeatWrapping;
@@ -52,9 +54,17 @@ class MyContents  {
         this.floorShininess = 30;
         this.floorMaterial = new THREE.MeshPhongMaterial({ color: this.diffuseFloorColor, specular: this.specularFloorColor, emissive: "#000000", shininess: this.floorShininess });
 
+        // other objects related attributes
+        this.legHeight = 2.5;
+        this.tableThickness = 0.3;
+
+        // shadow related attributes
+        this.mapSize = 4096;
+
         // room related attributes
         this.roomWidth = 25;
         this.roomHeight = 12;
+        this.roomThickness = 0.1;
 
         // lights related attributes
         this.spotLightEnabled = true;
@@ -72,6 +82,8 @@ class MyContents  {
         const lampStickMesh = new THREE.Mesh(lampStick, lampStickMaterial);
         lampStickMesh.position.set(x, 2.5, z);
         lampStickMesh.rotation.set(angleX, 0, angleZ);
+        lampStickMesh.receiveShadow = true;
+        lampStickMesh.castShadow = true;
         
         return lampStickMesh;
     }
@@ -83,14 +95,15 @@ class MyContents  {
         const topRing = new THREE.RingGeometry(0.7, 0.8, 32);
         const bottomRing = new THREE.RingGeometry(2, 2.1, 32);
         const lampSupport = new THREE.CylinderGeometry(0.2, 0.2, 3, 32, 32);
-        const lampMaterial = new THREE.MeshPhongMaterial({color: "#993240"});
+        const outerLampMaterial = new THREE.MeshPhongMaterial({color: "#993240", side: THREE.FrontSide});
+        const innerLampMaterial = new THREE.MeshPhongMaterial({color: "#993240", side: THREE.BackSide});
         const lampSupportMaterial = new THREE.MeshPhongMaterial({color: "#8f6b1d"});
-        lampMaterial.side = THREE.DoubleSide; 
-        const outerPartMesh = new THREE.Mesh(outerPart, lampMaterial);
-        const innerPartMesh = new THREE.Mesh(innerPart, lampMaterial);
-        const topRingMesh = new THREE.Mesh(topRing, lampMaterial);
-        const bottomRingMesh = new THREE.Mesh(bottomRing, lampMaterial);
+        const outerPartMesh = new THREE.Mesh(outerPart, outerLampMaterial);
+        const innerPartMesh = new THREE.Mesh(innerPart, innerLampMaterial);
+        const topRingMesh = new THREE.Mesh(topRing, innerLampMaterial);
+        const bottomRingMesh = new THREE.Mesh(bottomRing, outerLampMaterial);
         const lampSupportMesh = new THREE.Mesh(lampSupport, lampSupportMaterial);
+
         outerPartMesh.position.set(0, 3, 0);
         innerPartMesh.position.set(0, 3, 0);
         topRingMesh.position.set(0, 4, 0);
@@ -98,6 +111,17 @@ class MyContents  {
         bottomRingMesh.position.set(0, 2, 0);
         bottomRingMesh.rotation.set(Math.PI / 2, 0, 0);
         lampSupportMesh.position.set(0, 1, 0);
+
+        outerPartMesh.receiveShadow = true;
+        outerPartMesh.castShadow = true;
+        innerPartMesh.receiveShadow = true;
+        innerPartMesh.castShadow = true;
+        topRingMesh.receiveShadow = true;
+        topRingMesh.castShadow = true;
+        bottomRingMesh.receiveShadow = true;
+        bottomRingMesh.castShadow = true;
+        lampSupportMesh.receiveShadow = true;
+        lampSupportMesh.castShadow = true;
 
         lamp.add(outerPartMesh);
         lamp.add(innerPartMesh);
@@ -180,189 +204,80 @@ class MyContents  {
         const wallMaterial = new THREE.MeshPhongMaterial({color: "#80573e", map: wallTexture});
 	
 		for (let i = 0; i < 4; i += 1) {
-			let wall = new THREE.PlaneGeometry(this.roomWidth, this.roomHeight);
+			let wall = new THREE.BoxGeometry(this.roomWidth, this.roomHeight, this.roomThickness);
 			let firstWallMesh = new THREE.Mesh(wall, wallMaterial);
-			let secondWallMesh = new THREE.Mesh(wall, wallMaterial);
-            let wall2 = new THREE.Mesh(wall, wallMaterial);
-            let side1Mesh = new THREE.Mesh(wall, wallMaterial);
-            let side2Mesh = new THREE.Mesh(wall, wallMaterial);
+            let secondWallMesh = new THREE.Mesh(wall, wallMaterial);
+            let firstSideMesh = new THREE.Mesh(wall, wallMaterial);
+            let secondSideMesh = new THREE.Mesh(wall, wallMaterial);
 
 			switch (i) {
 				case 0:
 					firstWallMesh.position.set(0, this.roomHeight / 2, this.roomWidth / 2);
-					secondWallMesh.position.set(0, this.roomHeight / 2, -this.roomWidth / 2);
 					firstWallMesh.rotation.x = Math.PI;
 					break;
 				case 1:
-                    secondWallMesh.scale.set(1,(1/4),1);
 					firstWallMesh.position.set(this.roomWidth / 2, this.roomHeight / 2, 0);
-					secondWallMesh.position.set(-this.roomWidth / 2, (this.roomHeight / 2)*(1/4), 0);
 					firstWallMesh.rotation.y = Math.PI / 2;
-					secondWallMesh.rotation.y = -Math.PI / 2;
                     
-                    wall2.scale.set(1,(1/4),1);
-                    wall2.rotation.y = -Math.PI / 2;
-                    wall2.position.set(-this.roomWidth / 2, this.roomHeight-(1/4)*(this.roomHeight / 2), 0);
+                    secondWallMesh.scale.set(1,(1/4),1);
+                    secondWallMesh.rotation.y = -Math.PI / 2;
+                    secondWallMesh.position.set(-this.roomWidth / 2, this.roomHeight-(1/4)*(this.roomHeight / 2), 0);
 
-                    side1Mesh.scale.set((1/4),(1/2),1);
-                    side1Mesh.rotation.y = -Math.PI / 2;
-                    side1Mesh.position.set(-this.roomWidth / 2, this.roomHeight / 2, this.roomWidth/2-(1/4)*(this.roomWidth / 2));
+                    firstSideMesh.scale.set((1/4),(1/2),1);
+                    firstSideMesh.rotation.y = -Math.PI / 2;
+                    firstSideMesh.position.set(-this.roomWidth / 2, this.roomHeight / 2, this.roomWidth/2-(1/4)*(this.roomWidth / 2));
 
-                    side2Mesh.scale.set((1/4),(1/2),1);
-                    side2Mesh.rotation.y = -Math.PI / 2;
-                    side2Mesh.position.set(-this.roomWidth / 2, this.roomHeight / 2, -this.roomWidth/2+(1/4)*(this.roomWidth / 2));
+                    secondSideMesh.scale.set((1/4),(1/2),1);
+                    secondSideMesh.rotation.y = -Math.PI / 2;
+                    secondSideMesh.position.set(-this.roomWidth / 2, this.roomHeight / 2, -this.roomWidth/2+(1/4)*(this.roomWidth / 2));
 
-                    this.app.scene.add(wall2, side1Mesh,side2Mesh);
+                    secondWallMesh.receiveShadow = true;
+                    secondWallMesh.castShadow = true;
+                    firstSideMesh.receiveShadow = true;
+                    firstSideMesh.castShadow = true;
+                    secondSideMesh.receiveShadow = true;
+                    secondSideMesh.castShadow = true;
+
+                    this.app.scene.add(secondWallMesh, firstSideMesh, secondSideMesh);
 					break;
 				case 2:
 					firstWallMesh.position.set(0, this.roomHeight / 2, -this.roomWidth / 2);
-					secondWallMesh.position.set(0, this.roomHeight / 2, this.roomWidth / 2);
 					firstWallMesh.rotation.x = Math.PI;
 					break;
 				case 3:
                     firstWallMesh.scale.set(1,(1/4),1);
 					firstWallMesh.position.set(-this.roomWidth / 2, this.roomHeight-(1/4)*(this.roomHeight / 2), 0);
-					secondWallMesh.position.set(this.roomWidth / 2, this.roomHeight / 2, 0);
 					firstWallMesh.rotation.y = Math.PI / 2;
-					secondWallMesh.rotation.y = -Math.PI / 2;
 
-                    wall2.scale.set(1,(1/4),1);
-                    wall2.rotation.y = Math.PI / 2;
-                    wall2.position.set(-this.roomWidth / 2, (1/4)*(this.roomHeight / 2), 0);
+                    secondWallMesh.scale.set(1,(1/4),1);
+                    secondWallMesh.rotation.y = Math.PI / 2;
+                    secondWallMesh.position.set(-this.roomWidth / 2, (1/4)*(this.roomHeight / 2), 0);
 
-                    side1Mesh.scale.set((1/4),(1/2),1);
-                    side1Mesh.rotation.y = Math.PI / 2;
-                    side1Mesh.position.set(-this.roomWidth / 2, this.roomHeight / 2, this.roomWidth/2-(1/4)*(this.roomWidth / 2));
+                    firstSideMesh.scale.set((1/4),(1/2),1);
+                    firstSideMesh.rotation.y = Math.PI / 2;
+                    firstSideMesh.position.set(-this.roomWidth / 2, this.roomHeight / 2, this.roomWidth/2-(1/4)*(this.roomWidth / 2));
 
-                    side2Mesh.scale.set((1/4),(1/2),1);
-                    side2Mesh.rotation.y = Math.PI / 2;
-                    side2Mesh.position.set(-this.roomWidth / 2, this.roomHeight / 2, -this.roomWidth/2+(1/4)*(this.roomWidth / 2));
+                    secondSideMesh.scale.set((1/4),(1/2),1);
+                    secondSideMesh.rotation.y = Math.PI / 2;
+                    secondSideMesh.position.set(-this.roomWidth / 2, this.roomHeight / 2, -this.roomWidth/2+(1/4)*(this.roomWidth / 2));
 
-                    this.app.scene.add(wall2, side1Mesh,side2Mesh);
+                    secondWallMesh.receiveShadow = true;
+                    secondWallMesh.castShadow = true;
+                    firstSideMesh.receiveShadow = true;
+                    firstSideMesh.castShadow = true;
+                    secondSideMesh.receiveShadow = true;
+                    secondSideMesh.castShadow = true;
+
+                    this.app.scene.add(secondWallMesh, firstSideMesh, secondSideMesh);
 					break;
 			}
-			this.app.scene.add(firstWallMesh, secondWallMesh);
+
+            firstWallMesh.receiveShadow = true;
+            firstWallMesh.castShadow = true;
+
+			this.app.scene.add(firstWallMesh);
 		}
 	}
-
-    buildCake() {
-        const materials = {
-            brown: new THREE.MeshPhongMaterial({ color: "#3B1D14", specular: "#000000", emissive: "#000000", shininess: 90 }),
-            pink: new THREE.MeshPhongMaterial({ color: "#FFC0CB", specular: "#000000", emissive: "#000000", shininess: 90 }),
-            plate: new THREE.MeshPhongMaterial({ color: "#D3D3D3", specular: "#000000", emissive: "#000000", shininess: 90 }),
-            flame: new THREE.MeshPhongMaterial({ color: "#FFA500", specular: "#111111", emissive: "#FFFF00", shininess: 30, transparent: true, opacity: 0.5 }),
-            smallFlame: new THREE.MeshPhongMaterial({ color: "#FF0000", specular: "#FF0000", emissive: "#000000", shininess: 30}),
-            base: new THREE.MeshPhongMaterial({ color: "#FFFFFF", specular: "#000000", emissive: "#000000", shininess: 40})
-        };
-
-        this.cakeMesh = new THREE.Group();
-
-        const candleRadius = 0.02;
-        const candleHeight = 0.25;
-        const slicePosition = 1.5;
-		const cakeRadius = 0.5;
-		const cakeThickness = 0.15;
-		const radialSegments = 32;
-		const cakeAngle = 2 * Math.PI - Math.PI / 4;
-		const plateRadius = 0.7;
-		const plateThickness = 0.04;
-		const tableHeight = 2.5 + 0.3 / 2; // legHeight + tableThickness / 2
-
-        const cake = new THREE.CylinderGeometry(cakeRadius, cakeRadius, cakeThickness, radialSegments, 1, false, 0, cakeAngle);
-		const endCake = new THREE.PlaneGeometry(cakeRadius, cakeThickness);
-        const coneFlame = new THREE.ConeGeometry(candleRadius/2, candleHeight/5, radialSegments);
-        const candleBase = new THREE.CylinderGeometry(candleRadius, candleRadius, candleHeight, radialSegments);
-        const candleRope = new THREE.CylinderGeometry(candleRadius/8 ,candleRadius/8, candleHeight/5, radialSegments);
-        const slicecake = new THREE.CylinderGeometry(cakeRadius, cakeRadius, cakeThickness, radialSegments, 1, false, 0, Math.PI / 4);
-
-        this.cakeMesh = new THREE.Group();
-        this.sliceCakeMesh = new THREE.Group();
-
-        ['brown', 'pink', 'brown'].forEach((color, i) => {
-            const mesh = new THREE.Mesh(cake, materials[color]);
-            mesh.position.set(0, tableHeight + plateThickness + cakeThickness * (1 + 2 * i) / 2, 0);
-            this.cakeMesh.add(mesh);
-
-            const endMesh1 = new THREE.Mesh(endCake, materials[color]);
-            endMesh1.position.set(0, tableHeight + plateThickness + cakeThickness * (1 + 2 * i) / 2, cakeRadius / 2);
-            endMesh1.rotation.y = -Math.PI / 2;
-            this.cakeMesh.add(endMesh1);
-
-            const endMesh2 = new THREE.Mesh(endCake, materials[color]);
-            endMesh2.position.set(- cakeRadius / Math.sqrt(2) / 2, tableHeight + plateThickness + cakeThickness * (1 + 2 * i) / 2, cakeRadius / Math.sqrt(2) / 2);
-            endMesh2.rotation.y = Math.PI / 4;
-            this.cakeMesh.add(endMesh2);
-
-            //Slice creation
-            const meshSlice = new THREE.Mesh(slicecake, materials[color]);
-            meshSlice.position.set(0,cakeThickness * (1 + 2 * i) / 2,0);
-            this.sliceCakeMesh.add(meshSlice);
-
-            const endSlice1 = new THREE.Mesh(endCake, materials[color]);
-            endSlice1.position.set(0,cakeThickness * (1 + 2 * i) / 2, cakeRadius / 2);
-            endSlice1.rotation.y = -Math.PI / 2;
-            this.sliceCakeMesh.add(endSlice1);
-
-            const endSlice2 = new THREE.Mesh(endCake, materials[color]);
-            endSlice2.position.set(cakeRadius / Math.sqrt(2) / 2,cakeThickness * (1 + 2 * i) / 2, cakeRadius / Math.sqrt(2) / 2);
-            endSlice2.rotation.y = (3*Math.PI) / 4;
-            this.sliceCakeMesh.add(endSlice2);
-        })
-
-        const plate = new THREE.CylinderGeometry(plateRadius, plateRadius, plateThickness, radialSegments);
-        const plateMesh = new THREE.Mesh(plate, materials.plate);
-        plateMesh.position.set(0, tableHeight + plateThickness / 2, 0);
-        this.cakeMesh.add(plateMesh);
-
-        // Slice position
-        this.sliceCakeMesh.position.set(slicePosition - cakeRadius/2, tableHeight + plateThickness, slicePosition/2 - cakeRadius/2);
-        this.sliceCakeMesh.rotation.z = Math.PI/2;
-        this.sliceCakeMesh.rotation.y = Math.PI/2;
-        this.cakeMesh.add(this.sliceCakeMesh);
-
-        // Slice plate position
-        const smallPlate = new THREE.CylinderGeometry(3 * plateRadius / 5, 3 * plateRadius / 5, plateThickness, radialSegments);
-        const smallPlateMesh = new THREE.Mesh(smallPlate, materials.plate);
-        smallPlateMesh.position.set(slicePosition, tableHeight + plateThickness / 2, slicePosition / 2);
-        this.cakeMesh.add(smallPlateMesh);
-
-        // Candle creation
-        for (let i = 0; i < 5; i += 1) {
-            const candle = new THREE.Object3D();
-
-            const cFlame = new THREE.Mesh(coneFlame, materials.flame);
-            cFlame.position.set(3 * cakeRadius / 5, tableHeight + plateThickness + cakeThickness * 3.5 + candleHeight / 1.5, 0);
-            candle.add(cFlame);
-
-            // add a point light on top of each flame
-            let flameLight = new THREE.PointLight(0xffff00, 1, 0);
-            flameLight.position.set(3 * cakeRadius / 5, tableHeight + plateThickness + cakeThickness * 3.5 + candleHeight / 1.5, 0);
-            candle.add(flameLight);
-
-            // add flame sphere
-            const flameSphere = new THREE.SphereGeometry(0.004, 32, 32);
-            const material = new THREE.MeshPhongMaterial({color: "#FFA500", specular: "#111111", emissive: "#000000", shininess: 30});
-            const sphereMesh = new THREE.Mesh(flameSphere, material);
-            sphereMesh.position.set(3 * cakeRadius / 5, tableHeight + plateThickness + cakeThickness * 3.5 + candleHeight / 1.5, 0);
-            candle.add(sphereMesh);
-
-            const cSmallFlame = new THREE.Mesh(coneFlame, materials.smallFlame);
-            cSmallFlame.position.set(3 * cakeRadius / 5, tableHeight + plateThickness + cakeThickness * 3.5 + candleHeight / 1.5 - candleHeight / 20, 0);
-            cSmallFlame.scale.set(0.5, 0.5, 0.5);
-            candle.add(cSmallFlame);
-
-            const cBase = new THREE.Mesh(candleBase, materials.base);
-            cBase.position.set(3 * cakeRadius / 5, tableHeight + plateThickness + cakeThickness * 3.5, 0);
-            candle.add(cBase);
-
-            const cRope = new THREE.Mesh(candleRope, materials.base);
-            cRope.position.set(3 * cakeRadius / 5, tableHeight + plateThickness + cakeThickness * 3.5 + candleHeight / 2, 0);
-            candle.add(cRope);
-
-            this.cakeMesh.add(candle);
-            candle.rotation.y = -Math.PI/3 + i*(Math.PI/3);
-        }
-    }
 
     /**
      * builds the table mesh with material assigned
@@ -375,31 +290,33 @@ class MyContents  {
         let legMaterial = new THREE.MeshPhongMaterial({color: "#A1662F", specular: "#ffffff", emissive: "#000000", shininess: 100});
 
         let legRadius = 0.15;
-        let legHeight = 2.5;
         let radialSegments = 32;
 
         let tableWidth = 7;
         let tableLength = 4;
-        let tableThickness = 0.3;
 
         this.tableMesh = new THREE.Group();
 
-        let tableTop = new THREE.BoxGeometry(tableWidth + tableThickness, tableThickness, tableLength + tableThickness);
+        let tableTop = new THREE.BoxGeometry(tableWidth + this.tableThickness, this.tableThickness, tableLength + this.tableThickness);
         this.topMesh = new THREE.Mesh(tableTop, woodMaterial);
-        this.topMesh.position.set(0, legHeight, 0);
+        this.topMesh.position.set(0, this.legHeight, 0);
+        this.topMesh.receiveShadow = true;
+        this.topMesh.castShadow = true;
         this.tableMesh.add(this.topMesh);
 
         let legPositions = [
-            {x: tableWidth / 2, y: legHeight / 2, z: tableLength / 2},
-            {x: -tableWidth / 2, y: legHeight / 2, z: tableLength / 2},
-            {x: tableWidth / 2, y: legHeight / 2, z: -tableLength / 2},
-            {x: -tableWidth / 2, y: legHeight / 2, z: -tableLength / 2}
+            {x: tableWidth / 2, y: this.legHeight / 2, z: tableLength / 2},
+            {x: -tableWidth / 2, y: this.legHeight / 2, z: tableLength / 2},
+            {x: tableWidth / 2, y: this.legHeight / 2, z: -tableLength / 2},
+            {x: -tableWidth / 2, y: this.legHeight / 2, z: -tableLength / 2}
         ];
 
         for (let i = 0; i < 4; i++) {
-            let leg = new THREE.CylinderGeometry(legRadius, legRadius, legHeight, radialSegments);
+            let leg = new THREE.CylinderGeometry(legRadius, legRadius, this.legHeight, radialSegments);
             let legMesh = new THREE.Mesh(leg, legMaterial);
             legMesh.position.set(legPositions[i].x, legPositions[i].y, legPositions[i].z);
+            legMesh.receiveShadow = true;
+            legMesh.castShadow = true;
             this.tableMesh.add(legMesh);
         }
     }
@@ -409,15 +326,14 @@ class MyContents  {
         floorTexture.colorSpace = THREE.SRGBColorSpace;
 
         const floorMaterial = new THREE.MeshPhongMaterial({color: "#BCA89F", map: floorTexture});
+        const floor = new THREE.BoxGeometry(25, 25, 0.1);
+        const floorMesh = new THREE.Mesh(floor, floorMaterial);
+        floorMesh.rotation.x = -Math.PI / 2;
+        floorMesh.position.y = -0.1;
+        floorMesh.receiveShadow = true;
+        floorMesh.castShadow = true;
 
-        let floor = new THREE.PlaneGeometry(25, 25);
-        let firstFloorMesh = new THREE.Mesh(floor, floorMaterial);
-		let secondFloorMesh = new THREE.Mesh(floor, floorMaterial);
-        firstFloorMesh.rotation.x = -Math.PI / 2;
-        firstFloorMesh.position.y = -0;
-		secondFloorMesh.rotation.x = Math.PI / 2;
-        this.app.scene.add(firstFloorMesh);
-		this.app.scene.add(secondFloorMesh);
+        this.app.scene.add(floorMesh);
     }
 
     buildBeetle(){
@@ -618,6 +534,8 @@ class MyContents  {
             
             const topTubeGeometry = new THREE.TubeGeometry(topCurvePath, 25, 0.075, 8, false);
             const topTubeMesh = new THREE.Mesh(topTubeGeometry, materials[colorMaterial]);
+            topTubeMesh.receiveShadow = true;
+            topTubeMesh.castShadow = true;
             spring.add(topTubeMesh);
     
             const downCircle = new THREE.CubicBezierCurve3(points[3], points[4], points[5], points[6]);
@@ -627,6 +545,8 @@ class MyContents  {
     
             const downTubeGeometry = new THREE.TubeGeometry(downCurvePath, 25, 0.075, 8, false);
             const downTubeMesh = new THREE.Mesh(downTubeGeometry, materials[colorMaterial]);
+            downTubeMesh.receiveShadow = true;
+            downTubeMesh.castShadow = true;
             spring.add(downTubeMesh);
         }
     
@@ -637,7 +557,6 @@ class MyContents  {
     }
     
     buildCarpet(){
-
         const carpetTexture = this.loader.load('textures/carpet.jpg');
         carpetTexture.colorSpace = THREE.SRGBColorSpace;
         const carpetMaterial = new THREE.MeshPhongMaterial({color: "#FFFFFF", map: carpetTexture, opacity:1}); 
@@ -646,6 +565,8 @@ class MyContents  {
         const carpetMesh = new THREE.Mesh(carpet, carpetMaterial);
         carpetMesh.position.set(0,0.01,0);
         carpetMesh.scale.set(1,1,0.8);
+        carpetMesh.receiveShadow = true;
+        carpetMesh.castShadow = true;
         this.app.scene.add(carpetMesh);
 
     }
@@ -670,18 +591,47 @@ class MyContents  {
         if (this.axis === null) {
             // create and attach the axis to the scene
             this.axis = new MyAxis(this);
+            this.axisVisible = true;
             this.app.scene.add(this.axis);
         }
 
-        // add a point light on top of the model
-        const pointLight = new THREE.PointLight(0xffffff, 400, 0);
-        pointLight.position.set(0, 20, 0);
-        this.app.scene.add(pointLight);
+        // add a general ambient light
+        const ambientLight = new THREE.AmbientLight(0x555555, 5);
+        this.app.scene.add(ambientLight);
 
-        // add another point light on the lamp
-        const lampLight = new THREE.PointLight(0xffff00, 100, 0);
-        lampLight.position.set(9, 3.8, -9);
-        this.app.scene.add(lampLight);
+        // creates a directional light - ambient light
+        const roomAmbientLight = new THREE.DirectionalLight("#ffffff", 1.5);
+        roomAmbientLight.position.set(0, 25, 0);
+        roomAmbientLight.castShadow = true;
+        roomAmbientLight.shadow.mapSize.width = this.mapSize;
+        roomAmbientLight.shadow.mapSize.height = this.mapSize;
+        roomAmbientLight.shadow.camera.near = 0.5;
+        roomAmbientLight.shadow.camera.far = 100;
+        roomAmbientLight.shadow.camera.left = -15;
+        roomAmbientLight.shadow.camera.right = 15;
+        roomAmbientLight.shadow.camera.bottom = -15;
+        roomAmbientLight.shadow.camera.top = 15;
+
+        this.app.scene.add(roomAmbientLight);
+
+        // creates a helper for the light
+        // const roomAmbientLightHelper = new THREE.DirectionalLightHelper(roomAmbientLight, 5);
+        // this.app.scene.add(roomAmbientLightHelper);
+
+        // creates a point light
+        const roomLight = new THREE.PointLight("#484a2c", 100, 0, 0);
+        roomLight.position.set(10, 15, 10);
+        roomLight.castShadow = true;
+        roomLight.shadow.mapSize.width = this.mapSize;
+        roomLight.shadow.mapSize.height = this.mapSize;
+        roomLight.shadow.camera.near = 0.5;
+        roomLight.shadow.camera.far = 100;
+
+        this.app.scene.add(roomLight);
+
+        // creates a helper for the light
+        // const roomLightHelper = new THREE.PointLightHelper(roomLight, 1);
+        // this.app.scene.add(roomLightHelper);
 
         // add a spotlight to spot a specific object
         this.spotLight = new THREE.SpotLight(0xffffff, 8, 5, (2 * Math.PI) / 20, 0, 0);
@@ -700,35 +650,29 @@ class MyContents  {
         // spotLightHelper.target = this.targetSpot; 
         // this.app.scene.add( spotLightHelper );
 
-        // add a point light helper for the previous point light
-        const sphereSize = 0.5;
-        const pointLightHelper = new THREE.PointLightHelper(pointLight, sphereSize);
-        this.app.scene.add(pointLightHelper);
-
-        // add an ambient light
-        const ambientLight = new THREE.AmbientLight(0x555555, 4);
-        this.app.scene.add(ambientLight);
-
         const springGuy = new MySpringGuy(this.app);
         const radio = new MyRadio(this.app);
         const vase = new MyVase(this.app);
         const flower = new MyFlower(this.app);
         this.spotStudent = new MySpotStudent(this.app);
+        const cake = new MyCake(this.app, this.legHeight, this.tableThickness);
 
         this.buildFloor();
         this.buildWalls();
 		this.buildTable();
-        this.buildCake();
         this.buildBeetle();
         this.buildFlower();
         this.buildCarpet();
         this.buildSpring();
         this.buildWindow(this.roomHeight, this.roomWidth);
-        this.buildLandscapeSphere();
         this.buildFrame(0.1, 2, 3, 0.1, 3.5, 6, false, 'textures/luis.jpg',"#ffffff", 'back');
         this.buildFrame(0.1, 2, 3, 0.1, -3.5, 6, false, 'textures/nuno.jpg',"#ffffff", 'back');
         this.buildFrame(0.1, 3, 2, 0.1, 5, 6, false, 'textures/cork.jpg', "#ffffff", 'front');
         this.buildFrame(0.1, 3, 3.5, 0.1, -5, 6, false, 'textures/cork.jpg', "#ffffff", 'front');
+        this.buildLamp();
+        this.buildLandscapeSphere();
+        this.spotStudent.buildSpot(3.5,this.roomHeight,6,this.roomWidth);
+        this.spotStudent.buildSpot(-3.5,this.roomHeight,6,this.roomWidth);
         springGuy.buildSpringGuy(this.roomHeight, this.roomWidth);
         radio.buildRadio(this.roomHeight, this.roomWidth);
         vase.buildVase(-4,this.roomWidth/2-1,3);
@@ -737,9 +681,7 @@ class MyContents  {
         flower.buildFlower(-4,this.roomWidth/2-1,2);
         flower.buildFlower(-5.5,this.roomWidth/2-2,3);
         flower.buildFlower(-7,this.roomWidth/2-1,4);
-        this.spotStudent.buildSpot(3.5,this.roomHeight,6,this.roomWidth);
-        this.spotStudent.buildSpot(-3.5,this.roomHeight,6,this.roomWidth);
-        this.buildLamp();
+        cake.buildCake();
     }
 
     createNurbsSurfaces() {  
@@ -820,6 +762,10 @@ class MyContents  {
             secondMesh.scale.set(0.5, 0.5, 0.5);
             firstMesh.position.set(-3, 2.85, -0.2);
             secondMesh.position.set(-3, 2.85, -0.2);
+            firstMesh.receiveShadow = true;
+            firstMesh.castShadow = true;
+            secondMesh.receiveShadow = true;
+            secondMesh.castShadow = true;
             this.app.scene.add(firstMesh);
             this.app.scene.add(secondMesh);
             this.meshes.push(firstMesh);
@@ -851,18 +797,6 @@ class MyContents  {
         this.floorShininess = value;
         this.floorMaterial.shininess = this.floorShininess;
     }
-
-    updateCake() {
-        if (this.cakeEnabled !== this.lastCakeEnabled) {
-            this.lastCakeEnabled = this.cakeEnabled
-            if(this.cakeEnabled){
-                this.app.scene.add(this.cakeMesh)
-            }
-            else {
-                this.app.scene.remove(this.cakeMesh)
-            }
-        }
-    }
     
     updateTable() {
         if (this.tableEnabled !== this.lasttableEnabled) {
@@ -888,6 +822,10 @@ class MyContents  {
         }
     }
 
+    toggleAxis() {
+        this.axis.visible = !this.axis.visible;
+    }
+
     /**
      * updates the contents
      * this method is called from the render method of the app
@@ -895,7 +833,6 @@ class MyContents  {
      */
     update() {
         this.updateTable()
-        this.updateCake()
         this.updateSpotLight()
     }
 }

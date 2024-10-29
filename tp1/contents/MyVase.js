@@ -94,6 +94,8 @@ class MyVase  {
         surfaceData = this.builder.build(controlPoints, orderU, orderV, this.samplesU, this.samplesV, this.materials[tex]);
         mesh = new THREE.Mesh(surfaceData, this.materials[tex]);
         mesh.position.set(0,plateHeight/2,0);
+        mesh.receiveShadow = true;
+        mesh.castShadow = true;
         vase.add(mesh);
         this.meshes.push(mesh);
 
@@ -101,17 +103,23 @@ class MyVase  {
         mesh = new THREE.Mesh(surfaceData, this.materials[tex]);
         mesh.rotation.y = Math.PI;
         mesh.position.set(0,plateHeight/2,0);
+        mesh.receiveShadow = true;
+        mesh.castShadow = true;
         vase.add(mesh);
         this.meshes.push(mesh);
 
         const dirt = new THREE.CylinderGeometry(1.47, 1.47, 0.01, radialSegments, radialSegments);
         const dirtMesh = new THREE.Mesh(dirt, this.materials[1]);
         dirtMesh.position.set(0,6,0);
+        dirtMesh.receiveShadow = true;
+        dirtMesh.castShadow = true;
         vase.add(dirtMesh);
 
         const plate = new THREE.CylinderGeometry(platewidth, platewidth, plateHeight, radialSegments, radialSegments);
         const plateMesh = new THREE.Mesh(plate, this.materials[0]);
         plateMesh.position.set(0,plateHeight/2,0);
+        plateMesh.receiveShadow = true;
+        plateMesh.castShadow = true;
         vase.add(plateMesh);
 
         vase.position.set(positionX, 0,positionZ);

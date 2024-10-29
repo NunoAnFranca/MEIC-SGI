@@ -56,11 +56,15 @@ class MyFlower  {
         const steemTube = new THREE.TubeGeometry(curvePath,25,0.03,radialSegments,false);
         const steemMesh = new THREE.Mesh(steemTube,this.materials[0] );
         steemMesh.rotation.y = tex * Math.PI/2;
+        steemMesh.receiveShadow = true;
+        steemMesh.castShadow = true;
         flower.add(steemMesh);
 
         const center = new THREE.SphereGeometry(sphereRadius, radialSegments, radialSegments);
         const centerMesh = new THREE.Mesh(center, this.materials[1]);
         centerMesh.position.set(0,1.5,0);
+        centerMesh.receiveShadow = true;
+        centerMesh.castShadow = true;
         flower.add(centerMesh);
 
         controlPoints = [
@@ -95,6 +99,8 @@ class MyFlower  {
             mesh = new THREE.Mesh(surfaceData, this.materials[tex]);
             mesh.position.set(0,0,0.25+4.1/8);
             mesh.scale.set(0.25,0.25,0.25);
+            mesh.receiveShadow = true;
+            mesh.castShadow = true;
             petal.add(mesh);
             this.meshes.push(mesh);
             petals.add(petal);

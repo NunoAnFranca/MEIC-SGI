@@ -58,17 +58,23 @@ class MyRadio  {
         antena1Mesh.position.set(-boxWidth*3/8 + (Math.sin(Math.PI/3)), legHeight/2-(legHeight/2-(Math.cos(Math.PI/3)*legHeight/2))/2,0);
         antena1Mesh.rotation.x = Math.PI;
         antena1Mesh.rotation.z = Math.PI/3;
+        antena1Mesh.receiveShadow = true;
+        antena1Mesh.castShadow = true;
         radio.add(antena1Mesh);
         
         const antena2Mesh = new THREE.Mesh(antena, materials.antena);
         antena2Mesh.position.set(-boxWidth*3/8 - (Math.sin(Math.PI/6)), legHeight/2,0);
         antena2Mesh.rotation.x = Math.PI;
         antena2Mesh.rotation.z = 11*Math.PI/6;
+        antena2Mesh.receiveShadow = true;
+        antena2Mesh.castShadow = true;
         radio.add(antena2Mesh);
 
         const antenasBase = new THREE.CylinderGeometry(baseRadius, baseRadius, baseHeight, radialSegments);
         const antenasBaseMesh = new THREE.Mesh(antenasBase, materials.antena);
         antenasBaseMesh.position.set(-boxWidth*3/8, boxHeight/2 + baseHeight/2,0);
+        antenasBaseMesh.receiveShadow = true;
+        antenasBaseMesh.castShadow = true;
         radio.add(antenasBaseMesh);
 
         // Plane for radio grill
@@ -76,6 +82,8 @@ class MyRadio  {
         const planeGrill = new THREE.BoxGeometry(4*boxWidth/5, 3*boxHeight/5, grillDepth);
         const planeMesh = new THREE.Mesh(planeGrill, materials.grillMaterial);
         planeMesh.position.set(0,boxHeight/6,-boxdepth/2-grillDepth/2)
+        planeMesh.receiveShadow = true;
+        planeMesh.castShadow = true;
         radio.add(planeMesh);
 
 
@@ -88,6 +96,8 @@ class MyRadio  {
             const buttonMesh = new THREE.Mesh(button, materials.black);
             buttonMesh.position.set(-1*boxWidth/4+i*boxWidth/2,-1*boxHeight/3,-boxdepth/2 - buttonRadius/4);
             buttonMesh.rotation.x = -Math.PI/2
+            buttonMesh.receiveShadow = true;
+            buttonMesh.castShadow = true;
             radio.add(buttonMesh);
         }
 
@@ -101,6 +111,8 @@ class MyRadio  {
             legMesh.position.set(0,legHeight/2-(legHeight/2-Math.cos(Math.PI/4)*legHeight/2),0);
             legMesh.rotation.z = Math.PI/4;
             legMesh.rotation.y = i*Math.PI/2;
+            legMesh.receiveShadow = true;
+            legMesh.castShadow = true;
             stool.add(legMesh);
         }
 
@@ -108,6 +120,8 @@ class MyRadio  {
         const top = new THREE.CylinderGeometry(topSize, topSize, topSize/7, radialSegments);
         const topMesh = new THREE.Mesh(top, materials.brown);
         topMesh.position.set(0,legHeight/2-(legHeight/2-Math.cos(Math.PI/4)*legHeight/2) + legHeight*Math.sin(Math.PI/4)/2,0);
+        topMesh.receiveShadow = true;
+        topMesh.castShadow = true;
         stool.add(topMesh);
 
         stool.position.set(2*this.roomWidth/5,0,2*this.roomWidth/5);
