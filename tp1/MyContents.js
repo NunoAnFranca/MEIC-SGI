@@ -7,6 +7,8 @@ import { MyNurbsBuilder } from './MyNurbsBuilder.js';
 import { MySpringGuy } from './contents/springGuy.js';
 import { MyRadio } from './contents/radio.js';
 import { MyVase } from './contents/vase.js';
+import { MyFlower } from './contents/flower.js';
+import { MySpotStudent } from './contents/spotStudent.js';
 /**
  *  This class contains the contents of out application
  */
@@ -19,6 +21,8 @@ class MyContents  {
     constructor(app) {
         this.app = app;
         this.axis = null;
+
+        this.spotStudent=null;
 
         const map = new THREE.TextureLoader().load('textures/newspaper.png');
         map.wrapS = map.wrapT = THREE.RepeatWrapping;
@@ -114,7 +118,7 @@ class MyContents  {
     buildFrame(frameThickness, frameWidth, frameHeight, frameDepth, horizontalDisp, verticalDisp, hasFrame, imagePath, color, side) {
         const frameTexture = this.loader.load('textures/frame.jpg');
         frameTexture.colorSpace = THREE.SRGBColorSpace;
-        const frameMaterial = new THREE.MeshPhongMaterial({color: color, map: frameTexture, specular: "#000000", shininess: 0});
+        const frameMaterial = new THREE.MeshPhongMaterial({color: color, map: frameTexture, specular: "#111111", shininess: 0});
 
         let frameParts = [
             {name: 'Left', geometry: new THREE.BoxGeometry(frameThickness, frameHeight, frameDepth), position: new THREE.Vector3(frameWidth / 2, 0, 0)},
@@ -162,7 +166,7 @@ class MyContents  {
         const imageTexture = this.loader.load(imagePath);
         imageTexture.colorSpace = THREE.SRGBColorSpace;
 
-        const imageMaterial = new THREE.MeshBasicMaterial({color: "#ffffff", map: imageTexture});
+        const imageMaterial = new THREE.MeshPhongMaterial({color: "#ffffff", map: imageTexture});
         let image = new THREE.BoxGeometry(frameWidth, frameHeight, frameDepth / 2);
         let imageMesh = new THREE.Mesh(image, imageMaterial);
         frameGroup.add(imageMesh);      
@@ -404,7 +408,7 @@ class MyContents  {
         const floorTexture = this.loader.load('textures/floor.jpg');
         floorTexture.colorSpace = THREE.SRGBColorSpace;
 
-        const floorMaterial = new THREE.MeshPhongMaterial({color: "#ffffff", map: floorTexture});
+        const floorMaterial = new THREE.MeshPhongMaterial({color: "#BCA89F", map: floorTexture});
 
         let floor = new THREE.PlaneGeometry(25, 25);
         let firstFloorMesh = new THREE.Mesh(floor, floorMaterial);
@@ -708,6 +712,8 @@ class MyContents  {
         const springGuy = new MySpringGuy(this.app);
         const radio = new MyRadio(this.app);
         const vase = new MyVase(this.app);
+        const flower = new MyFlower(this.app);
+        this.spotStudent = new MySpotStudent(this.app);
 
         this.buildFloor();
         this.buildWalls();
@@ -725,7 +731,14 @@ class MyContents  {
         this.buildFrame(0.1, 3, 3.5, 0.1, -5, 6, false, 'textures/cork.jpg', "#ffffff", 'front');
         springGuy.buildSpringGuy(this.roomHeight, this.roomWidth);
         radio.buildRadio(this.roomHeight, this.roomWidth);
-        vase.buildVase(2,2);
+        vase.buildVase(-4,this.roomWidth/2-1,3);
+        vase.buildVase(-5.5,this.roomWidth/2-2,2);
+        vase.buildVase(-7,this.roomWidth/2-1,4);
+        flower.buildFlower(-4,this.roomWidth/2-1,2);
+        flower.buildFlower(-5.5,this.roomWidth/2-2,3);
+        flower.buildFlower(-7,this.roomWidth/2-1,4);
+        this.spotStudent.buildSpot(3.5,this.roomHeight,6,this.roomWidth);
+        this.spotStudent.buildSpot(-3.5,this.roomHeight,6,this.roomWidth);
         this.buildLamp();
     }
 
