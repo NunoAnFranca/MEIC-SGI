@@ -58,16 +58,18 @@ class MyGuiInterface  {
 
         // adds a folder to the gui interface for the Lights
         const LightsFolder = this.datgui.addFolder('Lights');
-        LightsFolder.add(this.contents, 'spotLightEnabled', true).name("Spotlight");
-        LightsFolder.open();
 
         const SubFolder = LightsFolder.addFolder('Spotlight Cake');
-        SubFolder.add(this.contents.spotLight, 'intensity', 0, 40).name("Intensity (cd)");
-        SubFolder.add(this.contents.spotLight, 'distance', 0, 20).name("Distance");
-        SubFolder.add(this.contents.spotLight, 'angle', 0, Math.PI/2).name("Spot angle");
-        SubFolder.add(this.contents.spotLight, 'penumbra', 0, 1).name("Penumbra");
-        SubFolder.add(this.contents.spotLight, 'decay', 0, 2).name("Decay");
-        SubFolder.open();
+        SubFolder.add(this.contents.spotCake.spotLight, 'visible').name("Spotlight Cake");
+        SubFolder.add(this.contents.spotCake.spotLight, 'intensity', 0, 100).name("Intensity (cd)");
+        SubFolder.add(this.contents.spotCake.spotLight, 'distance', 0, 16).name("Distance").onChange(() => {
+            this.contents.spotCake.updateSpotLightHelper();
+        });
+        SubFolder.add(this.contents.spotCake.spotLight, 'angle', 0, Math.PI/2).name("Spot angle");
+        SubFolder.add(this.contents.spotCake.spotLight, 'penumbra', 0, 1).name("Penumbra");
+        SubFolder.add(this.contents.spotCake.spotLight, 'decay', 0, 2).name("Decay");
+        SubFolder.add({ 'Show Helper': false }, 'Show Helper').onChange((value) => { this.contents.spotCake.toggleSpotLightHelpers(value); }).name('visible');
+        SubFolder.close();
 
         // Interface for Students Spotlights
         const spotLightFolder = this.datgui.addFolder('Spotlights Students');

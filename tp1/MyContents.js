@@ -9,6 +9,7 @@ import { MyRadio } from './contents/MyRadio.js';
 import { MyVase } from './contents/MyVase.js';
 import { MyFlower } from './contents/MyFlower.js';
 import { MySpotStudent } from './contents/MySpotStudent.js';
+import { MySpotCake } from './contents/MySpotCake.js';
 import { MyCake } from './contents/MyCake.js';
 /**
  *  This class contains the contents of out application
@@ -25,6 +26,7 @@ class MyContents  {
         this.axisVisible = false;
 
         this.spotStudent = null;
+        this.spotCake = null;
 
         const map = new THREE.TextureLoader().load('textures/newspaper.png');
         map.wrapS = map.wrapT = THREE.RepeatWrapping;
@@ -33,8 +35,8 @@ class MyContents  {
         this.material = new THREE.MeshLambertMaterial({ map: map, side: THREE.DoubleSide});
         this.builder = new MyNurbsBuilder();
         this.meshes = [];
-        this.samplesU = 32;
-        this.samplesV = 32;
+        this.samplesU = 64;
+        this.samplesV = 64;
 
         this.createNurbsSurfaces();
         
@@ -65,12 +67,6 @@ class MyContents  {
         this.roomWidth = 25;
         this.roomHeight = 12;
         this.roomThickness = 0.1;
-
-        // lights related attributes
-        this.spotLightEnabled = true;
-        this.spotLight = null;
-        this.lastSpotLightEnabled = null;
-        this.targetSpot = null;
 
         // texture loader
         this.loader = new THREE.TextureLoader();
@@ -633,19 +629,6 @@ class MyContents  {
         // const roomLightHelper = new THREE.PointLightHelper(roomLight, 1);
         // this.app.scene.add(roomLightHelper);
 
-        // add a spotlight to spot a specific object
-        this.spotLight = new THREE.SpotLight(0xffffff, 8, 5, (2 * Math.PI) / 20, 0, 0);
-        this.spotLight.position.set(1,5,1);
-        
-        // Object target for the spotLight
-        this.targetSpot = new THREE.Object3D();
-        this.targetSpot.position.set(0, 2.65, 0);
-        this.spotLight.target = this.targetSpot;
-
-        // add the Spot Ligh and it's respective target to the scene
-        this.app.scene.add(this.spotLight);
-        this.app.scene.add(this.targetSpot);
-
         // const spotLightHelper = new THREE.SpotLightHelper( this.spotLight );
         // spotLightHelper.target = this.targetSpot; 
         // this.app.scene.add( spotLightHelper );
@@ -660,6 +643,7 @@ class MyContents  {
         const vase = new MyVase(this.app);
         const flower = new MyFlower(this.app);
         this.spotStudent = new MySpotStudent(this.app);
+        this.spotCake = new MySpotCake(this.app);
         const cake = new MyCake(this.app, this.legHeight, this.tableThickness);
 
         this.buildFloor();
@@ -678,6 +662,7 @@ class MyContents  {
         this.buildLandscapeSphere();
         this.spotStudent.buildSpot(3.5,this.roomHeight,6,this.roomWidth);
         this.spotStudent.buildSpot(-3.5,this.roomHeight,6,this.roomWidth);
+        this.spotCake.buildSpot(3*this.roomWidth/8,this.roomHeight,0);
         springGuy.buildSpringGuy(this.roomHeight, this.roomWidth);
         radio.buildRadio(this.roomHeight, this.roomWidth);
         vase.buildVase(-4,this.roomWidth/2-1,3);
@@ -709,8 +694,8 @@ class MyContents  {
         for (let n = 0; n < 5; n++) {
             firstControlPoints = [
                 [
-                    [4.0, -2.0, 0.0, 1],
-                    [4.0, 2.0, 0.0, 1]
+                    [1.5, -2.0, 0.0, 1],
+                    [1.5, 2.0, 0.0, 1]
                 ],
                 [
                     [0.0, -2.0, 0.0, 1],
@@ -815,18 +800,6 @@ class MyContents  {
         }
     }
 
-    updateSpotLight() {
-        if (this.spotLightEnabled !== this.lastSpotLightEnabled) {
-            this.lastSpotLightEnabled = this.spotLightEnabled
-            if(this.spotLightEnabled){
-                this.app.scene.add(this.spotLight)
-            }
-            else {
-                this.app.scene.remove(this.spotLight)
-            }
-        }
-    }
-
     toggleAxis() {
         this.axis.visible = !this.axis.visible;
     }
@@ -838,7 +811,6 @@ class MyContents  {
      */
     update() {
         this.updateTable()
-        this.updateSpotLight()
     }
 }
 
