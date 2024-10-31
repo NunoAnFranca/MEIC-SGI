@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { MyAxis } from '../MyAxis.js';
-
+import { MyNurbsBuilder } from '../MyNurbsBuilder.js';
 
 
 class MySpringGuy  {
@@ -14,26 +14,37 @@ class MySpringGuy  {
         this.roomWidth = null;
         this.springGuyLegsHeight = null;
         this.springGuyTorsoHeight = null;
+        this.giftsHeight = null;
         this.loader = new THREE.TextureLoader();
+
+        this.builder = new MyNurbsBuilder();
+        this.meshes = [];
+        this.samplesU = 64;
+        this.samplesV = 64;
 
         const textures = {
             woodTexture : this.loader.load('textures/springGuy.jpg'),
             faceTexture : this.loader.load('textures/nuno.jpg'),
             shoesTexture :  this.loader.load('textures/springGuyShoes.jpg'),
-            jointsTexture :  this.loader.load('textures/springGuyJoints.jpg')
+            jointsTexture :  this.loader.load('textures/springGuyJoints.jpg'),
+            clothTexture : this.loader.load('textures/cloth_red.jpg'),
+            wrap1Texture: this.loader.load('textures/gift1.jpg')
         }
 
         textures.woodTexture.colorSpace = THREE.SRGBColorSpace;
         textures.faceTexture.colorSpace = THREE.SRGBColorSpace;
         textures.shoesTexture.colorSpace = THREE.SRGBColorSpace;
         textures.jointsTexture.colorSpace = THREE.SRGBColorSpace;
-
+        textures.clothTexture.colorSpace = THREE.SRGBColorSpace;
+        textures.wrap1Texture.colorSpace = THREE.SRGBColorSpace;
 
         this.materials = {
             wood: new THREE.MeshPhongMaterial({color: "#ffffff", specular: "#ffffff", map: textures.woodTexture}),
             shoes: new THREE.MeshPhongMaterial({color: "#ffffff", specular: "#545454", map: textures.shoesTexture}),
             joints: new THREE.MeshPhongMaterial({color: "#fff0f0", specular: "#545454", map: textures.jointsTexture}),
             face: new THREE.MeshPhongMaterial({color: "#fff0f0", specular: "#545454", map: textures.faceTexture}),
+            cloth: new THREE.MeshPhongMaterial({color: "#ffffff", specular: "#545454", map: textures.clothTexture, side: THREE.DoubleSide}),
+            wrap1: new THREE.MeshPhongMaterial({color: "#AAAAAA", specular: "#545454", map: textures.wrap1Texture}),
             black: new THREE.MeshPhongMaterial({ color: "#000000", specular: "#000000", emissive: "#000000", shininess: 90 }),
             gray: new THREE.MeshPhongMaterial({ color: "#545454", specular: "#000000", emissive: "#000000", shininess: 90 }),
 
@@ -256,6 +267,7 @@ class MySpringGuy  {
             top.add(thumbMesh);
         }
 
+        this.giftsHeight = this.springGuyLegsHeight-forearmRadius/2;
         top.position.set(centerBaseX,0,centerBaseZ);
         top.scale.set(0.75,0.75,0.75);
         this.app.scene.add(top);
@@ -266,8 +278,67 @@ class MySpringGuy  {
         const radialSegments = 32;
         const centerBaseX = 3-this.roomWidth/2;
         const centerBaseZ = 3-this.roomWidth/2;
-        let head = new THREE.Group();
+        
+        let controlPoints;
+        let surfaceData;
+        let mesh;
+        let orderU = 3;
+        let orderV = 3;
 
+        let head = new THREE.Group();
+        
+
+        controlPoints = [
+            // U = 0
+            [ // V = 0..4
+                [-3/4,0.5,0,1],
+                [-1/2,0,0,1],
+                [-1/2,1,0,1],
+                [0,1.5,0,1]
+
+            ],
+            // U = 1
+            [ // V = 0..4
+                [-3/4,0.5,-1,1],
+                [-1/2,0,-2/3,1],
+                [-1/2,1,-2/3,1],
+                [0,1.5,0,1],
+
+            ],
+            // U = 2
+            [ // V = 0..4
+                [3/4,0.5,-1,1],
+                [1/2,0,-2/3,1],
+                [1/2,1,-2/3,1],
+                [0,1.5,0,1]
+            ],
+            // U = 3
+            [ // V = 0..4
+                [3/4,0.5,0,1],
+                [1/2,0,0,1],
+                [1/2,1,0,1],
+                [0,1.5,0,1]
+            ]
+        ];
+
+        surfaceData = this.builder.build(controlPoints, orderU, orderV, this.samplesU, this.samplesV, this.materials.cloth);
+        mesh = new THREE.Mesh(surfaceData, this.materials.cloth);
+        mesh.position.set(0.05,this.springGuyTorsoHeight+3*headRadius/4,0);
+        mesh.rotation.z = Math.PI/6;
+        mesh.receiveShadow = true;
+        mesh.castShadow = true;
+        head.add(mesh);
+        this.meshes.push(mesh);
+
+        surfaceData = this.builder.build(controlPoints, orderU, orderV, this.samplesU, this.samplesV, this.materials.cloth);
+        mesh = new THREE.Mesh(surfaceData, this.materials.cloth);
+        mesh.position.set(0.05,this.springGuyTorsoHeight+3*headRadius/4,0);
+        mesh.rotation.y = Math.PI;
+        mesh.rotation.z = -Math.PI/6;
+        mesh.receiveShadow = true;
+        mesh.castShadow = true;
+        head.add(mesh);
+        this.meshes.push(mesh);
 
         const headBall = new THREE.SphereGeometry(headRadius,radialSegments,radialSegments);
         const headMesh = new THREE.Mesh(headBall, this.materials.face);
@@ -281,6 +352,25 @@ class MySpringGuy  {
         head.scale.set(0.75,0.75,0.75);
         this.app.scene.add(head);
     }
+
+    buildPresents(){
+        let gifts = new THREE.Group();
+        const centerBaseX = 3-this.roomWidth/2;
+        const centerBaseZ = 3-this.roomWidth/2;
+
+        const gift1x = 1, gift1y = 0.75, gift1z = 3;
+
+        const gift1 = new THREE.BoxGeometry(gift1x,gift1y,gift1z);
+        const gift1Mesh = new THREE.Mesh(gift1, this.materials.wrap1);
+        gift1Mesh.position.set(0,gift1y/2-0.05,0);
+        gift1Mesh.receiveShadow = true;
+        gift1Mesh.castShadow = true;
+        gifts.add(gift1Mesh);
+
+        gifts.position.set(centerBaseX+1.35,this.giftsHeight,centerBaseZ);
+        this.app.scene.add(gifts);
+    }
+
     buildSpringGuy(roomHeight, roomWidth) {
         this.roomHeight = roomHeight;
         this.roomWidth = roomWidth;
@@ -288,7 +378,7 @@ class MySpringGuy  {
         this.buildLegs();
         this.buildTorso();
         this.buildHead();
-
+        this.buildPresents();
     }
 }
 export { MySpringGuy };

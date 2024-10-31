@@ -59,20 +59,20 @@ class MyGuiInterface  {
         // adds a folder to the gui interface for the Lights
         const LightsFolder = this.datgui.addFolder('Lights');
 
-        const SubFolder = LightsFolder.addFolder('Spotlight Cake');
-        SubFolder.add(this.contents.spotCake.spotLight, 'visible').name("Spotlight Cake");
-        SubFolder.add(this.contents.spotCake.spotLight, 'intensity', 0, 100).name("Intensity (cd)");
-        SubFolder.add(this.contents.spotCake.spotLight, 'distance', 0, 16).name("Distance").onChange(() => {
+        const SpotCakeFolder = LightsFolder.addFolder('Spotlight Cake');
+        SpotCakeFolder.add(this.contents.spotCake.spotLight, 'visible').name("Spotlight Cake");
+        SpotCakeFolder.add(this.contents.spotCake.spotLight, 'intensity', 0, 100).name("Intensity (cd)");
+        SpotCakeFolder.add(this.contents.spotCake.spotLight, 'distance', 0, 16).name("Distance").onChange(() => {
             this.contents.spotCake.updateSpotLightHelper();
         });
-        SubFolder.add(this.contents.spotCake.spotLight, 'angle', 0, Math.PI/2).name("Spot angle");
-        SubFolder.add(this.contents.spotCake.spotLight, 'penumbra', 0, 1).name("Penumbra");
-        SubFolder.add(this.contents.spotCake.spotLight, 'decay', 0, 2).name("Decay");
-        SubFolder.add({ 'Show Helper': false }, 'Show Helper').onChange((value) => { this.contents.spotCake.toggleSpotLightHelpers(value); }).name('visible');
-        SubFolder.close();
+        SpotCakeFolder.add(this.contents.spotCake.spotLight, 'angle', 0, Math.PI/2).name("Spot angle");
+        SpotCakeFolder.add(this.contents.spotCake.spotLight, 'penumbra', 0, 1).name("Penumbra");
+        SpotCakeFolder.add(this.contents.spotCake.spotLight, 'decay', 0, 2).name("Decay");
+        SpotCakeFolder.add({ 'Show Helper': false }, 'Show Helper').onChange((value) => { this.contents.spotCake.toggleSpotLightHelpers(value); }).name('visible');
+        SpotCakeFolder.close();
 
         // Interface for Students Spotlights
-        const spotLightFolder = this.datgui.addFolder('Spotlights Students');
+        const spotLightFolder = LightsFolder.addFolder('Spotlights Students');
         spotLightFolder.add(this.contents.spotStudent.spotLights[0], 'visible').name("Spotlight Stu0");
         spotLightFolder.add(this.contents.spotStudent.spotLights[0], 'distance', 0.1, 100).name("Distance Stu0").onChange(() => {
             this.contents.spotStudent.updateSpotLightHelper();

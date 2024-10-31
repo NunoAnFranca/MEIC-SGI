@@ -11,6 +11,8 @@ import { MyFlower } from './contents/MyFlower.js';
 import { MySpotStudent } from './contents/MySpotStudent.js';
 import { MySpotCake } from './contents/MySpotCake.js';
 import { MyCake } from './contents/MyCake.js';
+import { MyTelevision } from './contents/MyTelevision.js';
+import { MyChair } from './contents/MyChair.js';
 /**
  *  This class contains the contents of out application
  */
@@ -325,7 +327,6 @@ class MyContents  {
         const floor = new THREE.BoxGeometry(25, 25, 0.1);
         const floorMesh = new THREE.Mesh(floor, floorMaterial);
         floorMesh.rotation.x = -Math.PI / 2;
-        floorMesh.position.y = -0.1;
         floorMesh.receiveShadow = true;
         floorMesh.castShadow = true;
 
@@ -571,7 +572,7 @@ class MyContents  {
         const landscapeTexture = this.loader.load('textures/landscapefinal.jpg');
         landscapeTexture.colorSpace = THREE.SRGBColorSpace;
         
-        const landscapeMaterial = new THREE.MeshPhongMaterial({color: "#FFFFFF", map: landscapeTexture, opacity:1, side: THREE.BackSide}); 
+        const landscapeMaterial = new THREE.MeshBasicMaterial({color: "#777777", map: landscapeTexture, opacity:1, side: THREE.BackSide}); 
         const sphereMaterial = new THREE.SphereGeometry(100,64,64);
         const sphere = new THREE.Mesh(sphereMaterial, landscapeMaterial);
 
@@ -645,6 +646,8 @@ class MyContents  {
         this.spotStudent = new MySpotStudent(this.app);
         this.spotCake = new MySpotCake(this.app);
         const cake = new MyCake(this.app, this.legHeight, this.tableThickness);
+        const television = new MyTelevision(this.app);
+        const chair = new MyChair(this.app);
 
         this.buildFloor();
         this.buildWalls();
@@ -672,6 +675,8 @@ class MyContents  {
         flower.buildFlower(-5.5,this.roomWidth/2-2,3);
         flower.buildFlower(-7,this.roomWidth/2-1,4);
         cake.buildCake();
+        television.buildTelevision(this.roomWidth/2,3*this.roomHeight/5,0);
+        chair.buildChair(4,4,0);
     }
 
     createNurbsSurfaces() {  
@@ -718,8 +723,8 @@ class MyContents  {
                     [2.0, 2.0, 0.0 + n * offset, 1]
                 ],
                 [
-                    [0.0, -2.0, 0.0, 1],
-                    [0.0, 2.0, 0.0, 1]
+                    [0.0, -2.0, -0.1, 1],
+                    [0.0, 2.0, -0.1, 1]
                 ],
             ];
 
@@ -735,8 +740,12 @@ class MyContents  {
                     [4.0, 2.0, 0.0 + n * offset * 0.2, 1]
                 ],
                 [
-                    [0.0, -2.0, 0.0, 1],
-                    [0.0, 2.0, 0.0, 1]
+                    [1.5, -2.0, 0.25 + n * offset * 0.1, 1],
+                    [1.5, 2.0, 0.25 + n * offset * 0.1, 1]
+                ],
+                [
+                    [0.0, -2.0, -0.1, 1],
+                    [0.0, 2.0, -0.1, 1]
                 ]
             ]
 
