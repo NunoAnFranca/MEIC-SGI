@@ -16,7 +16,7 @@ class MyBillboard  {
         this.samplesU = 64;
         this.samplesV = 64;
 
-        const lieTexture = this.loader.load('textures/cakelie.jpg')
+        const lieTexture = this.loader.load('textures/cakelie.jpg');
         lieTexture.colorSpace = THREE.SRGBColorSpace;
 
         this.materials = [

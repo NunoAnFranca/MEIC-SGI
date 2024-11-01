@@ -14,6 +14,8 @@ import { MyCake } from './contents/MyCake.js';
 import { MyTelevision } from './contents/MyTelevision.js';
 import { MyChair } from './contents/MyChair.js';
 import { MyBillboard } from './contents/MyBillboard.js';
+import { MyJournal } from './contents/MyJournal.js';
+import { MyCurveObjects } from './contents/MyCurveObjects.js';
 /**
  *  This class contains the contents of out application
  */
@@ -31,18 +33,6 @@ class MyContents  {
         this.spotStudent = null;
         this.spotCake = null;
         this.springGuy = null;
-
-        const map = new THREE.TextureLoader().load('textures/newspaper.png');
-        map.wrapS = map.wrapT = THREE.RepeatWrapping;
-        map.anisotropy = 16;
-        map.colorSpace = THREE.SRGBColorSpace;
-        this.material = new THREE.MeshLambertMaterial({ map: map, side: THREE.DoubleSide});
-        this.builder = new MyNurbsBuilder();
-        this.meshes = [];
-        this.samplesU = 64;
-        this.samplesV = 64;
-
-        this.createNurbsSurfaces();
         
         // table related attributes
         this.tableMesh = null;
@@ -335,144 +325,6 @@ class MyContents  {
         this.app.scene.add(floorMesh);
     }
 
-    buildBeetle(){
-        const materialBeetle = new THREE.LineBasicMaterial({color: "#000000"});
-
-        for(let i = 0; i<30;i++){
-
-            let beetle = new THREE.Group();
-            let points = [
-                new THREE.Vector3(-2,0,0),                                      // Left wheel & Left hull
-                new THREE.Vector3(-2,0.75*(4/3),0),                             // Left wheel
-                new THREE.Vector3(-0.5,0.75*(4/3),0),                           // Left wheel
-                new THREE.Vector3(-0.5,0,0),                                    // Left wheel
-                new THREE.Vector3(-2,2*(4/3)*(Math.sqrt(2)-1),0),               // Left hull
-                new THREE.Vector3(-2*(4/3)*(Math.sqrt(2)-1),2,0),               // Left hull
-                new THREE.Vector3(0,2,0),                                       // Left hull & Right top hull
-                new THREE.Vector3((4/3)*(Math.sqrt(2)-1),2,0),                  // Right top hull
-                new THREE.Vector3(1,1+(4/3)*(Math.sqrt(2)-1),0),                // Right top hull
-                new THREE.Vector3(1,1,0),                                       // Right top hull & Right bottom hull
-                new THREE.Vector3(1+(4/3)*(Math.sqrt(2)-1),1,0),                // Right bottom hull
-                new THREE.Vector3(2,(4/3)*(Math.sqrt(2)-1),0),                  // Right bottom hull
-                new THREE.Vector3(2,0,0),                                       // Right bottom hull & Right wheel
-                new THREE.Vector3(2,0.75*(4/3),0),                              // Right wheel
-                new THREE.Vector3(0.5,0.75*(4/3),0),                            // Right wheel
-                new THREE.Vector3(0.5,0,0)                                      // Right wheel
-            ]
-    
-            //Left wheel
-            const curve1 = new THREE.CubicBezierCurve3(points[0], points[1], points[2], points[3]);
-            const geometry1 = new THREE.BufferGeometry().setFromPoints(curve1.getPoints(50));
-            const curve1Mesh = new THREE.Line(geometry1, materialBeetle);
-            beetle.add(curve1Mesh);
-    
-            //Left hull
-            const curve2 = new THREE.CubicBezierCurve3(points[0],points[4], points[5], points[6]);
-            const geometry2 = new THREE.BufferGeometry().setFromPoints(curve2.getPoints(50));
-            const curve2Mesh = new THREE.Line(geometry2, materialBeetle);
-            beetle.add(curve2Mesh);
-    
-            // Right top hull
-            const curve3 = new THREE.CubicBezierCurve3(points[6],points[7], points[8], points[9]);
-            const geometry3 = new THREE.BufferGeometry().setFromPoints(curve3.getPoints(50)); 
-            const curve3Mesh = new THREE.Line(geometry3, materialBeetle);
-            beetle.add(curve3Mesh);
-    
-            // Right bottom hull
-            const curve4 = new THREE.CubicBezierCurve3(points[9],points[10], points[11], points[12]);
-            const geometry4 = new THREE.BufferGeometry().setFromPoints(curve4.getPoints(50)); 
-            const curve4Mesh = new THREE.Line(geometry4, materialBeetle);
-            beetle.add(curve4Mesh);
-    
-            // Right wheel
-            const curve5 = new THREE.CubicBezierCurve3(points[12],points[13], points[14], points[15]);
-            const geometry5 = new THREE.BufferGeometry().setFromPoints(curve5.getPoints(50)); 
-            const curve5Mesh = new THREE.Line(geometry5, materialBeetle);
-            beetle.add(curve5Mesh);
-    
-            beetle.scale.set(0.5,0.5,0.5);
-            beetle.position.set(5,5.5-i*0.002,this.roomWidth/2-0.15);
-            beetle.rotation.y = Math.PI;
-            this.app.scene.add(beetle);
-
-        }
-    }
-
-    // 
-    buildFlower(){
-        const materials = {
-            center: new THREE.LineBasicMaterial({color: "#4CF038"}),
-            petals: new THREE.LineBasicMaterial({color: "#FF1D8D"})
-        }
-        
-        for(let num = 0; num < 30; num++){
-            let flower = new THREE.Group();
-        
-            let pointsCircle = [
-                new THREE.Vector3(-1, 0,  0),
-                new THREE.Vector3(-1, (4/3), 0),
-                new THREE.Vector3(1, (4/3), 0),
-                new THREE.Vector3(1, 0, 0),
-                new THREE.Vector3(-1, -(4/3), 0),
-                new THREE.Vector3(1, -(4/3), 0)
-            ];
-            
-            const topCircle = new THREE.CubicBezierCurve3(pointsCircle[0], pointsCircle[1], pointsCircle[2], pointsCircle[3]);
-            const topCircleGeometry = new THREE.BufferGeometry().setFromPoints(topCircle.getPoints(50));
-            const topCircleMesh = new THREE.Line(topCircleGeometry, materials.center);
-            flower.add(topCircleMesh);
-
-            const downCircle = new THREE.CubicBezierCurve3(pointsCircle[0],pointsCircle[4],pointsCircle[5], pointsCircle[3]);
-            const downCircleGeometry = new THREE.BufferGeometry().setFromPoints(downCircle.getPoints(50));
-            const downCircleMesh = new THREE.Line(downCircleGeometry, materials.center);
-            flower.add(downCircleMesh);
-            
-            //draw petals
-            for(let i = 0; i < 12; i++){
-                
-                let angle = i*Math.PI/6;
-                
-                let points = [
-                    new THREE.Vector3(Math.cos(Math.PI/2 - angle),Math.sin(Math.PI/2 + angle),0), // DONE
-                    new THREE.Vector3(Math.cos(Math.PI/2 - angle)+0.2*Math.cos(Math.PI/2- angle),Math.sin(Math.PI/2+ angle)+0.2*Math.sin(Math.PI/2+ angle),0), // DONE
-                    new THREE.Vector3(-3*Math.cos(5*(Math.PI/12) + angle),3*Math.sin(5*(Math.PI/12) +angle ),0), // DONE
-                    new THREE.Vector3(-3*Math.cos(5*(Math.PI/12) + angle)+(Math.cos(Math.PI/6+angle)),3*Math.sin(5*(Math.PI/12)+ angle)-(Math.sin(Math.PI/6+angle)),0), // DONE
-                    new THREE.Vector3(-Math.cos(Math.PI/3+angle),Math.sin(Math.PI/3+angle),0),
-                    new THREE.Vector3(-Math.cos(Math.PI/3+angle)-0.2*Math.sin(Math.PI/6+angle),Math.sin(Math.PI/3+angle)-0.2*Math.cos(Math.PI/6+angle),0),
-                    new THREE.Vector3(-3*Math.cos(5*(Math.PI/12)+ angle)-Math.sin(Math.PI/6+ angle),3*Math.sin(5*(Math.PI/12)+ angle)-Math.cos(Math.PI/6+ angle),0)
-                ];
-                
-                const topPetal = new THREE.CubicBezierCurve3(points[0], points[1], points[3], points[2]);
-                const topPetalGeometry = new THREE.BufferGeometry().setFromPoints(topPetal.getPoints(50));
-                const topPetalMesh = new THREE.Line(topPetalGeometry, materials.petals);
-                flower.add(topPetalMesh);
-
-                const bottomPetal = new THREE.CubicBezierCurve3(points[4], points[5], points[6], points[2]);
-                const bottomPetalGeometry = new THREE.BufferGeometry().setFromPoints(bottomPetal.getPoints(50));
-                const bottomPetalMesh = new THREE.Line(bottomPetalGeometry, materials.petals);
-                flower.add(bottomPetalMesh);
-            }
-
-            //draw Steem
-            let pointsSteem = [
-                new THREE.Vector3(0, -1, 0),
-                new THREE.Vector3(1,-2,0),
-                new THREE.Vector3(-1,-4,0),
-                new THREE.Vector3(0,-6,0),
-            ];
-
-            const steem = new THREE.CubicBezierCurve3(pointsSteem[0], pointsSteem[1], pointsSteem[2], pointsSteem[3]);
-            const steemGeometry = new THREE.BufferGeometry().setFromPoints(steem.getPoints(50));
-            const steemMesh = new THREE.Line(steemGeometry, materials.center);
-            flower.add(steemMesh);
-
-            flower.position.set(-5-num*0.001, 6.5,this.roomWidth/2-0.15);
-            flower.scale.set(0.25,0.25,0.25);
-            this.app.scene.add(flower);
-        }
-        
-    }
-
     buildWindow(height, width){
         let frameWidth = 0.2;
         
@@ -642,21 +494,23 @@ class MyContents  {
         this.app.scene.add(lampLight);
 
         this.springGuy = new MySpringGuy(this.app);
-        const radio = new MyRadio(this.app);
-        const vase = new MyVase(this.app);
-        const flower = new MyFlower(this.app);
+        this.radio = new MyRadio(this.app);
+        this.vase = new MyVase(this.app);
+        this.flower = new MyFlower(this.app);
         this.spotStudent = new MySpotStudent(this.app);
         this.spotCake = new MySpotCake(this.app);
-        const cake = new MyCake(this.app, this.legHeight, this.tableThickness);
-        const television = new MyTelevision(this.app);
-        const chair = new MyChair(this.app);
-        const billboard = new MyBillboard(this.app);
+        this.cake = new MyCake(this.app, this.legHeight, this.tableThickness);
+        this.television = new MyTelevision(this.app);
+        this.chair = new MyChair(this.app);
+        this.billboard = new MyBillboard(this.app);
+        this.journal = new MyJournal(this.app);
+        this.curveObjects = new MyCurveObjects(this.app, this.roomWidth);
 
         this.buildFloor();
         this.buildWalls();
 		this.buildTable();
-        this.buildBeetle();
-        this.buildFlower();
+        this.curveObjects.buildBeetle();
+        this.curveObjects.buildFlower();
         this.buildCarpet();
         this.buildSpring();
         this.buildWindow(this.roomHeight, this.roomWidth);
@@ -670,113 +524,21 @@ class MyContents  {
         this.spotStudent.buildSpot(-3.5,this.roomHeight,6,this.roomWidth);
         this.spotCake.buildSpot(3*this.roomWidth/8,this.roomHeight,0);
         this.springGuy.buildSpringGuy(this.roomHeight, this.roomWidth);
-        radio.buildRadio(this.roomHeight, this.roomWidth);
-        vase.buildVase(-4,this.roomWidth/2-1,3);
-        vase.buildVase(-5.5,this.roomWidth/2-2,2);
-        vase.buildVase(-7,this.roomWidth/2-1,4);
-        flower.buildFlower(-4,this.roomWidth/2-1,2);
-        flower.buildFlower(-5.5,this.roomWidth/2-2,3);
-        flower.buildFlower(-7,this.roomWidth/2-1,4);
-        cake.buildCake();
-        television.buildTelevision(this.roomWidth/2,3*this.roomHeight/5,0);
-        chair.buildChair(2,3,Math.PI/6);
-        chair.buildChair(-2,3,-Math.PI/3);
-        chair.buildChair(-2.5,-2,-Math.PI);
-        chair.buildChair(1.5,-2,-Math.PI);
-        billboard.buildBillboard(this.roomWidth,this.roomHeight,this.roomWidth);
-    }
-
-    createNurbsSurfaces() {  
-        // are there any meshes to remove?
-        if (this.meshes !== null) {
-            // traverse mesh array
-            for (let i=0; i<this.meshes.length; i++) {
-                // remove all meshes from the scene
-                this.app.scene.remove(this.meshes[i]);
-            }
-            this.meshes = []; // empty the array  
-        }
-
-        // declare local variables
-        let firstControlPoints, secondControlPoints;
-        let firstSurfaceData, secondSurfaceData;
-        let firstMesh, secondMesh;
-        let offset = 0.2; // offset for each surface
-
-        for (let n = 0; n < 5; n++) {
-            firstControlPoints = [
-                [
-                    [1.5, -2.0, 0.0, 1],
-                    [1.5, 2.0, 0.0, 1]
-                ],
-                [
-                    [0.0, -2.0, 0.0, 1],
-                    [0.0, 2.0, 0.0, 1]
-                ],
-                [
-                    [-2.0 + n * offset * 2, -2.0, -2.0 + n * offset, 1],
-                    [-2.0 + n * offset * 2, 2.0, -2.0 + n * offset, 1]
-                ],
-                [
-                    [-2.0, -2.0, 2.0 - n * offset, 1],
-                    [-2.0, 2.0, 2.0 - n * offset, 1]
-                ],
-                [
-                    [2.0 - n * offset, -2.0, 2.0 - n * offset, 1],
-                    [2.0 - n * offset, 2.0, 2.0 - n * offset, 1]
-                ],
-                [
-                    [2.0, -2.0, 0.0 + n * offset, 1],
-                    [2.0, 2.0, 0.0 + n * offset, 1]
-                ],
-                [
-                    [0.0, -2.0, -0.1, 1],
-                    [0.0, 2.0, -0.1, 1]
-                ],
-            ];
-
-            let firstOrderU = firstControlPoints.length - 1;
-            let firstOrderV = firstControlPoints[0].length - 1;
-
-            firstSurfaceData = this.builder.build(firstControlPoints, firstOrderU, firstOrderV, this.samplesU, this.samplesV, this.material);
-            firstMesh = new THREE.Mesh(firstSurfaceData, this.material);
-            
-            secondControlPoints = [
-                [
-                    [4.0, -2.0, 0.0 + n * offset * 0.2, 1],
-                    [4.0, 2.0, 0.0 + n * offset * 0.2, 1]
-                ],
-                [
-                    [1.5, -2.0, 0.25 + n * offset * 0.1, 1],
-                    [1.5, 2.0, 0.25 + n * offset * 0.1, 1]
-                ],
-                [
-                    [0.0, -2.0, -0.1, 1],
-                    [0.0, 2.0, -0.1, 1]
-                ]
-            ]
-
-            let secondOrderU = secondControlPoints.length - 1;
-            let secondOrderV = secondControlPoints[0].length - 1;
-
-            secondSurfaceData = this.builder.build(secondControlPoints, secondOrderU, secondOrderV, this.samplesU, this.samplesV, this.material);
-            secondMesh = new THREE.Mesh(secondSurfaceData, this.material);
-
-            firstMesh.rotation.set(- Math.PI / 2, Math.PI / 30, 0);
-            secondMesh.rotation.set(- Math.PI / 2, Math.PI / 30, 0);
-            firstMesh.scale.set(0.5, 0.5, 0.5);
-            secondMesh.scale.set(0.5, 0.5, 0.5);
-            firstMesh.position.set(-3, 2.85, -0.2);
-            secondMesh.position.set(-3, 2.85, -0.2);
-            firstMesh.receiveShadow = true;
-            firstMesh.castShadow = true;
-            secondMesh.receiveShadow = true;
-            secondMesh.castShadow = true;
-            this.app.scene.add(firstMesh);
-            this.app.scene.add(secondMesh);
-            this.meshes.push(firstMesh);
-            this.meshes.push(secondMesh);
-        }
+        this.radio.buildRadio(this.roomHeight, this.roomWidth);
+        this.vase.buildVase(-4,this.roomWidth/2-1,3);
+        this.vase.buildVase(-5.5,this.roomWidth/2-2,2);
+        this.vase.buildVase(-7,this.roomWidth/2-1,4);
+        this.flower.buildFlower(-4,this.roomWidth/2-1,2);
+        this.flower.buildFlower(-5.5,this.roomWidth/2-2,3);
+        this.flower.buildFlower(-7,this.roomWidth/2-1,4);
+        this.cake.buildCake();
+        this.television.buildTelevision(this.roomWidth/2,3*this.roomHeight/5,0);
+        this.chair.buildChair(2,3,Math.PI/6);
+        this.chair.buildChair(-2,3,-Math.PI/3);
+        this.chair.buildChair(-2.5,-2,-Math.PI);
+        this.chair.buildChair(1.5,-2,-Math.PI);
+        this.billboard.buildBillboard(this.roomWidth,this.roomHeight,this.roomWidth);
+        this.journal.buildJournal();
     }
     
     /**
