@@ -16,6 +16,7 @@ import { MyCurveObjects } from './contents/MyCurveObjects.js';
 import { MyRoom } from './contents/MyRoom.js';
 import { MySpring } from './contents/MySpring.js';
 import { MyLamp } from './contents/MyLamp.js';
+import { MyCouch } from './contents/MyCouch.js';
 /**
  *  This class contains the contents of out application
  */
@@ -166,6 +167,7 @@ class MyContents  {
         this.room = new MyRoom(this.app, this.roomWidth, this.roomHeight, this.roomThickness);
         this.spring = new MySpring(this.app);
         this.lamp = new MyLamp(this.app);
+        this.couch = new MyCouch(this.app, this.roomHeight, this.roomWidth);
         
         this.buildTable();
         this.room.buildFloor();
@@ -200,6 +202,7 @@ class MyContents  {
         this.chair.buildChair(1.5,-2,-Math.PI);
         this.billboard.buildBillboard(this.roomWidth,this.roomHeight,this.roomWidth);
         this.journal.buildJournal();
+        this.couch.buildCouch();
     }
     
     /**
