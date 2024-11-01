@@ -500,5 +500,12 @@ class MySpringGuy  {
             Object.visible = visible;
         });
     }
+
+    SpringGuyScale(value) {
+        let folder = (this.SpringGuyBody.concat(this.SpringGuyHead)).concat(this.SpringGuyLegs);
+        folder.forEach(Object => {
+            Object.scale.set(value,value,value);
+        });
+    }
 }
 export { MySpringGuy };

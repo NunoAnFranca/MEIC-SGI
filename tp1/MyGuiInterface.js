@@ -97,10 +97,12 @@ class MyGuiInterface  {
         spotLightFolder.close();
 
         const SpringGuyFolder = this.datgui.addFolder('Spring Guy');
+        SpringGuyFolder.add({springGuyScale: 0.75}, 'springGuyScale', 0.1, 5.0).name('Spring Guy Scale').onChange(value => {this.contents.springGuy.SpringGuyScale(value);});        
         SpringGuyFolder.add({ 'Show Spring Guy Legs': true }, 'Show Spring Guy Legs').onChange((value) => { this.contents.springGuy.toggleSpringGuy(this.contents.springGuy.SpringGuyLegs, value); }).name('Show Spring Guy Legs');
         SpringGuyFolder.add({ 'Show Spring Guy Body': true }, 'Show Spring Guy Body').onChange((value) => { this.contents.springGuy.toggleSpringGuy(this.contents.springGuy.SpringGuyBody, value); }).name('Show Spring Guy Body');
         SpringGuyFolder.add({ 'Show Spring Guy Head': true }, 'Show Spring Guy Head').onChange((value) => { this.contents.springGuy.toggleSpringGuy(this.contents.springGuy.SpringGuyHead, value); }).name('Show Spring Guy Head');
         SpringGuyFolder.add({ 'Show Gifts': true }, 'Show Gifts').onChange((value) => { this.contents.springGuy.toggleSpringGuy(this.contents.springGuy.presents, value); }).name('Show Gifts');
+        SpringGuyFolder.open();
     }
 }
 

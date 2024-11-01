@@ -12,11 +12,16 @@ class MyTelevision  {
         this.loader = new THREE.TextureLoader();
 
         const screenTexture = this.loader.load('textures/television.jpg')
+        const buttonTexture = this.loader.load('textures/on-off.jpg')
+
         screenTexture.colorSpace = THREE.SRGBColorSpace;
+        buttonTexture.colorSpace = THREE.SRGBColorSpace;
 
         this.materials = {
-            black : new THREE.MeshPhongMaterial({color: "#000000", specular: "#000000"}), 
-            screen: new THREE.MeshBasicMaterial({color: "#ffffff", specular: "#000000", map: screenTexture}) 
+            black : new THREE.MeshPhongMaterial({color: "#000000", specular: "#000000"}),
+            gray : new THREE.MeshPhongMaterial({color: "#545454", specular: "#000000"}),  
+            screen: new THREE.MeshBasicMaterial({color: "#ffffff", specular: "#000000", map: screenTexture}),
+            button: new THREE.MeshBasicMaterial({color: "#ffffff", specular: "#000000", map: buttonTexture}) 
         };
     }
 
@@ -25,6 +30,7 @@ class MyTelevision  {
      */
     buildTelevision(x,y,z){
         let television = new THREE.Group();
+        const radialSegments = 32;
         const backWdith = 0.4;
         const backy = 3*(3/2);
         const backz = 4*(3/2);
@@ -32,6 +38,9 @@ class MyTelevision  {
         const frontWidth = 0.2;
         const fronty = backy+0.4;
         const frontz = backz+0.4;
+
+        const buttonWidth = 0.075;
+        const buttonHeight = 0.05;
 
         const backTelevision = new THREE.BoxGeometry(backWdith,backy,backz);
         const backMesh = new THREE.Mesh(backTelevision, this.materials.black);
@@ -46,7 +55,24 @@ class MyTelevision  {
         frontMesh.receiveShadow = true;
         frontMesh.castShadow = true;
         television.add(frontMesh);
-        
+
+        const button1  = new THREE.CylinderGeometry(buttonWidth,buttonWidth,buttonHeight,radialSegments);
+        const button1Mesh = new THREE.Mesh(button1, this.materials.gray);
+        button1Mesh.position.set(-backWdith-frontWidth/2,0.5-fronty/2,frontz/2+buttonHeight/2);
+        button1Mesh.rotation.x = Math.PI/2;
+        button1Mesh.receiveShadow = true;
+        button1Mesh.castShadow = true;
+        television.add(button1Mesh);
+
+        const button1Tex  = new THREE.CylinderGeometry(buttonWidth,buttonWidth,buttonHeight/100,radialSegments);
+        const button1TexMesh = new THREE.Mesh(button1Tex, this.materials.button);
+        button1TexMesh.position.set(-backWdith-frontWidth/2,0.5-fronty/2,frontz/2+buttonHeight+buttonHeight/100);
+        button1TexMesh.rotation.x = Math.PI/2;
+        button1TexMesh.rotation.y = Math.PI/2;
+        button1TexMesh.receiveShadow = true;
+        button1TexMesh.castShadow = true;
+        television.add(button1TexMesh);
+
         for(let i = 0; i<2; i++){
             const bar = new THREE.BoxGeometry(frontWidth,frontWidth,frontz);
             const barMesh = new THREE.Mesh(bar, this.materials.black);
