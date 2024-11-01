@@ -13,6 +13,7 @@ import { MySpotCake } from './contents/MySpotCake.js';
 import { MyCake } from './contents/MyCake.js';
 import { MyTelevision } from './contents/MyTelevision.js';
 import { MyChair } from './contents/MyChair.js';
+import { MyBillboard } from './contents/MyBillboard.js';
 /**
  *  This class contains the contents of out application
  */
@@ -649,6 +650,7 @@ class MyContents  {
         const cake = new MyCake(this.app, this.legHeight, this.tableThickness);
         const television = new MyTelevision(this.app);
         const chair = new MyChair(this.app);
+        const billboard = new MyBillboard(this.app);
 
         this.buildFloor();
         this.buildWalls();
@@ -678,6 +680,7 @@ class MyContents  {
         cake.buildCake();
         television.buildTelevision(this.roomWidth/2,3*this.roomHeight/5,0);
         chair.buildChair(4,4,0);
+        billboard.buildBillboard(this.roomWidth,this.roomHeight,this.roomWidth);
     }
 
     createNurbsSurfaces() {  
