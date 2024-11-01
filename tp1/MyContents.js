@@ -110,7 +110,7 @@ class MyContents  {
         topRingMesh.rotation.set(Math.PI / 2, 0, 0);
         bottomRingMesh.position.set(0, 2, 0);
         bottomRingMesh.rotation.set(Math.PI / 2, 0, 0);
-        lampSupportMesh.position.set(0, 1, 0);
+        lampSupportMesh.position.set(0, 1.5, 0);
 
         outerPartMesh.receiveShadow = true;
         outerPartMesh.castShadow = true;
@@ -679,7 +679,10 @@ class MyContents  {
         flower.buildFlower(-7,this.roomWidth/2-1,4);
         cake.buildCake();
         television.buildTelevision(this.roomWidth/2,3*this.roomHeight/5,0);
-        chair.buildChair(4,4,0);
+        chair.buildChair(2,3,Math.PI/6);
+        chair.buildChair(-2,3,-Math.PI/3);
+        chair.buildChair(-2.5,-2,-Math.PI);
+        chair.buildChair(1.5,-2,-Math.PI);
         billboard.buildBillboard(this.roomWidth,this.roomHeight,this.roomWidth);
     }
 
