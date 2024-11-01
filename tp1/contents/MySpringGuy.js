@@ -16,6 +16,10 @@ class MySpringGuy  {
         this.springGuyTorsoHeight = null;
         this.giftsHeight = null;
         this.loader = new THREE.TextureLoader();
+        this.SpringGuyLegs = [];
+        this.SpringGuyBody = [];
+        this.SpringGuyHead = [];
+        this.presents = [];
 
         this.builder = new MyNurbsBuilder();
         this.meshes = [];
@@ -28,7 +32,17 @@ class MySpringGuy  {
             shoesTexture :  this.loader.load('textures/springGuyShoes.jpg'),
             jointsTexture :  this.loader.load('textures/springGuyJoints.jpg'),
             clothTexture : this.loader.load('textures/cloth_red.jpg'),
-            wrap1Texture: this.loader.load('textures/gift1.jpg')
+            wrap1Texture: this.loader.load('textures/gift1.jpg'),
+            wrap2Texture: this.loader.load('textures/gift2.jpg'),
+            wrap3Texture: this.loader.load('textures/gift3.jpg'),
+            wrap4Texture: this.loader.load('textures/gift4.jpg'),
+            wrap5Texture: this.loader.load('textures/gift5.jpg'),
+            wrap6Texture: this.loader.load('textures/gift6.jpg'),
+            wrap7Texture: this.loader.load('textures/gift7.jpg'),
+            wrap8Texture: this.loader.load('textures/gift8.jpg'),
+            wrap9Texture: this.loader.load('textures/gift9.jpg'),
+            wrap10Texture: this.loader.load('textures/gift10.jpg'),
+
         }
 
         textures.woodTexture.colorSpace = THREE.SRGBColorSpace;
@@ -37,6 +51,15 @@ class MySpringGuy  {
         textures.jointsTexture.colorSpace = THREE.SRGBColorSpace;
         textures.clothTexture.colorSpace = THREE.SRGBColorSpace;
         textures.wrap1Texture.colorSpace = THREE.SRGBColorSpace;
+        textures.wrap2Texture.colorSpace = THREE.SRGBColorSpace;
+        textures.wrap3Texture.colorSpace = THREE.SRGBColorSpace;
+        textures.wrap4Texture.colorSpace = THREE.SRGBColorSpace;
+        textures.wrap5Texture.colorSpace = THREE.SRGBColorSpace;
+        textures.wrap6Texture.colorSpace = THREE.SRGBColorSpace;
+        textures.wrap7Texture.colorSpace = THREE.SRGBColorSpace;
+        textures.wrap8Texture.colorSpace = THREE.SRGBColorSpace;
+        textures.wrap9Texture.colorSpace = THREE.SRGBColorSpace;
+        textures.wrap10Texture.colorSpace = THREE.SRGBColorSpace;
 
         this.materials = {
             wood: new THREE.MeshPhongMaterial({color: "#ffffff", specular: "#ffffff", map: textures.woodTexture}),
@@ -45,6 +68,15 @@ class MySpringGuy  {
             face: new THREE.MeshPhongMaterial({color: "#fff0f0", specular: "#545454", map: textures.faceTexture}),
             cloth: new THREE.MeshPhongMaterial({color: "#ffffff", specular: "#545454", map: textures.clothTexture, side: THREE.DoubleSide}),
             wrap1: new THREE.MeshPhongMaterial({color: "#AAAAAA", specular: "#545454", map: textures.wrap1Texture}),
+            wrap2: new THREE.MeshPhongMaterial({color: "#AAAAAA", specular: "#545454", map: textures.wrap2Texture}),
+            wrap3: new THREE.MeshPhongMaterial({color: "#AAAAAA", specular: "#545454", map: textures.wrap3Texture}),
+            wrap4: new THREE.MeshPhongMaterial({color: "#AAAAAA", specular: "#545454", map: textures.wrap4Texture}),
+            wrap5: new THREE.MeshPhongMaterial({color: "#AAAAAA", specular: "#545454", map: textures.wrap5Texture}),
+            wrap6: new THREE.MeshPhongMaterial({color: "#AAAAAA", specular: "#545454", map: textures.wrap6Texture}),
+            wrap7: new THREE.MeshPhongMaterial({color: "#AAAAAA", specular: "#545454", map: textures.wrap7Texture}),
+            wrap8: new THREE.MeshPhongMaterial({color: "#AAAAAA", specular: "#545454", map: textures.wrap8Texture}),
+            wrap9: new THREE.MeshPhongMaterial({color: "#AAAAAA", specular: "#545454", map: textures.wrap9Texture}),
+            wrap10: new THREE.MeshPhongMaterial({color: "#AAAAAA", specular: "#545454", map: textures.wrap10Texture}),           
             black: new THREE.MeshPhongMaterial({ color: "#000000", specular: "#000000", emissive: "#000000", shininess: 90 }),
             gray: new THREE.MeshPhongMaterial({ color: "#545454", specular: "#000000", emissive: "#000000", shininess: 90 }),
 
@@ -169,6 +201,7 @@ class MySpringGuy  {
 
         legs.position.set(centerBaseX,0,centerBaseZ)
         legs.scale.set(0.75,0.75,0.75);
+        this.SpringGuyLegs.push(legs);
         this.app.scene.add(legs);
     }
 
@@ -270,6 +303,7 @@ class MySpringGuy  {
         this.giftsHeight = this.springGuyLegsHeight-forearmRadius/2;
         top.position.set(centerBaseX,0,centerBaseZ);
         top.scale.set(0.75,0.75,0.75);
+        this.SpringGuyBody.push(top);
         this.app.scene.add(top);
     }
 
@@ -350,6 +384,7 @@ class MySpringGuy  {
         
         head.position.set(centerBaseX,0,centerBaseZ);
         head.scale.set(0.75,0.75,0.75);
+        this.SpringGuyHead.push(head);
         this.app.scene.add(head);
     }
 
@@ -357,8 +392,18 @@ class MySpringGuy  {
         let gifts = new THREE.Group();
         const centerBaseX = 3-this.roomWidth/2;
         const centerBaseZ = 3-this.roomWidth/2;
+        const radialSegments = 32;
 
-        const gift1x = 1, gift1y = 0.75, gift1z = 3;
+        const gift1x = 1.2, gift1y = 0.75, gift1z = 3;
+        const gift2x = 0.8, gift2y = 0.6, gift2z = 0.8;
+        const gift3radius = 0.4;
+        const gift4Radius = 0.3, gift4Height = gift2y + gift3radius*2;
+        const gift5x = 1.0, gift5y = 1.0, gift5z = 1.4;
+        const gift6Radius = 0.4;
+        const gift7x = 1.2, gift7y = 0.45*Math.sin(Math.PI/6), gift7z = 1.2;
+        const gift8xyz = 0.9;
+        const gift9radius = 0.3;
+        const gift10Radius = 0.3;
 
         const gift1 = new THREE.BoxGeometry(gift1x,gift1y,gift1z);
         const gift1Mesh = new THREE.Mesh(gift1, this.materials.wrap1);
@@ -367,7 +412,76 @@ class MySpringGuy  {
         gift1Mesh.castShadow = true;
         gifts.add(gift1Mesh);
 
+        const gift2 = new THREE.BoxGeometry(gift2x,gift2y,gift2z);
+        const gift2Mesh = new THREE.Mesh(gift2, this.materials.wrap2);
+        gift2Mesh.position.set(0,gift2y/2 + gift1y-0.05,gift2z);
+        gift2Mesh.receiveShadow = true;
+        gift2Mesh.castShadow = true;
+        gifts.add(gift2Mesh);
+
+        const gift3 = new THREE.SphereGeometry(gift3radius, radialSegments, radialSegments);
+        const gift3Mesh = new THREE.Mesh(gift3, this.materials.wrap3);
+        gift3Mesh.position.set(0,gift3radius + gift2y + gift1y-0.05,gift2z);
+        gift3Mesh.receiveShadow = true;
+        gift3Mesh.castShadow = true;
+        gifts.add(gift3Mesh);
+        
+        for(let i = 0; i < 2; i++){
+            const gift4 = new THREE.CylinderGeometry(gift4Radius,gift4Radius,gift4Height,radialSegments);
+            const gift4Mesh = new THREE.Mesh(gift4, this.materials.wrap4);
+            gift4Mesh.position.set(0,gift4Height/2 + gift1y-0.05,-0.4-i*gift4Height/2);
+            gift4Mesh.receiveShadow = true;
+            gift4Mesh.castShadow = true;
+            gifts.add(gift4Mesh);
+        }
+
+        const gift5 = new THREE.BoxGeometry(gift5x,gift5y,gift5z);
+        const gift5Mesh = new THREE.Mesh(gift5, this.materials.wrap5);
+        gift5Mesh.position.set(0,gift5y/2 + gift4Height + gift1y-0.05,gift5z/4);
+        gift5Mesh.receiveShadow = true;
+        gift5Mesh.castShadow = true;
+        gifts.add(gift5Mesh);
+
+        const gift6 = new THREE.ConeGeometry(gift6Radius, gift5y, 3, radialSegments);
+        const gift6Mesh = new THREE.Mesh(gift6, this.materials.wrap6);
+        gift6Mesh.position.set(0,gift5y/2 + gift4Height + gift1y-0.05,-3*gift5z/4);
+        gift6Mesh.receiveShadow = true;
+        gift6Mesh.castShadow = true;
+        gifts.add(gift6Mesh);
+
+        const gift7 = new THREE.BoxGeometry(gift7x, gift7y, gift7z);
+        const gift7Mesh = new THREE.Mesh(gift7, this.materials.wrap7);
+        gift7Mesh.position.set(0,gift7y/2+gift5y + gift4Height + gift1y-0.05,-gift5z/2);
+        gift7Mesh.receiveShadow = true;
+        gift7Mesh.castShadow = true;
+        gifts.add(gift7Mesh);
+
+        const gift8 = new THREE.BoxGeometry(gift8xyz, gift8xyz, gift8xyz);
+        const gift8Mesh = new THREE.Mesh(gift8, this.materials.wrap8);
+        gift8Mesh.position.set(0,0.45*Math.sin(Math.PI/6)/2+gift8xyz/2+gift5y + gift4Height + gift1y,-0.1+0.45*Math.sin(Math.PI/6));
+        gift8Mesh.rotation.x = Math.PI/6;
+        gift8Mesh.receiveShadow = true;
+        gift8Mesh.castShadow = true;
+        gifts.add(gift8Mesh);
+
+        const gift9 = new THREE.SphereGeometry(gift9radius, radialSegments, radialSegments);
+        const gift9Mesh = new THREE.Mesh(gift9, this.materials.wrap9);
+        gift9Mesh.position.set(0,0.45*Math.sin(Math.PI/6)/2+gift8xyz+gift5y + gift4Height + gift1y-0.025,3*gift9radius);
+        gift9Mesh.rotation.x = Math.PI/4;
+        gift9Mesh.receiveShadow = true;
+        gift9Mesh.castShadow = true;
+        gifts.add(gift9Mesh);
+
+        const gift10 = new THREE.ConeGeometry(gift10Radius, gift5y, radialSegments,radialSegments);
+        const gift10Mesh = new THREE.Mesh(gift10, this.materials.wrap10);
+        gift10Mesh.position.set(0,gift10Radius+0.45*Math.sin(Math.PI/6)+gift8xyz+gift5y + gift4Height + gift1y+0.025,0.01+gift5y/2+gift9radius/2);
+        gift10Mesh.rotation.x = Math.PI/3;
+        gift10Mesh.receiveShadow = true;
+        gift10Mesh.castShadow = true;
+        gifts.add(gift10Mesh);
+
         gifts.position.set(centerBaseX+1.35,this.giftsHeight,centerBaseZ);
+        this.presents.push(gifts);
         this.app.scene.add(gifts);
     }
 
@@ -379,6 +493,12 @@ class MySpringGuy  {
         this.buildTorso();
         this.buildHead();
         this.buildPresents();
+    }
+
+    toggleSpringGuy(folder, visible) {
+        folder.forEach(Object => {
+            Object.visible = visible;
+        });
     }
 }
 export { MySpringGuy };

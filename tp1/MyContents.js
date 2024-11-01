@@ -29,6 +29,7 @@ class MyContents  {
 
         this.spotStudent = null;
         this.spotCake = null;
+        this.springGuy = null;
 
         const map = new THREE.TextureLoader().load('textures/newspaper.png');
         map.wrapS = map.wrapT = THREE.RepeatWrapping;
@@ -639,7 +640,7 @@ class MyContents  {
         lampLight.position.set(9, 3.8, -9);
         this.app.scene.add(lampLight);
 
-        const springGuy = new MySpringGuy(this.app);
+        this.springGuy = new MySpringGuy(this.app);
         const radio = new MyRadio(this.app);
         const vase = new MyVase(this.app);
         const flower = new MyFlower(this.app);
@@ -666,7 +667,7 @@ class MyContents  {
         this.spotStudent.buildSpot(3.5,this.roomHeight,6,this.roomWidth);
         this.spotStudent.buildSpot(-3.5,this.roomHeight,6,this.roomWidth);
         this.spotCake.buildSpot(3*this.roomWidth/8,this.roomHeight,0);
-        springGuy.buildSpringGuy(this.roomHeight, this.roomWidth);
+        this.springGuy.buildSpringGuy(this.roomHeight, this.roomWidth);
         radio.buildRadio(this.roomHeight, this.roomWidth);
         vase.buildVase(-4,this.roomWidth/2-1,3);
         vase.buildVase(-5.5,this.roomWidth/2-2,2);

@@ -95,6 +95,12 @@ class MyGuiInterface  {
         spotLightFolder.add(this.contents.spotStudent.spotLights[1], 'decay', 0, 5).name("Decay Stu1");
         spotLightFolder.add({ 'Show Helpers': false }, 'Show Helpers').onChange((value) => {this.contents.spotStudent.toggleSpotLightHelpers(value);});
         spotLightFolder.close();
+
+        const SpringGuyFolder = this.datgui.addFolder('Spring Guy');
+        SpringGuyFolder.add({ 'Show Spring Guy Legs': true }, 'Show Spring Guy Legs').onChange((value) => { this.contents.springGuy.toggleSpringGuy(this.contents.springGuy.SpringGuyLegs, value); }).name('Show Spring Guy Legs');
+        SpringGuyFolder.add({ 'Show Spring Guy Body': true }, 'Show Spring Guy Body').onChange((value) => { this.contents.springGuy.toggleSpringGuy(this.contents.springGuy.SpringGuyBody, value); }).name('Show Spring Guy Body');
+        SpringGuyFolder.add({ 'Show Spring Guy Head': true }, 'Show Spring Guy Head').onChange((value) => { this.contents.springGuy.toggleSpringGuy(this.contents.springGuy.SpringGuyHead, value); }).name('Show Spring Guy Head');
+        SpringGuyFolder.add({ 'Show Gifts': true }, 'Show Gifts').onChange((value) => { this.contents.springGuy.toggleSpringGuy(this.contents.springGuy.presents, value); }).name('Show Gifts');
     }
 }
 
