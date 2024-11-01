@@ -1,8 +1,5 @@
 import * as THREE from 'three';
 import { MyAxis } from './MyAxis.js';
-import { NURBSSurface } from 'three/addons/curves/NURBSSurface.js';
-import { ParametricGeometry } from 'three/addons/geometries/ParametricGeometry.js';
-import { MyNurbsBuilder } from './MyNurbsBuilder.js';
 
 import { MySpringGuy } from './contents/MySpringGuy.js';
 import { MyRadio } from './contents/MyRadio.js';
@@ -16,6 +13,9 @@ import { MyChair } from './contents/MyChair.js';
 import { MyBillboard } from './contents/MyBillboard.js';
 import { MyJournal } from './contents/MyJournal.js';
 import { MyCurveObjects } from './contents/MyCurveObjects.js';
+import { MyRoom } from './contents/MyRoom.js';
+import { MySpring } from './contents/MySpring.js';
+import { MyLamp } from './contents/MyLamp.js';
 /**
  *  This class contains the contents of out application
  */
@@ -66,209 +66,6 @@ class MyContents  {
         this.loader = new THREE.TextureLoader();
     }
 
-    buildLampSticks(angleX, angleZ, x, z) {
-        const lampStick = new THREE.CylinderGeometry(0.1, 0.1, 1.6, 32, 32);
-        const lampStickMaterial = new THREE.MeshPhongMaterial({color: "#d9af25"});
-        const lampStickMesh = new THREE.Mesh(lampStick, lampStickMaterial);
-        lampStickMesh.position.set(x, 2.5, z);
-        lampStickMesh.rotation.set(angleX, 0, angleZ);
-        lampStickMesh.receiveShadow = true;
-        lampStickMesh.castShadow = true;
-        
-        return lampStickMesh;
-    }
-
-    buildLamp() {
-        const lamp = new THREE.Group();
-        const outerPart = new THREE.CylinderGeometry(0.8, 2.1, 2, 32, 32, true);
-        const innerPart = new THREE.CylinderGeometry(0.7, 2, 2, 32, 32, true);
-        const topRing = new THREE.RingGeometry(0.7, 0.8, 32);
-        const bottomRing = new THREE.RingGeometry(2, 2.1, 32);
-        const lampSupport = new THREE.CylinderGeometry(0.2, 0.2, 3, 32, 32);
-        const outerLampMaterial = new THREE.MeshPhongMaterial({color: "#993240", side: THREE.FrontSide});
-        const innerLampMaterial = new THREE.MeshPhongMaterial({color: "#993240", side: THREE.BackSide});
-        const lampSupportMaterial = new THREE.MeshPhongMaterial({color: "#8f6b1d"});
-        const outerPartMesh = new THREE.Mesh(outerPart, outerLampMaterial);
-        const innerPartMesh = new THREE.Mesh(innerPart, innerLampMaterial);
-        const topRingMesh = new THREE.Mesh(topRing, innerLampMaterial);
-        const bottomRingMesh = new THREE.Mesh(bottomRing, outerLampMaterial);
-        const lampSupportMesh = new THREE.Mesh(lampSupport, lampSupportMaterial);
-
-        outerPartMesh.position.set(0, 3, 0);
-        innerPartMesh.position.set(0, 3, 0);
-        topRingMesh.position.set(0, 4, 0);
-        topRingMesh.rotation.set(Math.PI / 2, 0, 0);
-        bottomRingMesh.position.set(0, 2, 0);
-        bottomRingMesh.rotation.set(Math.PI / 2, 0, 0);
-        lampSupportMesh.position.set(0, 1.5, 0);
-
-        outerPartMesh.receiveShadow = true;
-        outerPartMesh.castShadow = true;
-        innerPartMesh.receiveShadow = true;
-        innerPartMesh.castShadow = true;
-        topRingMesh.receiveShadow = true;
-        topRingMesh.castShadow = true;
-        bottomRingMesh.receiveShadow = true;
-        bottomRingMesh.castShadow = true;
-        lampSupportMesh.receiveShadow = true;
-        lampSupportMesh.castShadow = true;
-
-        lamp.add(outerPartMesh);
-        lamp.add(innerPartMesh);
-        lamp.add(topRingMesh);
-        lamp.add(bottomRingMesh);
-        lamp.add(lampSupportMesh);
-        lamp.add(this.buildLampSticks(0, - Math.PI / 4, 0.7, 0));
-        lamp.add(this.buildLampSticks(0, Math.PI / 4, -0.7, 0));
-        lamp.add(this.buildLampSticks(Math.PI / 4, 0, 0, 0.7));
-        lamp.add(this.buildLampSticks(- Math.PI / 4, 0, 0, -0.7));
-
-        lamp.position.set(9, 0, -9);
-
-        this.app.scene.add(lamp);
-        
-    }
-
-    buildFrame(frameThickness, frameWidth, frameHeight, frameDepth, horizontalDisp, verticalDisp, hasFrame, imagePath, color, side) {
-        const frameTexture = this.loader.load('textures/frame.jpg');
-        frameTexture.colorSpace = THREE.SRGBColorSpace;
-        const frameMaterial = new THREE.MeshPhongMaterial({color: color, map: frameTexture, specular: "#111111", shininess: 0});
-
-        let frameParts = [
-            {name: 'Left', geometry: new THREE.BoxGeometry(frameThickness, frameHeight, frameDepth), position: new THREE.Vector3(frameWidth / 2, 0, 0)},
-            {name: 'Right', geometry: new THREE.BoxGeometry(frameThickness, frameHeight, frameDepth), position: new THREE.Vector3(- frameWidth / 2, 0, 0)},
-            {name: 'Front', geometry: new THREE.BoxGeometry(frameWidth + frameThickness, frameThickness, frameDepth), position: new THREE.Vector3(0, frameHeight / 2, 0)},
-            {name: 'Back', geometry: new THREE.BoxGeometry(frameWidth + frameThickness, frameThickness, frameDepth), position: new THREE.Vector3(0, - frameHeight / 2, 0)}
-        ];
-
-        let frameGroup = new THREE.Group();
-
-        for (let framePart of frameParts) {
-            let frameMesh = new THREE.Mesh(framePart.geometry, frameMaterial);
-            frameMesh.position.copy(framePart.position);
-            frameGroup.add(frameMesh);
-        }
-
-        switch (side) {
-            case 'left':
-                frameGroup.position.set(- this.roomWidth / 2 + frameThickness, verticalDisp, horizontalDisp);
-                frameGroup.rotation.y = Math.PI / 2;
-                break;
-            case 'right':
-                frameGroup.position.set(this.roomWidth / 2 - frameThickness, verticalDisp, horizontalDisp);
-                frameGroup.rotation.y = Math.PI / 2;
-                break;
-            case 'front':
-                frameGroup.position.set(horizontalDisp, verticalDisp, this.roomWidth / 2-frameThickness);
-                break;
-            case 'back':
-                frameGroup.position.set(horizontalDisp, verticalDisp, - this.roomWidth / 2+frameThickness);
-                frameGroup.rotation.y = Math.PI;
-                break;
-        }
-
-        if (hasFrame) {
-            let verticalStripe = new THREE.BoxGeometry(frameThickness, frameHeight, frameDepth);
-            let horizontalStripe = new THREE.BoxGeometry(frameWidth + frameThickness, frameThickness, frameDepth);
-            let verticalStripeMesh = new THREE.Mesh(verticalStripe, frameMaterial);
-            let horizontalStripeMesh = new THREE.Mesh(horizontalStripe, frameMaterial);
-            verticalStripeMesh.position.set(0, 0, 0);
-            horizontalStripeMesh.position.set(0, 0, 0);
-            frameGroup.add(verticalStripeMesh, horizontalStripeMesh);  
-        }
-
-        const imageTexture = this.loader.load(imagePath);
-        imageTexture.colorSpace = THREE.SRGBColorSpace;
-
-        const imageMaterial = new THREE.MeshPhongMaterial({color: "#ffffff", map: imageTexture});
-        let image = new THREE.BoxGeometry(frameWidth, frameHeight, frameDepth / 2);
-        let imageMesh = new THREE.Mesh(image, imageMaterial);
-        frameGroup.add(imageMesh);      
-
-        this.app.scene.add(frameGroup);
-    }
-
-	buildWalls() {
-        const wallTexture = this.loader.load('textures/wall.jpg');
-        wallTexture.colorSpace = THREE.SRGBColorSpace;
-        const wallMaterial = new THREE.MeshPhongMaterial({color: "#80573e", map: wallTexture});
-	
-		for (let i = 0; i < 4; i += 1) {
-			let wall = new THREE.BoxGeometry(this.roomWidth, this.roomHeight, this.roomThickness);
-			let firstWallMesh = new THREE.Mesh(wall, wallMaterial);
-            let secondWallMesh = new THREE.Mesh(wall, wallMaterial);
-            let firstSideMesh = new THREE.Mesh(wall, wallMaterial);
-            let secondSideMesh = new THREE.Mesh(wall, wallMaterial);
-
-			switch (i) {
-				case 0:
-					firstWallMesh.position.set(0, this.roomHeight / 2, this.roomWidth / 2);
-					firstWallMesh.rotation.x = Math.PI;
-					break;
-				case 1:
-					firstWallMesh.position.set(this.roomWidth / 2, this.roomHeight / 2, 0);
-					firstWallMesh.rotation.y = Math.PI / 2;
-                    
-                    secondWallMesh.scale.set(1,(1/4),1);
-                    secondWallMesh.rotation.y = -Math.PI / 2;
-                    secondWallMesh.position.set(-this.roomWidth / 2, this.roomHeight-(1/4)*(this.roomHeight / 2), 0);
-
-                    firstSideMesh.scale.set((1/4),(1/2),1);
-                    firstSideMesh.rotation.y = -Math.PI / 2;
-                    firstSideMesh.position.set(-this.roomWidth / 2, this.roomHeight / 2, this.roomWidth/2-(1/4)*(this.roomWidth / 2));
-
-                    secondSideMesh.scale.set((1/4),(1/2),1);
-                    secondSideMesh.rotation.y = -Math.PI / 2;
-                    secondSideMesh.position.set(-this.roomWidth / 2, this.roomHeight / 2, -this.roomWidth/2+(1/4)*(this.roomWidth / 2));
-
-                    secondWallMesh.receiveShadow = true;
-                    secondWallMesh.castShadow = true;
-                    firstSideMesh.receiveShadow = true;
-                    firstSideMesh.castShadow = true;
-                    secondSideMesh.receiveShadow = true;
-                    secondSideMesh.castShadow = true;
-
-                    this.app.scene.add(secondWallMesh, firstSideMesh, secondSideMesh);
-					break;
-				case 2:
-					firstWallMesh.position.set(0, this.roomHeight / 2, -this.roomWidth / 2);
-					firstWallMesh.rotation.x = Math.PI;
-					break;
-				case 3:
-                    firstWallMesh.scale.set(1,(1/4),1);
-					firstWallMesh.position.set(-this.roomWidth / 2, this.roomHeight-(1/4)*(this.roomHeight / 2), 0);
-					firstWallMesh.rotation.y = Math.PI / 2;
-
-                    secondWallMesh.scale.set(1,(1/4),1);
-                    secondWallMesh.rotation.y = Math.PI / 2;
-                    secondWallMesh.position.set(-this.roomWidth / 2, (1/4)*(this.roomHeight / 2), 0);
-
-                    firstSideMesh.scale.set((1/4),(1/2),1);
-                    firstSideMesh.rotation.y = Math.PI / 2;
-                    firstSideMesh.position.set(-this.roomWidth / 2, this.roomHeight / 2, this.roomWidth/2-(1/4)*(this.roomWidth / 2));
-
-                    secondSideMesh.scale.set((1/4),(1/2),1);
-                    secondSideMesh.rotation.y = Math.PI / 2;
-                    secondSideMesh.position.set(-this.roomWidth / 2, this.roomHeight / 2, -this.roomWidth/2+(1/4)*(this.roomWidth / 2));
-
-                    secondWallMesh.receiveShadow = true;
-                    secondWallMesh.castShadow = true;
-                    firstSideMesh.receiveShadow = true;
-                    firstSideMesh.castShadow = true;
-                    secondSideMesh.receiveShadow = true;
-                    secondSideMesh.castShadow = true;
-
-                    this.app.scene.add(secondWallMesh, firstSideMesh, secondSideMesh);
-					break;
-			}
-
-            firstWallMesh.receiveShadow = true;
-            firstWallMesh.castShadow = true;
-
-			this.app.scene.add(firstWallMesh);
-		}
-	}
-
     /**
      * builds the table mesh with material assigned
      */
@@ -310,129 +107,7 @@ class MyContents  {
             this.tableMesh.add(legMesh);
         }
     }
-
-    buildFloor() {
-        const floorTexture = this.loader.load('textures/floor.jpg');
-        floorTexture.colorSpace = THREE.SRGBColorSpace;
-
-        const floorMaterial = new THREE.MeshPhongMaterial({color: "#BCA89F", map: floorTexture});
-        const floor = new THREE.BoxGeometry(25, 25, 0.1);
-        const floorMesh = new THREE.Mesh(floor, floorMaterial);
-        floorMesh.rotation.x = -Math.PI / 2;
-        floorMesh.receiveShadow = true;
-        floorMesh.castShadow = true;
-
-        this.app.scene.add(floorMesh);
-    }
-
-    buildWindow(height, width){
-        let frameWidth = 0.2;
-        
-        const frameTexture = this.loader.load('textures/frame.jpg');
-        frameTexture.colorSpace = THREE.SRGBColorSpace;
-        const frameMaterial = new THREE.MeshPhongMaterial({color: "#423721", map: frameTexture, specular: "#000000", shininess: 0});
-        let frame = new THREE.Group();
-        
-        for(let i = -1; i < 2;i++){
-            const frameCenter = new THREE.BoxGeometry(frameWidth,height/2,frameWidth);
-            const centerMesh = new THREE.Mesh(frameCenter, frameMaterial);
-            centerMesh.position.set(0,0,i*width/4);
-            frame.add(centerMesh);
-        }
-
-        for(let i = -1; i < 2;i++){
-            const frameCenter = new THREE.BoxGeometry(frameWidth,frameWidth,width/2);
-            const centerMesh = new THREE.Mesh(frameCenter, frameMaterial);
-            centerMesh.position.set(0,i*height/4,0);
-            frame.add(centerMesh);
-        }
-
-        frame.position.set(-width/2,height/2,0);
-        this.app.scene.add(frame);
-    }
-
-    buildSpring() {
-
-        let materials = [
-            new THREE.MeshPhongMaterial({color: "#ff0000" }),
-            new THREE.MeshPhongMaterial({color: "#ffa500"}),
-            new THREE.MeshPhongMaterial({color: "#ffff00"}),
-            new THREE.MeshPhongMaterial({color: "#008000"}),
-            new THREE.MeshPhongMaterial({color: "#0000ff"}),
-            new THREE.MeshPhongMaterial({color: "#4b0082"}),
-            new THREE.MeshPhongMaterial({color: "#ee82ee"})
-        ];
-
-        let spring = new THREE.Group();
     
-        for (let i = 0; i < 28; i++) {
-            let points = [
-                new THREE.Vector3(-1, 0, 0 + 0.6 * i),
-                new THREE.Vector3(-1, 4 / 3, 0.1 + 0.6 * i),
-                new THREE.Vector3(1, 4 / 3, 0.2 + 0.6 * i),
-                new THREE.Vector3(1, 0, 0.3 + 0.6 * i),
-                new THREE.Vector3(1, -4 / 3, 0.4 + 0.6 * i),
-                new THREE.Vector3(-1, -4 / 3, 0.5 + 0.6 * i),
-                new THREE.Vector3(-1, 0, 0.6 + 0.6 * i),
-            ];
-
-            let colorMaterial = i%7;
-            
-            const topCircle = new THREE.CubicBezierCurve3(points[0], points[1], points[2], points[3]);
-            const topCirclePoints = topCircle.getPoints(50);
-            const topCurvePath = new THREE.CurvePath();
-            topCurvePath.add(new THREE.CatmullRomCurve3(topCirclePoints));
-            
-            const topTubeGeometry = new THREE.TubeGeometry(topCurvePath, 25, 0.075, 8, false);
-            const topTubeMesh = new THREE.Mesh(topTubeGeometry, materials[colorMaterial]);
-            topTubeMesh.receiveShadow = true;
-            topTubeMesh.castShadow = true;
-            spring.add(topTubeMesh);
-    
-            const downCircle = new THREE.CubicBezierCurve3(points[3], points[4], points[5], points[6]);
-            const downCirclePoints = downCircle.getPoints(50);
-            const downCurvePath = new THREE.CurvePath();
-            downCurvePath.add(new THREE.CatmullRomCurve3(downCirclePoints));
-    
-            const downTubeGeometry = new THREE.TubeGeometry(downCurvePath, 25, 0.075, 8, false);
-            const downTubeMesh = new THREE.Mesh(downTubeGeometry, materials[colorMaterial]);
-            downTubeMesh.receiveShadow = true;
-            downTubeMesh.castShadow = true;
-            spring.add(downTubeMesh);
-        }
-    
-        spring.position.set(-2, 2.5 + 0.3 / 2, 1.5);
-        spring.rotation.x = -Math.PI / 2;
-        spring.scale.set(0.1, 0.1, 0.02);
-        this.app.scene.add(spring);
-    }
-    
-    buildCarpet(){
-        const carpetTexture = this.loader.load('textures/carpet.jpg');
-        carpetTexture.colorSpace = THREE.SRGBColorSpace;
-        const carpetMaterial = new THREE.MeshPhongMaterial({color: "#FFFFFF", map: carpetTexture, opacity:1}); 
-
-        const carpet = new THREE.CylinderGeometry(6, 6, 0.01, 64);
-        const carpetMesh = new THREE.Mesh(carpet, carpetMaterial);
-        carpetMesh.position.set(0,0.01,0);
-        carpetMesh.scale.set(1,1,0.8);
-        carpetMesh.receiveShadow = true;
-        carpetMesh.castShadow = true;
-        this.app.scene.add(carpetMesh);
-
-    }
-
-    buildLandscapeSphere(){
-        const landscapeTexture = this.loader.load('textures/landscapefinal.jpg');
-        landscapeTexture.colorSpace = THREE.SRGBColorSpace;
-        
-        const landscapeMaterial = new THREE.MeshBasicMaterial({color: "#777777", map: landscapeTexture, opacity:1, side: THREE.BackSide}); 
-        const sphereMaterial = new THREE.SphereGeometry(100,64,64);
-        const sphere = new THREE.Mesh(sphereMaterial, landscapeMaterial);
-
-        this.app.scene.add(sphere);
-    }
-
     /**
      * initializes the contents
      */
@@ -463,11 +138,7 @@ class MyContents  {
         roomAmbientLight.shadow.camera.bottom = -15;
         roomAmbientLight.shadow.camera.top = 15;
 
-        this.app.scene.add(roomAmbientLight);
-
-        // creates a helper for the light
-        // const roomAmbientLightHelper = new THREE.DirectionalLightHelper(roomAmbientLight, 5);
-        // this.app.scene.add(roomAmbientLightHelper);
+        //this.app.scene.add(roomAmbientLight);
 
         // creates a point light
         const roomLight = new THREE.PointLight("#484a2c", 100, 0, 0);
@@ -479,19 +150,6 @@ class MyContents  {
         roomLight.shadow.camera.far = 100;
 
         this.app.scene.add(roomLight);
-
-        // creates a helper for the light
-        // const roomLightHelper = new THREE.PointLightHelper(roomLight, 1);
-        // this.app.scene.add(roomLightHelper);
-
-        // const spotLightHelper = new THREE.SpotLightHelper( this.spotLight );
-        // spotLightHelper.target = this.targetSpot; 
-        // this.app.scene.add( spotLightHelper );
-
-        // add another point light on the lamp
-        const lampLight = new THREE.PointLight(0xffff00, 100, 0);
-        lampLight.position.set(9, 3.8, -9);
-        this.app.scene.add(lampLight);
 
         this.springGuy = new MySpringGuy(this.app);
         this.radio = new MyRadio(this.app);
@@ -505,21 +163,24 @@ class MyContents  {
         this.billboard = new MyBillboard(this.app);
         this.journal = new MyJournal(this.app);
         this.curveObjects = new MyCurveObjects(this.app, this.roomWidth);
-
-        this.buildFloor();
-        this.buildWalls();
-		this.buildTable();
+        this.room = new MyRoom(this.app, this.roomWidth, this.roomHeight, this.roomThickness);
+        this.spring = new MySpring(this.app);
+        this.lamp = new MyLamp(this.app);
+        
+        this.buildTable();
+        this.room.buildFloor();
+        this.room.buildWalls();
+        this.room.buildWindow(this.roomHeight, this.roomWidth);
+        this.room.buildCarpet();
+        this.room.buildLandscapeSphere();
+        this.room.buildFrame(0.1, 2, 3, 0.1, 3.5, 6, false, 'textures/luis.jpg',"#ffffff", 'back');
+        this.room.buildFrame(0.1, 2, 3, 0.1, -3.5, 6, false, 'textures/nuno.jpg',"#ffffff", 'back');
+        this.room.buildFrame(0.1, 3, 2, 0.1, 5, 6, false, 'textures/cork.jpg', "#ffffff", 'front');
+        this.room.buildFrame(0.1, 3, 3.5, 0.1, -5, 6, false, 'textures/cork.jpg', "#ffffff", 'front');
+        this.spring.buildSpring();
+        this.lamp.buildLamp();
         this.curveObjects.buildBeetle();
         this.curveObjects.buildFlower();
-        this.buildCarpet();
-        this.buildSpring();
-        this.buildWindow(this.roomHeight, this.roomWidth);
-        this.buildFrame(0.1, 2, 3, 0.1, 3.5, 6, false, 'textures/luis.jpg',"#ffffff", 'back');
-        this.buildFrame(0.1, 2, 3, 0.1, -3.5, 6, false, 'textures/nuno.jpg',"#ffffff", 'back');
-        this.buildFrame(0.1, 3, 2, 0.1, 5, 6, false, 'textures/cork.jpg', "#ffffff", 'front');
-        this.buildFrame(0.1, 3, 3.5, 0.1, -5, 6, false, 'textures/cork.jpg', "#ffffff", 'front');
-        this.buildLamp();
-        this.buildLandscapeSphere();
         this.spotStudent.buildSpot(3.5,this.roomHeight,6,this.roomWidth);
         this.spotStudent.buildSpot(-3.5,this.roomHeight,6,this.roomWidth);
         this.spotCake.buildSpot(3*this.roomWidth/8,this.roomHeight,0);
@@ -549,6 +210,7 @@ class MyContents  {
         this.diffuseFloorColor = value;
         this.floorMaterial.color.set(this.diffuseFloorColor);
     }
+    
     /**
      * updates the specular floor color and the material
      * @param {THREE.Color} value 
@@ -557,6 +219,7 @@ class MyContents  {
         this.specularFloorColor = value;
         this.floorMaterial.specular.set(this.specularFloorColor);
     }
+
     /**
      * updates the floor shininess and the material
      * @param {number} value 
