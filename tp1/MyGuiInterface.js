@@ -42,8 +42,10 @@ class MyGuiInterface  {
         floorFolder.add(this.contents, 'floorShininess', 0, 1000).name("shininess").onChange( (value) => { this.contents.updateFloorShininess(value) } );
         floorFolder.open();
 
-        const tableFolder = this.datgui.addFolder('Table');
-        tableFolder.add(this.contents, 'tableEnabled').onChange((value) => { this.contents.updateTable(value); }).name('visible');
+        const tableFolder = this.datgui.addFolder('Scene');
+        tableFolder.add(this.contents, 'tableEnabled').onChange((value) => { this.contents.updateTable(value); }).name('Table visible');
+        tableFolder.add({ 'Show Couch': true }, 'Show Couch').onChange((value) => { this.contents.couch.toggleCouch(value); }).name('Couch visible');
+        tableFolder.add({ 'Show Chairs': true }, 'Show Chairs').onChange((value) => {this.contents.chair.toggleChairs(value);});
         tableFolder.open();
 
         const axisFolder = this.datgui.addFolder('Axis');

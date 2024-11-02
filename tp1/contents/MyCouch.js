@@ -17,6 +17,7 @@ class MyCouch  {
         this.meshes = [];
         this.samplesU = 128;
         this.samplesV = 128;
+        this.couch = new THREE.Group();
 
         //const leatherTexture = this.loader.load('textures/leather.jpg');              //keep the leather texture???!?!?!
         //leatherTexture.wrapS = leatherTexture.wrapT = THREE.RepeatWrapping;
@@ -55,7 +56,6 @@ class MyCouch  {
         const centerx = 3, centerz = 4;
         const feetTop = 0.1, feetDown = 0.05, feetHeight = 0.5;
 
-        let couch = new THREE.Group();
         let pillow = new THREE.Group();
 
         const feet = new THREE.CylinderGeometry(feetTop,feetDown,feetHeight, radialSegments);
@@ -68,7 +68,7 @@ class MyCouch  {
             feetLeft.position.set(-centerx/4, feetHeight/2, -centerz/4 + i*centerz/2);
             feetRight.position.set(centerx/4, feetHeight/2, -centerz/4 + i*centerz/2);
 
-            couch.add(feetLeft,feetRight);
+            this.couch.add(feetLeft,feetRight);
         }
         
         //left side points of the couch
@@ -148,7 +148,7 @@ class MyCouch  {
         mesh.position.set(0,0,0.1);
         //mesh.receiveShadow = true;
         //mesh.castShadow = true;
-        couch.add(mesh);
+        this.couch.add(mesh);
         this.meshes.push(mesh);
 
         //right side points of the couch
@@ -222,13 +222,13 @@ class MyCouch  {
 
         ];
 
-        //Surface for right side of the couch
+        //Surface for right side of the this.couch
         surfaceData = this.builder.build(controlPoints, orderSidesU, orderSidesV, this.samplesU, this.samplesV, this.materials.color1);
         mesh = new THREE.Mesh(surfaceData, this.materials.color1);
         mesh.position.set(0,0,-0.1);
         //mesh.receiveShadow = true;
         //mesh.castShadow = true;
-        couch.add(mesh);
+        this.couch.add(mesh);
         this.meshes.push(mesh);
 
 
@@ -310,11 +310,10 @@ class MyCouch  {
         mesh.scale.set(1.1,1.1,1.1);
         //mesh.receiveShadow = true;
         //mesh.castShadow = true;
-        couch.add(mesh);
+        this.couch.add(mesh);
         this.meshes.push(mesh);
     
-        couch.position.set(-this.roomWidth*0.35,0,0);
-        this.app.scene.add(couch);
+        this.couch.position.set(-this.roomWidth*0.35,0,0);
 
 
         //Back points of the couch
@@ -395,7 +394,7 @@ class MyCouch  {
         mesh.scale.set(1.05,1.05,1.05);
         //mesh.receiveShadow = true;
         //mesh.castShadow = true;
-        couch.add(mesh);
+        this.couch.add(mesh);
         this.meshes.push(mesh);
 
         
@@ -456,11 +455,15 @@ class MyCouch  {
         pillow.rotation.z=Math.PI/6;
         pillow.position.set(-centerx/2 + 2*Math.cos(Math.PI/6),2.2+Math.sin(Math.PI/6),0);
 
-        couch.add(pillow);
-        couch.scale.set(0.9,0.9,0.9);
-        couch.rotation.y = Math.PI/6;
-        couch.position.set(-this.roomWidth*0.35,0,this.roomWidth*0.35);
-        this.app.scene.add(couch);
+        this.couch.add(pillow);
+        this.couch.scale.set(0.9,0.9,0.9);
+        this.couch.rotation.y = Math.PI/6;
+        this.couch.position.set(-this.roomWidth*0.35,0,this.roomWidth*0.35);
+        this.app.scene.add(this.couch);
+    }
+
+    toggleCouch(visible) {
+        this.couch.visible = visible;
     }
 }
 export { MyCouch };

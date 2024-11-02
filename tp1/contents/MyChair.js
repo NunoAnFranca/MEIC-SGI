@@ -11,6 +11,7 @@ class MyChair  {
     constructor(app) {
         this.app = app;
         this.loader = new THREE.TextureLoader();
+        this.chairs = [];
 
         this.woodTexture = this.loader.load('textures/wood.jpg');
         this.woodTexture.colorSpace = THREE.SRGBColorSpace;
@@ -86,7 +87,16 @@ class MyChair  {
         chair.add(base);
         chair.rotation.y = rotation;
         chair.position.set(x,0,z);
+        
+        this.chairs.push(chair);
         this.app.scene.add(chair);
+    }
+
+
+    toggleChairs(visible) {
+        this.chairs.forEach(chair => {
+            chair.visible = visible;
+        });
     }
 
 }
