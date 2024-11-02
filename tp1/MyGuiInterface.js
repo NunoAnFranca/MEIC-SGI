@@ -34,6 +34,7 @@ class MyGuiInterface  {
             'specular color': this.contents.specularFloorColor,
         };
 
+        /*
         // adds a folder to the gui interface for the floor
         const floorFolder = this.datgui.addFolder( 'Floor' );
         floorFolder.addColor( data, 'diffuse color' ).onChange( (value) => { this.contents.updatediffuseFloorColor(value) } );
@@ -104,8 +105,9 @@ class MyGuiInterface  {
         SpringGuyFolder.add({ 'Show Spring Guy Body': true }, 'Show Spring Guy Body').onChange((value) => { this.contents.springGuy.toggleSpringGuy(this.contents.springGuy.SpringGuyBody, value); }).name('Show Spring Guy Body');
         SpringGuyFolder.add({ 'Show Spring Guy Head': true }, 'Show Spring Guy Head').onChange((value) => { this.contents.springGuy.toggleSpringGuy(this.contents.springGuy.SpringGuyHead, value); }).name('Show Spring Guy Head');
         SpringGuyFolder.add({ 'Show Gifts': true }, 'Show Gifts').onChange((value) => { this.contents.springGuy.toggleSpringGuy(this.contents.springGuy.presents, value); }).name('Show Gifts');
-        SpringGuyFolder.open();
+        SpringGuyFolder.open();*/
     }
+        
 }
 
 export { MyGuiInterface };
