@@ -458,7 +458,8 @@ class MyCouch  {
 
         couch.add(pillow);
         couch.scale.set(0.9,0.9,0.9);
-        couch.position.set(-this.roomWidth*0.4,0,this.roomWidth*0.2);
+        couch.rotation.y = Math.PI/6;
+        couch.position.set(-this.roomWidth*0.35,0,this.roomWidth*0.35);
         this.app.scene.add(couch);
     }
 }

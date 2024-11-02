@@ -189,12 +189,12 @@ class MyContents  {
         this.spotCake.buildSpot(3*this.roomWidth/8,this.roomHeight,0);
         this.springGuy.buildSpringGuy(this.roomHeight, this.roomWidth);
         this.radio.buildRadio(this.roomHeight, this.roomWidth);
-        this.vase.buildVase(-4,this.roomWidth/2-1,3);
-        this.vase.buildVase(-5.5,this.roomWidth/2-2,2);
-        this.vase.buildVase(-7,this.roomWidth/2-1,4);
-        this.flower.buildFlower(-4,this.roomWidth/2-1,2);
-        this.flower.buildFlower(-5.5,this.roomWidth/2-2,3);
-        this.flower.buildFlower(-7,this.roomWidth/2-1,4);
+        this.vase.buildVase(3,this.roomWidth/2-1,3);
+        this.vase.buildVase(1.5,this.roomWidth/2-2,2);
+        this.vase.buildVase(0,this.roomWidth/2-1,4);
+        this.flower.buildFlower(3,this.roomWidth/2-1,2);
+        this.flower.buildFlower(1.5,this.roomWidth/2-2,3);
+        this.flower.buildFlower(0,this.roomWidth/2-1,4);
         this.cake.buildCake();
         this.television.buildTelevision(this.roomWidth/2,3*this.roomHeight/5,0);
         this.chair.buildChair(2,3,Math.PI/6);
