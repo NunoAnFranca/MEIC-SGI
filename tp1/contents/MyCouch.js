@@ -29,7 +29,7 @@ class MyCouch  {
             leather : new THREE.MeshPhongMaterial({color: "#FFFFFF", specular: "#ffffff", side: THREE.DoubleSide}),
             color1 : new THREE.MeshPhongMaterial({color: "#FFFFFF", specular: "#111111", side: THREE.DoubleSide}),
             color2 : new THREE.MeshPhongMaterial({color: "#AAAAFF", specular: "#111111", side: THREE.DoubleSide}),
-            gold : new THREE.MeshPhongMaterial({color: "#FFFFFF", specular: "#AAAAAA", map: goldTexture}),
+            gold : new THREE.MeshPhongMaterial({color: "#444444", specular: "#AAAAAA", map: goldTexture}),
 
         }
     }
@@ -53,7 +53,7 @@ class MyCouch  {
         
         const radialSegments = 32;
         const centerx = 3, centerz = 4;
-        const feetTop = 0.1, feetDown = 0.05, feetHeight = 0.4;
+        const feetTop = 0.1, feetDown = 0.05, feetHeight = 0.5;
 
         let couch = new THREE.Group();
         let pillow = new THREE.Group();
@@ -454,7 +454,7 @@ class MyCouch  {
 
         pillow.scale.set(1.5,1.5,1.5);
         pillow.rotation.z=Math.PI/6;
-        pillow.position.set(-centerx/2 + 2*Math.cos(Math.PI/6),2.1+Math.sin(Math.PI/6),0);
+        pillow.position.set(-centerx/2 + 2*Math.cos(Math.PI/6),2.2+Math.sin(Math.PI/6),0);
 
         couch.add(pillow);
         couch.scale.set(0.9,0.9,0.9);
