@@ -27,8 +27,8 @@ class MyCouch  {
 
         this.materials = {
             leather : new THREE.MeshPhongMaterial({color: "#FFFFFF", specular: "#ffffff", side: THREE.DoubleSide}),
-            color1 : new THREE.MeshPhongMaterial({color: "#FFFFFF", specular: "#111111", side: THREE.DoubleSide}),
-            color2 : new THREE.MeshPhongMaterial({color: "#AAAAFF", specular: "#111111", side: THREE.DoubleSide}),
+            color1 : new THREE.MeshPhongMaterial({color: "#FFAA66", specular: "#111111", side: THREE.DoubleSide}),
+            color2 : new THREE.MeshPhongMaterial({color: "#AAAAFF", specular: "#000000", side: THREE.DoubleSide}),
             gold : new THREE.MeshPhongMaterial({color: "#444444", specular: "#AAAAAA", map: goldTexture}),
 
         }
@@ -458,7 +458,7 @@ class MyCouch  {
 
         couch.add(pillow);
         couch.scale.set(0.9,0.9,0.9);
-        couch.position.set(-this.roomWidth*0.35,0,this.roomWidth*0.2);
+        couch.position.set(-this.roomWidth*0.4,0,this.roomWidth*0.2);
         this.app.scene.add(couch);
     }
 }
