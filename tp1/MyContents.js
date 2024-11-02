@@ -151,7 +151,7 @@ class MyContents  {
         roomLight.shadow.camera.far = 100;
 
         this.app.scene.add(roomLight);
-        /*
+        
         this.springGuy = new MySpringGuy(this.app);
         this.radio = new MyRadio(this.app);
         this.vase = new MyVase(this.app);
@@ -166,10 +166,10 @@ class MyContents  {
         this.curveObjects = new MyCurveObjects(this.app, this.roomWidth);
         this.room = new MyRoom(this.app, this.roomWidth, this.roomHeight, this.roomThickness);
         this.spring = new MySpring(this.app);
-        this.lamp = new MyLamp(this.app);*/
+        this.lamp = new MyLamp(this.app);
         this.couch = new MyCouch(this.app, this.roomHeight, this.roomWidth);
        
-        /*
+        
         this.buildTable();
         this.room.buildFloor();
         this.room.buildWalls();
@@ -202,7 +202,7 @@ class MyContents  {
         this.chair.buildChair(-2.5,-2,-Math.PI);
         this.chair.buildChair(1.5,-2,-Math.PI);
         this.billboard.buildBillboard(this.roomWidth,this.roomHeight,this.roomWidth);
-        this.journal.buildJournal();*/
+        this.journal.buildJournal();
         this.couch.buildCouch();
     }
     

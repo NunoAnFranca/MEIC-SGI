@@ -25,6 +25,7 @@ class MyRoom  {
         floorMesh.rotation.x = -Math.PI / 2;
         floorMesh.receiveShadow = true;
         floorMesh.castShadow = true;
+        floorMesh.position.set(0,-0.05,0);
 
         this.app.scene.add(floorMesh);
     }

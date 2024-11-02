@@ -27,6 +27,8 @@ class MyCouch  {
 
         this.materials = {
             leather : new THREE.MeshPhongMaterial({color: "#FFFFFF", specular: "#ffffff", side: THREE.DoubleSide}),
+            color1 : new THREE.MeshPhongMaterial({color: "#FFFFFF", specular: "#111111", side: THREE.DoubleSide}),
+            color2 : new THREE.MeshPhongMaterial({color: "#AAAAFF", specular: "#111111", side: THREE.DoubleSide}),
             gold : new THREE.MeshPhongMaterial({color: "#FFFFFF", specular: "#AAAAAA", map: goldTexture}),
 
         }
@@ -36,17 +38,25 @@ class MyCouch  {
         let controlPoints;
         let surfaceData;
         let mesh;
+
         let orderSidesU = 10;
         let orderSidesV = 3;
 
         let orderCenterU = 9;
         let orderCenterV = 3;
+
+        let orderBackU = 10;
+        let orderBackV = 3;
+
+        let orderPillowU = 3;
+        let orderPillowV = 4;
         
         const radialSegments = 32;
         const centerx = 3, centerz = 4;
         const feetTop = 0.1, feetDown = 0.05, feetHeight = 0.4;
 
         let couch = new THREE.Group();
+        let pillow = new THREE.Group();
 
         const feet = new THREE.CylinderGeometry(feetTop,feetDown,feetHeight, radialSegments);
         const feetMesh = new THREE.Mesh(feet, this.materials.gold);
@@ -133,8 +143,8 @@ class MyCouch  {
         ];
 
         //Surface for left side of the couch
-        surfaceData = this.builder.build(controlPoints, orderSidesU, orderSidesV, this.samplesU, this.samplesV, this.materials.leather);
-        mesh = new THREE.Mesh(surfaceData, this.materials.leather);
+        surfaceData = this.builder.build(controlPoints, orderSidesU, orderSidesV, this.samplesU, this.samplesV, this.materials.color1);
+        mesh = new THREE.Mesh(surfaceData, this.materials.color1);
         mesh.position.set(0,0,0.1);
         //mesh.receiveShadow = true;
         //mesh.castShadow = true;
@@ -213,8 +223,8 @@ class MyCouch  {
         ];
 
         //Surface for right side of the couch
-        surfaceData = this.builder.build(controlPoints, orderSidesU, orderSidesV, this.samplesU, this.samplesV, this.materials.leather);
-        mesh = new THREE.Mesh(surfaceData, this.materials.leather);
+        surfaceData = this.builder.build(controlPoints, orderSidesU, orderSidesV, this.samplesU, this.samplesV, this.materials.color1);
+        mesh = new THREE.Mesh(surfaceData, this.materials.color1);
         mesh.position.set(0,0,-0.1);
         //mesh.receiveShadow = true;
         //mesh.castShadow = true;
@@ -294,8 +304,8 @@ class MyCouch  {
         ];
 
         //middle side of the couch
-        surfaceData = this.builder.build(controlPoints, orderCenterU, orderCenterV, this.samplesU, this.samplesV, this.materials.leather);
-        mesh = new THREE.Mesh(surfaceData, this.materials.leather);
+        surfaceData = this.builder.build(controlPoints, orderCenterU, orderCenterV, this.samplesU, this.samplesV, this.materials.color1);
+        mesh = new THREE.Mesh(surfaceData, this.materials.color1);
         mesh.position.set(0,feetHeight,0);
         mesh.scale.set(1.1,1.1,1.1);
         //mesh.receiveShadow = true;
@@ -304,6 +314,151 @@ class MyCouch  {
         this.meshes.push(mesh);
     
         couch.position.set(-this.roomWidth*0.35,0,0);
+        this.app.scene.add(couch);
+
+
+        //Back points of the couch
+        controlPoints = [
+            [
+                [-0.5,0,2,0.1],
+                [-0.5,0,2,1],
+                [-0.5,0,-2,1],
+                [-0.5,0,-2,0.1]
+            ],
+            [                   
+                [-0.5,0,2,0.1],
+                [0,0,2,6],
+                [0,0,-2,6],
+                [-0.5,0,-2,0.1],
+            ],
+            [
+                [-0.5,0,2,0.1],
+                [0,0,2,1],
+                [0,0,-2,1],
+                [-0.5,0,-2,0.1],
+            ],
+            [
+                [-0.5,4.5,2.2,0.1],
+                [0,4.5,2.2,1],
+                [0,4.5,-2.2,1],
+                [-0.5,4.5,-2.2,0.1],
+
+            ],
+            [
+                [-0.5,4.5,2.2,0],
+                [0,4.5,2.2,10],
+                [0,4.5,-2.2,10],
+                [-0.5,4.5,-2.2,0],
+            ],
+            [
+                [-0.5,5.5,2.4,0.1],
+                [-0.5,5.5,2.4,2],
+                [-0.5,5.5,-2.4,2],
+                [-0.5,5.5,-2.4,0.1],
+            ],
+            [
+                [-0.5,4.5,2.2,0],
+                [-1,4.5,2.2,6],
+                [-1,4.5,-2.2,6],
+                [-0.5,4.5,-2.2,0],
+            ],
+            [
+                [-0.5,4.5,2.2,0.1],
+                [-1,4.5,2.2,1],
+                [-1,4.5,-2.2,1],
+                [-0.5,4.5,-2.2,0.1]
+            ],
+            [
+                [-0.5,0,2,0.1],
+                [-1,0,2,1],
+                [-1,0,-2,1],
+                [-0.5,0,-2,0.1]
+            ],
+            [
+                [-0.5,0,2,0.1],
+                [-1,0,2,6],
+                [-1,0,-2,6],
+                [-0.5,0,-2,0.1]
+            ],
+            [
+                [-0.5,0,2,0.1],
+                [-0.5,0,2,1],
+                [-0.5,0,-2,1],
+                [-0.5,0,-2,0.1],
+            ],
+        ];
+
+        //Back side of the couch
+        surfaceData = this.builder.build(controlPoints, orderBackU, orderBackV, this.samplesU, this.samplesV, this.materials.color1);
+        mesh = new THREE.Mesh(surfaceData, this.materials.color1);
+        mesh.position.set(-centerx/2,0,0);
+        mesh.scale.set(1.05,1.05,1.05);
+        //mesh.receiveShadow = true;
+        //mesh.castShadow = true;
+        couch.add(mesh);
+        this.meshes.push(mesh);
+
+        
+        //Pillow points of the couch
+        controlPoints = [
+            [                   
+                [-0.5,-0.20,-1.20,0.1],
+                [-0.5,-0.20,-1.20,1],
+                [-0.5,0,0,1],
+                [-0.5,-0.20, 1.20,1],
+                [-0.5,-0.20, 1.20,0.1],
+
+            ],
+            [ 
+                [-0.5,0,-1,0.1],
+                [0,0,-1,5],
+                [-0.2,0,0,5],
+                [0,0, 1,5],
+                [-0.5,0,1,0.1],
+
+            ],
+            [
+                [-0.5,1,-1,0.1],
+                [0,1,-1,5],
+                [-0.25,1,0,5],
+                [0,1,1,5],
+                [-0.5,1,1,0.1],
+            ],
+            [ 
+                [-0.5,1.20,-1.20,0.1],
+                [-0.5,1.20,-1.20,1],
+                [-0.5,1,0,1],
+                [-0.5,1.20, 1.20,1],
+                [-0.5,1.20, 1.20,0.1],
+
+            ],
+        ];
+
+        //Pillow of the couch
+        surfaceData = this.builder.build(controlPoints, orderPillowU, orderPillowV, this.samplesU, this.samplesV, this.materials.color2);
+        mesh = new THREE.Mesh(surfaceData, this.materials.color2);
+        mesh.position.set(0,0,0);
+        //mesh.receiveShadow = true;
+        //mesh.castShadow = true;
+        pillow.add(mesh);
+        this.meshes.push(mesh);
+
+        //Pillow of the couch
+        mesh = new THREE.Mesh(surfaceData, this.materials.color2);
+        mesh.position.set(-1,0,0);
+        mesh.rotation.y=Math.PI;
+        //mesh.receiveShadow = true;
+        //mesh.castShadow = true;
+        pillow.add(mesh);
+        this.meshes.push(mesh);
+
+        pillow.scale.set(1.5,1.5,1.5);
+        pillow.rotation.z=Math.PI/6;
+        pillow.position.set(-centerx/2 + 2*Math.cos(Math.PI/6),2.1+Math.sin(Math.PI/6),0);
+
+        couch.add(pillow);
+        couch.scale.set(0.9,0.9,0.9);
+        couch.position.set(-this.roomWidth*0.35,0,this.roomWidth*0.2);
         this.app.scene.add(couch);
     }
 }
