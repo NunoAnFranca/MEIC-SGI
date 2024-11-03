@@ -28,29 +28,35 @@ class MyChair  {
         let base = new THREE.Group();
         let top = new THREE.Group();
 
+        // Variable definitions
         const legx = 0.1, legy = 1.8, legz = 0.15;
         const legsDistance = 1;
         const boxHeight = 0.2;
 
+        // Leg definition
         const leg = new THREE.BoxGeometry(legx,legy,legz);
         const legMesh = new THREE.Mesh(leg, this.materials.wood);
         legMesh.receiveShadow = true;
         legMesh.castShadow = true;
 
+        // Top vertical bars for the chair
         const topSideMesh = new THREE.Mesh(leg, this.materials.wood);
         topSideMesh.receiveShadow = true;
         topSideMesh.castShadow = true;
         
+        // Down bars for the chair
         const legSide = new THREE.BoxGeometry(4*legx/5,boxHeight,legsDistance);
         const legSideMesh = new THREE.Mesh(legSide, this.materials.wood);
         legSideMesh.receiveShadow = true;
         legSideMesh.castShadow = true;
 
+        // Down bars for the chair
         const legOSide = new THREE.BoxGeometry(legsDistance,boxHeight,4*legz/5);
         const legOSideMesh = new THREE.Mesh(legOSide, this.materials.wood);
         legOSideMesh.receiveShadow = true;
         legOSideMesh.castShadow = true;
 
+        // Sit for the chair
         const box = new THREE.BoxGeometry(legsDistance+1.2*legx, boxHeight, legsDistance+1.2*legz);
         const boxMesh = new THREE.Mesh(box, this.materials.wood);
         boxMesh.position.set(-legsDistance/2,legy,legsDistance/2);

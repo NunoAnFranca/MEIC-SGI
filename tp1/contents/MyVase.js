@@ -16,6 +16,7 @@ class MyVase  {
         this.samplesU = 64;
         this.samplesV = 64;
 
+        // Textures for vase
         const textures = {
             vase1 : this.loader.load('textures/vase1.jpg'),
             vase2 : this.loader.load('textures/vase2.jpg'),
@@ -30,6 +31,7 @@ class MyVase  {
         textures.clay.colorSpace = THREE.SRGBColorSpace;
         textures.dirt.colorSpace = THREE.SRGBColorSpace;
 
+        // Materials for vase
         this.materials = [
             new THREE.MeshPhongMaterial({color: "#ffffff", specular: "#111111", map: textures.clay}),
             new THREE.MeshPhongMaterial({color: "#ffffff", specular: "#111111", map: textures.dirt, side: THREE.DoubleSide}), 
@@ -54,6 +56,7 @@ class MyVase  {
         let orderU = 3;
         let orderV = 4;
 
+        // Points definition for the vase
         controlPoints = [
             // U = 0
             [ // V = 0..4
@@ -90,7 +93,8 @@ class MyVase  {
                 [2,8,0,1]
             ]
         ];
-
+        
+        // Two surfaces for vase creation, given the rotation of one side
         surfaceData = this.builder.build(controlPoints, orderU, orderV, this.samplesU, this.samplesV, this.materials[tex]);
         mesh = new THREE.Mesh(surfaceData, this.materials[tex]);
         mesh.position.set(0,plateHeight/2,0);
@@ -99,6 +103,7 @@ class MyVase  {
         vase.add(mesh);
         this.meshes.push(mesh);
 
+        // Two surfaces for vase creation, given the rotation of one side
         surfaceData = this.builder.build(controlPoints, orderU, orderV, this.samplesU, this.samplesV, this.materials[tex]);
         mesh = new THREE.Mesh(surfaceData, this.materials[tex]);
         mesh.rotation.y = Math.PI;
@@ -108,6 +113,7 @@ class MyVase  {
         vase.add(mesh);
         this.meshes.push(mesh);
 
+        // Smal cylinder dirt in order to give perspective in the flowers
         const dirt = new THREE.CylinderGeometry(1.47, 1.47, 0.01, radialSegments, radialSegments);
         const dirtMesh = new THREE.Mesh(dirt, this.materials[1]);
         dirtMesh.position.set(0,6,0);
@@ -115,6 +121,7 @@ class MyVase  {
         dirtMesh.castShadow = true;
         vase.add(dirtMesh);
 
+        // Clay plate for the vase
         const plate = new THREE.CylinderGeometry(platewidth, platewidth, plateHeight, radialSegments, radialSegments);
         const plateMesh = new THREE.Mesh(plate, this.materials[0]);
         plateMesh.position.set(0,plateHeight/2,0);

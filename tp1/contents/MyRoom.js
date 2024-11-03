@@ -13,15 +13,22 @@ class MyRoom  {
         this.roomHeight = roomHeight;
         this.roomThickness = roomThickness;
 
+        this.diffuseFloorColor =  "#BCA89F";
+        this.specularFloorColor = "#111111";
+        this.floorShininess = 1;
+
+        this.diffuseWallColor =  "#80573e";
+        this.specularWallColor = "#222222";
+        this.wallShininess = 1;
     }
 
     buildFloor() {
         const floorTexture = this.loader.load('textures/floor.jpg');
         floorTexture.colorSpace = THREE.SRGBColorSpace;
 
-        const floorMaterial = new THREE.MeshPhongMaterial({color: "#BCA89F", map: floorTexture});
+        this.floorMaterial = new THREE.MeshPhongMaterial({color: this.diffuseFloorColor, specular:this.specularFloorColor, shininess: this.floorShininess, map: floorTexture});
         const floor = new THREE.BoxGeometry(25, 25, 0.1);
-        const floorMesh = new THREE.Mesh(floor, floorMaterial);
+        const floorMesh = new THREE.Mesh(floor, this.floorMaterial);
         floorMesh.rotation.x = -Math.PI / 2;
         floorMesh.receiveShadow = true;
         floorMesh.castShadow = true;
@@ -33,14 +40,14 @@ class MyRoom  {
     buildWalls() {
         const wallTexture = this.loader.load('textures/wall.jpg');
         wallTexture.colorSpace = THREE.SRGBColorSpace;
-        const wallMaterial = new THREE.MeshPhongMaterial({color: "#80573e", map: wallTexture});
+        this.wallMaterial = new THREE.MeshPhongMaterial({color: this.diffuseWallColor, specular:this.specularWallColor, shininess:this.wallShininess, map: wallTexture});
 	
 		for (let i = 0; i < 4; i += 1) {
 			let wall = new THREE.BoxGeometry(this.roomWidth, this.roomHeight, this.roomThickness);
-			let firstWallMesh = new THREE.Mesh(wall, wallMaterial);
-            let secondWallMesh = new THREE.Mesh(wall, wallMaterial);
-            let firstSideMesh = new THREE.Mesh(wall, wallMaterial);
-            let secondSideMesh = new THREE.Mesh(wall, wallMaterial);
+			let firstWallMesh = new THREE.Mesh(wall, this.wallMaterial);
+            let secondWallMesh = new THREE.Mesh(wall, this.wallMaterial);
+            let firstSideMesh = new THREE.Mesh(wall, this.wallMaterial);
+            let secondSideMesh = new THREE.Mesh(wall, this.wallMaterial);
 
 			switch (i) {
 				case 0:
@@ -221,5 +228,60 @@ class MyRoom  {
 
         this.app.scene.add(frameGroup);
     }
+
+    /**
+     * updates the diffuse floor color and the material
+     * @param {THREE.Color} value 
+     */
+    updatediffuseFloorColor(value) {
+        this.diffuseFloorColor = value;
+        this.floorMaterial.color.set(this.diffuseFloorColor);
+    }
+    
+    /**
+     * updates the specular floor color and the material
+     * @param {THREE.Color} value 
+     */
+    updatespecularFloorColor(value) {
+        this.specularFloorColor = value;
+        this.floorMaterial.specular.set(this.specularFloorColor);
+    }
+
+    /**
+     * updates the floor shininess and the material
+     * @param {number} value 
+     */
+    updateFloorShininess(value) {
+        this.floorShininess = value;
+        this.floorMaterial.shininess = this.floorShininess;
+    }
+
+    /**
+     * updates the diffuse wall color and the material
+     * @param {THREE.Color} value 
+     */
+    updatediffuseWallColor(value) {
+        this.diffuseWallColor = value;
+        this.wallMaterial.color.set(this.diffuseWallColor);
+    }
+    
+    /**
+     * updates the specular Wall color and the material
+     * @param {THREE.Color} value 
+     */
+    updatespecularWallColor(value) {
+        this.specularWallColor = value;
+        this.wallMaterial.specular.set(this.specularWallColor);
+    }
+
+    /**
+     * updates the Wall shininess and the material
+     * @param {number} value 
+     */
+    updateWallShininess(value) {
+        this.wallShininess = value;
+        this.wallMaterial.shininess = this.wallShininess;
+    }
+        
 }
 export { MyRoom };

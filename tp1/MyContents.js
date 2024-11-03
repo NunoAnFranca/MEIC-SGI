@@ -205,34 +205,7 @@ class MyContents  {
         this.journal.buildJournal();
         this.couch.buildCouch();
     }
-    
-    /**
-     * updates the diffuse floor color and the material
-     * @param {THREE.Color} value 
-     */
-    updatediffuseFloorColor(value) {
-        this.diffuseFloorColor = value;
-        this.floorMaterial.color.set(this.diffuseFloorColor);
-    }
-    
-    /**
-     * updates the specular floor color and the material
-     * @param {THREE.Color} value 
-     */
-    updatespecularFloorColor(value) {
-        this.specularFloorColor = value;
-        this.floorMaterial.specular.set(this.specularFloorColor);
-    }
 
-    /**
-     * updates the floor shininess and the material
-     * @param {number} value 
-     */
-    updateFloorShininess(value) {
-        this.floorShininess = value;
-        this.floorMaterial.shininess = this.floorShininess;
-    }
-    
     updateTable() {
         if (this.tableEnabled !== this.lasttableEnabled) {
             this.lasttableEnabled = this.tableEnabled

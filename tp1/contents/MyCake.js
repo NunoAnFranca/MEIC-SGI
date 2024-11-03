@@ -12,6 +12,7 @@ class MyCake {
         this.legHeight = legHeight;
         this.tableThickness = tableThickness;
 
+        //Variable definitions
         this.candleRadius = 0.02;
         this.candleHeight = 0.25;
         this.slicePosition = 1.5;
@@ -23,6 +24,7 @@ class MyCake {
         this.plateThickness = 0.04;
         this.tableHeight = this.legHeight + this.tableThickness / 2;    
 
+        // Material definitions
         this.materials = {
             brown: new THREE.MeshPhongMaterial({ color: "#3B1D14", specular: "#000000", emissive: "#000000", shininess: 90 }),
             pink: new THREE.MeshPhongMaterial({ color: "#FFC0CB", specular: "#000000", emissive: "#000000", shininess: 90 }),

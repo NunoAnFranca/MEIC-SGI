@@ -19,13 +19,10 @@ class MyCouch  {
         this.samplesV = 128;
         this.couch = new THREE.Group();
 
-        //const leatherTexture = this.loader.load('textures/leather.jpg');              //keep the leather texture???!?!?!
-        //leatherTexture.wrapS = leatherTexture.wrapT = THREE.RepeatWrapping;
-        //leatherTexture.colorSpace = THREE.SRGBColorSpace;
-
         const goldTexture = this.loader.load('textures/gold.jpg');
         goldTexture.colorSpace = THREE.SRGBColorSpace;
 
+        // Materials definition for Couch
         this.materials = {
             leather : new THREE.MeshPhongMaterial({color: "#FFFFFF", specular: "#ffffff", side: THREE.DoubleSide}),
             color1 : new THREE.MeshPhongMaterial({color: "#FFAA66", specular: "#111111", side: THREE.DoubleSide}),
@@ -464,6 +461,10 @@ class MyCouch  {
 
     toggleCouch(visible) {
         this.couch.visible = visible;
+    }
+
+    CouchRotationY(value) {
+        this.couch.rotation.y = value;
     }
 }
 export { MyCouch };

@@ -11,6 +11,7 @@ class MyJournal  {
     constructor(app) {
         this.app = app;
 
+        // Variable definitions for journal
         const map = new THREE.TextureLoader().load('textures/newspaper.png');
         map.wrapS = map.wrapT = THREE.RepeatWrapping;
         map.anisotropy = 16;
@@ -40,6 +41,8 @@ class MyJournal  {
         let offset = 0.2; // offset for each surface
 
         for (let n = 0; n < 5; n++) {
+           
+            // Points fot the complex part of the journal
             firstControlPoints = [
                 [
                     [1.5, -2.0, 0.0, 1],
@@ -77,6 +80,7 @@ class MyJournal  {
             firstSurfaceData = this.builder.build(firstControlPoints, firstOrderU, firstOrderV, this.samplesU, this.samplesV, this.material);
             firstMesh = new THREE.Mesh(firstSurfaceData, this.material);
             
+            // Points for the simple part of the journal
             secondControlPoints = [
                 [
                     [4.0, -2.0, 0.0 + n * offset * 0.2, 1],

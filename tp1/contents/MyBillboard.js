@@ -21,13 +21,13 @@ class MyBillboard  {
 
         this.materials = [
             new THREE.MeshPhongMaterial({color: "#111111", specular: "#ffffff", side: THREE.DoubleSide}),// rivets
-            new THREE.MeshBasicMaterial({color: "#ffffff", specular: "#ffffff", side: THREE.DoubleSide, map: lieTexture}), 
+            new THREE.MeshBasicMaterial({color: "#ffffff", side: THREE.DoubleSide, map: lieTexture}), 
         ];
 
     }
 
     /**
-     * Function that takes position x and y in order to create a billboard
+     * Function that takes position x, y and z in order to create a billboard
      */
     buildBillboard(positionX, positionY, positionZ){
         
@@ -44,7 +44,7 @@ class MyBillboard  {
         let billboard = new THREE.Group();
         let rivet = new THREE.Group();
 
-
+        // Control points for billboard definition
         controlPoints = [
             // U = 0
             [ // V = 0..3
@@ -68,6 +68,7 @@ class MyBillboard  {
             // U = 1
         ];
 
+        // Surface creation
         surfaceData = this.builder.build(controlPoints, orderU, orderV, this.samplesU, this.samplesV, this.materials[1]);
         mesh = new THREE.Mesh(surfaceData, this.materials[1]);
         mesh.rotation.y = -Math.PI/2;
@@ -76,10 +77,12 @@ class MyBillboard  {
         billboard.add(mesh);
         this.meshes.push(mesh);
 
+        // Cylinder constration for rivet
         const cylinder = new THREE.CylinderGeometry(cylinderRadius,cylinderRadius,cylinderHeight,radialSegments);
         const cylinderMesh = new THREE.Mesh(cylinder, this.materials[0]);
         rivet.add(cylinderMesh);
 
+        // Sphere constration for rivet
         const sphere = new THREE.SphereGeometry(sphereRadius,radialSegments,radialSegments,0, Math.PI);
         sphere.phiLength = Math.PI;
         const sphereMesh = new THREE.Mesh(sphere, this.materials[0]);
@@ -88,6 +91,7 @@ class MyBillboard  {
         rivet.add(sphereMesh);
         rivet.rotation.z=Math.PI/2;
 
+        // Rivet iteration in order to create 4
         for(let i= 0; i< 2; i++){
             const rivet1Clone = rivet.clone();
             const rivet2Clone = rivet.clone();

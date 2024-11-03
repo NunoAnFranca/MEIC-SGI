@@ -12,6 +12,7 @@ class MySpotCake  {
         this.spotLight = null;
         this.spotLightHelper = null;
 
+        // Materials for the Cake spot light 
         this.materials = [
             new THREE.MeshPhongMaterial({color: "#000000", specular: "#AAAAAA"}), 
             new THREE.MeshPhongMaterial({color: "#FFFF9E", specular: "#000000", emissive: "#FFFF9E"}), 
@@ -31,15 +32,18 @@ class MySpotCake  {
         let spot = new THREE.Group();
         let main = new THREE.Group();
 
+        // Top stick for the spotlight object
         const stick = new THREE.BoxGeometry(stickWidth,stickHeight,stickWidth);
         const stickMesh = new THREE.Mesh(stick, this.materials[0]);
         stickMesh.position.set(0,-stickHeight/2,0);
         spot.add(stickMesh);
         
+        // Cylinder for the spotlight object
         const tube = new THREE.CylinderGeometry(tubeWidth,tubeWidth,tubeHeight,radialSegments);
         const tubeMesh = new THREE.Mesh(tube, this.materials[0]);
         main.add(tubeMesh);
 
+        // Sphere for the spotlight object
         const light = new THREE.SphereGeometry(3*tubeWidth/4,radialSegments,radialSegments);
         const lightMesh = new THREE.Mesh(light, this.materials[1]);
         lightMesh.position.set(0,tubeWidth/4-tubeHeight/2,0);

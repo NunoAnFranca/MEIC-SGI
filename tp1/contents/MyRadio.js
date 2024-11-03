@@ -14,6 +14,9 @@ class MyRadio  {
         this.roomWidth = null;
         this.roomHeight = null;
 
+        this.radio = new THREE.Group();
+        this.stool = new THREE.Group();
+
     }
     /**
      * Creates a radio in the corner of the living room
@@ -33,9 +36,7 @@ class MyRadio  {
             antena: new THREE.MeshPhongMaterial({ color:"#0f0f0f", specular: "#000000", emissive: "#000000", shininess: 90 }),
             grillMaterial: new THREE.MeshPhongMaterial({color: "#e1bf44", specular: "#545454", map: radioTexture})
         }
-
-        let radio = new THREE.Group();
-
+        
         const boxWidth = 2;
         const boxHeight = 1.2;
         const boxdepth = 0.6;
@@ -60,7 +61,7 @@ class MyRadio  {
         antena1Mesh.rotation.z = Math.PI/3;
         antena1Mesh.receiveShadow = true;
         antena1Mesh.castShadow = true;
-        radio.add(antena1Mesh);
+        this.radio.add(antena1Mesh);
         
         const antena2Mesh = new THREE.Mesh(antena, materials.antena);
         antena2Mesh.position.set(-boxWidth*3/8 - (Math.sin(Math.PI/6)), legHeight/2,0);
@@ -68,14 +69,14 @@ class MyRadio  {
         antena2Mesh.rotation.z = 11*Math.PI/6;
         antena2Mesh.receiveShadow = true;
         antena2Mesh.castShadow = true;
-        radio.add(antena2Mesh);
+        this.radio.add(antena2Mesh);
 
         const antenasBase = new THREE.CylinderGeometry(baseRadius, baseRadius, baseHeight, radialSegments);
         const antenasBaseMesh = new THREE.Mesh(antenasBase, materials.antena);
         antenasBaseMesh.position.set(-boxWidth*3/8, boxHeight/2 + baseHeight/2,0);
         antenasBaseMesh.receiveShadow = true;
         antenasBaseMesh.castShadow = true;
-        radio.add(antenasBaseMesh);
+        this.radio.add(antenasBaseMesh);
 
         // Plane for radio grill
         const grillDepth = 0.01;
@@ -84,7 +85,7 @@ class MyRadio  {
         planeMesh.position.set(0,boxHeight/6,-boxdepth/2-grillDepth/2)
         planeMesh.receiveShadow = true;
         planeMesh.castShadow = true;
-        radio.add(planeMesh);
+        this.radio.add(planeMesh);
 
 
         // buttons
@@ -98,12 +99,10 @@ class MyRadio  {
             buttonMesh.rotation.x = -Math.PI/2
             buttonMesh.receiveShadow = true;
             buttonMesh.castShadow = true;
-            radio.add(buttonMesh);
+            this.radio.add(buttonMesh);
         }
 
         // stool construction 
-        let stool = new THREE.Group();
-
         // legs construction for stool
         for(let i = 0; i < 4; i++){
             const leg = new THREE.CylinderGeometry(legSize, legSize, legHeight,radialSegments);
@@ -113,7 +112,7 @@ class MyRadio  {
             legMesh.rotation.y = i*Math.PI/2;
             legMesh.receiveShadow = true;
             legMesh.castShadow = true;
-            stool.add(legMesh);
+            this.stool.add(legMesh);
         }
 
         // top construction for stool
@@ -122,16 +121,23 @@ class MyRadio  {
         topMesh.position.set(0,legHeight/2-(legHeight/2-Math.cos(Math.PI/4)*legHeight/2) + legHeight*Math.sin(Math.PI/4)/2,0);
         topMesh.receiveShadow = true;
         topMesh.castShadow = true;
-        stool.add(topMesh);
+        this.stool.add(topMesh);
 
-        stool.position.set(2*this.roomWidth/5,0,2*this.roomWidth/5);
+        this.stool.position.set(2*this.roomWidth/5,0,2*this.roomWidth/5);
         //stool.position.set(2*this.roomWidth/5,legHeight*Math.sin(Math.PI/4)/2,2*this.roomWidth/5);
-        this.app.scene.add(stool);
+        this.app.scene.add(this.stool);
 
-        radio.add(boxMesh);
-        radio.position.set(2*this.roomWidth/5,boxHeight/2+legHeight/2-(legHeight/2-Math.cos(Math.PI/4)*legHeight/2) + legHeight*Math.sin(Math.PI/4)/2+(topSize/7)/2,2*this.roomWidth/5);
-        this.app.scene.add(radio);
+        this.radio.add(boxMesh);
+        this.radio.position.set(2*this.roomWidth/5,boxHeight/2+legHeight/2-(legHeight/2-Math.cos(Math.PI/4)*legHeight/2) + legHeight*Math.sin(Math.PI/4)/2+(topSize/7)/2,2*this.roomWidth/5);
+        this.app.scene.add(this.radio);
+    }
+    
+    toggleRadio(visible) {
+        this.radio.visible = visible;
     }
 
+    RadioRotationY(value) {
+        this.radio.rotation.y = value;
+    }
 }
 export { MyRadio };

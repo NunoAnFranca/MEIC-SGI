@@ -26,6 +26,7 @@ class MySpringGuy  {
         this.samplesU = 64;
         this.samplesV = 64;
 
+        // Texture definitions for spring guy
         const textures = {
             woodTexture : this.loader.load('textures/springGuy.jpg'),
             faceTexture : this.loader.load('textures/nuno.jpg'),
@@ -61,6 +62,7 @@ class MySpringGuy  {
         textures.wrap9Texture.colorSpace = THREE.SRGBColorSpace;
         textures.wrap10Texture.colorSpace = THREE.SRGBColorSpace;
 
+        // Materials definition for spring guy
         this.materials = {
             wood: new THREE.MeshPhongMaterial({color: "#ffffff", specular: "#ffffff", map: textures.woodTexture}),
             shoes: new THREE.MeshPhongMaterial({color: "#ffffff", specular: "#545454", map: textures.shoesTexture}),
@@ -321,7 +323,7 @@ class MySpringGuy  {
 
         let head = new THREE.Group();
         
-
+        // Points definition for hat for spring guy
         controlPoints = [
             // U = 0
             [ // V = 0..4

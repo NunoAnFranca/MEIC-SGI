@@ -16,6 +16,7 @@ class MySpring  {
      */
     buildSpring() {
 
+        // Multi color materials in order to create the rainbow spring
         let materials = [
             new THREE.MeshPhongMaterial({color: "#ff0000" }),
             new THREE.MeshPhongMaterial({color: "#ffa500"}),
@@ -29,6 +30,8 @@ class MySpring  {
         let spring = new THREE.Group();
     
         for (let i = 0; i < 28; i++) {
+
+            // Definition of points for two bezier curves, that can be iterated in order to create a spring
             let points = [
                 new THREE.Vector3(-1, 0, 0 + 0.6 * i),
                 new THREE.Vector3(-1, 4 / 3, 0.1 + 0.6 * i),
@@ -41,22 +44,26 @@ class MySpring  {
 
             let colorMaterial = i%7;
             
+            // Circle construction
             const topCircle = new THREE.CubicBezierCurve3(points[0], points[1], points[2], points[3]);
             const topCirclePoints = topCircle.getPoints(50);
             const topCurvePath = new THREE.CurvePath();
             topCurvePath.add(new THREE.CatmullRomCurve3(topCirclePoints));
             
+            // Definition of spring as a tube, to create some width
             const topTubeGeometry = new THREE.TubeGeometry(topCurvePath, 25, 0.075, 8, false);
             const topTubeMesh = new THREE.Mesh(topTubeGeometry, materials[colorMaterial]);
             topTubeMesh.receiveShadow = true;
             topTubeMesh.castShadow = true;
             spring.add(topTubeMesh);
     
+            // Circle construction
             const downCircle = new THREE.CubicBezierCurve3(points[3], points[4], points[5], points[6]);
             const downCirclePoints = downCircle.getPoints(50);
             const downCurvePath = new THREE.CurvePath();
             downCurvePath.add(new THREE.CatmullRomCurve3(downCirclePoints));
     
+            // Definition of spring as a tube, to create some width
             const downTubeGeometry = new THREE.TubeGeometry(downCurvePath, 25, 0.075, 8, false);
             const downTubeMesh = new THREE.Mesh(downTubeGeometry, materials[colorMaterial]);
             downTubeMesh.receiveShadow = true;

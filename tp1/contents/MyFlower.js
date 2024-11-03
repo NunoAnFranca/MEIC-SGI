@@ -15,6 +15,7 @@ class MyFlower  {
         this.samplesU = 64;
         this.samplesV = 64;
 
+        // Materials definition
         this.materials = [
             new THREE.MeshPhongMaterial({color: "#4CD038", specular: "#ffffff", side: THREE.DoubleSide}), // green
             new THREE.MeshPhongMaterial({color: "#FFD700", specular: "#111111"}), // Mid yellow
@@ -48,6 +49,7 @@ class MyFlower  {
             new THREE.Vector3(0, 1.5, 0)
         ];
 
+        // Steem definition with a tube geometry
         const steem = new THREE.CatmullRomCurve3(pointsSteem);
         const points = steem.getPoints( 50 ); 
         const curvePath = new THREE.CurvePath();
@@ -60,6 +62,7 @@ class MyFlower  {
         steemMesh.castShadow = true;
         flower.add(steemMesh);
 
+        // Middle Sphere definition for the flower
         const center = new THREE.SphereGeometry(sphereRadius, radialSegments, radialSegments);
         const centerMesh = new THREE.Mesh(center, this.materials[1]);
         centerMesh.position.set(0,1.5,0);
@@ -67,6 +70,7 @@ class MyFlower  {
         centerMesh.castShadow = true;
         flower.add(centerMesh);
 
+        // Points definition for a ppetal
         controlPoints = [
             // U = 0
             [ // V = 0..3
@@ -92,6 +96,7 @@ class MyFlower  {
         
         let petals = new THREE.Group();
 
+        // Petal iteration for multiple petals creation
         for (let i = 0; i < 8; i++){
             const petal = new THREE.Object3D();
 

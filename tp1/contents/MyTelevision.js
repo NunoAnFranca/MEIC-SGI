@@ -11,17 +11,19 @@ class MyTelevision  {
         this.app = app;
         this.loader = new THREE.TextureLoader();
 
+        // Texture for television
         const screenTexture = this.loader.load('textures/television.jpg')
         const buttonTexture = this.loader.load('textures/on-off.jpg')
 
         screenTexture.colorSpace = THREE.SRGBColorSpace;
         buttonTexture.colorSpace = THREE.SRGBColorSpace;
 
+        // Materials for television
         this.materials = {
             black : new THREE.MeshPhongMaterial({color: "#000000", specular: "#000000"}),
             gray : new THREE.MeshPhongMaterial({color: "#545454", specular: "#000000"}),  
-            screen: new THREE.MeshBasicMaterial({color: "#ffffff", specular: "#000000", map: screenTexture}),
-            button: new THREE.MeshBasicMaterial({color: "#ffffff", specular: "#000000", map: buttonTexture}) 
+            screen: new THREE.MeshBasicMaterial({color: "#ffffff", map: screenTexture}),
+            button: new THREE.MeshBasicMaterial({color: "#ffffff", map: buttonTexture}) 
         };
     }
 
@@ -42,6 +44,7 @@ class MyTelevision  {
         const buttonWidth = 0.075;
         const buttonHeight = 0.05;
 
+        // Back part of the television
         const backTelevision = new THREE.BoxGeometry(backWdith,backy,backz);
         const backMesh = new THREE.Mesh(backTelevision, this.materials.black);
         backMesh.position.set(-backWdith/2,0,0);
@@ -49,6 +52,7 @@ class MyTelevision  {
         backMesh.castShadow = true;
         television.add(backMesh);
 
+        // Front part of the television with screen texture
         const frontTelevision = new THREE.BoxGeometry(frontWidth,backy,backz);
         const frontMesh = new THREE.Mesh(frontTelevision, this.materials.screen);
         frontMesh.position.set(-backWdith-frontWidth/2,0,0);
@@ -56,6 +60,7 @@ class MyTelevision  {
         frontMesh.castShadow = true;
         television.add(frontMesh);
 
+        // Button on/off television
         const button1  = new THREE.CylinderGeometry(buttonWidth,buttonWidth,buttonHeight,radialSegments);
         const button1Mesh = new THREE.Mesh(button1, this.materials.gray);
         button1Mesh.position.set(-backWdith-frontWidth/2,0.5-fronty/2,frontz/2+buttonHeight/2);
@@ -64,6 +69,7 @@ class MyTelevision  {
         button1Mesh.castShadow = true;
         television.add(button1Mesh);
 
+        // Texture for on/off button
         const button1Tex  = new THREE.CylinderGeometry(buttonWidth,buttonWidth,buttonHeight/100,radialSegments);
         const button1TexMesh = new THREE.Mesh(button1Tex, this.materials.button);
         button1TexMesh.position.set(-backWdith-frontWidth/2,0.5-fronty/2,frontz/2+buttonHeight+buttonHeight/100);
@@ -73,6 +79,7 @@ class MyTelevision  {
         button1TexMesh.castShadow = true;
         television.add(button1TexMesh);
 
+        //Bars for the television in order for the front part to look wider
         for(let i = 0; i<2; i++){
             const bar = new THREE.BoxGeometry(frontWidth,frontWidth,frontz);
             const barMesh = new THREE.Mesh(bar, this.materials.black);
