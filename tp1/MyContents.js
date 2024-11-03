@@ -17,6 +17,7 @@ import { MyRoom } from './contents/MyRoom.js';
 import { MySpring } from './contents/MySpring.js';
 import { MyLamp } from './contents/MyLamp.js';
 import { MyCouch } from './contents/MyCouch.js';
+import { MyRoomLights } from './contents/MyRoomLights.js';
 /**
  *  This class contains the contents of out application
  */
@@ -121,36 +122,6 @@ class MyContents  {
             this.axisVisible = true;
             this.app.scene.add(this.axis);
         }
-
-        // add a general ambient light
-        const ambientLight = new THREE.AmbientLight(0x555555, 5);
-        this.app.scene.add(ambientLight);
-
-        // creates a directional light - ambient light
-        const roomAmbientLight = new THREE.DirectionalLight("#ffffff", 1.5);
-        roomAmbientLight.position.set(0, 25, 0);
-        roomAmbientLight.castShadow = true;
-        roomAmbientLight.shadow.mapSize.width = this.mapSize;
-        roomAmbientLight.shadow.mapSize.height = this.mapSize;
-        roomAmbientLight.shadow.camera.near = 0.5;
-        roomAmbientLight.shadow.camera.far = 100;
-        roomAmbientLight.shadow.camera.left = -15;
-        roomAmbientLight.shadow.camera.right = 15;
-        roomAmbientLight.shadow.camera.bottom = -15;
-        roomAmbientLight.shadow.camera.top = 15;
-
-        //this.app.scene.add(roomAmbientLight);
-
-        // creates a point light
-        const roomLight = new THREE.PointLight("#484a2c", 100, 0, 0);
-        roomLight.position.set(10, 15, 10);
-        roomLight.castShadow = true;
-        roomLight.shadow.mapSize.width = this.mapSize;
-        roomLight.shadow.mapSize.height = this.mapSize;
-        roomLight.shadow.camera.near = 0.5;
-        roomLight.shadow.camera.far = 100;
-
-        this.app.scene.add(roomLight);
         
         this.springGuy = new MySpringGuy(this.app);
         this.radio = new MyRadio(this.app);
@@ -168,7 +139,7 @@ class MyContents  {
         this.spring = new MySpring(this.app);
         this.lamp = new MyLamp(this.app);
         this.couch = new MyCouch(this.app, this.roomHeight, this.roomWidth);
-       
+        this.roomLights = new MyRoomLights(this.app, this.mapSize);
         
         this.buildTable();
         this.room.buildFloor();
@@ -204,6 +175,7 @@ class MyContents  {
         this.billboard.buildBillboard(this.roomWidth,this.roomHeight,this.roomWidth);
         this.journal.buildJournal();
         this.couch.buildCouch();
+        this.roomLights.buildLights();
     }
 
     updateTable() {

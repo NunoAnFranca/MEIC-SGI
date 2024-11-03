@@ -39,6 +39,13 @@ class MyGuiInterface  {
             'specular color': this.contents.room.specularWallColor,
         };
 
+        const dataRoom = {
+            'ambient light color' : this.contents.roomLights.ambientLightColor,
+            'directional light color' : this.contents.roomLights.roomAmbientLightColor,
+            'point light 1 color' : this.contents.roomLights.roomLight1Color,
+            'point light 2 color' : this.contents.roomLights.roomLight2Color,
+        }
+
         
         // adds a folder to the gui interface for the floor
         const floorWallsFolder = this.datgui.addFolder( 'Floor / Walls' );
@@ -73,6 +80,49 @@ class MyGuiInterface  {
 
         // adds a folder to the gui interface for the Lights
         const LightsFolder = this.datgui.addFolder('Lights');
+        
+        // Interface for Ambient Light
+        const AmbientLightFolder = LightsFolder.addFolder('Ambient Light');
+        AmbientLightFolder.add(this.contents.roomLights.ambientLight, 'visible').name("Ambient Light");
+        AmbientLightFolder.add(this.contents.roomLights.ambientLight, 'intensity',1,100).name("Intensity Ambient Light");
+        AmbientLightFolder.addColor( dataRoom, 'ambient light color' ).onChange( (value) => { this.contents.roomLights.toggleAmbientLightColor(value) } ).name('Ambient Light color');
+        AmbientLightFolder.close();
+
+        // Interface for Directional Light
+        const DirectionalLight = LightsFolder.addFolder('Directional Light');
+        DirectionalLight.add(this.contents.roomLights.roomAmbientLight, 'visible').name("Directional Light");
+        DirectionalLight.add(this.contents.roomLights.roomAmbientLight, 'intensity',1,100).name("Intensity Directional Light");
+        DirectionalLight.addColor( dataRoom, 'directional light color' ).onChange( (value) => { this.contents.roomLights.toggleDirectionalLightColor(value) } ).name('Directional Light color');
+        DirectionalLight.add(this.contents.roomLights.roomAmbientLight, 'castShadow', true).name("Shadow Directional Light");
+        DirectionalLight.add(this.contents.roomLights.helperRoomAmbientLight, 'visible', false).name("Helper Directional Light");
+        DirectionalLight.close();
+
+        // Interface for Point Light 1
+        const PointLight1 = LightsFolder.addFolder('Point Light 1');
+        PointLight1.add(this.contents.roomLights.roomLight1, 'visible').name("Point Light");
+        PointLight1.add(this.contents.roomLights.roomLight1, 'intensity',1,100).name("Intensity Point Light");
+        PointLight1.addColor( dataRoom, 'point light 1 color' ).onChange( (value) => { this.contents.roomLights.togglePointLight1Color(value) } ).name('Point Light color');
+        PointLight1.add(this.contents.roomLights.roomLight1, 'castShadow', true).name("Shadow Point Light");
+        PointLight1.add(this.contents.roomLights.roomLight1.position, 'x',-20, 20).onChange(() => { this.contents.roomLights.updatePointLight1Helper(); }).name("Point Light x");
+        PointLight1.add(this.contents.roomLights.roomLight1.position, 'y',-20, 20).onChange(() => { this.contents.roomLights.updatePointLight1Helper(); }).name("Point Light y");
+        PointLight1.add(this.contents.roomLights.roomLight1.position, 'z',-20, 20).onChange(() => { this.contents.roomLights.updatePointLight1Helper(); }).name("Point Light z");
+        PointLight1.add(this.contents.roomLights.roomLight1.shadow.camera, 'far',0.5,100).name("Point Light Far");
+        PointLight1.add(this.contents.roomLights.helperRoomLight1, 'visible', false).name("Helper Point Light");
+        PointLight1.close();
+
+        // Interface for Point Light 2
+        const PointLight2 = LightsFolder.addFolder('Point Light 2');
+        PointLight2.add(this.contents.roomLights.roomLight2, 'visible').name("Point Light");
+        PointLight2.add(this.contents.roomLights.roomLight2, 'intensity',1,100).name("Intensity Point Light");
+        PointLight2.addColor( dataRoom, 'point light 2 color' ).onChange( (value) => { this.contents.roomLights.togglePointLight2Color(value) } ).name('Point Light color');
+        PointLight2.add(this.contents.roomLights.roomLight2, 'castShadow', true).name("Shadow Point Light");
+        PointLight2.add(this.contents.roomLights.roomLight2.position, 'x',-20, 20).onChange(() => { this.contents.roomLights.updatePointLight2Helper(); }).name("Point Light x");
+        PointLight2.add(this.contents.roomLights.roomLight2.position, 'y',-20, 20).onChange(() => { this.contents.roomLights.updatePointLight2Helper(); }).name("Point Light y");
+        PointLight2.add(this.contents.roomLights.roomLight2.position, 'z',-20, 20).onChange(() => { this.contents.roomLights.updatePointLight2Helper(); }).name("Point Light z");
+        PointLight2.add(this.contents.roomLights.roomLight2.shadow.camera, 'far',0.5,100).name("Point Light Far");
+        PointLight2.add(this.contents.roomLights.helperRoomLight2, 'visible', false).name("Helper Point Light");
+        PointLight2.close();
+
 
         // Interface for Cake Spotlight
         const SpotCakeFolder = LightsFolder.addFolder('Spotlight Cake');
@@ -86,7 +136,7 @@ class MyGuiInterface  {
         });
         SpotCakeFolder.add(this.contents.spotCake.spotLight, 'penumbra', 0, 1).name("Penumbra");
         SpotCakeFolder.add(this.contents.spotCake.spotLight, 'decay', 0, 2).name("Decay");
-        SpotCakeFolder.add({ 'Show Helper': false }, 'Show Helper').onChange((value) => { this.contents.spotCake.toggleSpotLightHelpers(value); }).name('visible');
+        SpotCakeFolder.add({ 'Show Helper': false }, 'Show Helper').onChange((value) => { this.contents.spotCake.toggleSpotLightHelpers(value); }).name('Helper visible');
         SpotCakeFolder.close();
 
         // Interface for Students Spotlights

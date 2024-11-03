@@ -79,10 +79,8 @@ class MySpotCake  {
     }
 
     updateSpotLightHelper() {
-            if (this.spotLightHelper.visible) {
-                this.spotLightHelper.update();
-            }
-        }
+        this.spotLightHelper.update();
+    }
     
 }
 export { MySpotCake };
