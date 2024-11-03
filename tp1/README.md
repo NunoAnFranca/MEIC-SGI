@@ -24,7 +24,7 @@ A broad view of the scene can be seen in the next two images. Images showcasing 
 
 ### Table, Plate, Cake and Candles
 
-The table was created as requested, while the cake has created with 3 different cylinders, allowing for the multi level feel of the brown/strawberry flavours. The cake also has an iteration of candles, where every candle as a pointlight in the middle in order to resemble a flame.
+The table was created as requested, while the cake has created with 3 different cylinders, allowing for the multi level feel of the brown/strawberry flavours. The cake also has an iteration of candles, where every candle has a pointlight in the middle in order to resemble a flame.
 
 |![image3](images/image3.png)                |
 |:------------------------------------------:|
@@ -35,7 +35,7 @@ The table was created as requested, while the cake has created with 3 different 
 
 ### Floor and Walls
 
-Floor and walls can be seen in the Image 1, they were created with the interface in mind, so as it can be seen in Image 4, there are multiple controls to change their appearance.
+Floor and walls can be seen in the Image 1, they were created with the interface in mind, as it can be seen in Image 4, there are multiple controls to change their appearance.
 
 |![image4](images/image4.png)                |
 |:------------------------------------------:|
@@ -58,7 +58,7 @@ The two student pictures are framed in the wall can can be seen in the following
 |:------------------------------------------:|
 | Image 6 - Two student pictures             |
 
-The pictures also have two spotlights to showcase the pictures. Those spotlights can be enabled and disabled and the attributes can be changed in the interface, both spotlights have an helper, in order to better understand the flow of the light.
+The pictures also have two spotlights to showcase them. Those spotlights can be enabled and disabled and the attributes can be changed in the interface, both spotlights have an helper, in order to better understand the flow of light.
 
 |![image7](images/image7.png)                |
 |:------------------------------------------:|
@@ -95,7 +95,7 @@ The spot light for the cake is similar to the students, also has a viewable geom
 
 ### Beetle and 2D Flower with bezier curves
 
-The following image shows the mandatory beetle and an optional flower with bezier curves, both objects were created with an iteration, in order to change to look and give a little thickness.
+The following image shows the mandatory beetle and an optional flower with bezier curves, both objects were created with a simple iteration of the y coordinate for the beetler and x coordinate for the flower, in order to change to look and give a little thickness.
 
 |![image11](images/image11.png)                |
 |:------------------------------------------:|
@@ -105,7 +105,7 @@ The following image shows the mandatory beetle and an optional flower with bezie
 
 ### Spiral Spring and Journal
 
-The following image shows the journal build as a surface and a spring, build with bezier curves and with a tube geometry to give thickness. The spring was build with an iteration of y value of each point, in order to give a proper spring look.
+The following image shows the journal built as a surface and a spring, build with bezier curves and with a tube geometry to give thickness. The spring was build with an iteration of y value for each point, in order to give a proper spring look.
 
 |![image12](images/image12.png)                |
 |:------------------------------------------:| 
@@ -160,13 +160,13 @@ All the lights in the scene have helpers and changeable atributes in the interfa
 
 ### Additional furniture
 
-There was developed additional furniture in order to complete the romm and fill it with personality, some of this additional furnituer can be changed with the interface.
+There was developed additional furniture in order to complete the room and fill it with personality, some of this additional furniture can be changed with the interface.
 
 |![image17](images/image17.png)             |
 |:------------------------------------------:| 
 | Image 17 - Chairs         |
 
-The following image of the spring guy was built with mostly simple geometrys, but uses springs for the conjunction of body parts and a surface for the hat. The spring guy also has some controllable options in the interface.
+The following image of the spring guy was built with mostly simple geometries, but uses springs for the conjunction of body parts and a surface for the hat. The spring guy also has some controllable options in the interface.
 
 |![image18](images/image18.png)             |
 |:------------------------------------------:| 
@@ -230,5 +230,5 @@ In the following image the full interface can be seen, there's also an option to
 ---- 
 ## Issues/Problems
 
-- Only known problem, is related to how the materials in the surfaces are constructed. Surfaces should be built from both sides and therefore the material is built with this attribute, **side: THREE.DoubleSide**. 
+- Only known problem, is related to how the materials in the surfaces are constructed. Surfaces are desired to be seen from both sides and therefore the material is built with this attribute, **side: THREE.DoubleSide**. 
 A mesh with this kind of material, while being able to cast/receive shadows, creates pixelated shadows. It's a known issue from THREEjs and such can be observed in the flowers/journal in the scene, when lights are casting shadows. That's also the reason why the couch doesn't have shadows, the cast/receive shadow attribute is turned off in order to not get pixelated.
