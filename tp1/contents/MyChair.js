@@ -1,7 +1,4 @@
 import * as THREE from 'three';
-import { MyAxis } from '../MyAxis.js';
-
-
 
 class MyChair  {
     /**

@@ -1,7 +1,4 @@
 import * as THREE from 'three';
-import { MyAxis } from '../MyAxis.js';
-
-
 
 class MyRoomLights  {
     /**
@@ -48,7 +45,7 @@ class MyRoomLights  {
 
         // creates a point light
         this.roomLight1Color = "#484a2c";
-        this.roomLight1 = new THREE.PointLight(this.roomLight1Color, 100, 0, 0);
+        this.roomLight1 = new THREE.PointLight(this.roomLight1Color, 40, 0, 0);
         this.roomLight1.position.set(10, 15, 10);
         this.roomLight1.castShadow = true;
         this.roomLight1.shadow.mapSize.width = this.mapSize;
@@ -65,7 +62,7 @@ class MyRoomLights  {
 
         // creates a second point light
         this.roomLight2Color = "#484a2c";
-        this.roomLight2 = new THREE.PointLight(this.roomLight2Color, 100, 0, 0);
+        this.roomLight2 = new THREE.PointLight(this.roomLight2Color, 40, 0, 0);
         this.roomLight2.position.set(-10, 15, 10);
         this.roomLight2.castShadow = true;
         this.roomLight2.shadow.mapSize.width = this.mapSize;

@@ -1,6 +1,4 @@
 import * as THREE from 'three';
-import { MyAxis } from '../MyAxis.js';
-
 
 class MySpotStudent  {
     /**
@@ -20,7 +18,7 @@ class MySpotStudent  {
     }
 
     /**
-     * 
+     * Spot light and geometries for the students
      */
     buildSpot(x,y,z,width){
         const stickWidth = 0.15;

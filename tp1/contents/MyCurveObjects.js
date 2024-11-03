@@ -1,7 +1,4 @@
 import * as THREE from 'three';
-import { MyAxis } from '../MyAxis.js';
-
-
 
 class MyCurveObjects  {
     /**
@@ -76,7 +73,7 @@ class MyCurveObjects  {
         }
     }
 
-    // 
+    // Flower built with bezier curves
     buildFlower(){
         const materials = {
             center: new THREE.LineBasicMaterial({color: "#4CF038"}),

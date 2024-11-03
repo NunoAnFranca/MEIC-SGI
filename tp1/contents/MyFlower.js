@@ -1,7 +1,5 @@
 import * as THREE from 'three';
-import { MyAxis } from '../MyAxis.js';
 import { MyNurbsBuilder } from '../MyNurbsBuilder.js';
-
 
 class MyFlower  {
     /**
@@ -79,13 +77,14 @@ class MyFlower  {
                 [-0.25,0,2,1],
                 [0,0,2.1,1]
             ],
+            // U = 1
             [ // V = 0..3
                 [0,0.25,-2,1],
                 [0,1.35,-1,1],
                 [0,0,2,1],
                 [0,0,2.1,1]
             ],
-            // U = 1
+            // U = 2
             [ // V = 0..3
                 [0.5,0,-2,1],
                 [1.5,1.25,-1,1],

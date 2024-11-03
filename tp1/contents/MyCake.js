@@ -1,6 +1,4 @@
 import * as THREE from 'three';
-import { MyAxis } from '../MyAxis.js';
-import { MyNurbsBuilder } from '../MyNurbsBuilder.js';
 
 class MyCake {
   /**

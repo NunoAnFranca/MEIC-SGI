@@ -1,7 +1,5 @@
 import * as THREE from 'three';
-import { MyAxis } from '../MyAxis.js';
 import { MyNurbsBuilder } from '../MyNurbsBuilder.js';
-
 
 class MyBillboard  {
     /**
@@ -65,7 +63,6 @@ class MyBillboard  {
                 [2.5,1,0,1],
                 [2,2,0,1]
             ]
-            // U = 1
         ];
 
         // Surface creation

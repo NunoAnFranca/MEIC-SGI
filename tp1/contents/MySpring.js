@@ -1,7 +1,4 @@
 import * as THREE from 'three';
-import { MyAxis } from '../MyAxis.js';
-
-
 
 class MySpring  {
     /**
@@ -12,7 +9,7 @@ class MySpring  {
         this.app = app;
     }
     /**
-     *
+     * Multi color spring in the top of the table
      */
     buildSpring() {
 

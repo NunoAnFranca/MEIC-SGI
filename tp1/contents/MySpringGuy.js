@@ -1,7 +1,5 @@
 import * as THREE from 'three';
-import { MyAxis } from '../MyAxis.js';
 import { MyNurbsBuilder } from '../MyNurbsBuilder.js';
-
 
 class MySpringGuy  {
     /**
@@ -326,7 +324,7 @@ class MySpringGuy  {
         // Points definition for hat for spring guy
         controlPoints = [
             // U = 0
-            [ // V = 0..4
+            [ // V = 0..3
                 [-3/4,0.5,0,1],
                 [-1/2,0,0,1],
                 [-1/2,1,0,1],
@@ -334,7 +332,7 @@ class MySpringGuy  {
 
             ],
             // U = 1
-            [ // V = 0..4
+            [ // V = 0..3
                 [-3/4,0.5,-1,1],
                 [-1/2,0,-2/3,1],
                 [-1/2,1,-2/3,1],
@@ -342,14 +340,14 @@ class MySpringGuy  {
 
             ],
             // U = 2
-            [ // V = 0..4
+            [ // V = 0..3
                 [3/4,0.5,-1,1],
                 [1/2,0,-2/3,1],
                 [1/2,1,-2/3,1],
                 [0,1.5,0,1]
             ],
             // U = 3
-            [ // V = 0..4
+            [ // V = 0..3
                 [3/4,0.5,0,1],
                 [1/2,0,0,1],
                 [1/2,1,0,1],

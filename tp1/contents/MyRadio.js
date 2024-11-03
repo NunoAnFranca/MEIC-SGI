@@ -124,7 +124,6 @@ class MyRadio  {
         this.stool.add(topMesh);
 
         this.stool.position.set(2*this.roomWidth/5,0,2*this.roomWidth/5);
-        //stool.position.set(2*this.roomWidth/5,legHeight*Math.sin(Math.PI/4)/2,2*this.roomWidth/5);
         this.app.scene.add(this.stool);
 
         this.radio.add(boxMesh);

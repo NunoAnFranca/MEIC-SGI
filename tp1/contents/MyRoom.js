@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import { MyAxis } from '../MyAxis.js';
 
 class MyRoom  {
     /**
@@ -221,7 +220,7 @@ class MyRoom  {
         const imageTexture = this.loader.load(imagePath);
         imageTexture.colorSpace = THREE.SRGBColorSpace;
 
-        const imageMaterial = new THREE.MeshPhongMaterial({color: "#ffffff", map: imageTexture});
+        const imageMaterial = new THREE.MeshPhongMaterial({color: "#AAAAAA", map: imageTexture});
         let image = new THREE.BoxGeometry(frameWidth, frameHeight, frameDepth / 2);
         let imageMesh = new THREE.Mesh(image, imageMaterial);
         frameGroup.add(imageMesh);      
