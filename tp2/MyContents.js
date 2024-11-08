@@ -118,6 +118,7 @@ class MyContents {
     createTextures() {
         for (let [name, values] of Object.entries(this.yasf.textures)) {
             this.textures[name] = this.loader.load(values.filepath);
+            this.textures[name].colorSpace = THREE.SRGBColor;
         }
     }
 
@@ -128,7 +129,8 @@ class MyContents {
                 emissive: new THREE.Color(values.emissive.r, values.emissive.g, values.emissive.b),
                 specular: new THREE.Color(values.specular.r, values.specular.g, values.specular.b),
                 shininess: values.shininess, transparent: values.transparent,
-                opacity: values.opacity, map: this.textures[values.textureref]
+                opacity: values.opacity, map: this.textures[values.textureref],
+                side: values.twosided ? THREE.DoubleSide : THREE.FrontSide,
             });
         }
     }
@@ -138,6 +140,12 @@ class MyContents {
 
         this.createTextures();
         this.createMaterials();
+
+        // light to test materials and textures
+        this.ambientLightColor = 0x555555;
+        this.ambientLightIntensity = 5;
+        this.ambientLight = new THREE.AmbientLight(this.ambientLightColor, 5);
+        this.app.scene.add(this.ambientLight);
 
         // test materials and textures loaded
         const rectangle = new THREE.BoxGeometry(2, 2, 2);
