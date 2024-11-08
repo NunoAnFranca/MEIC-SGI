@@ -115,6 +115,12 @@ class MyContents {
         }
     }
 
+    createAmbientLight() {
+        this.ambientLightColor = new THREE.Color(this.yasf.globals.ambient.r, this.yasf.globals.ambient.g, this.yasf.globals.ambient.b);
+        this.ambientLight = new THREE.AmbientLight(this.ambientLightColor);
+        this.app.scene.add(this.ambientLight);
+    }
+
     createTextures() {
         for (let [name, values] of Object.entries(this.yasf.textures)) {
             this.textures[name] = this.loader.load(values.filepath);
@@ -138,14 +144,9 @@ class MyContents {
     onAfterSceneLoadedAndBeforeRender(data) {
         this.yasf = data.yasf;
 
+        this.createAmbientLight();
         this.createTextures();
         this.createMaterials();
-
-        // light to test materials and textures
-        this.ambientLightColor = 0x555555;
-        this.ambientLightIntensity = 5;
-        this.ambientLight = new THREE.AmbientLight(this.ambientLightColor, 5);
-        this.app.scene.add(this.ambientLight);
 
         // test materials and textures loaded
         const rectangle = new THREE.BoxGeometry(2, 2, 2);
