@@ -15,7 +15,7 @@ class MyContents {
         this.axis = null;
 
         this.reader = new MyFileReader(this.onSceneLoaded.bind(this));
-        this.reader.open("scenes/demo/demo.json");
+        this.reader.open("scenes/demo.json");
 
         this.backgroundColor = null;
         this.ambientColor = null;
@@ -24,6 +24,9 @@ class MyContents {
         this.textures = {};
         this.materials = {};
         this.cameras = {};
+
+        // texture loader
+        this.loader = new THREE.TextureLoader();
     }
 
     /**
@@ -56,7 +59,6 @@ class MyContents {
         for (const [name, values] of Object.entries(fog)) {
             this.fog[name] = values;
         }
-        console.log(this.fog)
     }
 
     readTextures(textures) {
@@ -87,6 +89,21 @@ class MyContents {
         }
     }
 
+    readGraph(graph) {
+        for (const [name, values] of Object.entries(graph)) {
+            if (name === "rootid") {
+                this.graph[name] = values;
+            } else {
+                this.graph[name] = {}
+                for (const [attName, attValues] of Object.entries(values)) {
+                    this.graph[name][attName] = attValues;
+                }
+            }
+        }
+
+        console.log(graph);
+    }
+
     printYASF(data, indent = '') {
         for (let key in data) {
             if (typeof data[key] === 'object' && data[key] !== null) {
@@ -98,13 +115,48 @@ class MyContents {
         }
     }
 
+    createTextures() {
+        for (let [name, values] of Object.entries(this.yasf.textures)) {
+            this.textures[name] = this.loader.load(values.filepath);
+        }
+    }
+
+    createMaterials() {
+        for (let [name, values] of Object.entries(this.yasf.materials)) {
+            this.materials[name] = new THREE.MeshPhongMaterial({
+                color: new THREE.Color(values.color.r, values.color.g, values.color.b),
+                emissive: new THREE.Color(values.emissive.r, values.emissive.g, values.emissive.b),
+                specular: new THREE.Color(values.specular.r, values.specular.g, values.specular.b),
+                shininess: values.shininess, transparent: values.transparent,
+                opacity: values.opacity, map: this.textures[values.textureref]
+            });
+        }
+    }
+
     onAfterSceneLoadedAndBeforeRender(data) {
-        const YASF = data.yasf
+        this.yasf = data.yasf;
+
+        this.createTextures();
+        this.createMaterials();
+
+        // test materials and textures loaded
+        const rectangle = new THREE.BoxGeometry(2, 2, 2);
+        const rectangleMesh = new THREE.Mesh(rectangle, this.materials.tableApp);
+        this.app.scene.add(rectangleMesh);
+
+        /*const YASF = data.yasf;
         this.readGlobals(YASF.globals);
         this.readFog(YASF.fog);
         this.readTextures(YASF.textures);
         this.readMaterials(YASF.materials);
         this.readCameras(YASF.cameras);
+        this.readGraph(YASF.graph);
+        this.globals = YASF.globals;
+        this.fog = YASF.fog;
+        this.textures = YASF.textures;
+        this.materials = YASF.materials;
+        this.cameras = YASF.cameras;
+        this.graph = YASF.graph;*/
     }
 
     update() {
