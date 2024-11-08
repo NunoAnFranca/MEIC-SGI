@@ -23,6 +23,7 @@ class MyContents {
 
         this.textures = {};
         this.materials = {};
+        this.cameras = {};
     }
 
     /**
@@ -73,6 +74,19 @@ class MyContents {
         }
     }
 
+    readCameras(cameras) {
+        for (const [name, values] of Object.entries(cameras)) {
+            if (name === "initial") {
+                this.cameras[name] = values;
+            } else {
+                this.cameras[name] = {}
+                for (const [attName, attValues] of Object.entries(values)) {
+                    this.cameras[name][attName] = attValues;
+                }
+            }
+        }
+    }
+
     printYASF(data, indent = '') {
         for (let key in data) {
             if (typeof data[key] === 'object' && data[key] !== null) {
@@ -90,6 +104,7 @@ class MyContents {
         this.readFog(YASF.fog);
         this.readTextures(YASF.textures);
         this.readMaterials(YASF.materials);
+        this.readCameras(YASF.cameras);
     }
 
     update() {
