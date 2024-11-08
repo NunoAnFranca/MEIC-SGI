@@ -11,11 +11,18 @@ class MyContents {
        @param {MyApp} app The application object
     */
     constructor(app) {
-        this.app = app
-        this.axis = null
+        this.app = app;
+        this.axis = null;
 
         this.reader = new MyFileReader(this.onSceneLoaded.bind(this));
         this.reader.open("scenes/demo/demo.json");
+
+        this.backgroundColor = null;
+        this.ambientColor = null;
+        this.fog = {};
+
+        this.textures = {};
+        this.materials = {};
     }
 
     /**
@@ -39,6 +46,33 @@ class MyContents {
         this.onAfterSceneLoadedAndBeforeRender(data);
     }
 
+    readGlobals(globals) {
+        this.backgroundColor = globals.background;
+        this.ambientColor = globals.ambient;
+    }
+
+    readFog(fog) {
+        for (const [name, values] of Object.entries(fog)) {
+            this.fog[name] = values;
+        }
+        console.log(this.fog)
+    }
+
+    readTextures(textures) {
+        for (const [name, values] of Object.entries(textures)) {
+            this.textures[name] = values.filepath;
+        }
+    }
+
+    readMaterials(materials) {
+        for (const [name, values] of Object.entries(materials)) {
+            this.materials[name] = {};
+            for (const [attName, attValues] of Object.entries(values)) {
+                this.materials[name][attName] = attValues;
+            }
+        }
+    }
+
     printYASF(data, indent = '') {
         for (let key in data) {
             if (typeof data[key] === 'object' && data[key] !== null) {
@@ -51,7 +85,11 @@ class MyContents {
     }
 
     onAfterSceneLoadedAndBeforeRender(data) {
-        this.printYASF(data)
+        const YASF = data.yasf
+        this.readGlobals(YASF.globals);
+        this.readFog(YASF.fog);
+        this.readTextures(YASF.textures);
+        this.readMaterials(YASF.materials);
     }
 
     update() {
