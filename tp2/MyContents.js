@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { MyAxis } from './MyAxis.js';
 import { MyFileReader } from './parser/MyFileReader.js';
-import { MyGraph } from './MyGraph.js';
+import { MyGraph, MyNode, MyPointLight } from './MyGraph.js';
 /**
  *  This class contains the contents of out application
  */
@@ -31,6 +31,7 @@ class MyContents {
 
         // graph loader
         this.graph = null;
+        this.graphGroup = new THREE.Group();
     }
 
     /**
@@ -52,60 +53,6 @@ class MyContents {
     onSceneLoaded(data) {
         console.info("YASF loaded.")
         this.onAfterSceneLoadedAndBeforeRender(data);
-    }
-
-    readGlobals(globals) {
-        this.backgroundColor = globals.background;
-        this.ambientColor = globals.ambient;
-    }
-
-    readFog(fog) {
-        for (const [name, values] of Object.entries(fog)) {
-            this.fog[name] = values;
-        }
-    }
-
-    readTextures(textures) {
-        for (const [name, values] of Object.entries(textures)) {
-            this.textures[name] = values.filepath;
-        }
-    }
-
-    readMaterials(materials) {
-        for (const [name, values] of Object.entries(materials)) {
-            this.materials[name] = {};
-            for (const [attName, attValues] of Object.entries(values)) {
-                this.materials[name][attName] = attValues;
-            }
-        }
-    }
-
-    readCameras(cameras) {
-        for (const [name, values] of Object.entries(cameras)) {
-            if (name === "initial") {
-                this.cameras[name] = values;
-            } else {
-                this.cameras[name] = {}
-                for (const [attName, attValues] of Object.entries(values)) {
-                    this.cameras[name][attName] = attValues;
-                }
-            }
-        }
-    }
-
-    readGraph(graph) {
-        for (const [name, values] of Object.entries(graph)) {
-            if (name === "rootid") {
-                this.graph[name] = values;
-            } else {
-                this.graph[name] = {}
-                for (const [attName, attValues] of Object.entries(values)) {
-                    this.graph[name][attName] = attValues;
-                }
-            }
-        }
-
-        console.log(graph);
     }
 
     printYASF(data, indent = '') {
@@ -145,32 +92,59 @@ class MyContents {
         }
     }
 
+    transforms(object, group) {
+        for (const [key, value] of Object.entries(object.transforms)) {
+            if (key === "translate") {
+                group.position.set(value.x, value.y, value.z);
+            } else if (key === "rotate") {
+                group.rotation.set(value.x * Math.PI / 180, value.y * Math.PI / 180, value.z * Math.PI / 180);
+            } else if (key === "scale") {
+                group.scale.set(value.x, value.y, value.z);
+            }
+        }
+    }
+
+    createPointLight(object) {
+        const pointLight = new THREE.PointLight(object.color, object.intensity, object.distance, object.decay);
+        pointLight.castShadow = object.castShadow;
+        pointLight.position.set(object.position.x, object.position.y, object.position.z);
+        this.app.scene.add(pointLight);
+
+        // helper
+        const pointLightHelper = new THREE.PointLightHelper(pointLight);
+        this.app.scene.add(pointLightHelper);
+    }
+
+    createGraph(nodes, group) {
+        for (let [_, object] of Object.entries(nodes.children)) {
+            if (object instanceof MyNode) {
+                if (object.children.length === 0) {
+                    const rectangle = new THREE.PlaneGeometry(object.coords.xy2.x - object.coords.xy1.x, object.coords.xy2.y - object.coords.xy1.y);
+                    const rectangleMesh = new THREE.Mesh(rectangle, this.materials[object.material]);
+                    this.transforms(object, rectangleMesh);
+                    group.add(rectangleMesh);
+                } else {
+                    let temp = new THREE.Group();
+                    this.createGraph(object, temp);
+                    this.transforms(object, temp);
+                    group.add(temp);
+                }
+            } else if (object instanceof MyPointLight) {
+                this.createPointLight(object);
+            }
+        }
+    }
+
     onAfterSceneLoadedAndBeforeRender(data) {
         this.yasf = data.yasf;
+        this.graph = new MyGraph(this.app, this.yasf.graph);
 
         this.createAmbientLight();
         this.createTextures();
         this.createMaterials();
-        this.graph = new MyGraph(this.app, this.yasf.graph);
+        this.createGraph(this.graph, this.graphGroup);
 
-        // test materials and textures loaded
-        const rectangle = new THREE.BoxGeometry(2, 2, 2);
-        const rectangleMesh = new THREE.Mesh(rectangle, this.materials.tableApp);
-        this.app.scene.add(rectangleMesh);
-
-        /*const YASF = data.yasf;
-        this.readGlobals(YASF.globals);
-        this.readFog(YASF.fog);
-        this.readTextures(YASF.textures);
-        this.readMaterials(YASF.materials);
-        this.readCameras(YASF.cameras);
-        this.readGraph(YASF.graph);
-        this.globals = YASF.globals;
-        this.fog = YASF.fog;
-        this.textures = YASF.textures;
-        this.materials = YASF.materials;
-        this.cameras = YASF.cameras;
-        this.graph = YASF.graph;*/
+        this.app.scene.add(this.graphGroup);
     }
 
     update() {

@@ -32,13 +32,13 @@ class MyGraph {
 }
 
 class MyNode {
-    constructor(name, value, node) {
+    constructor(name, value, node, material) {
         this.name = name;
         this.nodeId = value.nodeId;
         this.node = node;
         this.children = [];
         this.transforms = {};
-        this.material = null;
+        this.material = material;
         this.children = [];
         this.coords = {};
 
@@ -66,7 +66,7 @@ class MyNode {
             } else if (name === "children") {
                 for (const [nameAttr, valueAttr] of Object.entries(value)) {
                     if (valueAttr.type === "noderef") {
-                        this.children.push(new MyNode(nameAttr, valueAttr, this.node));
+                        this.children.push(new MyNode(nameAttr, valueAttr, this.node, this.material));
                     } else if (valueAttr.type === "rectangle") {
                         this.coords.xy1 = new THREE.Vector2(valueAttr.xy1.x, valueAttr.xy1.y);
                         this.coords.xy2 = new THREE.Vector2(valueAttr.xy2.x, valueAttr.xy2.y);
@@ -90,4 +90,6 @@ class MyPointLight {
     }
 }
 
+export { MyPointLight };
+export { MyNode };
 export { MyGraph };
