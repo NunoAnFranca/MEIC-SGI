@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { MyAxis } from './MyAxis.js';
 import { MyFileReader } from './parser/MyFileReader.js';
+import { MyGraph } from './MyGraph.js';
 /**
  *  This class contains the contents of out application
  */
@@ -27,6 +28,9 @@ class MyContents {
 
         // texture loader
         this.loader = new THREE.TextureLoader();
+
+        // graph loader
+        this.graph = null;
     }
 
     /**
@@ -147,6 +151,7 @@ class MyContents {
         this.createAmbientLight();
         this.createTextures();
         this.createMaterials();
+        this.graph = new MyGraph(this.app, this.yasf.graph);
 
         // test materials and textures loaded
         const rectangle = new THREE.BoxGeometry(2, 2, 2);
