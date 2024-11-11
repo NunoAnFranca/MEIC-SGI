@@ -74,8 +74,22 @@ class MyContents {
 
     createTextures() {
         for (let [name, values] of Object.entries(this.yasf.textures)) {
-            this.textures[name] = this.loader.load(values.filepath);
-            this.textures[name].colorSpace = THREE.SRGBColor;
+            if(values.isVideo === false){
+                this.textures[name] = this.loader.load(values.filepath);
+                this.textures[name].colorSpace = THREE.SRGBColor;
+            }
+            else{
+                const video = document.createElement('video');
+                video.src = values.filepath;
+                video.loop = true;
+                video.muted = true;
+                video.play();
+                
+                this.textures[name] = new THREE.VideoTexture(video);
+                this.textures[name].colorSpace = THREE.SRGBColorSpace;
+                this.textures[name].minFilter = THREE.LinearFilter;
+                this.textures[name].magFilter = THREE.LinearFilter;
+            }
         }
     }
 

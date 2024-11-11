@@ -23,31 +23,40 @@
         },
         "textures": {
             "leftWallTex": {
-                "filepath": "scenes/textures/scratchedWall.jpg"
+                "filepath": "scenes/textures/scratchedWall.jpg",
+                "isVideo": false
             },
             "rightWallTex": {
-                "filepath": "scenes/textures/bloodyWall.jpg"
+                "filepath": "scenes/textures/bloodyWall.jpg",
+                "isVideo": false
             },
             "floorTex": {
-                "filepath": "scenes/textures/test1.jpg"
+                "filepath": "scenes/textures/test1.jpg",
+                "isVideo": false
             },
             "tableTex": {
-                "filepath": "scenes/textures/table.png"
+                "filepath": "scenes/textures/test.mp4",
+                "isVideo": true
             },
             "crimeWeaponTex": {
-                "filepath": "scenes/textures/bloodyPrints.jpg"
+                "filepath": "scenes/textures/bloodyPrints.jpg",
+                "isVideo": false
             },
             "tapeTex": {
-                "filepath": "scenes/textures/pTape.jpg"
+                "filepath": "scenes/textures/pTape.jpg",
+                "isVideo": false
             },
             "tapeSupportTex": {
-                "filepath": "scenes/textures/lamp.png"
+                "filepath": "scenes/textures/lamp.png",
+                "isVideo": false
             },
             "pineTex": {
-                "filepath": "scenes/textures/pine.png"
+                "filepath": "scenes/textures/pine.png",
+                "isVideo": false
             },
             "vaseTex": {
-                "filepath": "scenes/textures/vase.png"
+                "filepath": "scenes/textures/vase.png",
+                "isVideo": false
             }
         },
         "materials": {
