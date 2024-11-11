@@ -66,10 +66,15 @@ class MyContents {
         }
     }
 
-    createAmbientLight() {
+    createGlobals() {
+        this.app.scene.background = new THREE.Color(this.yasf.globals.background.r, this.yasf.globals.background.g, this.yasf.globals.background.b);
         this.ambientLightColor = new THREE.Color(this.yasf.globals.ambient.r, this.yasf.globals.ambient.g, this.yasf.globals.ambient.b);
-        this.ambientLight = new THREE.AmbientLight(this.ambientLightColor);
+        this.ambientLight = new THREE.AmbientLight(this.ambientLightColor, this.yasf.globals.ambient.intensity);
         this.app.scene.add(this.ambientLight);
+    }
+
+    createFog() {
+        this.app.scene.fog = new THREE.Fog(new THREE.Color(this.yasf.fog.color.r, this.yasf.fog.color.g, this.yasf.fog.color.b), this.yasf.fog.near, this.yasf.fog.far);
     }
 
     createTextures() {
@@ -139,7 +144,8 @@ class MyContents {
         this.yasf = data.yasf;
         this.graph = new MyGraph(this.app, this.yasf.graph);
 
-        this.createAmbientLight();
+        this.createGlobals();
+        this.createFog();
         this.createTextures();
         this.createMaterials();
         this.createGraph(this.graph, this.graphGroup);
