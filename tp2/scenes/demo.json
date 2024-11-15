@@ -36,49 +36,64 @@
         },
         "textures": {
             "leftWallTex": {
-                "filepath": "scenes/textures/scratchedWall.jpg"
+                "filepath": "scenes/textures/scratchedWall.jpg",
+                "isVideo": false
             },
             "rightWallTex": {
-                "filepath": "scenes/textures/bloodyWall.jpg"
+                "filepath": "scenes/textures/bloodyWall.jpg",
+                "isVideo": false
             },
             "floorTex": {
-                "filepath": "scenes/textures/test1.jpg"
+                "filepath": "scenes/textures/test1.jpg",
+                "isVideo": false
             },
             "tableTex": {
-                "filepath": "scenes/textures/table.png"
+                "filepath": "scenes/textures/test.mp4",
+                "isVideo": true
             },
             "crimeWeaponTex": {
-                "filepath": "scenes/textures/bloodyPrints.jpg"
+                "filepath": "scenes/textures/bloodyPrints.jpg",
+                "isVideo": false
             },
             "tapeTex": {
-                "filepath": "scenes/textures/pTape.jpg"
+                "filepath": "scenes/textures/pTape.jpg",
+                "isVideo": false
             },
             "tapeSupportTex": {
-                "filepath": "scenes/textures/lamp.png"
+                "filepath": "scenes/textures/lamp.png",
+                "isVideo": false
             },
             "pineTex": {
-                "filepath": "scenes/textures/pine.png"
+                "filepath": "scenes/textures/pine.png",
+                "isVideo": false
             },
             "vaseTex": {
-                "filepath": "scenes/textures/vase.png"
+                "filepath": "scenes/textures/vase.png",
+                "isVideo": false
             },
             "upTex": {
-                "filepath": "scenes/textures/py.png"
+                "filepath": "scenes/textures/py.png",
+                "isVideo": false
             },
             "downTex": {
-                "filepath": "scenes/textures/ny.png"
+                "filepath": "scenes/textures/ny.png",
+                "isVideo": false
             },
             "frontTex": {
-                "filepath": "scenes/textures/nz.png"
+                "filepath": "scenes/textures/nz.png",
+                "isVideo": false
             },
             "backTex": {
-                "filepath": "scenes/textures/nx.png"
+                "filepath": "scenes/textures/nx.png",
+                "isVideo": false
             },
             "leftTex": {
-                "filepath": "scenes/textures/pz.png"
+                "filepath": "scenes/textures/pz.png",
+                "isVideo": false
             },
             "rightTex": {
-                "filepath": "scenes/textures/px.png"
+                "filepath": "scenes/textures/px.png",
+                "isVideo": false
             }
         },
         "materials": {
