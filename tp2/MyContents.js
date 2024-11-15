@@ -24,7 +24,7 @@ class MyContents {
 
         this.textures = {};
         this.materials = {};
-        this.cameras = {};
+        // this.cameras = [];
 
         // texture loader
         this.loader = new THREE.TextureLoader();
@@ -97,6 +97,39 @@ class MyContents {
         }
     }
 
+    /*
+    createCameras() {
+        this.initialCamera = this.yasf.cameras.initial;
+        for (let [name, values] of Object.entries(this.yasf.cameras)) {
+            if (name !== "initial") {
+                if (values.type === "perspective") {
+                    this.cameras[name] = new THREE.PerspectiveCamera(20, 20, values.near, values.far);
+                    this.cameras[name].position.set(values.location.x, values.location.y, values.location.z);
+                    this.cameras[name].lookAt(values.target.x, values.target.y, values.target.z);
+                    this.app.cameras[name] = this.cameras[name];
+                } else if (values.type === "orthographic") {
+                
+                }
+            }
+        }
+        this.app.camera = this.cameras[this.yasf.globals.camera];
+    }
+    */
+
+    createSkybox() {
+        const skyboxGeometry = new THREE.BoxGeometry(this.yasf.skybox.size.x, this.yasf.skybox.size.y, this.yasf.skybox.size.z);
+        const skyBoxMaterials = [
+            this.materials[this.yasf.skybox.right],
+            this.materials[this.yasf.skybox.left],
+            this.materials[this.yasf.skybox.up],
+            this.materials[this.yasf.skybox.down],
+            this.materials[this.yasf.skybox.back],
+            this.materials[this.yasf.skybox.front],
+        ]
+        const skybox = new THREE.Mesh(skyboxGeometry, skyBoxMaterials);
+        this.app.scene.add(skybox);
+    }
+
     transforms(object, group) {
         for (const [key, value] of Object.entries(object.transforms)) {
             if (key === "translate") {
@@ -148,6 +181,7 @@ class MyContents {
         this.createFog();
         this.createTextures();
         this.createMaterials();
+        this.createSkybox();
         this.createGraph(this.graph, this.graphGroup);
 
         this.app.scene.add(this.graphGroup);

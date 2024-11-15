@@ -20,7 +20,19 @@
                 "b": 1.0
             },
             "near": 1.0,
-            "far": 100.0
+            "far": 200.0
+        },
+        "skybox": {
+            "size": {"x": 100.0, "y": 100.0, "z": 100.0},
+            "center": {"x": 0.0, "y": 0.0, "z": 0.0},
+            "emissive": {"r": 0.5, "g": 0.5, "b": 0.5},
+            "intensity": 3.0,
+            "front": "frontApp",
+            "back": "backApp",
+            "up": "upApp",
+            "down": "downApp",
+            "left": "leftApp",
+            "right": "rightApp"
         },
         "textures": {
             "leftWallTex": {
@@ -49,6 +61,24 @@
             },
             "vaseTex": {
                 "filepath": "scenes/textures/vase.png"
+            },
+            "upTex": {
+                "filepath": "scenes/textures/py.png"
+            },
+            "downTex": {
+                "filepath": "scenes/textures/ny.png"
+            },
+            "frontTex": {
+                "filepath": "scenes/textures/nz.png"
+            },
+            "backTex": {
+                "filepath": "scenes/textures/nx.png"
+            },
+            "leftTex": {
+                "filepath": "scenes/textures/pz.png"
+            },
+            "rightTex": {
+                "filepath": "scenes/textures/px.png"
             }
         },
         "materials": {
@@ -264,6 +294,150 @@
                 "texlength_s": 1,
                 "texlength_t": 1,
                 "shading": "flat"
+            },
+            "upApp": {
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "color": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0
+                },
+                "specular": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                },
+                "shininess": 0.0,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "upTex",
+                "texlength_s": 15,
+                "texlength_t": 15,
+                "twosided": true
+            },
+            "downApp": {
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "color": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0
+                },
+                "specular": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                },
+                "shininess": 0.0,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "downTex",
+                "texlength_s": 15,
+                "texlength_t": 15,
+                "twosided": true
+            },
+            "frontApp": {
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "color": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0
+                },
+                "specular": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                },
+                "shininess": 0.0,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "frontTex",
+                "texlength_s": 15,
+                "texlength_t": 15,
+                "twosided": true
+            },
+            "backApp": {
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "color": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0
+                },
+                "specular": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                },
+                "shininess": 0.0,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "leftTex",
+                "texlength_s": 15,
+                "texlength_t": 15,
+                "twosided": true
+            },
+            "leftApp": {
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "color": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0
+                },
+                "specular": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                },
+                "shininess": 0.0,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "backTex",
+                "texlength_s": 15,
+                "texlength_t": 15,
+                "twosided": true
+            },
+            "rightApp": {
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "color": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0
+                },
+                "specular": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                },
+                "shininess": 0.0,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "rightTex",
+                "texlength_s": 15,
+                "texlength_t": 15,
+                "twosided": true
             }
         },
         "cameras": {
