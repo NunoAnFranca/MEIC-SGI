@@ -502,6 +502,10 @@
                         "type": "noderef",
                         "nodeId": "table"
                     },
+                    "test": {
+                        "type": "noderef",
+                        "nodeId": "test"
+                    },
                     "pointLight": {
                         "type": "pointlight",
                         "enabled": true,
@@ -573,6 +577,112 @@
                     "leg4": {
                         "type": "noderef",
                         "nodeId": "leg4"
+                    }
+                }
+            },
+            "test" : {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 5.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "tableApp"
+                },
+                "children": {
+                    "testTri": {
+                        "type": "noderef",
+                        "nodeId": "testTri"
+                    }
+                }
+            },
+            "testTri": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        }
+                    }
+                ],
+                "children": {
+                    "tro": {
+                        "type": "noderef",
+                        "nodeId": "tro"
+                    }
+                }
+            },
+            "tro": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "rectanglePrim": {
+                        "type": "triangle",
+                        "xyz1": {
+                            "x": -2,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0,
+                            "y": 5,
+                            "z": 0
+                        },
+                        "xyz3": {
+                            "x": 2,
+                            "y": 0,
+                            "z": 0
+                        }
                     }
                 }
             },
