@@ -81,7 +81,7 @@ class MyContents {
         for (let [name, values] of Object.entries(this.yasf.textures)) {
             if(values.isVideo === false){
                 this.textures[name] = this.loader.load(values.filepath);
-                this.textures[name].colorSpace = THREE.SRGBColor;
+                this.textures[name].colorSpace = THREE.SRGBColorSpace;
             }
             else{
                 const video = document.createElement('video');
@@ -168,11 +168,30 @@ class MyContents {
     }
 
     createRectangle(object){
-        const rectangle = new THREE.PlaneGeometry(object.coords.xy2.x - object.coords.xy1.x, object.coords.xy2.y - object.coords.xy1.y);
+        const rectangle = new THREE.PlaneGeometry(object.coords.xy2.x - object.coords.xy1.x, object.coords.xy2.y - object.coords.xy1.y, object.parts_x, object.parts_y);
         const rectangleMesh = new THREE.Mesh(rectangle, this.materials[object.material]);
         this.transforms(object, rectangleMesh);
 
         return rectangleMesh;
+    }
+
+    createBox(object){
+        const box = new THREE.BoxGeometry(object.coords.xyz2.x - object.coords.xyz1.x, object.coords.xyz2.y - object.coords.xyz1.y,  object.coords.xyz2.z - object.coords.xyz1.z ,object.parts_x, object.parts_y, object.parts_z);
+        const boxMesh = new THREE.Mesh(box, this.materials[object.material]);
+        this.transforms(object, boxMesh);
+
+        return boxMesh;
+    }
+
+    createCylinder(object){
+        let thetaStart = (object.thetaStart ?? 0) * Math.PI / 180;
+        let thetaLength = (object.thetaLength ?? 360) * Math.PI / 180;
+
+        const cylinder = new THREE.CylinderGeometry(object.top, object.base, object.height, object.slices, object.stacks, object.capsclose, thetaStart, thetaLength);
+        const cylinderMesh = new THREE.Mesh(cylinder, this.materials[object.material]);
+        this.transforms(object, cylinderMesh);
+
+        return cylinderMesh;
     }
 
     createTriangle(object){
@@ -182,7 +201,7 @@ class MyContents {
             object.coords.xyz2.x, object.coords.xyz2.y, object.coords.xyz2.z,  // Vertex 2
             object.coords.xyz3.x, object.coords.xyz3.y, object.coords.xyz3.z   // Vertex 3
         ]);
-        console.log("ola");
+
         geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
         const triangleMesh = new THREE.Mesh(geometry, this.materials[object.material]);
 
@@ -199,6 +218,12 @@ class MyContents {
                     }
                     else if(object.objectType === "triangle"){
                         addObject = this.createTriangle(object);
+                    }
+                    else if(object.objectType === "box"){
+                        addObject = this.createBox(object);
+                    }
+                    else if(object.objectType === "cylinder"){
+                        addObject = this.createCylinder(object);
                     }
                     group.add(addObject);
 

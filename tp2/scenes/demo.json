@@ -615,6 +615,89 @@
                     "testTri": {
                         "type": "noderef",
                         "nodeId": "testTri"
+                    },
+                    "testBox": {
+                        "type": "noderef",
+                        "nodeId": "testBox"
+                    },
+                    "testCylinder": {
+                        "type": "noderef", 
+                        "nodeId": "testCylinder"
+                    }
+                }
+            },
+            "testCylinder": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 5,
+                            "y": 0,
+                            "z": 5
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "cycycycy": {
+                        "type": "cylinder",
+                        "base": 1,
+
+                        "top": 1.5,
+
+                        "height": 3,
+
+                        "slices": 6,
+
+                        "stacks": 6,
+
+                        "capsclose": false,
+
+                        "thetaLength": 270
+                    }
+                }
+            },
+            "testBox": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -5,
+                            "y": 0,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "rectanglePrim": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 5,
+                            "y": 5,
+                            "z": 5
+                        }
                     }
                 }
             },
