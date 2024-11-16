@@ -41,6 +41,7 @@ class MyNode {
         this.material = material;
         this.children = [];
         this.coords = {};
+        this.objectType = null;
 
         this.createChildren();
     }
@@ -68,8 +69,16 @@ class MyNode {
                     if (valueAttr.type === "noderef") {
                         this.children.push(new MyNode(nameAttr, valueAttr, this.node, this.material));
                     } else if (valueAttr.type === "rectangle") {
+                        this.objectType = valueAttr.type;
+
                         this.coords.xy1 = new THREE.Vector2(valueAttr.xy1.x, valueAttr.xy1.y);
                         this.coords.xy2 = new THREE.Vector2(valueAttr.xy2.x, valueAttr.xy2.y);
+                    } else if (valueAttr.type === "triangle") {
+                        this.objectType = valueAttr.type;
+
+                        this.coords.xyz1 = new THREE.Vector3(valueAttr.xyz1.x, valueAttr.xyz1.y, valueAttr.xyz1.z);
+                        this.coords.xyz2 = new THREE.Vector3(valueAttr.xyz2.x, valueAttr.xyz2.y, valueAttr.xyz2.z);
+                        this.coords.xyz3 = new THREE.Vector3(valueAttr.xyz3.x, valueAttr.xyz3.y, valueAttr.xyz3.z);
                     }
                 }
             }

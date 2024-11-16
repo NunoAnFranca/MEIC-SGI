@@ -167,14 +167,44 @@ class MyContents {
         this.app.scene.add(pointLightHelper);
     }
 
+    createRectangle(object){
+        const rectangle = new THREE.PlaneGeometry(object.coords.xy2.x - object.coords.xy1.x, object.coords.xy2.y - object.coords.xy1.y);
+        const rectangleMesh = new THREE.Mesh(rectangle, this.materials[object.material]);
+        this.transforms(object, rectangleMesh);
+
+        return rectangleMesh;
+    }
+
+    createTriangle(object){
+        const geometry = new THREE.BufferGeometry();
+        const vertices = new Float32Array([
+            0.0,  1.0, 0.0,  // Vertex 1
+           -1.0, -1.0, 0.0,  // Vertex 2
+            1.0, -1.0, 0.0   // Vertex 3
+        ]);
+        geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+    
+        console.log(object);
+        const triangle = new THREE.Triangle((object.coords.xyz1.x,object.coords.xyz1.y,object.coords.xyz1.z), object.coords.xyz2, object.coords.xyz3);
+        const triangleMesh = new THREE.Mesh(geometry, this.materials[object.material]);
+        this.transforms(object, triangleMesh);
+        
+        return triangleMesh;
+    }
+    
     createGraph(nodes, group) {
         for (let [_, object] of Object.entries(nodes.children)) {
             if (object instanceof MyNode) {
                 if (object.children.length === 0) {
-                    const rectangle = new THREE.PlaneGeometry(object.coords.xy2.x - object.coords.xy1.x, object.coords.xy2.y - object.coords.xy1.y);
-                    const rectangleMesh = new THREE.Mesh(rectangle, this.materials[object.material]);
-                    this.transforms(object, rectangleMesh);
-                    group.add(rectangleMesh);
+                    let addObject = null;
+                    if (object.objectType === "rectangle"){
+                        addObject = this.createRectangle(object);
+                    }
+                    else if(object.objectType === "triangle"){
+                        addObject = this.createTriangle(object);
+                    }
+                    group.add(addObject);
+
                 } else {
                     let temp = new THREE.Group();
                     this.createGraph(object, temp);
