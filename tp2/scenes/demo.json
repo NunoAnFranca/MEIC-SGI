@@ -623,6 +623,14 @@
                     "testCylinder": {
                         "type": "noderef", 
                         "nodeId": "testCylinder"
+                    },
+                    "testSphere": {
+                        "type": "noderef", 
+                        "nodeId": "testSphere"
+                    },
+                    "testNurbs": {
+                        "type": "noderef", 
+                        "nodeId": "testNurbs"
                     }
                 }
             },
@@ -698,6 +706,94 @@
                             "y": 5,
                             "z": 5
                         }
+                    }
+                }
+            },
+            "testSphere": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 5,
+                            "z": -10
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "rectanglePrim": {
+                        "type": "sphere",
+                        "radius": 4,
+
+                        "slices": 32,
+
+                        "stacks": 32,
+
+                        "philength": 180
+                    }
+                }
+            },
+            "testNurbs": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 5,
+                            "z": -10
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "rectanglePrim": {
+                        "type": "nurbs",
+                        "degree_u": 3,
+                        "degree_v": 4,
+                        "parts_u": 64,
+                        "parts_v": 64,
+                        "controlpoints": [
+                            {"x": -1, "y": 0, "z": 0},
+                            {"x": -3, "y": 1, "z": 0},
+                            {"x": -0.5, "y": 5, "z": 0},
+                            {"x": -1.5, "y": 6, "z": 0},
+                            {"x": -2, "y": 8, "z": 0},
+                            
+                            {"x": -1, "y": 0, "z": -1.3333333},
+                            {"x": -3, "y": 1, "z": -4},
+                            {"x": -0.5, "y": 5, "z": -0.6666667},
+                            {"x": -1.5, "y": 6, "z": -2},
+                            {"x": -2, "y": 8, "z": -2.6666667},
+
+                            {"x": 1, "y": 0, "z": -1.3333333},
+                            {"x": 3, "y": 1, "z": -4},
+                            {"x": 0.5, "y": 5, "z": -0.6666667},
+                            {"x": 1.5, "y": 6, "z": -2},
+                            {"x": 2, "y": 8, "z": -2.6666667},
+
+                            {"x": 1, "y": 0, "z": 0},
+                            {"x": 3, "y": 1, "z": 0},
+                            {"x": 0.5, "y": 5, "z": 0},
+                            {"x": 1.5, "y": 6, "z": 0},
+                            {"x": 2, "y": 8, "z": 0}
+                        ]
                     }
                 }
             },

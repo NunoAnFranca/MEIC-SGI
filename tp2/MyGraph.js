@@ -56,7 +56,13 @@ class MyNode {
         this.capsclose = null;
         this.thetastart = null;
         this.thetalength = null;
+        this.phistart = null;
+        this.philength = null;
 
+        this.degree_u = null; 
+        this.degree_v = null; 
+        this.parts_u = null; 
+        this.parts_v = null; 
         this.createChildren();
     }
 
@@ -127,9 +133,18 @@ class MyNode {
                         this.slices = valueAttr.slices;
                         this.stacks = valueAttr.stacks;
                         this.thetastart = valueAttr.thetastart;
-                        this.thetalength = valueAttr.thetaLength;
+                        this.thetalength = valueAttr.thetalength;
                         this.phistart = valueAttr.phistart;
                         this.philength = valueAttr.philength;
+                   
+                    } else if (valueAttr.type === "nurbs") {
+                        this.objectType = valueAttr.type;
+
+                        this.degree_u = valueAttr.degree_u;
+                        this.degree_v = valueAttr.degree_v;
+                        this.parts_u = valueAttr.parts_u;
+                        this.parts_v = valueAttr.parts_v;
+                        this.controlpoints = valueAttr.controlpoints;
                     }
                 }
             }

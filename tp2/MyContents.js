@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { MyAxis } from './MyAxis.js';
 import { MyFileReader } from './parser/MyFileReader.js';
 import { MyGraph, MyNode, MyPointLight } from './MyGraph.js';
+import { MyNurbsBuilder } from './MyNurbsBuilder.js';
 /**
  *  This class contains the contents of out application
  */
@@ -106,7 +107,7 @@ class MyContents {
                 specular: new THREE.Color(values.specular.r, values.specular.g, values.specular.b),
                 shininess: values.shininess, transparent: values.transparent,
                 opacity: values.opacity, map: this.textures[values.textureref],
-                side: values.twosided ? THREE.DoubleSide : THREE.FrontSide,
+                side: values.twosided ? THREE.DoubleSide : THREE.FrontSide, //NEED TO CHANGE
             });
         }
     }
@@ -222,6 +223,42 @@ class MyContents {
 
         return triangleMesh;
     }
+
+    convertControlPoints(controlPoints, degree_u, degree_v) {
+        let convertedControlPoints = [];
+    
+        let idx = 0; // Index to track which point in the grid we are on
+        for (let u = 0; u <= degree_u; u++) {
+            let row = [];
+            for (let v = 0; v <= degree_v; v++) {
+                let point = controlPoints[idx]; // Get the current point
+                let x = point.x;
+                let y = point.y;
+                let z = point.z;
+    
+                // Ensure there is a 4th value (w) which defaults to 1
+                row.push([x, y, z, 1]);
+    
+                idx++; // Move to the next control point
+            }
+            convertedControlPoints.push(row); // Add the row to the final result
+        }
+    
+        return convertedControlPoints;
+    }
+
+    createNurbs(object){
+        this.builder = new MyNurbsBuilder();
+        let surfaceData;
+        let mesh;
+
+        let controlPoints = this.convertControlPoints(object.controlpoints, object.degree_u, object.degree_v);
+
+        surfaceData = this.builder.build(controlPoints, object.degree_u, object.degree_v, object.parts_u, object.parts_v, this.materials[object.material]);
+        mesh = new THREE.Mesh(surfaceData, this.materials[object.material]);
+
+        return mesh;
+    }
     
     createGraph(nodes, group) {
         for (let [_, object] of Object.entries(nodes.children)) {
@@ -242,6 +279,9 @@ class MyContents {
                     }
                     else if(object.objectType === "sphere") {
                         addObject = this.createSphere(object);
+                    }
+                    else if(object.objectType === "nurbs") {
+                        addObject = this.createNurbs(object);
                     }
                     group.add(addObject);
 
