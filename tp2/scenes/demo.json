@@ -35,68 +35,60 @@
             }
         },
         "textures": {
-            "leftWallTex": {
-                "filepath": "scenes/textures/scratchedWall.jpg",
-                "isVideo": false
-            },
-            "rightWallTex": {
-                "filepath": "scenes/textures/bloodyWall.jpg",
-                "isVideo": false
-            },
-            "floorTex": {
-                "filepath": "scenes/textures/test1.jpg",
-                "isVideo": false
-            },
             "tableTex": {
                 "filepath": "scenes/textures/table.png",
                 "isVideo": false
             },
-            "crimeWeaponTex": {
-                "filepath": "scenes/textures/bloodyPrints.jpg",
-                "isVideo": false
-            },
-            "tapeTex": {
-                "filepath": "scenes/textures/pTape.jpg",
-                "isVideo": false
-            },
-            "tapeSupportTex": {
-                "filepath": "scenes/textures/lamp.png",
-                "isVideo": false
-            },
-            "pineTex": {
-                "filepath": "scenes/textures/pine.png",
-                "isVideo": false
-            },
-            "vaseTex": {
-                "filepath": "scenes/textures/vase.png",
-                "isVideo": false
-            },
             "upTex": {
-                "filepath": "scenes/textures/view3.png",
-                "isVideo": false
-            },
-            "downTex": {
-                "filepath": "scenes/textures/view4.png",
+                "filepath": "scenes/textures/skybox/view3.png",
                 "isVideo": false
             },
             "frontTex": {
-                "filepath": "scenes/textures/view2.png",
+                "filepath": "scenes/textures/skybox/view2.png",
                 "isVideo": false
             },
             "backTex": {
-                "filepath": "scenes/textures/view2.png",
+                "filepath": "scenes/textures/skybox/view2.png",
                 "isVideo": false
             },
             "leftTex": {
-                "filepath": "scenes/textures/view1.png",
+                "filepath": "scenes/textures/skybox/view1.png",
                 "isVideo": false
             },
             "rightTex": {
-                "filepath": "scenes/textures/view1.png",
+                "filepath": "scenes/textures/skybox/view1.png",
+                "isVideo": false
+            },
+            "brickTex": {
+                "filepath": "scenes/textures/elements/brick1.png",
                 "isVideo": false
             }
         },
         "materials": {
+            "brickApp": {
+                "color": {
+                    "r": 0.8,
+                    "g": 0.8,
+                    "b": 0.8
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "brickTex",
+                "texlength_s": 10,
+                "texlength_t": 10
+
+            },
             "tableApp": {
                 "color": {
                     "r": 0.8,
@@ -120,196 +112,6 @@
                 "texlength_s": 1,
                 "texlength_t": 1
             },
-            "leftWallApp": {
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "color": {
-                    "r": 0.8,
-                    "g": 0.8,
-                    "b": 0.8
-                },
-                "specular": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "shininess": 0.0,
-                "transparent": false,
-                "opacity": 1.0,
-                "textureref": "leftWallTex",
-                "texlength_s": 15,
-                "texlength_t": 8,
-                "twosided": true
-            },
-            "rightWallApp": {
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "color": {
-                    "r": 0.8,
-                    "g": 0.8,
-                    "b": 0.8
-                },
-                "specular": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "shininess": 0.0,
-                "transparent": false,
-                "opacity": 1.0,
-                "textureref": "rightWallTex",
-                "texlength_s": 15,
-                "texlength_t": 8,
-                "twosided": true
-            },
-            "floorApp": {
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "color": {
-                    "r": 0.8,
-                    "g": 0.8,
-                    "b": 0.8
-                },
-                "specular": {
-                    "r": 0,
-                    "g": 0,
-                    "b": 0
-                },
-                "shininess": 0.0,
-                "transparent": false,
-                "opacity": 1.0,
-                "textureref": "floorTex",
-                "texlength_s": 15,
-                "texlength_t": 15,
-                "twosided": true
-            },
-            "crimeWeaponApp": {
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "color": {
-                    "r": 0.8,
-                    "g": 0.8,
-                    "b": 0.8
-                },
-                "specular": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "shininess": 0.0,
-                "transparent": false,
-                "opacity": 1.0,
-                "textureref": "crimeWeaponTex",
-                "texlength_s": 1,
-                "texlength_t": 1
-            },
-            "tapeApp": {
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "color": {
-                    "r": 0.8,
-                    "g": 0.8,
-                    "b": 0.8
-                },
-                "specular": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "shininess": 0.0,
-                "transparent": false,
-                "opacity": 1.0,
-                "textureref": "tapeTex",
-                "texlength_s": 1,
-                "texlength_t": 0.4,
-                "twosided": true
-            },
-            "tapeSupportApp": {
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "color": {
-                    "r": 0.8,
-                    "g": 0.8,
-                    "b": 0.8
-                },
-                "specular": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "shininess": 0.0,
-                "transparent": false,
-                "opacity": 1.0,
-                "textureref": "tapeSupportTex",
-                "texlength_s": 1,
-                "texlength_t": 1
-            },
-            "pineApp": {
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "color": {
-                    "r": 0.8,
-                    "g": 0.8,
-                    "b": 0.8
-                },
-                "specular": {
-                    "r": 0,
-                    "g": 0,
-                    "b": 0
-                },
-                "shininess": 0.0,
-                "transparent": false,
-                "opacity": 1.0,
-                "textureref": "pineTex",
-                "texlength_s": 1,
-                "texlength_t": 1,
-                "wireframe": true
-            },
-            "vaseApp": {
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "color": {
-                    "r": 0.8,
-                    "g": 0.8,
-                    "b": 0.8
-                },
-                "specular": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "shininess": 0.0,
-                "transparent": false,
-                "opacity": 1.0,
-                "textureref": "vaseTex",
-                "texlength_s": 1,
-                "texlength_t": 1,
-                "shading": "flat"
-            },
             "upApp": {
                 "emissive": {
                     "r": 0.0,
@@ -330,8 +132,6 @@
                 "transparent": false,
                 "opacity": 1.0,
                 "textureref": "upTex",
-                "texlength_s": 15,
-                "texlength_t": 15,
                 "twosided": true
             },
             "downApp": {
@@ -353,9 +153,9 @@
                 "shininess": 0.0,
                 "transparent": false,
                 "opacity": 1.0,
-                "textureref": "downTex",
-                "texlength_s": 15,
-                "texlength_t": 15,
+                "textureref": "brickTex",
+                "texlength_s": 25,
+                "texlength_t": 25,
                 "twosided": true
             },
             "frontApp": {
@@ -378,8 +178,6 @@
                 "transparent": false,
                 "opacity": 1.0,
                 "textureref": "frontTex",
-                "texlength_s": 15,
-                "texlength_t": 15,
                 "twosided": true
             },
             "backApp": {
@@ -402,8 +200,6 @@
                 "transparent": false,
                 "opacity": 1.0,
                 "textureref": "backTex",
-                "texlength_s": 15,
-                "texlength_t": 15,
                 "twosided": true
             },
             "leftApp": {
@@ -426,8 +222,6 @@
                 "transparent": false,
                 "opacity": 1.0,
                 "textureref": "leftTex",
-                "texlength_s": 15,
-                "texlength_t": 15,
                 "twosided": true
             },
             "rightApp": {
@@ -450,8 +244,6 @@
                 "transparent": false,
                 "opacity": 1.0,
                 "textureref": "rightTex",
-                "texlength_s": 15,
-                "texlength_t": 15,
                 "twosided": true
             }
         },
@@ -555,7 +347,7 @@
                     }
                 ],
                 "materialref": {
-                    "materialId": "tableApp"
+                    "materialId": "brickApp"
                 },
                 "children": {
                     "tableTop": {
@@ -658,17 +450,11 @@
                     "cycycycy": {
                         "type": "cylinder",
                         "base": 1,
-
                         "top": 1.5,
-
                         "height": 3,
-
                         "slices": 6,
-
                         "stacks": 6,
-
                         "capsclose": false,
-
                         "thetalength": 270
                     }
                 }

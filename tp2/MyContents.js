@@ -78,36 +78,42 @@ class MyContents {
         this.app.scene.fog = new THREE.Fog(new THREE.Color(this.yasf.globals.fog.color.r, this.yasf.globals.fog.color.g, this.yasf.globals.fog.color.b), this.yasf.globals.fog.near, this.yasf.globals.fog.far);
     }
 
-    createTextures() {
-        for (let [name, values] of Object.entries(this.yasf.textures)) {
-            if(values.isVideo === false){
-                this.textures[name] = this.loader.load(values.filepath);
-                this.textures[name].colorSpace = THREE.SRGBColorSpace;
-            }
-            else{
-                const video = document.createElement('video');
-                video.src = values.filepath;
-                video.loop = true;
-                video.muted = true;
-                video.play();
-                
-                this.textures[name] = new THREE.VideoTexture(video);
-                this.textures[name].colorSpace = THREE.SRGBColorSpace;
-                this.textures[name].minFilter = THREE.LinearFilter;
-                this.textures[name].magFilter = THREE.LinearFilter;
-            }
-        }
-    }
-
-    createMaterials() {
+    createMaterialsAndTexture() {
         for (let [name, values] of Object.entries(this.yasf.materials)) {
+            let texture = null;
+            const textureRef = values.textureref;
+
+            if (textureRef && this.yasf.textures[textureRef]) {
+                const textureValues = this.yasf.textures[textureRef];
+
+                if (textureValues.isVideo) {
+                    const video = document.createElement('video');
+                    video.src = textureValues.filepath;
+                    video.loop = true;
+                    video.muted = true;
+                    video.play();
+                    
+                    texture = new THREE.VideoTexture(video);
+                    texture.colorSpace = THREE.SRGBColorSpace;
+                    texture.minFilter = THREE.LinearFilter;
+                    texture.magFilter = THREE.LinearFilter;
+                }
+                else {
+                    texture = this.loader.load(textureValues.filepath);
+                    texture.colorSpace = THREE.SRGBColorSpace;
+                    texture.wrapS = THREE.RepeatWrapping;
+                    texture.wrapT = THREE.RepeatWrapping;
+                    texture.repeat.set(values.texlength_s || 1, values.texlength_t || 1);
+                }
+            }
+
             this.materials[name] = new THREE.MeshPhongMaterial({
                 color: new THREE.Color(values.color.r, values.color.g, values.color.b),
                 emissive: new THREE.Color(values.emissive.r, values.emissive.g, values.emissive.b),
                 specular: new THREE.Color(values.specular.r, values.specular.g, values.specular.b),
                 shininess: values.shininess, transparent: values.transparent,
-                opacity: values.opacity, map: this.textures[values.textureref],
-                side: values.twosided ? THREE.DoubleSide : THREE.FrontSide, //NEED TO CHANGE
+                opacity: values.opacity, map: texture,
+                side: values.twosided ? THREE.DoubleSide : THREE.FrontSide, // NEED TO CHANGE
             });
         }
     }
@@ -142,7 +148,7 @@ class MyContents {
             this.materials[this.yasf.globals.skybox.front],
         ]
         const skybox = new THREE.Mesh(skyboxGeometry, skyBoxMaterials);
-        skybox.translateY(25);
+        skybox.translateY(this.yasf.globals.skybox.size.y / 2);
         this.app.scene.add(skybox);
     }
 
@@ -181,7 +187,6 @@ class MyContents {
         const box = new THREE.BoxGeometry(object.coords.xyz2.x - object.coords.xyz1.x, object.coords.xyz2.y - object.coords.xyz1.y,  object.coords.xyz2.z - object.coords.xyz1.z ,object.parts_x, object.parts_y, object.parts_z);
         const boxMesh = new THREE.Mesh(box, this.materials[object.material]);
         this.transforms(object, boxMesh);
-        console.log(object);
 
         return boxMesh;
     }
@@ -190,7 +195,6 @@ class MyContents {
         let thetaStart = (object.thetastart ?? 0) * Math.PI / 180;
         let thetaLength = (object.thetalength ?? 360) * Math.PI / 180;
 
-        console.log(object);
         const cylinder = new THREE.CylinderGeometry(object.top, object.base, object.height, object.slices, object.stacks, object.capsclose, thetaStart, thetaLength);
         const cylinderMesh = new THREE.Mesh(cylinder, this.materials[object.material]);
         this.transforms(object, cylinderMesh);
@@ -304,8 +308,7 @@ class MyContents {
 
         this.createGlobals();
         this.createFog();
-        this.createTextures();
-        this.createMaterials();
+        this.createMaterialsAndTexture();
         this.createSkybox();
         this.createGraph(this.graph, this.graphGroup);
 
