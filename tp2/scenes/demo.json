@@ -20,10 +20,10 @@
                 "b": 1.0
             },
             "near": 1.0,
-            "far": 200.0
+            "far": 1000.0
         },
         "skybox": {
-            "size": {"x": 100.0, "y": 100.0, "z": 100.0},
+            "size": {"x": 50.0, "y": 50.0, "z": 50.0},
             "center": {"x": 0.0, "y": 0.0, "z": 0.0},
             "emissive": {"r": 0.5, "g": 0.5, "b": 0.5},
             "intensity": 3.0,
@@ -48,8 +48,8 @@
                 "isVideo": false
             },
             "tableTex": {
-                "filepath": "scenes/textures/test.mp4",
-                "isVideo": true
+                "filepath": "scenes/textures/scratchedWall.jpg",
+                "isVideo": false
             },
             "crimeWeaponTex": {
                 "filepath": "scenes/textures/bloodyPrints.jpg",
@@ -72,27 +72,27 @@
                 "isVideo": false
             },
             "upTex": {
-                "filepath": "scenes/textures/py.png",
+                "filepath": "scenes/textures/view3.png",
                 "isVideo": false
             },
             "downTex": {
-                "filepath": "scenes/textures/ny.png",
+                "filepath": "scenes/textures/view4.png",
                 "isVideo": false
             },
             "frontTex": {
-                "filepath": "scenes/textures/nz.png",
+                "filepath": "scenes/textures/view2.png",
                 "isVideo": false
             },
             "backTex": {
-                "filepath": "scenes/textures/nx.png",
+                "filepath": "scenes/textures/view2.png",
                 "isVideo": false
             },
             "leftTex": {
-                "filepath": "scenes/textures/pz.png",
+                "filepath": "scenes/textures/view1.png",
                 "isVideo": false
             },
             "rightTex": {
-                "filepath": "scenes/textures/px.png",
+                "filepath": "scenes/textures/view1.png",
                 "isVideo": false
             }
         },
@@ -401,7 +401,7 @@
                 "shininess": 0.0,
                 "transparent": false,
                 "opacity": 1.0,
-                "textureref": "leftTex",
+                "textureref": "backTex",
                 "texlength_s": 15,
                 "texlength_t": 15,
                 "twosided": true
@@ -425,7 +425,7 @@
                 "shininess": 0.0,
                 "transparent": false,
                 "opacity": 1.0,
-                "textureref": "backTex",
+                "textureref": "leftTex",
                 "texlength_s": 15,
                 "texlength_t": 15,
                 "twosided": true

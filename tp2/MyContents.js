@@ -141,6 +141,7 @@ class MyContents {
             this.materials[this.yasf.skybox.front],
         ]
         const skybox = new THREE.Mesh(skyboxGeometry, skyBoxMaterials);
+        skybox.translateY(25);
         this.app.scene.add(skybox);
     }
 
