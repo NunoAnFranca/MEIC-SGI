@@ -74,7 +74,7 @@ class MyContents {
     }
 
     createFog() {
-        this.app.scene.fog = new THREE.Fog(new THREE.Color(this.yasf.fog.color.r, this.yasf.fog.color.g, this.yasf.fog.color.b), this.yasf.fog.near, this.yasf.fog.far);
+        this.app.scene.fog = new THREE.Fog(new THREE.Color(this.yasf.globals.fog.color.r, this.yasf.globals.fog.color.g, this.yasf.globals.fog.color.b), this.yasf.globals.fog.near, this.yasf.globals.fog.far);
     }
 
     createTextures() {
@@ -131,14 +131,14 @@ class MyContents {
     */
 
     createSkybox() {
-        const skyboxGeometry = new THREE.BoxGeometry(this.yasf.skybox.size.x, this.yasf.skybox.size.y, this.yasf.skybox.size.z);
+        const skyboxGeometry = new THREE.BoxGeometry(this.yasf.globals.skybox.size.x, this.yasf.globals.skybox.size.y, this.yasf.globals.skybox.size.z);
         const skyBoxMaterials = [
-            this.materials[this.yasf.skybox.right],
-            this.materials[this.yasf.skybox.left],
-            this.materials[this.yasf.skybox.up],
-            this.materials[this.yasf.skybox.down],
-            this.materials[this.yasf.skybox.back],
-            this.materials[this.yasf.skybox.front],
+            this.materials[this.yasf.globals.skybox.right],
+            this.materials[this.yasf.globals.skybox.left],
+            this.materials[this.yasf.globals.skybox.up],
+            this.materials[this.yasf.globals.skybox.down],
+            this.materials[this.yasf.globals.skybox.back],
+            this.materials[this.yasf.globals.skybox.front],
         ]
         const skybox = new THREE.Mesh(skyboxGeometry, skyBoxMaterials);
         this.app.scene.add(skybox);
@@ -179,19 +179,34 @@ class MyContents {
         const box = new THREE.BoxGeometry(object.coords.xyz2.x - object.coords.xyz1.x, object.coords.xyz2.y - object.coords.xyz1.y,  object.coords.xyz2.z - object.coords.xyz1.z ,object.parts_x, object.parts_y, object.parts_z);
         const boxMesh = new THREE.Mesh(box, this.materials[object.material]);
         this.transforms(object, boxMesh);
+        console.log(object);
 
         return boxMesh;
     }
 
     createCylinder(object){
-        let thetaStart = (object.thetaStart ?? 0) * Math.PI / 180;
-        let thetaLength = (object.thetaLength ?? 360) * Math.PI / 180;
+        let thetaStart = (object.thetastart ?? 0) * Math.PI / 180;
+        let thetaLength = (object.thetalength ?? 360) * Math.PI / 180;
 
+        console.log(object);
         const cylinder = new THREE.CylinderGeometry(object.top, object.base, object.height, object.slices, object.stacks, object.capsclose, thetaStart, thetaLength);
         const cylinderMesh = new THREE.Mesh(cylinder, this.materials[object.material]);
         this.transforms(object, cylinderMesh);
 
         return cylinderMesh;
+    }
+
+    createSphere(object){
+        let thetaStart = (object.thetastart ?? 0) * Math.PI / 180;
+        let thetaLength = (object.thetalength ?? 360) * Math.PI / 180;
+        let phiStart = (object.phistart ?? 0) * Math.PI / 180;
+        let phiLength = (object.philength ?? 360) * Math.PI / 180;
+
+        const sphere = new THREE.SphereGeometry(object.radius, object.slices, object.stacks, thetaStart, thetaLength, phiStart, phiLength);
+        const sphereMesh = new THREE.Mesh(sphere, this.materials[object.material]);
+        this.transforms(object, sphereMesh);
+
+        return sphereMesh;
     }
 
     createTriangle(object){
@@ -224,6 +239,9 @@ class MyContents {
                     }
                     else if(object.objectType === "cylinder"){
                         addObject = this.createCylinder(object);
+                    }
+                    else if(object.objectType === "sphere") {
+                        addObject = this.createSphere(object);
                     }
                     group.add(addObject);
 

@@ -11,28 +11,28 @@
                 "g": 1.0,
                 "b": 1.0,
                 "intensity": 1.0
-            }
-        },
-        "fog": {
-            "color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
             },
-            "near": 1.0,
-            "far": 200.0
-        },
-        "skybox": {
-            "size": {"x": 100.0, "y": 100.0, "z": 100.0},
-            "center": {"x": 0.0, "y": 0.0, "z": 0.0},
-            "emissive": {"r": 0.5, "g": 0.5, "b": 0.5},
-            "intensity": 3.0,
-            "front": "frontApp",
-            "back": "backApp",
-            "up": "upApp",
-            "down": "downApp",
-            "left": "leftApp",
-            "right": "rightApp"
+            "fog": {
+                "color": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0
+                },
+                "near": 1.0,
+                "far": 200.0
+            },
+            "skybox": {
+                "size": {"x": 100.0, "y": 100.0, "z": 100.0},
+                "center": {"x": 0.0, "y": 0.0, "z": 0.0},
+                "emissive": {"r": 0.5, "g": 0.5, "b": 0.5},
+                "intensity": 3.0,
+                "front": "frontApp",
+                "back": "backApp",
+                "up": "upApp",
+                "down": "downApp",
+                "left": "leftApp",
+                "right": "rightApp"
+            }
         },
         "textures": {
             "leftWallTex": {
@@ -48,8 +48,8 @@
                 "isVideo": false
             },
             "tableTex": {
-                "filepath": "scenes/textures/test.mp4",
-                "isVideo": true
+                "filepath": "scenes/textures/table.png",
+                "isVideo": false
             },
             "crimeWeaponTex": {
                 "filepath": "scenes/textures/bloodyPrints.jpg",
@@ -661,7 +661,7 @@
 
                         "capsclose": false,
 
-                        "thetaLength": 270
+                        "thetalength": 270
                     }
                 }
             },

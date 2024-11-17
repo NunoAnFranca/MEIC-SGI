@@ -52,9 +52,10 @@ class MyNode {
         this.top = null;
         this.height = null;
         this.slices = null;
+        this.stacks = null;
         this.capsclose = null;
-        this.thetaStart = null;
-        this.thetaLength = null;
+        this.thetastart = null;
+        this.thetalength = null;
 
         this.createChildren();
     }
@@ -114,9 +115,21 @@ class MyNode {
                         this.top = valueAttr.top;
                         this.height = valueAttr.height;
                         this.slices = valueAttr.slices;
+                        this.stacks = valueAttr.stacks;
                         this.capsclose = valueAttr.capsclose;
-                        this.thetaStart = valueAttr.thetaStart;
-                        this.thetaLength = valueAttr.thetaLength;
+                        this.thetastart = valueAttr.thetastart;
+                        this.thetalength = valueAttr.thetalength;
+
+                    } else if (valueAttr.type === "sphere") {
+                        this.objectType = valueAttr.type;
+
+                        this.radius = valueAttr.radius;
+                        this.slices = valueAttr.slices;
+                        this.stacks = valueAttr.stacks;
+                        this.thetastart = valueAttr.thetastart;
+                        this.thetalength = valueAttr.thetaLength;
+                        this.phistart = valueAttr.phistart;
+                        this.philength = valueAttr.philength;
                     }
                 }
             }
