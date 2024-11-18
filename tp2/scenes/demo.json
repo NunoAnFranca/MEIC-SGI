@@ -62,6 +62,18 @@
             "brickTex": {
                 "filepath": "scenes/textures/elements/brick1.png",
                 "isVideo": false
+            },
+            "brickTex2": {
+                "filepath": "scenes/textures/elements/brick2.png",
+                "isVideo": false
+            },
+            "grassTex":{
+                "filepath": "scenes/textures/elements/grass.jpg",
+                "isVideo": false
+            },
+            "tubeMetalTex": {
+                "filepath": "scenes/textures/elements/tubeMetal.jpg",
+                "isVideo": false
             }
         },
         "materials": {
@@ -88,6 +100,90 @@
                 "texlength_s": 10,
                 "texlength_t": 10
 
+            },
+            "brick2App": {
+                "color": {
+                    "r": 0.8,
+                    "g": 0.8,
+                    "b": 0.8
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "brickTex"
+
+            },
+            "topFlagMaterial": {
+                "color": {
+                    "r": 1,
+                    "g": 0.05,
+                    "b": 0.05
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0
+            },
+            "tubeFlagMaterial": {
+                "color": {
+                    "r": 1,
+                    "g": 1,
+                    "b": 1
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 1000,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "tubeMetalTex"
+            },
+            "flagFlagMaterial": {
+                "color": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 50,
+                "transparent": false,
+                "opacity": 1.0,
+                "twosided": true
             },
             "tableApp": {
                 "color": {
@@ -153,7 +249,7 @@
                 "shininess": 0.0,
                 "transparent": false,
                 "opacity": 1.0,
-                "textureref": "brickTex",
+                "textureref": "grassTex",
                 "texlength_s": 25,
                 "texlength_t": 25,
                 "twosided": true
@@ -298,6 +394,10 @@
                         "type": "noderef",
                         "nodeId": "test"
                     },
+                    "flagParent":{
+                        "type": "noderef",
+                        "nodeId": "flagParent"
+                    },
                     "pointLight": {
                         "type": "pointlight",
                         "enabled": true,
@@ -369,6 +469,65 @@
                     "leg4": {
                         "type": "noderef",
                         "nodeId": "leg4"
+                    }
+                }
+            },
+            "flagParent":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 3.0,
+                            "z": -15.0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        }
+                    }
+                ],
+                "children": {
+                    "baseFlag1": {
+                        "type": "noderef",
+                        "nodeId": "baseFlag1"
+                    },
+                    "baseFlag2": {
+                        "type": "noderef",
+                        "nodeId": "baseFlag2"
+                    },
+                    "baseFlag3": {
+                        "type": "noderef",
+                        "nodeId": "baseFlag3"
+                    },
+                    "baseFlag4": {
+                        "type": "noderef",
+                        "nodeId": "baseFlag4"
+                    },
+                    "tubeFlag": {
+                        "type": "noderef",
+                        "nodeId": "tubeFlag"
+                    },
+                    "topFlag": {
+                        "type": "noderef",
+                        "nodeId": "topFlag"
+                    },
+                    "flagflag": {
+                        "type": "noderef",
+                        "nodeId": "flagflag"
                     }
                 }
             },
@@ -459,6 +618,256 @@
                     }
                 }
             },
+            "baseFlag1": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -0.52,
+                            "y": 0.5,
+                            "z": -0.52
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "brick2App"
+                },
+                "children": {
+                    "brick1Constructor": {
+                        "type": "noderef",
+                        "nodeId": "brick1Constructor"
+                    }
+                }
+            },
+            "baseFlag2": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -0.52,
+                            "y": 0.5,
+                            "z": 0.52
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "brick2App"
+                },
+                "children": {
+                    "brick1Constructor": {
+                        "type": "noderef",
+                        "nodeId": "brick1Constructor"
+                    }
+                }
+            },
+            "baseFlag3": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.52,
+                            "y": 0.5,
+                            "z": -0.52
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "brick2App"
+                },
+                "children": {
+                    "brick1Constructor": {
+                        "type": "noderef",
+                        "nodeId": "brick1Constructor"
+                    }
+                }
+            },
+            "baseFlag4": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.52,
+                            "y": 0.5,
+                            "z": 0.52
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "brick2App"
+                },
+                "children": {                    
+                    "brick1Constructor": {
+                        "type": "noderef",
+                        "nodeId": "brick1Constructor"
+                    }
+                }
+            },
+            "tubeFlag":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 6.5,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "tubeFlagMaterial"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "cylinder",
+                        "base": 0.2,
+                        "top": 0.2,
+                        "height": 12,
+                        "slices": 32,
+                        "stacks": 32
+                    }
+                }
+            },
+            "topFlag":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 12.5,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "topFlagMaterial"
+                },
+                "children": {
+                    "sphere": {
+                        "type": "sphere",
+                        "radius": 0.5,
+                        "slices": 64,
+                        "stacks": 64
+                    }
+                }
+            },
+            "flagflag":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -0.15,
+                            "y": 9.75,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "flagFlagMaterial"
+                },
+                "children": {
+                    "rectanglePrim": {
+                        "type": "nurbs",
+                        "degree_u": 3,
+                        "degree_v": 1,
+                        "parts_u": 64,
+                        "parts_v": 64,
+                        "controlpoints": [
+                            {"x": 0, "y": 0, "z": 0},
+                            {"x": 0, "y": 2, "z": 0},
+                            
+                            {"x": 0.5, "y": 0, "z": -0.5},
+                            {"x": 0.5, "y": 2, "z": -0.5},
+
+                            {"x": -0.5, "y": 0, "z": -1},
+                            {"x": -0.5, "y": 2, "z": -1},
+
+                            {"x": 0, "y": 1, "z": -4},
+                            {"x": 0, "y": 1, "z": -4}
+                        ]
+                    }
+                }
+            },
+            "brick1Constructor":{
+                "type": "node",
+                "children": {
+                    "brick": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 1,
+                            "y": 1,
+                            "z": 1
+                        }
+                    }
+                }
+            },
             "testBox": {
                 "type": "node",
                 "transforms": [
@@ -501,9 +910,9 @@
                     {
                         "type": "translate",
                         "amount": {
-                            "x": 0,
-                            "y": 5,
-                            "z": -10
+                            "x": -20,
+                            "y": 25,
+                            "z": -20
                         }
                     },
                     {
@@ -518,7 +927,7 @@
                 "children": {
                     "rectanglePrim": {
                         "type": "sphere",
-                        "radius": 4,
+                        "radius": 1,
 
                         "slices": 32,
 
@@ -536,7 +945,7 @@
                         "amount": {
                             "x": 0,
                             "y": 5,
-                            "z": -10
+                            "z": 1
                         }
                     },
                     {

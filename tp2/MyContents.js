@@ -113,7 +113,7 @@ class MyContents {
                 specular: new THREE.Color(values.specular.r, values.specular.g, values.specular.b),
                 shininess: values.shininess, transparent: values.transparent,
                 opacity: values.opacity, map: texture,
-                side: values.twosided ? THREE.DoubleSide : THREE.FrontSide, // NEED TO CHANGE
+                side: values.twosided ? THREE.DoubleSide : THREE.FrontSide
             });
         }
     }
@@ -261,6 +261,8 @@ class MyContents {
 
         surfaceData = this.builder.build(controlPoints, object.degree_u, object.degree_v, object.parts_u, object.parts_v, this.materials[object.material]);
         mesh = new THREE.Mesh(surfaceData, this.materials[object.material]);
+
+        this.transforms(object, mesh);
 
         return mesh;
     }
