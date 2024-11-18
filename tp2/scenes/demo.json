@@ -59,7 +59,7 @@
                 "filepath": "scenes/textures/skybox/view1.png",
                 "isVideo": false
             },
-            "brickTex": {
+            "brickTex1": {
                 "filepath": "scenes/textures/elements/brick1.png",
                 "isVideo": false
             },
@@ -71,8 +71,12 @@
                 "filepath": "scenes/textures/elements/brick3.png",
                 "isVideo": false
             },
-            "grassTex":{
-                "filepath": "scenes/textures/elements/grass.jpg",
+            "grassTex": {
+                "filepath": "scenes/textures/elements/grass.png",
+                "isVideo": false
+            },
+            "waterTex": {
+                "filepath": "scenes/textures/elements/water.png",
                 "isVideo": false
             },
             "tubeMetalTex": {
@@ -81,7 +85,7 @@
             }
         },
         "materials": {
-            "brickApp": {
+            "brickApp1": {
                 "color": {
                     "r": 0.8,
                     "g": 0.8,
@@ -100,10 +104,9 @@
                 "shininess": 10,
                 "transparent": false,
                 "opacity": 1.0,
-                "textureref": "brickTex",
+                "textureref": "brickTex1",
                 "texlength_s": 10,
                 "texlength_t": 10
-
             },
             "brick2App": {
                 "color": {
@@ -124,8 +127,7 @@
                 "shininess": 10,
                 "transparent": false,
                 "opacity": 1.0,
-                "textureref": "brickTex"
-
+                "textureref": "brickTex1"
             },
             "brick3App": {
                 "color": {
@@ -480,7 +482,7 @@
                         "amount": {
                             "x": 1.0,
                             "y": 1.0,
-                            "z": 1.0
+                            "z": 10.0
                         }
                     },
                     {
@@ -501,7 +503,7 @@
                     }
                 ],
                 "materialref": {
-                    "materialId": "brickApp"
+                    "materialId": "brickApp1"
                 },
                 "children": {
                     "tableTop": {
@@ -614,21 +616,9 @@
                     }
                 ],
                 "children": {
-                    "baseTube1": {
+                    "baseTube": {
                         "type": "noderef",
-                        "nodeId": "baseTube1"
-                    },
-                    "baseTube2": {
-                        "type": "noderef",
-                        "nodeId": "baseTube2"
-                    },
-                    "baseTube3": {
-                        "type": "noderef",
-                        "nodeId": "baseTube3"
-                    },
-                    "baseTube4": {
-                        "type": "noderef",
-                        "nodeId": "baseTube4"
+                        "nodeId": "tubeBase"
                     },
                     "tubeGreenBase": {
                         "type": "noderef",
@@ -673,21 +663,9 @@
                     }
                 ],
                 "children": {
-                    "baseTube1": {
+                    "baseTube": {
                         "type": "noderef",
-                        "nodeId": "baseTube1"
-                    },
-                    "baseTube2": {
-                        "type": "noderef",
-                        "nodeId": "baseTube2"
-                    },
-                    "baseTube3": {
-                        "type": "noderef",
-                        "nodeId": "baseTube3"
-                    },
-                    "baseTube4": {
-                        "type": "noderef",
-                        "nodeId": "baseTube4"
+                        "nodeId": "tubeBase"
                     },
                     "tubeGreenBase": {
                         "type": "noderef",
@@ -703,7 +681,28 @@
                     }
                 }
             },
-            "test" : {
+            "baseTube": {
+                "type": "node",
+                "children": {
+                    "baseTube1": {
+                        "type": "noderef",
+                        "nodeId": "baseTube1"
+                    },
+                    "baseTube2": {
+                        "type": "noderef",
+                        "nodeId": "baseTube2"
+                    },
+                    "baseTube3": {
+                        "type": "noderef",
+                        "nodeId": "baseTube3"
+                    },
+                    "baseTube4": {
+                        "type": "noderef",
+                        "nodeId": "baseTube4"
+                    }
+                }
+            },
+            "test": {  
                 "type": "node",
                 "transforms": [
                     {
@@ -711,7 +710,7 @@
                         "amount": {
                             "x": 0.0,
                             "y": 5.0,
-                            "z": 0.0
+                            "z": 10.0
                         }
                     },
                     {
