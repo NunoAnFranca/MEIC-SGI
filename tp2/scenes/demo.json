@@ -67,6 +67,10 @@
                 "filepath": "scenes/textures/elements/brick2.png",
                 "isVideo": false
             },
+            "brickTex3": {
+                "filepath": "scenes/textures/elements/brick3.png",
+                "isVideo": false
+            },
             "grassTex":{
                 "filepath": "scenes/textures/elements/grass.jpg",
                 "isVideo": false
@@ -123,6 +127,28 @@
                 "textureref": "brickTex"
 
             },
+            "brick3App": {
+                "color": {
+                    "r": 0.8,
+                    "g": 0.8,
+                    "b": 0.8
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "brickTex3"
+
+            },
             "topFlagMaterial": {
                 "color": {
                     "r": 1,
@@ -163,6 +189,26 @@
                 "transparent": false,
                 "opacity": 1.0,
                 "textureref": "tubeMetalTex"
+            },
+            "tubeGreenMaterial": {
+                "color": {
+                    "r": 0.01,
+                    "g": 0.8,
+                    "b": 0.01
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 1000,
+                "transparent": false,
+                "opacity": 1.0
             },
             "flagFlagMaterial": {
                 "color": {
@@ -398,6 +444,14 @@
                         "type": "noderef",
                         "nodeId": "flagParent"
                     },
+                    "GreenTube1":{
+                        "type": "noderef",
+                        "nodeId": "GreenTube1"
+                    },
+                    "GreenTube2":{
+                        "type": "noderef",
+                        "nodeId": "GreenTube2"
+                    },
                     "pointLight": {
                         "type": "pointlight",
                         "enabled": true,
@@ -531,6 +585,124 @@
                     }
                 }
             },
+            "GreenTube1":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 3.0,
+                            "z": -10.0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        }
+                    }
+                ],
+                "children": {
+                    "baseTube1": {
+                        "type": "noderef",
+                        "nodeId": "baseTube1"
+                    },
+                    "baseTube2": {
+                        "type": "noderef",
+                        "nodeId": "baseTube2"
+                    },
+                    "baseTube3": {
+                        "type": "noderef",
+                        "nodeId": "baseTube3"
+                    },
+                    "baseTube4": {
+                        "type": "noderef",
+                        "nodeId": "baseTube4"
+                    },
+                    "tubeGreenBase": {
+                        "type": "noderef",
+                        "nodeId":  "tubeGreenBase"
+                    },
+                    "tubeGreenTop1": {
+                        "type": "noderef",
+                        "nodeId":  "tubeGreenTop1"
+                    },
+                    "tubeGreenTop2": {
+                        "type": "noderef",
+                        "nodeId":  "tubeGreenTop2"
+                    }
+                }
+            },
+            "GreenTube2":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 3.0,
+                            "z": -5.0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        }
+                    }
+                ],
+                "children": {
+                    "baseTube1": {
+                        "type": "noderef",
+                        "nodeId": "baseTube1"
+                    },
+                    "baseTube2": {
+                        "type": "noderef",
+                        "nodeId": "baseTube2"
+                    },
+                    "baseTube3": {
+                        "type": "noderef",
+                        "nodeId": "baseTube3"
+                    },
+                    "baseTube4": {
+                        "type": "noderef",
+                        "nodeId": "baseTube4"
+                    },
+                    "tubeGreenBase": {
+                        "type": "noderef",
+                        "nodeId":  "tubeGreenBase"
+                    },
+                    "tubeGreenTop1": {
+                        "type": "noderef",
+                        "nodeId":  "tubeGreenTop1"
+                    },
+                    "tubeGreenTop2": {
+                        "type": "noderef",
+                        "nodeId":  "tubeGreenTop2"
+                    }
+                }
+            },
             "test" : {
                 "type": "node",
                 "transforms": [
@@ -563,10 +735,6 @@
                     "materialId": "tableApp"
                 },
                 "children": {
-                    "testTri": {
-                        "type": "noderef",
-                        "nodeId": "testTri"
-                    },
                     "testBox": {
                         "type": "noderef",
                         "nodeId": "testBox"
@@ -615,6 +783,228 @@
                         "stacks": 6,
                         "capsclose": false,
                         "thetalength": 270
+                    }
+                }
+            },
+            "baseTube1": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -0.52,
+                            "y": 0.5,
+                            "z": -0.52
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "brick3App"
+                },
+                "children": {
+                    "brick1Constructor": {
+                        "type": "noderef",
+                        "nodeId": "brick1Constructor"
+                    }
+                }
+            },
+            "baseTube2": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -0.52,
+                            "y": 0.5,
+                            "z": 0.52
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "brick3App"
+                },
+                "children": {
+                    "brick1Constructor": {
+                        "type": "noderef",
+                        "nodeId": "brick1Constructor"
+                    }
+                }
+            },
+            "baseTube3": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.52,
+                            "y": 0.5,
+                            "z": -0.52
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "brick3App"
+                },
+                "children": {
+                    "brick1Constructor": {
+                        "type": "noderef",
+                        "nodeId": "brick1Constructor"
+                    }
+                }
+            },
+            "baseTube4": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.52,
+                            "y": 0.5,
+                            "z": 0.52
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "brick3App"
+                },
+                "children": {
+                    "brick1Constructor": {
+                        "type": "noderef",
+                        "nodeId": "brick1Constructor"
+                    }
+                }
+            },
+            "tubeGreenBase":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 1.9,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "tubeGreenMaterial"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "cylinder",
+                        "base": 0.9,
+                        "top": 0.9,
+                        "height": 1.8,
+                        "slices": 64,
+                        "stacks": 64
+                    }
+                }
+            },
+            "tubeGreenTop1":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 3.1,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "tubeGreenMaterial"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "cylinder",
+                        "base": 1.2,
+                        "top": 1.2,
+                        "height": 0.6,
+                        "slices": 64,
+                        "stacks": 64
+                    }
+                }
+            },
+            "tubeGreenTop2":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 3.1001,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "flagFlagMaterial"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "cylinder",
+                        "base": 0.85,
+                        "top": 0.85,
+                        "height": 0.6,
+                        "slices": 64,
+                        "stacks": 64
                     }
                 }
             },
@@ -767,8 +1157,8 @@
                         "base": 0.2,
                         "top": 0.2,
                         "height": 12,
-                        "slices": 32,
-                        "stacks": 32
+                        "slices": 64,
+                        "stacks": 64
                     }
                 }
             },
@@ -929,9 +1319,9 @@
                         "type": "sphere",
                         "radius": 1,
 
-                        "slices": 32,
+                        "slices": 64,
 
-                        "stacks": 32,
+                        "stacks": 64,
 
                         "philength": 180
                     }
