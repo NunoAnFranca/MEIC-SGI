@@ -298,8 +298,8 @@
                 "transparent": false,
                 "opacity": 1.0,
                 "textureref": "grassTex",
-                "texlength_s": 25,
-                "texlength_t": 25,
+                "texlength_s": 50,
+                "texlength_t": 50,
                 "twosided": true
             },
             "frontApp": {
@@ -454,6 +454,10 @@
                         "type": "noderef",
                         "nodeId": "GreenTube2"
                     },
+                    "GreenTubeLong3":{
+                        "type": "noderef",
+                        "nodeId": "GreenTubeLong3"
+                    },
                     "pointLight": {
                         "type": "pointlight",
                         "enabled": true,
@@ -536,7 +540,7 @@
                         "amount": {
                             "x": 0.0,
                             "y": 3.0,
-                            "z": -15.0
+                            "z": -20.0
                         }
                     },
                     {
@@ -595,7 +599,7 @@
                         "amount": {
                             "x": 0.0,
                             "y": 3.0,
-                            "z": -10.0
+                            "z": -5.0
                         }
                     },
                     {
@@ -642,7 +646,7 @@
                         "amount": {
                             "x": 0.0,
                             "y": 3.0,
-                            "z": -5.0
+                            "z": -10.0
                         }
                     },
                     {
@@ -678,6 +682,53 @@
                     "tubeGreenTop2": {
                         "type": "noderef",
                         "nodeId":  "tubeGreenTop2"
+                    }
+                }
+            },
+            "GreenTubeLong3":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 3.0,
+                            "z": -15.0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        }
+                    }
+                ],
+                "children": {
+                    "baseTube": {
+                        "type": "noderef",
+                        "nodeId": "tubeBase"
+                    },
+                    "tubeGreenBaseLong": {
+                        "type": "noderef",
+                        "nodeId":  "tubeGreenBaseLong"
+                    },
+                    "tubeGreenTop1Long": {
+                        "type": "noderef",
+                        "nodeId":  "tubeGreenTop1Long"
+                    },
+                    "tubeGreenTop2Long": {
+                        "type": "noderef",
+                        "nodeId":  "tubeGreenTop2Long"
                     }
                 }
             },
@@ -912,7 +963,7 @@
                         "type": "translate",
                         "amount": {
                             "x": 0,
-                            "y": 1.9,
+                            "y": 1.7,
                             "z": 0
                         }
                     },
@@ -933,7 +984,7 @@
                         "type": "cylinder",
                         "base": 0.9,
                         "top": 0.9,
-                        "height": 1.8,
+                        "height": 1.4,
                         "slices": 64,
                         "stacks": 64
                     }
@@ -946,7 +997,7 @@
                         "type": "translate",
                         "amount": {
                             "x": 0,
-                            "y": 3.1,
+                            "y": 2.7,
                             "z": 0
                         }
                     },
@@ -980,7 +1031,109 @@
                         "type": "translate",
                         "amount": {
                             "x": 0,
-                            "y": 3.101,
+                            "y": 2.701,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "flagFlagMaterial"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "cylinder",
+                        "base": 0.85,
+                        "top": 0.85,
+                        "height": 0.6,
+                        "slices": 64,
+                        "stacks": 64
+                    }
+                }
+            },
+            "tubeGreenBaseLong":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 3,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "tubeGreenMaterial"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "cylinder",
+                        "base": 0.9,
+                        "top": 0.9,
+                        "height": 4,
+                        "slices": 64,
+                        "stacks": 64
+                    }
+                }
+            },
+            "tubeGreenTop1Long":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 5.1,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "tubeGreenMaterial"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "cylinder",
+                        "base": 1.2,
+                        "top": 1.2,
+                        "height": 0.6,
+                        "slices": 64,
+                        "stacks": 64
+                    }
+                }
+            },
+            "tubeGreenTop2Long":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 5.101,
                             "z": 0
                         }
                     },
