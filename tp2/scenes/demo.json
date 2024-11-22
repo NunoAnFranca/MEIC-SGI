@@ -87,12 +87,129 @@
                 "filepath": "scenes/textures/elements/tubeMetal.jpg",
                 "isVideo": false
             },
+            "sandTexture": {
+                "filepath": "scenes/textures/elements/sand.jpg",
+                "isVideo": false
+            },
             "tubeTex": {
                 "filepath": "scenes/textures/elements/tube.png",
                 "isVideo": false
             }
         },
         "materials": {
+            "waterApp": {
+                "color": {
+                    "r": 0.5,
+                    "g": 0.5,
+                    "b": 0.5
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": true,
+                "opacity": 0.8,
+                "textureref": "waterTex",
+                "texlength_s": 6,
+                "texlength_t": 6
+            },
+            "waterAppFalling": {
+                "color": {
+                    "r": 0.5,
+                    "g": 0.5,
+                    "b": 0.5
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": true,
+                "opacity": 0.8,
+                "textureref": "waterTex"
+            },
+            "waterAppFountain":{
+                "color": {
+                    "r": 0.5,
+                    "g": 0.5,
+                    "b": 0.5
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": true,
+                "opacity": 0.8,
+                "textureref": "waterTex",
+                "texlength_s": 8,
+                "texlength_t": 1
+            },
+            "sandApp": {
+                "color": {
+                    "r": 1,
+                    "g": 1,
+                    "b": 0.0
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "sandTexture",
+                "texlength_s": 5,
+                "texlength_t": 5
+            },
+            "brickWaterApp": {
+                "color": {
+                    "r": 0.8,
+                    "g": 0.8,
+                    "b": 0.8
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "brickTex1",
+                "texlength_s": 7,
+                "texlength_t": 1
+            },
             "tubeApp": {
                 "color": {
                     "r": 0.8,
@@ -502,6 +619,10 @@
                         "type": "noderef",
                         "nodeId": "centerBoxes"
                     },
+                    "leftLake":{
+                        "type": "noderef",
+                        "nodeId": "leftLake"
+                    },
                     "pointLight": {
                         "type": "pointlight",
                         "enabled": true,
@@ -691,6 +812,499 @@
                     "centerBox7": {
                         "type": "noderef",
                         "nodeId": "centerBox7"
+                    }
+                }
+            },
+            "leftLake":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -15.0,
+                            "y": 0.25,
+                            "z": -15.0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "sandApp"
+                },
+                "children": {
+                    "leftLakeBase": {
+                        "type": "noderef",
+                        "nodeId": "leftLakeBase"
+                    },
+                    "leftLakeBasePart1": {
+                        "type": "noderef",
+                        "nodeId": "leftLakeBasePart1"
+                    },
+                    "leftLakeBasePart2": {
+                        "type": "noderef",
+                        "nodeId": "leftLakeBasePart2"
+                    },
+                    "leftLakeBasePart3": {
+                        "type": "noderef",
+                        "nodeId": "leftLakeBasePart3"
+                    },
+                    "leftLakeBasePart4": {
+                        "type": "noderef",
+                        "nodeId": "leftLakeBasePart4"
+                    },
+                    "leftLakeWater": {
+                        "type": "noderef",
+                        "nodeId": "leftLakeWater"
+                    },
+                    "leftLakeFountain1": {
+                        "type": "noderef",
+                        "nodeId": "leftLakeFountain1"
+                    },
+                    "leftLakeFountain2": {
+                        "type": "noderef",
+                        "nodeId": "leftLakeFountain2"
+                    },
+                    "leftLakeFountain3": {
+                        "type": "noderef",
+                        "nodeId": "leftLakeFountain3"
+                    },
+                    "leftLakeFountainWater1":{
+                        "type": "noderef",
+                        "nodeId": "leftLakeFountainWater1"
+                    },
+                    "leftLakeFountainWater2":{
+                        "type": "noderef",
+                        "nodeId": "leftLakeFountainWater2"
+                    }
+
+                }
+            },
+            "leftLakeBase": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "baseLake":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 6,
+                            "y": 0.5,
+                            "z": 6
+                        }
+                    }
+                }
+            },
+            "leftLakeBasePart1": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -3.25,
+                            "y": 0.5,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "create":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.5,
+                            "y": 0.5,
+                            "z": 6
+                        }
+                    }
+                }
+            },
+            "leftLakeBasePart2": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 3.25,
+                            "y": 0.5,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "create":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.5,
+                            "y": 0.5,
+                            "z": 6
+                        }
+                    }
+                }
+            },
+            "leftLakeBasePart3": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0.5,
+                            "z": 3.25
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "create":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 6,
+                            "y": 0.5,
+                            "z": 0.5
+                        }
+                    }
+                }
+            },
+            "leftLakeBasePart4": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0.5,
+                            "z": -3.25
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "create":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 6,
+                            "y": 0.5,
+                            "z": 0.5
+                        }
+                    }
+                }
+            },
+            "leftLakeWater": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0.5,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "waterApp"
+                },
+                "children": {
+                    "create":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 6,
+                            "y": 0.5,
+                            "z": 6
+                        }
+                    }
+                }
+            },
+            "leftLakeFountain1": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -6.5,
+                            "y": 10,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "brickWaterApp"
+                },
+                "children": {
+                    "create":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 7,
+                            "y": 1,
+                            "z": 1
+                        }
+                    }
+                }
+            },
+            "leftLakeFountain2": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -6.5,
+                            "y": 11,
+                            "z": -1
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 90,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "brickWaterApp"
+                },
+                "children": {
+                    "create":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 7,
+                            "y": 1,
+                            "z": 1
+                        }
+                    }
+                }
+            },
+            "leftLakeFountain3": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -6.5,
+                            "y": 11,
+                            "z": 1
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 90,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "brickWaterApp"
+                },
+                "children": {
+                    "create":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 7,
+                            "y": 1,
+                            "z": 1
+                        }
+                    }
+                }
+            },
+            "leftLakeFountainWater1": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -6,
+                            "y": 10.75,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "waterAppFountain"
+                },
+                "children": {
+                    "create":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 8,
+                            "y": 0.5,
+                            "z": 1
+                        }
+                    }
+                }
+            },
+            "leftLakeFountainWater2": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -1.5,
+                            "y": 6,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "waterAppFalling"
+                },
+                "children": {
+                    "create":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 1,
+                            "y": 10,
+                            "z": 1
+                        }
                     }
                 }
             },
@@ -2046,7 +2660,7 @@
                 "children": {
                     "unitCube": {
                         "type": "noderef",
-                        "nodeId": "leg"
+                        "nodeId": "unitCube"
                     }
                 }
             },
