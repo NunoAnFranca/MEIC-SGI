@@ -82,9 +82,34 @@
             "tubeMetalTex": {
                 "filepath": "scenes/textures/elements/tubeMetal.jpg",
                 "isVideo": false
+            },
+            "tubeTex": {
+                "filepath": "scenes/textures/elements/tube.png",
+                "isVideo": false
             }
         },
         "materials": {
+            "tubeApp": {
+                "color": {
+                    "r": 0.8,
+                    "g": 0.8,
+                    "b": 0.8
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "tubeTex"
+            },
             "brickApp1": {
                 "color": {
                     "r": 0.8,
