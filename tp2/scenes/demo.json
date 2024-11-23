@@ -23,40 +23,20 @@
             },
             "skybox": {
                 "size": {"x": 50.0, "y": 50.0, "z": 50.0},
-                "center": {"x": 0.0, "y": 0.0, "z": 0.0},
-                "emissive": {"r": 0.5, "g": 0.5, "b": 0.5},
+                "center": {"x": 0.0, "y": 25.0, "z": 0.0},
+                "emissive": {"r": 0, "g": 0, "b": 0},
                 "intensity": 3.0,
-                "front": "frontApp",
-                "back": "backApp",
-                "up": "upApp",
-                "down": "downApp",
-                "left": "leftApp",
-                "right": "rightApp"
+                "front": "scenes/textures/skybox/view2.png",
+                "back": "scenes/textures/skybox/view2.png",
+                "up": "scenes/textures/skybox/view3.png",
+                "down": "scenes/textures/skybox/grassfloor.png",
+                "left": "scenes/textures/skybox/view1.png",
+                "right": "scenes/textures/skybox/view1.png"
             }
         },
         "textures": {
             "tableTex": {
                 "filepath": "scenes/textures/table.png",
-                "isVideo": false
-            },
-            "upTex": {
-                "filepath": "scenes/textures/skybox/view3.png",
-                "isVideo": false
-            },
-            "frontTex": {
-                "filepath": "scenes/textures/skybox/view2.png",
-                "isVideo": false
-            },
-            "backTex": {
-                "filepath": "scenes/textures/skybox/view2.png",
-                "isVideo": false
-            },
-            "leftTex": {
-                "filepath": "scenes/textures/skybox/view1.png",
-                "isVideo": false
-            },
-            "rightTex": {
-                "filepath": "scenes/textures/skybox/view1.png",
                 "isVideo": false
             },
             "brickTex1": {
@@ -73,10 +53,6 @@
             },
             "brickTex4": {
                 "filepath": "scenes/textures/elements/brick4.png",
-                "isVideo": false
-            },
-            "grassTex": {
-                "filepath": "scenes/textures/elements/grass.png",
                 "isVideo": false
             },
             "waterTex": {
@@ -420,140 +396,6 @@
                 "textureref": "tableTex",
                 "texlength_s": 1,
                 "texlength_t": 1
-            },
-            "upApp": {
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "color": {
-                    "r": 1.0,
-                    "g": 1.0,
-                    "b": 1.0
-                },
-                "specular": {
-                    "r": 0,
-                    "g": 0,
-                    "b": 0
-                },
-                "shininess": 0.0,
-                "transparent": false,
-                "opacity": 1.0,
-                "textureref": "upTex",
-                "twosided": true
-            },
-            "downApp": {
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "color": {
-                    "r": 1.0,
-                    "g": 1.0,
-                    "b": 1.0
-                },
-                "specular": {
-                    "r": 0,
-                    "g": 0,
-                    "b": 0
-                },
-                "shininess": 0.0,
-                "transparent": false,
-                "opacity": 1.0,
-                "textureref": "grassTex",
-                "texlength_s": 50,
-                "texlength_t": 50,
-                "twosided": true
-            },
-            "frontApp": {
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "color": {
-                    "r": 1.0,
-                    "g": 1.0,
-                    "b": 1.0
-                },
-                "specular": {
-                    "r": 0,
-                    "g": 0,
-                    "b": 0
-                },
-                "shininess": 0.0,
-                "transparent": false,
-                "opacity": 1.0,
-                "textureref": "frontTex",
-                "twosided": true
-            },
-            "backApp": {
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "color": {
-                    "r": 1.0,
-                    "g": 1.0,
-                    "b": 1.0
-                },
-                "specular": {
-                    "r": 0,
-                    "g": 0,
-                    "b": 0
-                },
-                "shininess": 0.0,
-                "transparent": false,
-                "opacity": 1.0,
-                "textureref": "backTex",
-                "twosided": true
-            },
-            "leftApp": {
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "color": {
-                    "r": 1.0,
-                    "g": 1.0,
-                    "b": 1.0
-                },
-                "specular": {
-                    "r": 0,
-                    "g": 0,
-                    "b": 0
-                },
-                "shininess": 0.0,
-                "transparent": false,
-                "opacity": 1.0,
-                "textureref": "leftTex",
-                "twosided": true
-            },
-            "rightApp": {
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "color": {
-                    "r": 1.0,
-                    "g": 1.0,
-                    "b": 1.0
-                },
-                "specular": {
-                    "r": 0,
-                    "g": 0,
-                    "b": 0
-                },
-                "shininess": 0.0,
-                "transparent": false,
-                "opacity": 1.0,
-                "textureref": "rightTex",
-                "twosided": true
             }
         },
         "cameras": {
