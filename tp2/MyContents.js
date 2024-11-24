@@ -1,8 +1,19 @@
 import * as THREE from 'three';
 import { MyAxis } from './MyAxis.js';
 import { MyFileReader } from './parser/MyFileReader.js';
-import { MyGraph, MyNode, MyPointLight } from './MyGraph.js';
+import { MyGraph } from './MyGraph.js';
+import { MyNode } from './MyNode.js';
 import { MyNurbsBuilder } from './MyNurbsBuilder.js';
+
+import { MyPointLight } from './objects/MyPointLight.js';
+import { MyBox } from './objects/primitives/MyBox.js';
+import { MyCylinder } from './objects/primitives/MyCylinder.js';
+import { MyNurbs } from './objects/primitives/MyNurbs.js';
+import { MyRectangle } from './objects/primitives/MyRectangle.js';
+import { MySphere } from './objects/primitives/MySphere.js';
+import { MyPolygon } from './objects/primitives/MyPolygon.js';
+import { MyTriangle } from './objects/primitives/MyTriangle.js';
+
 /**
  *  This class contains the contents of out application
  */
@@ -175,34 +186,39 @@ class MyContents {
         this.app.scene.add(pointLightHelper);
     }
 
-    createRectangle(object){
-        const rectangle = new THREE.PlaneGeometry(object.coords.xy2.x - object.coords.xy1.x, object.coords.xy2.y - object.coords.xy1.y, object.parts_x, object.parts_y);
+    createRectangle(object) {
+        const width = object.xy2.x - object.xy1.x;
+        const height = object.xy2.y - object.xy1.y;
+        const rectangle = new THREE.PlaneGeometry(Math.abs(width), Math.abs(height), object.parts_x, object.parts_y);
         const rectangleMesh = new THREE.Mesh(rectangle, this.materials[object.material]);
-        this.transforms(object, rectangleMesh);
+       
+        rectangleMesh.position.set(object.xy1.x + width / 2, object.xy1.y + height / 2, object.xy1.z);
 
         return rectangleMesh;
     }
 
-    createBox(object){
-        const box = new THREE.BoxGeometry(object.coords.xyz2.x - object.coords.xyz1.x, object.coords.xyz2.y - object.coords.xyz1.y,  object.coords.xyz2.z - object.coords.xyz1.z ,object.parts_x, object.parts_y, object.parts_z);
+    createBox(object) {
+        const width = object.xyz2.x - object.xyz1.x;
+        const height = object.xyz2.y - object.xyz1.y;
+        const depth = object.xyz2.z - object.xyz1.z;
+        const box = new THREE.BoxGeometry(Math.abs(width), Math.abs(height), Math.abs(depth), object.parts_x, object.parts_y, object.parts_z);
         const boxMesh = new THREE.Mesh(box, this.materials[object.material]);
-        this.transforms(object, boxMesh);
+        boxMesh.position.set(object.xyz1.x + width / 2, object.xyz1.y + height / 2, object.xyz1.z + depth / 2);
 
         return boxMesh;
     }
 
-    createCylinder(object){
+    createCylinder(object) {
         let thetaStart = (object.thetastart ?? 0) * Math.PI / 180;
         let thetaLength = (object.thetalength ?? 360) * Math.PI / 180;
 
         const cylinder = new THREE.CylinderGeometry(object.top, object.base, object.height, object.slices, object.stacks, object.capsclose, thetaStart, thetaLength);
         const cylinderMesh = new THREE.Mesh(cylinder, this.materials[object.material]);
-        this.transforms(object, cylinderMesh);
 
         return cylinderMesh;
     }
 
-    createSphere(object){
+    createSphere(object) {
         let thetaStart = (object.thetastart ?? 0) * Math.PI / 180;
         let thetaLength = (object.thetalength ?? 360) * Math.PI / 180;
         let phiStart = (object.phistart ?? 0) * Math.PI / 180;
@@ -210,12 +226,11 @@ class MyContents {
 
         const sphere = new THREE.SphereGeometry(object.radius, object.slices, object.stacks, thetaStart, thetaLength, phiStart, phiLength);
         const sphereMesh = new THREE.Mesh(sphere, this.materials[object.material]);
-        this.transforms(object, sphereMesh);
 
         return sphereMesh;
     }
 
-    createTriangle(object){
+    createTriangle(object) {
         const geometry = new THREE.BufferGeometry();
         const vertices = new Float32Array([
             object.coords.xyz1.x, object.coords.xyz1.y, object.coords.xyz1.z,  // Vertex 1
@@ -252,55 +267,43 @@ class MyContents {
         return convertedControlPoints;
     }
 
-    createNurbs(object){
+    createNurbs(object) {
         this.builder = new MyNurbsBuilder();
-        let surfaceData;
-        let mesh;
 
-        let controlPoints = this.convertControlPoints(object.controlpoints, object.degree_u, object.degree_v);
-
-        surfaceData = this.builder.build(controlPoints, object.degree_u, object.degree_v, object.parts_u, object.parts_v, this.materials[object.material]);
-        mesh = new THREE.Mesh(surfaceData, this.materials[object.material]);
-
-        this.transforms(object, mesh);
+        const controlPoints = this.convertControlPoints(object.controlpoints, object.degree_u, object.degree_v);
+        const surfaceData = this.builder.build(controlPoints, object.degree_u, object.degree_v, object.parts_u, object.parts_v, this.materials[object.material]);
+        const mesh = new THREE.Mesh(surfaceData, this.materials[object.material]);
 
         return mesh;
     }
     
     createGraph(nodes, group) {
         for (let [_, object] of Object.entries(nodes.children)) {
-            if (object instanceof MyNode) {
-                if (object.children.length === 0) {
-                    let addObject = null;
-                    if (object.objectType === "rectangle"){
-                        addObject = this.createRectangle(object);
-                    }
-                    else if(object.objectType === "triangle"){
-                        addObject = this.createTriangle(object);
-                    }
-                    else if(object.objectType === "box"){
-                        addObject = this.createBox(object);
-                    }
-                    else if(object.objectType === "cylinder"){
-                        addObject = this.createCylinder(object);
-                    }
-                    else if(object.objectType === "sphere") {
-                        addObject = this.createSphere(object);
-                    }
-                    else if(object.objectType === "nurbs") {
-                        addObject = this.createNurbs(object);
-                    }
-                    group.add(addObject);
-
-                } else {
-                    let temp = new THREE.Group();
-                    this.createGraph(object, temp);
-                    this.transforms(object, temp);
-                    group.add(temp);
-                }
-            } else if (object instanceof MyPointLight) {
+            let addObject = null;
+            if (object instanceof MyPointLight) {
                 this.createPointLight(object);
+            } else if (object instanceof MyBox) {
+                addObject = this.createBox(object);
+            } else if (object instanceof MyCylinder) {
+                addObject = this.createCylinder(object);
+            } else if (object instanceof MyNurbs) {
+                addObject = this.createNurbs(object);
+            } else if (object instanceof MyPolygon) {
+                addObject = this.createTriangle(object);
+            } else if (object instanceof MyRectangle) {
+                addObject = this.createRectangle(object);
+            } else if (object instanceof MySphere) {
+                addObject = this.createSphere(object);
+            } else if (object instanceof MyTriangle) {
+                addObject = this.createTriangle(object);
+            } else if (object instanceof MyNode) {
+                let temp = new THREE.Group();
+                this.createGraph(object, temp);
+                this.transforms(object, temp);
+                group.add(temp);
             }
+
+            if (addObject) group.add(addObject);
         }
     }
 
@@ -312,7 +315,7 @@ class MyContents {
         this.createFog();
         this.createMaterialsAndTexture();
         this.createSkybox();
-        this.createGraph(this.graph, this.graphGroup);
+        this.createGraph(this.graph.rootNode, this.graphGroup);
 
         this.app.scene.add(this.graphGroup);
     }
