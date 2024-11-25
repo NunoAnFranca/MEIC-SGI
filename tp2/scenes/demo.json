@@ -23,38 +23,18 @@
             },
             "skybox": {
                 "size": {"x": 50.0, "y": 50.0, "z": 50.0},
-                "center": {"x": 0.0, "y": 0.0, "z": 0.0},
-                "emissive": {"r": 0.5, "g": 0.5, "b": 0.5},
+                "center": {"x": 0.0, "y": 25.0, "z": 0.0},
+                "emissive": {"r": 0, "g": 0, "b": 0},
                 "intensity": 3.0,
-                "front": "frontApp",
-                "back": "backApp",
-                "up": "upApp",
-                "down": "downApp",
-                "left": "leftApp",
-                "right": "rightApp"
+                "front": "scenes/textures/skybox/view2.png",
+                "back": "scenes/textures/skybox/view2.png",
+                "up": "scenes/textures/skybox/view3.png",
+                "down": "scenes/textures/skybox/grassfloor.png",
+                "left": "scenes/textures/skybox/view1.png",
+                "right": "scenes/textures/skybox/view1.png"
             }
         },
         "textures": {
-            "upTex": {
-                "filepath": "scenes/textures/skybox/view3.png",
-                "isVideo": false
-            },
-            "frontTex": {
-                "filepath": "scenes/textures/skybox/view2.png",
-                "isVideo": false
-            },
-            "backTex": {
-                "filepath": "scenes/textures/skybox/view2.png",
-                "isVideo": false
-            },
-            "leftTex": {
-                "filepath": "scenes/textures/skybox/view1.png",
-                "isVideo": false
-            },
-            "rightTex": {
-                "filepath": "scenes/textures/skybox/view1.png",
-                "isVideo": false
-            },
             "brickTex1": {
                 "filepath": "scenes/textures/elements/brick1.png",
                 "isVideo": false
@@ -67,10 +47,6 @@
                 "filepath": "scenes/textures/elements/brick3.png",
                 "isVideo": false
             },
-            "questionMarkTex": {
-                "filepath": "scenes/textures/elements/questionMarkBrick.png",
-                "isVideo": false
-            },
             "grassTex": {
                 "filepath": "scenes/textures/elements/grass.png",
                 "isVideo": false
@@ -79,17 +55,161 @@
                 "filepath": "scenes/textures/elements/water.png",
                 "isVideo": false
             },
+            "waterVideoTex": {
+                "filepath": "scenes/textures/elements/water.mp4",
+                "isVideo": true
+            },
             "tubeMetalTex": {
                 "filepath": "scenes/textures/elements/tubeMetal.jpg",
                 "isVideo": false
             },
-            "tubeTex": {
-                "filepath": "scenes/textures/elements/tube.png",
+            "sandTexture": {
+                "filepath": "scenes/textures/elements/sand.jpg",
+                "isVideo": false
+            },
+            "questionMarkTex": {
+                "filepath": "scenes/textures/elements/questionMarkBrick.png",
                 "isVideo": false
             }
         },
         "materials": {
-            "tubeApp": {
+            "waterApp": {
+                "color": {
+                    "r": 0.5,
+                    "g": 0.5,
+                    "b": 0.5
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": true,
+                "opacity": 0.8,
+                "textureref": "waterTex",
+                "texlength_s": 1,
+                "texlength_t": 1
+            },
+            "waterVideoApp": {
+                "color": {
+                    "r": 0.5,
+                    "g": 0.5,
+                    "b": 0.5
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": true,
+                "opacity": 0.8,
+                "textureref": "waterVideoTex",
+                "texlength_s": 1,
+                "texlength_t": 1
+            },
+            "lakeWaterApp": {
+                "color": {
+                    "r": 0.5,
+                    "g": 0.5,
+                    "b": 0.5
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": true,
+                "opacity": 0.8,
+                "textureref": "waterTex",
+                "texlength_s": 4,
+                "texlength_t": 4
+            },
+            "waterFallingApp": {
+                "color": {
+                    "r": 0.5,
+                    "g": 0.5,
+                    "b": 0.5
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": true,
+                "opacity": 0.8,
+                "textureref": "waterTex"
+            },
+            "waterFountainApp":{
+                "color": {
+                    "r": 0.5,
+                    "g": 0.5,
+                    "b": 0.5
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": true,
+                "opacity": 0.8,
+                "textureref": "waterTex",
+                "texlength_s": 8,
+                "texlength_t": 1
+            },
+            "sandApp": {
+                "color": {
+                    "r": 1,
+                    "g": 1,
+                    "b": 0.0
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "sandTexture",
+                "texlength_s": 5,
+                "texlength_t": 5
+            },
+            "brickWaterApp": {
                 "color": {
                     "r": 0.8,
                     "g": 0.8,
@@ -108,28 +228,9 @@
                 "shininess": 10,
                 "transparent": false,
                 "opacity": 1.0,
-                "textureref": "tubeTex"
-            },
-            "brick2App": {
-                "color": {
-                    "r": 0.3,
-                    "g": 0.3,
-                    "b": 0.3
-                },
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "specular": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "shininess": 10,
-                "transparent": false,
-                "opacity": 1.0,
-                "textureref": "brickTex2"
+                "textureref": "brickTex1",
+                "texlength_s": 7,
+                "texlength_t": 1
             },
             "brick1App": {
                 "color": {
@@ -151,6 +252,27 @@
                 "transparent": false,
                 "opacity": 1.0,
                 "textureref": "brickTex1"
+            },
+            "brick2App": {
+                "color": {
+                    "r": 0.3,
+                    "g": 0.3,
+                    "b": 0.3
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "brickTex2"
             },
             "brick3App": {
                 "color": {
@@ -174,11 +296,11 @@
                 "textureref": "brickTex3"
 
             },
-            "questionMarkApp": {
+            "blackTubeMaterial": {
                 "color": {
-                    "r": 0.8,
-                    "g": 0.8,
-                    "b": 0.8
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
                 },
                 "emissive": {
                     "r": 0.0,
@@ -192,8 +314,7 @@
                 },
                 "shininess": 10,
                 "transparent": false,
-                "opacity": 1.0,
-                "textureref": "questionMarkTex"
+                "opacity": 1.0
             },
             "topFlagMaterial": {
                 "color": {
@@ -236,7 +357,7 @@
                 "opacity": 1.0,
                 "textureref": "tubeMetalTex"
             },
-            "greenMaterial": {
+            "greenTubeMaterial": {
                 "color": {
                     "r": 0.01,
                     "g": 0.8,
@@ -256,7 +377,7 @@
                 "transparent": false,
                 "opacity": 1.0
             },
-            "blackMaterial": {
+            "flagFlagMaterial": {
                 "color": {
                     "r": 0,
                     "g": 0,
@@ -277,139 +398,28 @@
                 "opacity": 1.0,
                 "twosided": true
             },
-            "upApp": {
+            "questionMarkApp": {
+                "color": {
+                    "r": 0.8,
+                    "g": 0.8,
+                    "b": 0.8
+                },
                 "emissive": {
                     "r": 0.0,
                     "g": 0.0,
                     "b": 0.0
                 },
-                "color": {
-                    "r": 1.0,
-                    "g": 1.0,
-                    "b": 1.0
-                },
                 "specular": {
-                    "r": 0,
-                    "g": 0,
-                    "b": 0
-                },
-                "shininess": 0.0,
-                "transparent": false,
-                "opacity": 1.0,
-                "textureref": "upTex",
-                "twosided": true
-            },
-            "downApp": {
-                "emissive": {
                     "r": 0.0,
                     "g": 0.0,
                     "b": 0.0
                 },
-                "color": {
-                    "r": 1.0,
-                    "g": 1.0,
-                    "b": 1.0
-                },
-                "specular": {
-                    "r": 0,
-                    "g": 0,
-                    "b": 0
-                },
-                "shininess": 0.0,
+                "shininess": 10,
                 "transparent": false,
                 "opacity": 1.0,
-                "textureref": "grassTex",
-                "texlength_s": 50,
-                "texlength_t": 50,
-                "twosided": true
-            },
-            "frontApp": {
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "color": {
-                    "r": 1.0,
-                    "g": 1.0,
-                    "b": 1.0
-                },
-                "specular": {
-                    "r": 0,
-                    "g": 0,
-                    "b": 0
-                },
-                "shininess": 0.0,
-                "transparent": false,
-                "opacity": 1.0,
-                "textureref": "frontTex",
-                "twosided": true
-            },
-            "backApp": {
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "color": {
-                    "r": 1.0,
-                    "g": 1.0,
-                    "b": 1.0
-                },
-                "specular": {
-                    "r": 0,
-                    "g": 0,
-                    "b": 0
-                },
-                "shininess": 0.0,
-                "transparent": false,
-                "opacity": 1.0,
-                "textureref": "backTex",
-                "twosided": true
-            },
-            "leftApp": {
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "color": {
-                    "r": 1.0,
-                    "g": 1.0,
-                    "b": 1.0
-                },
-                "specular": {
-                    "r": 0,
-                    "g": 0,
-                    "b": 0
-                },
-                "shininess": 0.0,
-                "transparent": false,
-                "opacity": 1.0,
-                "textureref": "leftTex",
-                "twosided": true
-            },
-            "rightApp": {
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "color": {
-                    "r": 1.0,
-                    "g": 1.0,
-                    "b": 1.0
-                },
-                "specular": {
-                    "r": 0,
-                    "g": 0,
-                    "b": 0
-                },
-                "shininess": 0.0,
-                "transparent": false,
-                "opacity": 1.0,
-                "textureref": "rightTex",
-                "twosided": true
+                "textureref": "questionMarkTex",
+                "texlength_s": 1,
+                "texlength_t": 1 
             }
         },
         "cameras": {
@@ -475,6 +485,10 @@
                         "type": "noderef",
                         "nodeId": "centerBoxes"
                     },
+                    "leftLake":{
+                        "type": "noderef",
+                        "nodeId": "leftLake"
+                    },
                     "pointLight2": {
                         "type": "noderef",
                         "nodeId": "pointLight2"
@@ -498,7 +512,7 @@
                         }
                     }
                 }
-            },
+            },  
             "pointLight2": {
                 "type": "noderef",
                 "children": {
@@ -550,6 +564,379 @@
                     "flagFlag": {
                         "type": "noderef",
                         "nodeId": "flagFlag"
+                    }
+                }
+            },
+            "leftLake":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -25.0,
+                            "y": 0,
+                            "z": -20.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "sandApp"
+                },
+                "children": {
+                    "leftLakeBasePart": {
+                        "type": "noderef",
+                        "nodeId": "leftLakeBasePart"
+                    },
+                    "leftLakeWater": {
+                        "type": "noderef",
+                        "nodeId": "leftLakeWater"
+                    },
+                    "leftLakeFountain": {
+                        "type": "noderef",
+                        "nodeId": "leftLakeFountain"
+                    },
+                    "leftLakeFountainWater1":{
+                        "type": "noderef",
+                        "nodeId": "leftLakeFountainWater1"
+                    },
+                    "leftLakeFountainWater2":{
+                        "type": "noderef",
+                        "nodeId": "leftLakeFountainWater2"
+                    }
+
+                }
+            },
+            "leftLakeBasePart": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "sandApp"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 5,
+                            "y": 0,
+                            "z": -2
+                        }
+                    }
+                ],
+                "children": {
+                    "leftLakeBasePart1": {
+                        "type": "noderef",
+                        "nodeId": "leftLakeBasePart1"
+                    },
+                    "leftLakeBasePart2": {
+                        "type": "noderef",
+                        "nodeId": "leftLakeBasePart2"
+                    },
+                    "leftLakeBasePart3": {
+                        "type": "noderef",
+                        "nodeId": "leftLakeBasePart3"
+                    },
+                    "leftLakeBasePart4": {
+                        "type": "noderef",
+                        "nodeId": "leftLakeBasePart4"
+                    }
+                }
+            },
+            "leftLakeBasePart1": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 5
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 90,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "leftLakeBasePartUnit":{
+                        "type": "noderef",
+                        "nodeId": "leftLakeBasePartUnit"
+                    }
+                }
+            },
+            "leftLakeBasePart2": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 5,
+                            "y": 0,
+                            "z": 6
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 90,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "leftLakeBasePartUnit":{
+                        "type": "noderef",
+                        "nodeId": "leftLakeBasePartUnit"
+                    }
+                }
+            },
+            "leftLakeBasePart3": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 5
+                        }
+                    }
+                ],
+                "children": {
+                    "leftLakeBasePartUnit":{
+                        "type": "noderef",
+                        "nodeId": "leftLakeBasePartUnit"
+                    }  
+                }
+            },
+            "leftLakeBasePart4": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 1,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "leftLakeBasePartUnit":{
+                        "type": "noderef",
+                        "nodeId": "leftLakeBasePartUnit"
+                    }
+                }
+            },
+            "leftLakeBasePartUnit": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "sandApp"
+                },
+                "children": {
+                    "create":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 5,
+                            "y": 1,
+                            "z": 1
+                        }
+                    }
+                }
+            },
+            "leftLakeWater": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "lakeWaterApp"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 6,
+                            "y": 0,
+                            "z": -1
+                        }
+                    }
+                ],
+                "children": {
+                    "base":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 4,
+                            "y": 1,
+                            "z": 4
+                        }
+                    }
+                }
+            },
+            "leftLakeFountain": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "brick1App"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 10,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "leftLakeFountain1": {
+                        "type": "noderef",
+                        "nodeId": "leftLakeFountain1"
+                    },
+                    "leftLakeFountain2": {
+                        "type": "noderef",
+                        "nodeId": "leftLakeFountain2"
+                    },
+                    "leftLakeFountain3": {
+                        "type": "noderef",
+                        "nodeId": "leftLakeFountain3"
+                    }
+                }
+            },
+            "leftLakeFountain1": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": -1,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "barSeven": {
+                        "type": "noderef",
+                        "nodeId": "barSeven"
+                    }
+                }
+            },
+            "leftLakeFountain2": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 1
+                        }
+                    }
+                ],
+                "children": {
+                    "barSeven": {
+                        "type": "noderef",
+                        "nodeId": "barSeven"
+                    }
+                }
+            },
+            "leftLakeFountain3": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": -1
+                        }
+                    }
+                ],
+                "children": {
+                    "barSeven": {
+                        "type": "noderef",
+                        "nodeId": "barSeven"
+                    }
+                }
+            },
+            "leftLakeFountainWater": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "waterFountainApp"
+                },
+                "children": {
+                    "leftLakeFountainWater1": {
+                        "type": "noderef",
+                        "nodeId": "leftLakeFountainWater1"
+                    },
+                    "leftLakeFountainWater2": {
+                        "type": "noderef",
+                        "nodeId": "leftLakeFountainWater2"
+                    }
+                }
+            },
+            "leftLakeFountainWater1": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "waterVideoApp"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 10,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "brick": {
+                        "type": "noderef",
+                        "nodeId": "barSeven"
+                    }
+                }
+            },
+            "leftLakeFountainWater2": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "waterVideoApp"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 7,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "create":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 1,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 1,
+                            "y": 11,
+                            "z": 1
+                        }
                     }
                 }
             },
@@ -616,7 +1003,7 @@
                     }
                 ],
                 "materialref": {
-                    "materialId": "blackMaterial"
+                    "materialId": "blackTubeMaterial"
                 },
                 "children": {
                     "rectanglePrim": {
@@ -780,7 +1167,7 @@
             "greenTubeBase": {
                 "type": "node",
                 "materialref": {
-                    "materialId": "greenMaterial"
+                    "materialId": "greenTubeMaterial"
                 },
                 "children": {
                     "cylinder": {
@@ -872,7 +1259,7 @@
             "greenTubeTop1": {
                 "type": "node",
                 "materialref": {
-                    "materialId": "greenMaterial"
+                    "materialId": "greenTubeMaterial"
                 },
                 "children": {
                     "cylinder": {
@@ -888,7 +1275,7 @@
             "greenTubeTop2": {
                 "type": "node",
                 "materialref": {
-                    "materialId": "blackMaterial"
+                    "materialId": "blackTubeMaterial"
                 },
                 "children": {
                     "cylinder": {
@@ -1089,6 +1476,153 @@
                     }
                 }
             },
+            "barSeven": {
+                "type": "node",
+                "children": {
+                    "brickConstructor": {
+                        "type": "noderef",
+                        "nodeId": "brickConstructor"
+                    },
+                    "brick6": {
+                        "type": "noderef",
+                        "nodeId": "brick6"
+                    }
+                }
+            },
+            "brick6": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 1.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "children": {
+                    "brickConstructor": {
+                        "type": "noderef",
+                        "nodeId": "brickConstructor"
+                    },
+                    "brick5": {
+                        "type": "noderef",
+                        "nodeId": "brick5"
+                    }
+                }
+            },
+            "brick5": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 1.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "children": {
+                    "brickConstructor": {
+                        "type": "noderef",
+                        "nodeId": "brickConstructor"
+                    },
+                    "brick4": {
+                        "type": "noderef",
+                        "nodeId": "brick4"
+                    }
+                }
+            },
+            "brick4": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 1.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "children": {
+                    "brickConstructor": {
+                        "type": "noderef",
+                        "nodeId": "brickConstructor"
+                    },
+                    "brick3": {
+                        "type": "noderef",
+                        "nodeId": "brick3"
+                    }
+                }
+            },
+            "brick3": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 1.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "children": {
+                    "brickConstructor": {
+                        "type": "noderef",
+                        "nodeId": "brickConstructor"
+                    },
+                    "brick2": {
+                        "type": "noderef",
+                        "nodeId": "brick2"
+                    }
+                }
+            },
+            "brick2": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 1.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "children": {
+                    "brickConstructor": {
+                        "type": "noderef",
+                        "nodeId": "brickConstructor"
+                    },
+                    "brick1": {
+                        "type": "noderef",
+                        "nodeId": "brick1"
+                    }
+                }
+            },
+            "brick1": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 1.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "children": {
+                    "brickConstructor": {
+                        "type": "noderef",
+                        "nodeId": "brickConstructor"
+                    }
+                }
+            },
             "baseBrick1": {
                 "type": "node",
                 "materialref": {
@@ -1105,6 +1639,18 @@
                 "type": "node",
                 "materialref": {
                     "materialId": "brick3App"
+                },
+                "children": {
+                    "fourCubesBase": {
+                        "type": "noderef",
+                        "nodeId": "fourCubesBase"
+                    }
+                }
+            },
+            "baseWater": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "waterApp"
                 },
                 "children": {
                     "fourCubesBase": {
@@ -1139,7 +1685,7 @@
                 "children": {
                     "brickConstructor1": {
                         "type": "noderef",
-                        "nodeId": "brickConstructor1"
+                        "nodeId": "brickConstructor"
                     }
                 }
             },
@@ -1158,7 +1704,7 @@
                 "children": {
                     "brickConstructor1": {
                         "type": "noderef",
-                        "nodeId": "brickConstructor1"
+                        "nodeId": "brickConstructor"
                     }
                 }
             },
@@ -1177,7 +1723,7 @@
                 "children": {
                     "brickConstructor1": {
                         "type": "noderef",
-                        "nodeId": "brickConstructor1"
+                        "nodeId": "brickConstructor"
                     }
                 }
             },
@@ -1196,7 +1742,25 @@
                 "children": {                    
                     "brickConstructor1": {
                         "type": "noderef",
-                        "nodeId": "brickConstructor1"
+                        "nodeId": "brickConstructor"
+                    }
+                }
+            },
+            "brickConstructor": {
+                "type": "node",
+                "children": {
+                    "brick": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 1,
+                            "y": 1,
+                            "z": 1
+                        }
                     }
                 }
             },

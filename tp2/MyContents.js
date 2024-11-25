@@ -150,16 +150,37 @@ class MyContents {
 
     createSkybox() {
         const skyboxGeometry = new THREE.BoxGeometry(this.yasf.globals.skybox.size.x, this.yasf.globals.skybox.size.y, this.yasf.globals.skybox.size.z);
+        const emissiveColor = new THREE.Color( this.yasf.globals.skybox.emissive.r, this.yasf.globals.skybox.emissive.g, this.yasf.globals.skybox.emissive.b);
+        const intensityLevel = this.yasf.globals.skybox.intensity;
+        
+        const skyBoxTextures = [
+            this.loader.load(this.yasf.globals.skybox.right),
+            this.loader.load(this.yasf.globals.skybox.left),
+            this.loader.load(this.yasf.globals.skybox.up),
+            this.loader.load(this.yasf.globals.skybox.down),
+            this.loader.load(this.yasf.globals.skybox.back),
+            this.loader.load(this.yasf.globals.skybox.front),
+        ];
+        skyBoxTextures[0].colorSpace = THREE.SRGBColorSpace;
+        skyBoxTextures[1].colorSpace = THREE.SRGBColorSpace;
+        skyBoxTextures[2].colorSpace = THREE.SRGBColorSpace;
+        skyBoxTextures[3].colorSpace = THREE.SRGBColorSpace;
+        skyBoxTextures[4].colorSpace = THREE.SRGBColorSpace;
+        skyBoxTextures[5].colorSpace = THREE.SRGBColorSpace;
+
         const skyBoxMaterials = [
-            this.materials[this.yasf.globals.skybox.right],
-            this.materials[this.yasf.globals.skybox.left],
-            this.materials[this.yasf.globals.skybox.up],
-            this.materials[this.yasf.globals.skybox.down],
-            this.materials[this.yasf.globals.skybox.back],
-            this.materials[this.yasf.globals.skybox.front],
-        ]
+            new THREE.MeshPhongMaterial({emissive: emissiveColor, emissiveIntensity: intensityLevel, map:skyBoxTextures[0], side: THREE.BackSide}),
+            new THREE.MeshPhongMaterial({emissive: emissiveColor, emissiveIntensity: intensityLevel, map:skyBoxTextures[1], side: THREE.BackSide}),
+            new THREE.MeshPhongMaterial({emissive: emissiveColor, emissiveIntensity: intensityLevel, map:skyBoxTextures[2], side: THREE.BackSide}),
+            new THREE.MeshPhongMaterial({emissive: emissiveColor, emissiveIntensity: intensityLevel, map:skyBoxTextures[3], side: THREE.BackSide}),
+            new THREE.MeshPhongMaterial({emissive: emissiveColor, emissiveIntensity: intensityLevel, map:skyBoxTextures[4], side: THREE.BackSide}),
+            new THREE.MeshPhongMaterial({emissive: emissiveColor, emissiveIntensity: intensityLevel, map:skyBoxTextures[5], side: THREE.BackSide})
+        ];
+
         const skybox = new THREE.Mesh(skyboxGeometry, skyBoxMaterials);
         skybox.translateY(this.yasf.globals.skybox.size.y / 2);
+        skybox.position.set(this.yasf.globals.skybox.center.x,this.yasf.globals.skybox.center.y,this.yasf.globals.skybox.center.z);
+
         this.app.scene.add(skybox);
     }
 
