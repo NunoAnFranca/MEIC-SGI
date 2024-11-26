@@ -112,8 +112,7 @@ class MyContents {
                 else {
                     texture = this.loader.load(textureValues.filepath);
                     texture.colorSpace = THREE.SRGBColorSpace;
-                    texture.wrapS = THREE.RepeatWrapping;
-                    texture.wrapT = THREE.RepeatWrapping;
+                    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
                     texture.repeat.set(values.texlength_s || 1, values.texlength_t || 1);
                 }
             }
@@ -207,11 +206,31 @@ class MyContents {
         this.app.scene.add(pointLightHelper);
     }
 
+    getmaterialLenSLenT(object){
+        for (let [name, values] of Object.entries(this.yasf.materials)) {
+            if(object==name){
+                return {s: values.texlength_s, t: values.texlength_t};
+            }
+        }
+    }
+
     createRectangle(object) {
-        const width = object.xy2.x - object.xy1.x;
-        const height = object.xy2.y - object.xy1.y;
-        const rectangle = new THREE.PlaneGeometry(Math.abs(width), Math.abs(height), object.parts_x, object.parts_y);
-        const rectangleMesh = new THREE.Mesh(rectangle, this.materials[object.material]);
+        const width = Math.abs(object.xy2.x - object.xy1.x);
+        const height = Math.abs(object.xy2.y - object.xy1.y);
+        
+        const texValues = this.getmaterialLenSLenT(object.material);
+        let objectMaterial = this.materials[object.material].clone();
+
+        if (objectMaterial) {
+            let originalMap = objectMaterial.map;
+            objectMaterial.map = originalMap.clone();
+            if (originalMap) {
+                objectMaterial.map.repeat.set(width / (texValues.s || 1), height / (texValues.t || 1));
+            }
+        }
+
+        const rectangle = new THREE.PlaneGeometry(width, height, object.parts_x, object.parts_y);
+        const rectangleMesh = new THREE.Mesh(rectangle, objectMaterial);
        
         rectangleMesh.position.set(object.xy1.x + width / 2, object.xy1.y + height / 2, object.xy1.z);
 
@@ -219,11 +238,26 @@ class MyContents {
     }
 
     createBox(object) {
-        const width = object.xyz2.x - object.xyz1.x;
-        const height = object.xyz2.y - object.xyz1.y;
-        const depth = object.xyz2.z - object.xyz1.z;
-        const box = new THREE.BoxGeometry(Math.abs(width), Math.abs(height), Math.abs(depth), object.parts_x, object.parts_y, object.parts_z);
-        const boxMesh = new THREE.Mesh(box, this.materials[object.material]);
+        const width = Math.abs(object.xyz2.x - object.xyz1.x);
+        const height = Math.abs( object.xyz2.y - object.xyz1.y);
+        const depth = Math.abs(object.xyz2.z - object.xyz1.z);
+
+        const texValues = this.getmaterialLenSLenT(object.material);
+        let objectMaterial = this.materials[object.material].clone();
+
+        if (objectMaterial) {
+            let originalMap = objectMaterial.map;
+            objectMaterial.map = originalMap.clone();
+
+            if (originalMap) {
+                objectMaterial.map.repeat.set(
+                Math.max(width / (texValues.s || 1), depth / (texValues.s || 1)),
+                Math.max(height / (texValues.t || 1), depth / (texValues.t || 1)));
+            }
+        }
+        
+        const box = new THREE.BoxGeometry(width, height, depth, object.parts_x, object.parts_y, object.parts_z);
+        const boxMesh = new THREE.Mesh(box, objectMaterial);
         boxMesh.position.set(object.xyz1.x + width / 2, object.xyz1.y + height / 2, object.xyz1.z + depth / 2);
 
         return boxMesh;

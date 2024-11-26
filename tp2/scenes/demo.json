@@ -546,14 +546,81 @@
                     {
                         "type": "translate",
                         "amount": {
-                            "x": 15.0,
-                            "y": 3.0,
-                            "z": -15.0
+                            "x": 12.0,
+                            "y": 0.0,
+                            "z": -20.0
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.2,
+                            "y": 1.2,
+                            "z": 1.2
                         }
                     }
                 ],
                 "materialref": {
-                    "materialId": "brick2App"
+                    "materialId": "brick3App"
+                },
+                "children": {
+                    "base":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 8,
+                            "y": 4,
+                            "z": 8
+                        }
+                    },
+                    "castleWall1": {
+                        "type": "noderef",
+                        "nodeId": "castleWall1"
+                    },
+                    "castleWall2": {
+                        "type": "noderef",
+                        "nodeId": "castleWall2"
+                    },
+                    "castleWall3": {
+                        "type": "noderef",
+                        "nodeId": "castleWall3"
+                    },
+                    "castleWall4": {
+                        "type": "noderef",
+                        "nodeId": "castleWall4"
+                    },
+                    "castleRightTop":{
+                        "type":"noderef",
+                        "nodeId": "castleRightTop"
+                    }
+                }
+            },
+            "castleRightTop":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 1.6,
+                            "y": 4.0,
+                            "z": 1.6
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.6,
+                            "y": 1.1,
+                            "z": 0.6
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "brick3App"
                 },
                 "children": {
                     "base":{
@@ -600,7 +667,7 @@
                     }
                 ],
                 "materialref": {
-                    "materialId": "brick3App"
+                    "materialId": "brick2App"
                 },
                 "children": {
                     "base":{
@@ -647,7 +714,7 @@
                     }
                 ],
                 "materialref": {
-                    "materialId": "brick3App"
+                    "materialId": "brick2App"
                 },
                 "children": {
                     "base":{
