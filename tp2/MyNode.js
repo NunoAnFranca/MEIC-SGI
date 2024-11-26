@@ -66,7 +66,7 @@ class MyNode {
             } else if (name === "materialref") {
                 this.material = value.materialId;
             } else if (name === "children") {
-                for (const [_, valueAttr] of Object.entries(value)) {
+                for (const [name, valueAttr] of Object.entries(value)) {
                     if (PRIMITIVES.includes(valueAttr.type)) {
                         primitiveCount++;
                         if (primitiveCount > 1) {
@@ -74,9 +74,10 @@ class MyNode {
                             continue;
                         }
                     }
-
-                    if (valueAttr.type === "noderef") {
-                        this.children.push(new MyNode(valueAttr.nodeId, this.node, this.material));
+                    if (name === "nodeList") {
+                        for(let i in valueAttr){
+                            this.children.push(new MyNode(valueAttr[i], this.node, this.material));
+                        }
                     } else if (valueAttr.type === "pointlight") {
                         this.children.push(new MyPointLight(valueAttr));
                     } else if (PRIMITIVE_CLASSES[valueAttr.type]) {
