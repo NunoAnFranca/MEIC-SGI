@@ -329,6 +329,26 @@
                 "opacity": 1.0,
                 "twosided" : true
             },
+            "doorMaterial": {
+                "color": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0
+            },
             "topFlagMaterial": {
                 "color": {
                     "r": 1,
@@ -605,7 +625,245 @@
                     }
                 ],
                 "children": {
-                    "nodeList": ["castleWall"]
+                    "nodeList": ["castleWall", "castleDoor"]
+                }
+            },
+            "castleDoor": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.01,
+                            "y": 0.0,
+                            "z": 4.5
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.001,
+                            "y": 0.75,
+                            "z": 1
+                        }
+                    }
+                ],
+                "materialref":{
+                    "materialId": "doorMaterial"
+                },
+                "children": {
+                    "nodeList": ["castleDoorBottom","castleDoorTop"]
+                }
+            },
+            "castleDoorBottom": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 180,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "base":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 2,
+                            "y": 4,
+                            "z": 2
+                        }
+                    }
+                }
+            },
+            "castleDoorTop": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -1,
+                            "y": 4,
+                            "z": -1
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1,
+                            "y": 1,
+                            "z": 1
+                        }
+                    }
+                ],
+                "children": {
+                    "sphere": {
+                        "type": "sphere",
+                        "radius": 1,
+                        "slices": 64,
+                        "stacks": 64
+                    }
+                }
+            },
+            "castleWindow1": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 1.01,
+                            "y": 3,
+                            "z": 5
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.001,
+                            "y": 0.25,
+                            "z": 0.5
+                        }
+                    }
+                ],
+                "materialref":{
+                    "materialId": "doorMaterial"
+                },
+                "children": {
+                    "nodeList": ["castleWindowBottom","castleWindowTop"]
+                }
+            },
+            "castleWindow2": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 1.01,
+                            "y": 3,
+                            "z": 3
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.001,
+                            "y": 0.25,
+                            "z": 0.5
+                        }
+                    }
+                ],
+                "materialref":{
+                    "materialId": "doorMaterial"
+                },
+                "children": {
+                    "nodeList": ["castleWindowBottom","castleWindowTop"]
+                }
+            },
+            "castleWindow3": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 1.01,
+                            "y": 5.5,
+                            "z": 4
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.001,
+                            "y": 0.25,
+                            "z": 0.5
+                        }
+                    }
+                ],
+                "materialref":{
+                    "materialId": "doorMaterial"
+                },
+                "children": {
+                    "nodeList": ["castleWindowBottom","castleWindowTop"]
+                }
+            },
+            "castleWindowBottom": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 180,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "base":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 2,
+                            "y": 4,
+                            "z": 2
+                        }
+                    }
+                }
+            },
+            "castleWindowTop": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -1,
+                            "y": 4,
+                            "z": -1
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1,
+                            "y": 1,
+                            "z": 1
+                        }
+                    }
+                ],
+                "children": {
+                    "sphere": {
+                        "type": "sphere",
+                        "radius": 1,
+                        "slices": 64,
+                        "stacks": 64
+                    }
                 }
             },
             "castleWall2": {
@@ -621,7 +879,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": ["castleWall"]
+                    "nodeList": ["castleWall", "castleDoor"]
                 }
             },
             "castleWall3": {
@@ -645,7 +903,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": ["castleWall"]
+                    "nodeList": ["castleWall", "castleDoor"]
                 }
             },
             "castleWall4": {
@@ -669,7 +927,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": ["castleWall"]
+                    "nodeList": ["castleWall", "castleDoor"]
                 }
             },
             "castleWallBrick1": {
@@ -805,7 +1063,7 @@
                             "z": 6
                         }
                     },
-                    "nodeList": ["castleWallSmallBrick1", "castleWallSmallBrick2"]
+                    "nodeList": ["castleWallSmallBrick1", "castleWallSmallBrick2", "castleWindow1","castleWindow2","castleWindow3"]
                 }
             },
             "castleWallSmall1": {

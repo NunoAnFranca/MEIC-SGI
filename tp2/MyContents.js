@@ -272,6 +272,12 @@ class MyContents {
     
             return boxMesh;
         }
+
+        const box = new THREE.BoxGeometry(Math.abs(width), Math.abs(height), Math.abs(depth), object.parts_x, object.parts_y, object.parts_z);
+        const boxMesh = new THREE.Mesh(box, this.materials[object.material]);
+        boxMesh.position.set(object.xyz1.x + width / 2, object.xyz1.y + height / 2, object.xyz1.z + depth / 2);
+
+        return boxMesh;
     }
 
     createCylinder(object) {
