@@ -640,8 +640,298 @@
                         "greenTube1",
                         "greenTube3",
                         "centerBoxes",
-                        "BottomCave"
+                        "BottomCave",
+                        "stairwayToHeaven"
                     ]
+                }
+            },
+            "stairwayToHeaven": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0,
+                            "z": 3.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "brick1App"
+                },
+                "children": {
+                    "base": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": -1,
+                            "y": 0,
+                            "z": -10
+                        },
+                        "xyz2": {
+                            "x": 1,
+                            "y": 1,
+                            "z": -19
+                        }
+                    },
+                    "nodeList": [
+                        "stairwayToHeaven1",
+                        "stairwayToHeaven2",
+                        "stairwayToHeaven3",
+                        "stairwayToHeaven4",
+                        "stairwayToHeaven5",
+                        "stairwayToHeaven6",
+                        "stairwayToHeaven7",
+                        "stairwayToHeaven8"
+                    ]
+                }
+            },
+            "stairwayToHeaven1": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 1,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "brick1App"
+                },
+                "children": {
+                    "base": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": -1,
+                            "y": 0,
+                            "z": -11
+                        },
+                        "xyz2": {
+                            "x": 1,
+                            "y": 1,
+                            "z": -19
+                        }
+                    }
+                }
+            },
+            "stairwayToHeaven2": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 2,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "brick1App"
+                },
+                "children": {
+                    "base": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": -1,
+                            "y": 0,
+                            "z": -12
+                        },
+                        "xyz2": {
+                            "x": 1,
+                            "y": 1,
+                            "z": -19
+                        }
+                    }
+                }
+            },
+            "stairwayToHeaven3": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 3,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "brick1App"
+                },
+                "children": {
+                    "base": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": -1,
+                            "y": 0,
+                            "z": -13
+                        },
+                        "xyz2": {
+                            "x": 1,
+                            "y": 1,
+                            "z": -19
+                        }
+                    }
+                }
+            },
+            "stairwayToHeaven4": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 4,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "brick1App"
+                },
+                "children": {
+                    "base": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": -1,
+                            "y": 0,
+                            "z": -14
+                        },
+                        "xyz2": {
+                            "x": 1,
+                            "y": 1,
+                            "z": -19
+                        }
+                    }
+                }
+            },
+            "stairwayToHeaven5": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 5,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "brick1App"
+                },
+                "children": {
+                    "base": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": -1,
+                            "y": 0,
+                            "z": -15
+                        },
+                        "xyz2": {
+                            "x": 1,
+                            "y": 1,
+                            "z": -19
+                        }
+                    }
+                }
+            },
+            "stairwayToHeaven6": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 6,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "brick1App"
+                },
+                "children": {
+                    "base": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": -1,
+                            "y": 0,
+                            "z": -16
+                        },
+                        "xyz2": {
+                            "x": 1,
+                            "y": 1,
+                            "z": -19
+                        }
+                    }
+                }
+            },
+            "stairwayToHeaven7": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 7,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "brick1App"
+                },
+                "children": {
+                    "base": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": -1,
+                            "y": 0,
+                            "z": -17
+                        },
+                        "xyz2": {
+                            "x": 1,
+                            "y": 1,
+                            "z": -19
+                        }
+                    }
+                }
+            },
+            "stairwayToHeaven8": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 8,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "brick1App"
+                },
+                "children": {
+                    "base": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": -1,
+                            "y": 0,
+                            "z": -18
+                        },
+                        "xyz2": {
+                            "x": 1,
+                            "y": 1,
+                            "z": -19
+                        }
+                    }
                 }
             },
             "centerPath": {
@@ -2226,7 +2516,7 @@
                         "amount": {
                             "x": 0.0,
                             "y": 0.0,
-                            "z": -2.0
+                            "z": -3
                         }
                     }
                 ],
