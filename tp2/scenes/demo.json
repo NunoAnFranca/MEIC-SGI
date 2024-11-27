@@ -326,7 +326,8 @@
                 },
                 "shininess": 10,
                 "transparent": false,
-                "opacity": 1.0
+                "opacity": 1.0,
+                "twosided" : true
             },
             "topFlagMaterial": {
                 "color": {
@@ -475,38 +476,7 @@
             "scene": {
                 "type": "node",
                 "children": {
-                    "flagParent": {
-                        "type": "noderef",
-                        "nodeId": "flagParent"
-                    },
-                    "greenTube1": {
-                        "type": "noderef",
-                        "nodeId": "greenTube1"
-                    },
-                    "greenTube2": {
-                        "type": "noderef",
-                        "nodeId": "greenTube2"
-                    },
-                    "greenTube3": {
-                        "type": "noderef",
-                        "nodeId": "greenTube3"
-                    },
-                    "centerBoxes": {
-                        "type": "noderef",
-                        "nodeId": "centerBoxes"
-                    },
-                    "leftLake":{
-                        "type": "noderef",
-                        "nodeId": "leftLake"
-                    },
-                    "pointLight2": {
-                        "type": "noderef",
-                        "nodeId": "pointLight2"
-                    },
-                    "castleRight": {
-                        "type": "noderef",
-                        "nodeId": "castleRight"
-                    },
+                    "nodeList": ["flagParent","greenTube1", "greenTube2", "greenTube3", "centerBoxes", "leftLake", "pointLight2", "castleRight"],
                     "pointLight1": {
                         "type": "pointlight",
                         "enabled": true,
@@ -579,26 +549,7 @@
                             "z": 8
                         }
                     },
-                    "castleWall1": {
-                        "type": "noderef",
-                        "nodeId": "castleWall1"
-                    },
-                    "castleWall2": {
-                        "type": "noderef",
-                        "nodeId": "castleWall2"
-                    },
-                    "castleWall3": {
-                        "type": "noderef",
-                        "nodeId": "castleWall3"
-                    },
-                    "castleWall4": {
-                        "type": "noderef",
-                        "nodeId": "castleWall4"
-                    },
-                    "castleRightTop":{
-                        "type":"noderef",
-                        "nodeId": "castleRightTop"
-                    }
+                    "nodeList":["castleWall1", "castleWall2", "castleWall3", "castleWall4", "castleRightTop"]
                 }
             },
             "castleWall": {
@@ -630,22 +581,7 @@
                             "z": 8
                         }
                     },
-                    "castleWallBrick1":{
-                        "type": "noderef",
-                        "nodeId": "castleWallBrick1"
-                    },
-                    "castleWallBrick2":{
-                        "type": "noderef",
-                        "nodeId": "castleWallBrick2"
-                    },
-                    "castleWallBrick3":{
-                        "type": "noderef",
-                        "nodeId": "castleWallBrick3"
-                    },
-                    "castleWallBrick4":{
-                        "type": "noderef",
-                        "nodeId": "castleWallBrick4"
-                    }
+                    "nodeList": ["castleWallBrick1", "castleWallBrick2", "castleWallBrick3", "castleWallBrick4"]
                 }
             },
             "castleWall1": {
@@ -669,10 +605,7 @@
                     }
                 ],
                 "children": {
-                    "castleWall": {
-                        "type": "noderef",
-                        "nodeId": "castleWall"
-                    }
+                    "nodeList": ["castleWall"]
                 }
             },
             "castleWall2": {
@@ -688,10 +621,7 @@
                     }
                 ],
                 "children": {
-                    "castleWall": {
-                        "type": "noderef",
-                        "nodeId": "castleWall"
-                    }
+                    "nodeList": ["castleWall"]
                 }
             },
             "castleWall3": {
@@ -715,10 +645,7 @@
                     }
                 ],
                 "children": {
-                    "castleWall": {
-                        "type": "noderef",
-                        "nodeId": "castleWall"
-                    }
+                    "nodeList": ["castleWall"]
                 }
             },
             "castleWall4": {
@@ -742,10 +669,7 @@
                     }
                 ],
                 "children": {
-                    "castleWall": {
-                        "type": "noderef",
-                        "nodeId": "castleWall"
-                    }
+                    "nodeList": ["castleWall"]
                 }
             },
             "castleWallBrick1": {
@@ -849,22 +773,7 @@
                             "z": 6
                         }
                     },
-                    "castleWallSmall1": {
-                        "type": "noderef",
-                        "nodeId": "castleWallSmall1"
-                    },
-                    "castleWallSmall2": {
-                        "type": "noderef",
-                        "nodeId": "castleWallSmall2"
-                    },
-                    "castleWallSmall3": {
-                        "type": "noderef",
-                        "nodeId": "castleWallSmall3"
-                    },
-                    "castleWallSmall4": {
-                        "type": "noderef",
-                        "nodeId": "castleWallSmall4"
-                    }
+                    "nodeList": ["castleWallSmall1", "castleWallSmall2", "castleWallSmall3", "castleWallSmall4"]
                 }
             },
             "castleWallSmall": {
@@ -896,14 +805,7 @@
                             "z": 6
                         }
                     },
-                    "castleWallSmallBrick1":{
-                        "type": "noderef",
-                        "nodeId": "castleWallSmallBrick1"
-                    },
-                    "castleWallSmallBrick2":{
-                        "type": "noderef",
-                        "nodeId": "castleWallSmallBrick2"
-                    }
+                    "nodeList": ["castleWallSmallBrick1", "castleWallSmallBrick2"]
                 }
             },
             "castleWallSmall1": {
@@ -927,10 +829,7 @@
                     }
                 ],
                 "children": {
-                    "castleWallSmal": {
-                        "type": "noderef",
-                        "nodeId": "castleWallSmall"
-                    }
+                    "nodeList": ["castleWallSmall"]
                 }
             },
             "castleWallSmall2": {
@@ -954,10 +853,7 @@
                     }
                 ],
                 "children": {
-                    "castleWallSmal": {
-                        "type": "noderef",
-                        "nodeId": "castleWallSmall"
-                    }
+                    "nodeList": ["castleWallSmall"]
                 }
             },
             "castleWallSmall3": {
@@ -973,10 +869,7 @@
                     }
                 ],
                 "children": {
-                    "castleWallSmal": {
-                        "type": "noderef",
-                        "nodeId": "castleWallSmall"
-                    }
+                    "nodeList": ["castleWallSmall"]
                 }
             },
             "castleWallSmall4": {
@@ -1000,10 +893,7 @@
                     }
                 ],
                 "children": {
-                    "castleWallSmal": {
-                        "type": "noderef",
-                        "nodeId": "castleWallSmall"
-                    }
+                    "nodeList": ["castleWallSmall"]
                 }
             },
             "castleWallSmallBrick1": {
@@ -1055,26 +945,14 @@
                     }
                 ],
                 "children": {
-                    "baseBrick1": {
-                        "type": "noderef",
-                        "nodeId": "baseBrick1"
-                    },
-                    "flagTube": {
-                        "type": "noderef",
-                        "nodeId": "flagTube"
-                    },
-                    "flagTop": {
-                        "type": "noderef",
-                        "nodeId": "flagTop"
-                    },
-                    "flagFlag": {
-                        "type": "noderef",
-                        "nodeId": "flagFlag"
-                    }
+                    "nodeList":["baseBrick1", "flagTube", "flagTop", "flagFlag"]
                 }
             },
             "leftLake":{
                 "type": "node",
+                "materialref": {
+                    "materialId": "sandApp"
+                },
                 "transforms": [
                     {
                         "type": "translate",
@@ -1085,31 +963,8 @@
                         }
                     }
                 ],
-                "materialref": {
-                    "materialId": "sandApp"
-                },
                 "children": {
-                    "leftLakeBasePart": {
-                        "type": "noderef",
-                        "nodeId": "leftLakeBasePart"
-                    },
-                    "leftLakeWater": {
-                        "type": "noderef",
-                        "nodeId": "leftLakeWater"
-                    },
-                    "leftLakeFountain": {
-                        "type": "noderef",
-                        "nodeId": "leftLakeFountain"
-                    },
-                    "leftLakeFountainWater1":{
-                        "type": "noderef",
-                        "nodeId": "leftLakeFountainWater1"
-                    },
-                    "leftLakeFountainWater2":{
-                        "type": "noderef",
-                        "nodeId": "leftLakeFountainWater2"
-                    }
-
+                    "nodeList":["leftLakeBasePart", "leftLakeWater", "leftLakeFountain", "leftLakeFountainWater1", "leftLakeFountainWater2"]
                 }
             },
             "leftLakeBasePart": {
@@ -1128,22 +983,7 @@
                     }
                 ],
                 "children": {
-                    "leftLakeBasePart1": {
-                        "type": "noderef",
-                        "nodeId": "leftLakeBasePart1"
-                    },
-                    "leftLakeBasePart2": {
-                        "type": "noderef",
-                        "nodeId": "leftLakeBasePart2"
-                    },
-                    "leftLakeBasePart3": {
-                        "type": "noderef",
-                        "nodeId": "leftLakeBasePart3"
-                    },
-                    "leftLakeBasePart4": {
-                        "type": "noderef",
-                        "nodeId": "leftLakeBasePart4"
-                    }
+                    "nodeList":["leftLakeBasePart1", "leftLakeBasePart2", "leftLakeBasePart3", "leftLakeBasePart4"]
                 }
             },
             "leftLakeBasePart1": {
@@ -1167,10 +1007,7 @@
                     }
                 ],
                 "children": {
-                    "leftLakeBasePartUnit":{
-                        "type": "noderef",
-                        "nodeId": "leftLakeBasePartUnit"
-                    }
+                    "nodeList":["leftLakeBasePartUnit"]
                 }
             },
             "leftLakeBasePart2": {
@@ -1194,10 +1031,7 @@
                     }
                 ],
                 "children": {
-                    "leftLakeBasePartUnit":{
-                        "type": "noderef",
-                        "nodeId": "leftLakeBasePartUnit"
-                    }
+                    "nodeList":["leftLakeBasePartUnit"]
                 }
             },
             "leftLakeBasePart3": {
@@ -1213,10 +1047,7 @@
                     }
                 ],
                 "children": {
-                    "leftLakeBasePartUnit":{
-                        "type": "noderef",
-                        "nodeId": "leftLakeBasePartUnit"
-                    }  
+                    "nodeList":["leftLakeBasePartUnit"]
                 }
             },
             "leftLakeBasePart4": {
@@ -1232,10 +1063,7 @@
                     }
                 ],
                 "children": {
-                    "leftLakeBasePartUnit":{
-                        "type": "noderef",
-                        "nodeId": "leftLakeBasePartUnit"
-                    }
+                    "nodeList":["leftLakeBasePartUnit"]
                 }
             },
             "leftLakeBasePartUnit": {
@@ -1306,18 +1134,7 @@
                     }
                 ],
                 "children": {
-                    "leftLakeFountain1": {
-                        "type": "noderef",
-                        "nodeId": "leftLakeFountain1"
-                    },
-                    "leftLakeFountain2": {
-                        "type": "noderef",
-                        "nodeId": "leftLakeFountain2"
-                    },
-                    "leftLakeFountain3": {
-                        "type": "noderef",
-                        "nodeId": "leftLakeFountain3"
-                    }
+                    "nodeList":["leftLakeFountain1","leftLakeFountain2","leftLakeFountain3"]
                 }
             },
             "leftLakeFountain1": {
@@ -1333,10 +1150,7 @@
                     }
                 ],
                 "children": {
-                    "barSeven": {
-                        "type": "noderef",
-                        "nodeId": "barSeven"
-                    }
+                    "nodeList":["barSeven"]
                 }
             },
             "leftLakeFountain2": {
@@ -1352,10 +1166,7 @@
                     }
                 ],
                 "children": {
-                    "barSeven": {
-                        "type": "noderef",
-                        "nodeId": "barSeven"
-                    }
+                    "nodeList":["barSeven"]
                 }
             },
             "leftLakeFountain3": {
@@ -1371,10 +1182,7 @@
                     }
                 ],
                 "children": {
-                    "barSeven": {
-                        "type": "noderef",
-                        "nodeId": "barSeven"
-                    }
+                    "nodeList":["barSeven"]
                 }
             },
             "leftLakeFountainWater": {
@@ -1383,14 +1191,7 @@
                     "materialId": "waterFountainApp"
                 },
                 "children": {
-                    "leftLakeFountainWater1": {
-                        "type": "noderef",
-                        "nodeId": "leftLakeFountainWater1"
-                    },
-                    "leftLakeFountainWater2": {
-                        "type": "noderef",
-                        "nodeId": "leftLakeFountainWater2"
-                    }
+                    "nodeList":["leftLakeFountainWater1","leftLakeFountainWater2"]
                 }
             },
             "leftLakeFountainWater1": {
@@ -1409,10 +1210,7 @@
                     }
                 ],
                 "children": {
-                    "brick": {
-                        "type": "noderef",
-                        "nodeId": "barSeven"
-                    }
+                    "nodeList":["barSeven"]
                 }
             },
             "leftLakeFountainWater2": {
@@ -1547,10 +1345,7 @@
                     }
                 ],
                 "children": {
-                    "greenTubeSmallMain": {
-                        "type": "noderef",
-                        "nodeId": "greenTubeSmallMain"
-                    }
+                    "nodeList":["greenTubeSmallMain"]
                 }
             },
             "greenTube2": {
@@ -1566,10 +1361,7 @@
                     }
                 ],
                 "children": {
-                    "greenTubeSmallMain": {
-                        "type": "noderef",
-                        "nodeId": "greenTubeSmallMain"
-                    }
+                    "nodeList":["greenTubeSmallMain"]
                 }
             },
             "greenTube3": {
@@ -1585,43 +1377,13 @@
                     }
                 ],
                 "children": {
-                    "baseBrick3": {
-                        "type": "noderef",
-                        "nodeId": "baseBrick3"
-                    },
-                    "greenTubeLongBase": {
-                        "type": "noderef",
-                        "nodeId":  "greenTubeLongBase"
-                    },
-                    "greenTubeLongTop1": {
-                        "type": "noderef",
-                        "nodeId":  "greenTubeLongTop1"
-                    },
-                    "greenTubeLongTop2": {
-                        "type": "noderef",
-                        "nodeId":  "greenTubeLongTop2"
-                    }
+                    "nodeList":["baseBrick3","greenTubeLongBase","greenTubeLongTop1","greenTubeLongTop2"]
                 }
             },
             "greenTubeSmallMain": {
                 "type": "node",
                 "children": {
-                    "baseBrick3": {
-                        "type": "noderef",
-                        "nodeId": "baseBrick3"
-                    },
-                    "greenTubeSmallBase": {
-                        "type": "noderef",
-                        "nodeId":  "greenTubeSmallBase"
-                    },
-                    "greenTubeSmallTop1": {
-                        "type": "noderef",
-                        "nodeId":  "greenTubeSmallTop1"
-                    },
-                    "greenTubeSmallTop2": {
-                        "type": "noderef",
-                        "nodeId":  "greenTubeSmallTop2"
-                    }
+                    "nodeList":["baseBrick3","greenTubeSmallBase","greenTubeSmallTop1","greenTubeSmallTop2"]
                 }
             },
             "greenTubeSmallBase": {
@@ -1637,10 +1399,7 @@
                     }
                 ],
                 "children": {
-                    "greenTubeBase": {
-                        "type": "noderef",
-                        "nodeId": "greenTubeBase"
-                    }
+                    "nodeList":["greenTubeBase"]
                 }
             },
             "greenTubeLongBase": {
@@ -1664,10 +1423,7 @@
                     }
                 ],
                 "children": {
-                    "cylinder": {
-                        "type": "noderef",
-                        "nodeId": "greenTubeBase"
-                    }
+                    "nodeList":["greenTubeBase"]
                 }
             },
             "greenTubeBase": {
@@ -1699,10 +1455,7 @@
                     }
                 ],
                 "children": {
-                    "cylinder": {
-                        "type": "noderef",
-                        "nodeId": "greenTubeTop1"
-                    }
+                    "nodeList":["greenTubeTop1"]
                 }
             },
             "greenTubeSmallTop2": {
@@ -1717,11 +1470,8 @@
                         }
                     }
                 ],
-                "children": {
-                    "greenTubeTop2": {
-                        "type": "noderef",
-                        "nodeId": "greenTubeTop2"
-                    }
+                "children": {                    
+                    "nodeList":["greenTubeTop2"]
                 }
             },
             "greenTubeLongTop1": {
@@ -1737,10 +1487,7 @@
                     }
                 ],
                 "children": {
-                    "greenTubeTop1": {
-                        "type": "noderef",
-                        "nodeId": "greenTubeTop1"
-                    }
+                    "nodeList":["greenTubeTop1"]
                 }
             },
             "greenTubeLongTop2": {
@@ -1756,10 +1503,7 @@
                     }
                 ],
                 "children": {
-                    "cylinder": {
-                        "type": "noderef",
-                        "nodeId": "greenTubeTop2"
-                    }
+                    "nodeList":["greenTubeTop2"]
                 }
             },
             "greenTubeTop1": {
@@ -1807,34 +1551,7 @@
                     }
                 ],
                 "children": {
-                    "centerBox1": {
-                        "type": "noderef",
-                        "nodeId": "centerBox1"
-                    },
-                    "centerBox2": {
-                        "type": "noderef",
-                        "nodeId": "centerBox2"
-                    },
-                    "centerBox3": {
-                        "type": "noderef",
-                        "nodeId": "centerBox3"
-                    },
-                    "centerBox4": {
-                        "type": "noderef",
-                        "nodeId": "centerBox4"
-                    },
-                    "centerBox5": {
-                        "type": "noderef",
-                        "nodeId": "centerBox5"
-                    },
-                    "centerBox6": {
-                        "type": "noderef",
-                        "nodeId": "centerBox6"
-                    },
-                    "centerBox7": {
-                        "type": "noderef",
-                        "nodeId": "centerBox7"
-                    }
+                    "nodeList":["centerBox1","centerBox2","centerBox3", "centerBox4", "centerBox5", "centerBox6", "centerBox7"]
                 }
             },
             "centerBox1": {
@@ -1853,10 +1570,7 @@
                     "materialId": "brick2App"
                 },
                 "children": {
-                    "brickConstructor2": {
-                        "type": "noderef",
-                        "nodeId": "brickConstructor2"
-                    }
+                    "nodeList":["brickConstructor2"]
                 }
             },
             "centerBox2": {
@@ -1875,10 +1589,7 @@
                     "materialId": "brick2App"
                 },
                 "children": {
-                    "brickConstructor2": {
-                        "type": "noderef",
-                        "nodeId": "brickConstructor2"
-                    }
+                    "nodeList":["brickConstructor2"]
                 }
             },
             "centerBox3": {
@@ -1894,10 +1605,7 @@
                     }
                 ],
                 "children": {
-                    "questionMarkConstructor": {
-                        "type": "noderef",
-                        "nodeId": "questionMarkConstructor"
-                    }
+                    "nodeList":["questionMarkConstructor"]
                 }
             },
             "centerBox4": {
@@ -1916,10 +1624,7 @@
                     "materialId": "brick2App"
                 },
                 "children": {
-                    "brickConstructor2": {
-                        "type": "noderef",
-                        "nodeId": "brickConstructor2"
-                    }
+                    "nodeList":["brickConstructor2"]
                 }
             },
             "centerBox5": {
@@ -1935,10 +1640,7 @@
                     }
                 ],
                 "children": {
-                    "questionMarkConstructor": {
-                        "type": "noderef",
-                        "nodeId": "questionMarkConstructor"
-                    }
+                    "nodeList":["questionMarkConstructor"]
                 }
             },
             "centerBox6": {
@@ -1957,10 +1659,7 @@
                     "materialId": "brick2App"
                 },
                 "children": {
-                    "brickConstructor2": {
-                        "type": "noderef",
-                        "nodeId": "brickConstructor2"
-                    }
+                    "nodeList":["brickConstructor2"]
                 }
             },
             "centerBox7": {
@@ -1976,23 +1675,13 @@
                     }
                 ],
                 "children": {
-                    "questionMarkConstructor": {
-                        "type": "noderef",
-                        "nodeId": "questionMarkConstructor"
-                    }
+                    "nodeList":["questionMarkConstructor"]
                 }
             },
             "barSeven": {
                 "type": "node",
                 "children": {
-                    "brickConstructor": {
-                        "type": "noderef",
-                        "nodeId": "brickConstructor"
-                    },
-                    "brick6": {
-                        "type": "noderef",
-                        "nodeId": "brick6"
-                    }
+                    "nodeList":["brickConstructor","brick6"]
                 }
             },
             "brick6": {
@@ -2008,14 +1697,7 @@
                     }
                 ],
                 "children": {
-                    "brickConstructor": {
-                        "type": "noderef",
-                        "nodeId": "brickConstructor"
-                    },
-                    "brick5": {
-                        "type": "noderef",
-                        "nodeId": "brick5"
-                    }
+                    "nodeList":["brickConstructor","brick5"]
                 }
             },
             "brick5": {
@@ -2031,14 +1713,7 @@
                     }
                 ],
                 "children": {
-                    "brickConstructor": {
-                        "type": "noderef",
-                        "nodeId": "brickConstructor"
-                    },
-                    "brick4": {
-                        "type": "noderef",
-                        "nodeId": "brick4"
-                    }
+                    "nodeList":["brickConstructor","brick4"]
                 }
             },
             "brick4": {
@@ -2054,14 +1729,7 @@
                     }
                 ],
                 "children": {
-                    "brickConstructor": {
-                        "type": "noderef",
-                        "nodeId": "brickConstructor"
-                    },
-                    "brick3": {
-                        "type": "noderef",
-                        "nodeId": "brick3"
-                    }
+                    "nodeList":["brickConstructor","brick3"]
                 }
             },
             "brick3": {
@@ -2077,14 +1745,7 @@
                     }
                 ],
                 "children": {
-                    "brickConstructor": {
-                        "type": "noderef",
-                        "nodeId": "brickConstructor"
-                    },
-                    "brick2": {
-                        "type": "noderef",
-                        "nodeId": "brick2"
-                    }
+                    "nodeList":["brickConstructor","brick2"]
                 }
             },
             "brick2": {
@@ -2100,14 +1761,7 @@
                     }
                 ],
                 "children": {
-                    "brickConstructor": {
-                        "type": "noderef",
-                        "nodeId": "brickConstructor"
-                    },
-                    "brick1": {
-                        "type": "noderef",
-                        "nodeId": "brick1"
-                    }
+                    "nodeList":["brickConstructor","brick1"]
                 }
             },
             "brick1": {
@@ -2123,10 +1777,7 @@
                     }
                 ],
                 "children": {
-                    "brickConstructor": {
-                        "type": "noderef",
-                        "nodeId": "brickConstructor"
-                    }
+                    "nodeList":["brickConstructor"]
                 }
             },
             "baseBrick1": {
@@ -2135,10 +1786,7 @@
                     "materialId": "brick1App"
                 },
                 "children": {
-                    "fourCubesBase": {
-                        "type": "noderef",
-                        "nodeId": "fourCubesBase"
-                    }
+                    "nodeList":["fourCubesBase"]
                 }
             },
             "baseBrick3": {
@@ -2147,10 +1795,7 @@
                     "materialId": "brick3App"
                 },
                 "children": {
-                    "fourCubesBase": {
-                        "type": "noderef",
-                        "nodeId": "fourCubesBase"
-                    }
+                    "nodeList":["fourCubesBase"]
                 }
             },
             "baseWater": {
@@ -2159,40 +1804,19 @@
                     "materialId": "waterApp"
                 },
                 "children": {
-                    "fourCubesBase": {
-                        "type": "noderef",
-                        "nodeId": "fourCubesBase"
-                    }
+                    "nodeList":["fourCubesBase"]
                 }
             },
             "fourCubesBase": {
                 "type": "node",
                 "children": {
-                    "fCB1": {
-                        "type": "noderef",
-                        "nodeId": "fCB1"
-                    },
-                    "fCB2": {
-                        "type": "noderef",
-                        "nodeId": "fCB2"
-                    },
-                    "fCB3": {
-                        "type": "noderef",
-                        "nodeId": "fCB3"
-                    },
-                    "fCB4": {
-                        "type": "noderef",
-                        "nodeId": "fCB4"
-                    }
+                    "nodeList":["fCB1","fCB2","fCB3","fCB4"]
                 }
             },
             "fCB1": {
                 "type": "node",
                 "children": {
-                    "brickConstructor1": {
-                        "type": "noderef",
-                        "nodeId": "brickConstructor"
-                    }
+                    "nodeList":["brickConstructor"]
                 }
             },
             "fCB2": {
@@ -2208,10 +1832,7 @@
                     }
                 ],
                 "children": {
-                    "brickConstructor1": {
-                        "type": "noderef",
-                        "nodeId": "brickConstructor"
-                    }
+                    "nodeList":["brickConstructor"]
                 }
             },
             "fCB3": {
@@ -2227,10 +1848,7 @@
                     }
                 ],
                 "children": {
-                    "brickConstructor1": {
-                        "type": "noderef",
-                        "nodeId": "brickConstructor"
-                    }
+                    "nodeList":["brickConstructor"]
                 }
             },
             "fCB4": {
@@ -2246,10 +1864,7 @@
                     }
                 ],
                 "children": {                    
-                    "brickConstructor1": {
-                        "type": "noderef",
-                        "nodeId": "brickConstructor"
-                    }
+                    "nodeList":["brickConstructor"]
                 }
             },
             "brickConstructor": {
