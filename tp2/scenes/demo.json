@@ -484,6 +484,46 @@
                 "transparent": false,
                 "opacity": 1.0,
                 "textureref": "questionMarkTex"
+            },
+            "outerCoinMaterial": {
+                "color": {
+                    "r": 0.7,
+                    "g": 0.7,
+                    "b": 0
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0
+            },
+            "innerCoinMaterial": {
+                "color": {
+                    "r": 0.8,
+                    "g": 0.8,
+                    "b": 0
+                },
+                "emissive": {
+                    "r": 0.01,
+                    "g": 0.01,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0
             }
         },
         "cameras": {
@@ -598,7 +638,6 @@
                         "flagParent",
                         "centerPath",
                         "greenTube1",
-                        "greenTube2",
                         "greenTube3",
                         "centerBoxes",
                         "BottomCave"
@@ -616,7 +655,7 @@
                         "amount": {
                             "x": 0.0,
                             "y": 0.0,
-                            "z": 0.0
+                            "z": 4.0
                         }
                     }
                 ],
@@ -647,7 +686,7 @@
                         "amount": {
                             "x": 0.0,
                             "y": -8.0,
-                            "z": 0.0
+                            "z": 4.0
                         }
                     }
                 ],
@@ -666,8 +705,152 @@
                         }
                     },
                     "nodeList": [
-                        "BottomLeftCave", "BottomRightCave", "BottomGreenTube"
+                        "BottomLeftCave", "BottomRightCave", "BottomGreenTube", "coinFamily"
                     ]
+                }
+            },
+            "coinFamily": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 3.0,
+                            "z": 5.0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodeList":["BottomCaveCoin1","BottomCaveCoin2","BottomCaveCoin3","BottomCaveCoin4","BottomCaveCoin5","BottomCaveCoin6","BottomCaveCoin7","BottomCaveCoin8"]
+                }
+            },
+            "BottomCaveCoin1": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodeList":["coinConstructor"]
+                }
+            },
+            "BottomCaveCoin2": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 2.0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodeList":["coinConstructor"]
+                }
+            },
+            "BottomCaveCoin3": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 4.0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodeList":["coinConstructor"]
+                }
+            },
+            "BottomCaveCoin4": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 6.0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodeList":["coinConstructor"]
+                }
+            },
+            "BottomCaveCoin5": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 3.0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodeList":["coinConstructor"]
+                }
+            },
+            "BottomCaveCoin6": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 3.0,
+                            "z": 2.0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodeList":["coinConstructor"]
+                }
+            },
+            "BottomCaveCoin7": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 3.0,
+                            "z": 4.0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodeList":["coinConstructor"]
+                }
+            },
+            "BottomCaveCoin8": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 3.0,
+                            "z": 6.0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodeList":["coinConstructor"]
                 }
             },
             "BottomLeftCave": {
@@ -2025,25 +2208,7 @@
                         "amount": {
                             "x": 0.0,
                             "y": 0.0,
-                            "z": 16.0
-                        }
-                    }
-                ],
-                "children": {
-                    "nodeList": [
-                        "greenTubeSmallMain"
-                    ]
-                }
-            },
-            "greenTube2": {
-                "type": "node",
-                "transforms": [
-                    {
-                        "type": "translate",
-                        "amount": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": -10.0
+                            "z": 20.0
                         }
                     }
                 ],
@@ -2061,7 +2226,7 @@
                         "amount": {
                             "x": 0.0,
                             "y": 0.0,
-                            "z": -15.0
+                            "z": -2.0
                         }
                     }
                 ],
@@ -2257,7 +2422,7 @@
                         "amount": {
                             "x": -0.5,
                             "y": 5.0,
-                            "z": 0.0
+                            "z": 5.0
                         }
                     }
                 ],
@@ -2569,6 +2734,98 @@
                             "x": 1,
                             "y": 1,
                             "z": 1
+                        }
+                    }
+                }
+            },
+            "coinConstructor": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "outerCoinMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 90.0,
+                            "y": 0.0,
+                            "z": 90.0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodeList": [
+                        "coinCylinder",
+                        "coinCenter"
+                    ]
+                }
+            },
+            "coinCylinder": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.6,
+                            "y": 1,
+                            "z": 1
+                        }
+                    }
+                ],
+                "children": {
+                    "base": {
+                        "type": "cylinder",
+                        "base": 0.8,
+                        "top": 0.8,
+                        "height": 0.2,
+                        "slices": 20,
+                        "stacks": 20
+                    }
+                }
+            },
+            "coinCenter": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "innerCoinMaterial"
+                },
+                "children": {
+                    "base": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": -0.1,
+                            "y": -0.15,
+                            "z": -0.5
+                        },
+                        "xyz2": {
+                            "x": 0.1,
+                            "y": 0.15,
+                            "z": 0.5
                         }
                     }
                 }
