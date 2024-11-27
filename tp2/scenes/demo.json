@@ -1377,13 +1377,13 @@
                     }
                 ],
                 "children": {
-                    "nodeList":["baseBrick3","greenTubeLongBase","greenTubeLongTop1","greenTubeLongTop2"]
+                    "nodeList":["baseBrick3", "greenTubeLongBase", "greenTubeLongTop1", "greenTubeLongTop2"]
                 }
             },
             "greenTubeSmallMain": {
                 "type": "node",
                 "children": {
-                    "nodeList":["baseBrick3","greenTubeSmallBase","greenTubeSmallTop1","greenTubeSmallTop2"]
+                    "nodeList":["baseBrick3", "greenTubeSmallBase", "greenTubeSmallTop1", "greenTubeSmallTop2"]
                 }
             },
             "greenTubeSmallBase": {
@@ -1681,103 +1681,19 @@
             "barSeven": {
                 "type": "node",
                 "children": {
-                    "nodeList":["brickConstructor","brick6"]
-                }
-            },
-            "brick6": {
-                "type": "node",
-                "transforms": [
-                    {
-                        "type": "translate",
-                        "amount": {
-                            "x": 1.0,
-                            "y": 0.0,
-                            "z": 0.0
+                    "base": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 7,
+                            "y": 1,
+                            "z": 1
                         }
                     }
-                ],
-                "children": {
-                    "nodeList":["brickConstructor","brick5"]
-                }
-            },
-            "brick5": {
-                "type": "node",
-                "transforms": [
-                    {
-                        "type": "translate",
-                        "amount": {
-                            "x": 1.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        }
-                    }
-                ],
-                "children": {
-                    "nodeList":["brickConstructor","brick4"]
-                }
-            },
-            "brick4": {
-                "type": "node",
-                "transforms": [
-                    {
-                        "type": "translate",
-                        "amount": {
-                            "x": 1.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        }
-                    }
-                ],
-                "children": {
-                    "nodeList":["brickConstructor","brick3"]
-                }
-            },
-            "brick3": {
-                "type": "node",
-                "transforms": [
-                    {
-                        "type": "translate",
-                        "amount": {
-                            "x": 1.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        }
-                    }
-                ],
-                "children": {
-                    "nodeList":["brickConstructor","brick2"]
-                }
-            },
-            "brick2": {
-                "type": "node",
-                "transforms": [
-                    {
-                        "type": "translate",
-                        "amount": {
-                            "x": 1.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        }
-                    }
-                ],
-                "children": {
-                    "nodeList":["brickConstructor","brick1"]
-                }
-            },
-            "brick1": {
-                "type": "node",
-                "transforms": [
-                    {
-                        "type": "translate",
-                        "amount": {
-                            "x": 1.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        }
-                    }
-                ],
-                "children": {
-                    "nodeList":["brickConstructor"]
                 }
             },
             "baseBrick1": {
@@ -1786,7 +1702,19 @@
                     "materialId": "brick1App"
                 },
                 "children": {
-                    "nodeList":["fourCubesBase"]
+                    "base": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": -1,
+                            "y": 0,
+                            "z": -1
+                        },
+                        "xyz2": {
+                            "x": 1,
+                            "y": 1,
+                            "z": 1
+                        }
+                    }
                 }
             },
             "baseBrick3": {
@@ -1795,76 +1723,19 @@
                     "materialId": "brick3App"
                 },
                 "children": {
-                    "nodeList":["fourCubesBase"]
-                }
-            },
-            "baseWater": {
-                "type": "node",
-                "materialref": {
-                    "materialId": "waterApp"
-                },
-                "children": {
-                    "nodeList":["fourCubesBase"]
-                }
-            },
-            "fourCubesBase": {
-                "type": "node",
-                "children": {
-                    "nodeList":["fCB1","fCB2","fCB3","fCB4"]
-                }
-            },
-            "fCB1": {
-                "type": "node",
-                "children": {
-                    "nodeList":["brickConstructor"]
-                }
-            },
-            "fCB2": {
-                "type": "node",
-                "transforms": [
-                    {
-                        "type": "translate",
-                        "amount": {
-                            "x": -1,
-                            "y": 0,
-                            "z": 0
-                        }
-                    }
-                ],
-                "children": {
-                    "nodeList":["brickConstructor"]
-                }
-            },
-            "fCB3": {
-                "type": "node",
-                "transforms": [
-                    {
-                        "type": "translate",
-                        "amount": {
+                    "base": {
+                        "type": "box",
+                        "xyz1": {
                             "x": -1,
                             "y": 0,
                             "z": -1
+                        },
+                        "xyz2": {
+                            "x": 1,
+                            "y": 1,
+                            "z": 1
                         }
                     }
-                ],
-                "children": {
-                    "nodeList":["brickConstructor"]
-                }
-            },
-            "fCB4": {
-                "type": "node",
-                "transforms": [
-                    {
-                        "type": "translate",
-                        "amount": {
-                            "x": 0,
-                            "y": 0,
-                            "z": -1
-                        }
-                    }
-                ],
-                "children": {                    
-                    "nodeList":["brickConstructor"]
                 }
             },
             "brickConstructor": {
