@@ -47,6 +47,10 @@
                 "filepath": "scenes/textures/elements/brick3.png",
                 "isVideo": false
             },
+            "brickTex4": {
+                "filepath": "scenes/textures/elements/brick4.png",
+                "isVideo": false
+            },
             "grassTex": {
                 "filepath": "scenes/textures/elements/grass.png",
                 "isVideo": false
@@ -92,9 +96,7 @@
                 "shininess": 10,
                 "transparent": true,
                 "opacity": 0.8,
-                "textureref": "waterTex",
-                "texlength_s": 1,
-                "texlength_t": 1
+                "textureref": "waterTex"
             },
             "waterVideoApp": {
                 "color": {
@@ -115,9 +117,7 @@
                 "shininess": 10,
                 "transparent": true,
                 "opacity": 0.8,
-                "textureref": "waterVideoTex",
-                "texlength_s": 1,
-                "texlength_t": 1
+                "textureref": "waterVideoTex"
             },
             "lakeWaterApp": {
                 "color": {
@@ -138,9 +138,7 @@
                 "shininess": 10,
                 "transparent": true,
                 "opacity": 0.8,
-                "textureref": "waterTex",
-                "texlength_s": 4,
-                "texlength_t": 4
+                "textureref": "waterTex"
             },
             "waterFallingApp": {
                 "color": {
@@ -182,9 +180,7 @@
                 "shininess": 10,
                 "transparent": true,
                 "opacity": 0.8,
-                "textureref": "waterTex",
-                "texlength_s": 8,
-                "texlength_t": 1
+                "textureref": "waterTex"
             },
             "sandApp": {
                 "color": {
@@ -205,9 +201,7 @@
                 "shininess": 10,
                 "transparent": false,
                 "opacity": 1.0,
-                "textureref": "sandTexture",
-                "texlength_s": 5,
-                "texlength_t": 5
+                "textureref": "sandTexture"
             },
             "brickWaterApp": {
                 "color": {
@@ -228,9 +222,7 @@
                 "shininess": 10,
                 "transparent": false,
                 "opacity": 1.0,
-                "textureref": "brickTex1",
-                "texlength_s": 7,
-                "texlength_t": 1
+                "textureref": "brickTex1"
             },
             "brick1App": {
                 "color": {
@@ -294,7 +286,27 @@
                 "transparent": false,
                 "opacity": 1.0,
                 "textureref": "brickTex3"
-
+            },
+            "brick4App": {
+                "color": {
+                    "r": 0.8,
+                    "g": 0.8,
+                    "b": 0.8
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "brickTex4"
             },
             "blackTubeMaterial": {
                 "color": {
@@ -417,9 +429,7 @@
                 "shininess": 10,
                 "transparent": false,
                 "opacity": 1.0,
-                "textureref": "questionMarkTex",
-                "texlength_s": 1,
-                "texlength_t": 1 
+                "textureref": "questionMarkTex"
             }
         },
         "cameras": {
@@ -516,7 +526,7 @@
                         }
                     }
                 }
-            },  
+            },
             "pointLight2": {
                 "type": "noderef",
                 "children": {
@@ -542,6 +552,9 @@
             },
             "castleRight" :{
                 "type": "node",
+                "materialref": {
+                    "materialId": "brick3App"
+                },
                 "transforms": [
                     {
                         "type": "translate",
@@ -550,26 +563,15 @@
                             "y": 0.0,
                             "z": -20.0
                         }
-                    },
-                    {
-                        "type": "scale",
-                        "amount": {
-                            "x": 1.2,
-                            "y": 1.2,
-                            "z": 1.2
-                        }
                     }
                 ],
-                "materialref": {
-                    "materialId": "brick3App"
-                },
                 "children": {
                     "base":{
                         "type": "box",
                         "xyz1": {
-                            "x": 0,
+                            "x": 1,
                             "y": 0,
-                            "z": 0
+                            "z": 1
                         },
                         "xyz2": {
                             "x": 8,
@@ -599,63 +601,11 @@
                     }
                 }
             },
-            "castleRightTop":{
+            "castleWall": {
                 "type": "node",
-                "transforms": [
-                    {
-                        "type": "translate",
-                        "amount": {
-                            "x": 1.6,
-                            "y": 4.0,
-                            "z": 1.6
-                        }
-                    },
-                    {
-                        "type": "scale",
-                        "amount": {
-                            "x": 0.6,
-                            "y": 1.1,
-                            "z": 0.6
-                        }
-                    }
-                ],
                 "materialref": {
-                    "materialId": "brick3App"
+                    "materialId": "brick4App"
                 },
-                "children": {
-                    "base":{
-                        "type": "box",
-                        "xyz1": {
-                            "x": 0,
-                            "y": 0,
-                            "z": 0
-                        },
-                        "xyz2": {
-                            "x": 8,
-                            "y": 4,
-                            "z": 8
-                        }
-                    },
-                    "castleWall1": {
-                        "type": "noderef",
-                        "nodeId": "castleWall1"
-                    },
-                    "castleWall2": {
-                        "type": "noderef",
-                        "nodeId": "castleWall2"
-                    },
-                    "castleWall3": {
-                        "type": "noderef",
-                        "nodeId": "castleWall3"
-                    },
-                    "castleWall4": {
-                        "type": "noderef",
-                        "nodeId": "castleWall4"
-                    }
-                }
-            },
-            "castleWallReference1": {
-                "type": "node",
                 "transforms": [
                     {
                         "type": "translate",
@@ -666,9 +616,6 @@
                         }
                     }
                 ],
-                "materialref": {
-                    "materialId": "brick2App"
-                },
                 "children": {
                     "base":{
                         "type": "box",
@@ -680,7 +627,7 @@
                         "xyz2": {
                             "x": 1,
                             "y": 5,
-                            "z": 10
+                            "z": 8
                         }
                     },
                     "castleWallBrick1":{
@@ -701,221 +648,6 @@
                     }
                 }
             },
-            "castleWallReference2": {
-                "type": "node",
-                "transforms": [
-                    {
-                        "type": "translate",
-                        "amount": {
-                            "x": -1.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        }
-                    }
-                ],
-                "materialref": {
-                    "materialId": "brick2App"
-                },
-                "children": {
-                    "base":{
-                        "type": "box",
-                        "xyz1": {
-                            "x": 0,
-                            "y": 0,
-                            "z": 1
-                        },
-                        "xyz2": {
-                            "x": 1,
-                            "y": 5,
-                            "z": 9
-                        }
-                    },
-                    "castleWallBrick5":{
-                        "type": "noderef",
-                        "nodeId": "castleWallBrick5"
-                    },
-                    "castleWallBrick2":{
-                        "type": "noderef",
-                        "nodeId": "castleWallBrick2"
-                    },
-                    "castleWallBrick3":{
-                        "type": "noderef",
-                        "nodeId": "castleWallBrick3"
-                    },
-                    "castleWallBrick66":{
-                        "type": "noderef",
-                        "nodeId": "castleWallBrick6"
-                    }
-                }
-            },
-            "castleWallBrick1": {
-                "type": "node",
-                "transforms": [
-                    {
-                        "type": "translate",
-                        "amount": {
-                            "x": 0,
-                            "y": 5.0,
-                            "z": 0
-                        }
-                    }
-                ],
-                "children": {
-                    "brick":{
-                        "type": "box",
-                        "xyz1": {
-                            "x": 0,
-                            "y": 0,
-                            "z": 0
-                        },
-                        "xyz2": {
-                            "x": 1,
-                            "y": 1,
-                            "z": 1.5
-                        }
-                    }
-                }
-            },
-            "castleWallBrick2": {
-                "type": "node",
-                "transforms": [
-                    {
-                        "type": "translate",
-                        "amount": {
-                            "x": 0,
-                            "y": 5.0,
-                            "z": 2.75
-                        }
-                    }
-                ],
-                "children": {
-                    "brick":{
-                        "type": "box",
-                        "xyz1": {
-                            "x": 0,
-                            "y": 0,
-                            "z": 0
-                        },
-                        "xyz2": {
-                            "x": 1,
-                            "y": 1,
-                            "z": 1.5
-                        }
-                    }
-                }
-            },
-            "castleWallBrick3": {
-                "type": "node",
-                "transforms": [
-                    {
-                        "type": "translate",
-                        "amount": {
-                            "x": 0,
-                            "y": 5.0,
-                            "z": 5.75
-                        }
-                    }
-                ],
-                "children": {
-                    "brick":{
-                        "type": "box",
-                        "xyz1": {
-                            "x": 0,
-                            "y": 0,
-                            "z": 0
-                        },
-                        "xyz2": {
-                            "x": 1,
-                            "y": 1,
-                            "z": 1.5
-                        }
-                    }
-                }
-            },
-            "castleWallBrick4": {
-                "type": "node",
-                "transforms": [
-                    {
-                        "type": "translate",
-                        "amount": {
-                            "x": 0,
-                            "y": 5.0,
-                            "z": 8.5
-                        }
-                    }
-                ],
-                "children": {
-                    "brick":{
-                        "type": "box",
-                        "xyz1": {
-                            "x": 0,
-                            "y": 0,
-                            "z": 0
-                        },
-                        "xyz2": {
-                            "x": 1,
-                            "y": 1,
-                            "z": 1.5
-                        }
-                    }
-                }
-            },
-            "castleWallBrick5": {
-                "type": "node",
-                "transforms": [
-                    {
-                        "type": "translate",
-                        "amount": {
-                            "x": 0,
-                            "y": 5.0,
-                            "z": 8.5
-                        }
-                    }
-                ],
-                "children": {
-                    "brick":{
-                        "type": "box",
-                        "xyz1": {
-                            "x": 0,
-                            "y": 0,
-                            "z": 0
-                        },
-                        "xyz2": {
-                            "x": 1,
-                            "y": 1,
-                            "z": 0.5
-                        }
-                    }
-                }
-            },
-            "castleWallBrick6": {
-                "type": "node",
-                "transforms": [
-                    {
-                        "type": "translate",
-                        "amount": {
-                            "x": 0,
-                            "y": 5.0,
-                            "z": 1.0
-                        }
-                    }
-                ],
-                "children": {
-                    "brick":{
-                        "type": "box",
-                        "xyz1": {
-                            "x": 0,
-                            "y": 0,
-                            "z": 0
-                        },
-                        "xyz2": {
-                            "x": 1,
-                            "y": 1,
-                            "z": 0.5
-                        }
-                    }
-                }
-            },
             "castleWall1": {
                 "type": "node",
                 "transforms": [
@@ -924,14 +656,22 @@
                         "amount": {
                             "x": 0.0,
                             "y": 0.0,
-                            "z": 0.0
+                            "z": 8.0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 180,
+                            "z": 0
                         }
                     }
                 ],
                 "children": {
                     "castleWall": {
                         "type": "noderef",
-                        "nodeId": "castleWallReference1"
+                        "nodeId": "castleWall"
                     }
                 }
             },
@@ -943,14 +683,14 @@
                         "amount": {
                             "x": 9.0,
                             "y": 0.0,
-                            "z": 0.0
+                            "z": 1.0
                         }
                     }
                 ],
                 "children": {
                     "castleWall": {
                         "type": "noderef",
-                        "nodeId": "castleWallReference1"
+                        "nodeId": "castleWall"
                     }
                 }
             },
@@ -960,9 +700,9 @@
                     {
                         "type": "translate",
                         "amount": {
-                            "x": -1.0,
+                            "x": 1.0,
                             "y": 0.0,
-                            "z": -1.0
+                            "z": 0.0
                         }
                     },
                     {
@@ -975,9 +715,9 @@
                     }
                 ],
                 "children": {
-                    "castleWallReference2": {
+                    "castleWall": {
                         "type": "noderef",
-                        "nodeId": "castleWallReference2"
+                        "nodeId": "castleWall"
                     }
                 }
             },
@@ -987,9 +727,267 @@
                     {
                         "type": "translate",
                         "amount": {
+                            "x": 8.0,
+                            "y": 0.0,
+                            "z": 9.0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": -90,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "castleWall": {
+                        "type": "noderef",
+                        "nodeId": "castleWall"
+                    }
+                }
+            },
+            "castleWallBrick1": {
+                "type": "node",
+                "children": {
+                    "brick":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 5,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 1,
+                            "y": 6,
+                            "z": 2
+                        }
+                    }
+                }
+            },
+            "castleWallBrick2": {
+                "type": "node",
+                "children": {
+                    "brick":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 5,
+                            "z": 3
+                        },
+                        "xyz2": {
+                            "x": 1,
+                            "y": 6,
+                            "z": 4
+                        }
+                    }
+                }
+            },
+            "castleWallBrick3": {
+                "type": "node",
+                "children": {
+                    "brick":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 5,
+                            "z": 5
+                        },
+                        "xyz2": {
+                            "x": 1,
+                            "y": 6,
+                            "z": 6
+                        }
+                    }
+                }
+            },
+            "castleWallBrick4": {
+                "type": "node",
+                "children": {
+                    "brick":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 5,
+                            "z": 7
+                        },
+                        "xyz2": {
+                            "x": 1,
+                            "y": 6,
+                            "z": 8
+                        }
+                    }
+                }
+            },
+            "castleRightTop":{
+                "type": "node",
+                "materialref": {
+                    "materialId": "brick3App"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 1,
+                            "y": 4,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "base":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 2,
+                            "y": 0,
+                            "z": 3
+                        },
+                        "xyz2": {
+                            "x": 5,
+                            "y": 7,
+                            "z": 6
+                        }
+                    },
+                    "castleWallSmall1": {
+                        "type": "noderef",
+                        "nodeId": "castleWallSmall1"
+                    },
+                    "castleWallSmall2": {
+                        "type": "noderef",
+                        "nodeId": "castleWallSmall2"
+                    },
+                    "castleWallSmall3": {
+                        "type": "noderef",
+                        "nodeId": "castleWallSmall3"
+                    },
+                    "castleWallSmall4": {
+                        "type": "noderef",
+                        "nodeId": "castleWallSmall4"
+                    }
+                }
+            },
+            "castleWallSmall": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "brick4App"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
                             "x": -1.0,
                             "y": 0.0,
-                            "z": 8.0
+                            "z": -1.0
+                        }
+                    }
+                ],
+                "children": {
+                    "base":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 2
+                        },
+                        "xyz2": {
+                            "x": 1,
+                            "y": 8,
+                            "z": 6
+                        }
+                    },
+                    "castleWallSmallBrick1":{
+                        "type": "noderef",
+                        "nodeId": "castleWallSmallBrick1"
+                    },
+                    "castleWallSmallBrick2":{
+                        "type": "noderef",
+                        "nodeId": "castleWallSmallBrick2"
+                    }
+                }
+            },
+            "castleWallSmall1": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 1.0,
+                            "y": 0.0,
+                            "z": 7.0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 180,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "castleWallSmal": {
+                        "type": "noderef",
+                        "nodeId": "castleWallSmall"
+                    }
+                }
+            },
+            "castleWallSmall2": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 6.0,
+                            "y": 0.0,
+                            "z": 7.0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": -90,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "castleWallSmal": {
+                        "type": "noderef",
+                        "nodeId": "castleWallSmall"
+                    }
+                }
+            },
+            "castleWallSmall3": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 6.0,
+                            "y": 0.0,
+                            "z": 2.0
+                        }
+                    }
+                ],
+                "children": {
+                    "castleWallSmal": {
+                        "type": "noderef",
+                        "nodeId": "castleWallSmall"
+                    }
+                }
+            },
+            "castleWallSmall4": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 1.0,
+                            "y": 0.0,
+                            "z": 2.0
                         }
                     },
                     {
@@ -1002,9 +1000,45 @@
                     }
                 ],
                 "children": {
-                    "castleWallReference2": {
+                    "castleWallSmal": {
                         "type": "noderef",
-                        "nodeId": "castleWallReference2"
+                        "nodeId": "castleWallSmall"
+                    }
+                }
+            },
+            "castleWallSmallBrick1": {
+                "type": "node",
+                "children": {
+                    "brick":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 8,
+                            "z": 5
+                        },
+                        "xyz2": {
+                            "x": 1,
+                            "y": 9,
+                            "z": 6
+                        }
+                    }
+                }
+            },
+            "castleWallSmallBrick2": {
+                "type": "node",
+                "children": {
+                    "brick":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 8,
+                            "z": 3
+                        },
+                        "xyz2": {
+                            "x": 1,
+                            "y": 9,
+                            "z": 4
+                        }
                     }
                 }
             },
