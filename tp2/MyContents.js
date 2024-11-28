@@ -36,7 +36,7 @@ class MyContents {
 
         this.textures = {};
         this.materials = {};
-        // this.cameras = [];
+        this.cameras = [];
 
         // texture loader
         this.loader = new THREE.TextureLoader();
@@ -128,24 +128,26 @@ class MyContents {
         }
     }
 
-    /*
     createCameras() {
+        const aspect = window.innerWidth / window.innerHeight;
+
         this.initialCamera = this.yasf.cameras.initial;
         for (let [name, values] of Object.entries(this.yasf.cameras)) {
             if (name !== "initial") {
                 if (values.type === "perspective") {
-                    this.cameras[name] = new THREE.PerspectiveCamera(20, 20, values.near, values.far);
+                    this.cameras[name] = new THREE.PerspectiveCamera(75, aspect, values.near, values.far);
                     this.cameras[name].position.set(values.location.x, values.location.y, values.location.z);
                     this.cameras[name].lookAt(values.target.x, values.target.y, values.target.z);
                     this.app.cameras[name] = this.cameras[name];
-                } else if (values.type === "orthographic") {
-                
+                } else if (values.type === "orthogonal") {
+                    this.cameras[name] = new THREE.OrthographicCamera(-window.innerWidth / 2, window.innerWidth / 2, window.innerHeight / 2, -window.innerHeight / 2, values.near, values.far);
+                    this.cameras[name].position.set(values.location.x, values.location.y, values.location.z);
+                    this.cameras[name].lookAt(values.target.x, values.target.y, values.target.z);
+                    this.app.cameras[name] = this.cameras[name];
                 }
             }
         }
-        this.app.camera = this.cameras[this.yasf.globals.camera];
     }
-    */
 
     createSkybox() {
         const skyboxGeometry = new THREE.BoxGeometry(this.yasf.globals.skybox.size.x, this.yasf.globals.skybox.size.y, this.yasf.globals.skybox.size.z);
@@ -390,6 +392,10 @@ class MyContents {
         this.createGraph(this.graph.rootNode, this.graphGroup);
 
         this.app.scene.add(this.graphGroup);
+    }
+
+    toggleAxis() {
+        this.axis.visible = !this.axis.visible;
     }
 
     update() {

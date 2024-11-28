@@ -29,6 +29,10 @@ class MyGuiInterface  {
      * Initialize the gui interface
      */
     init() {
+        // Axis folder
+        const axisFolder = this.datgui.addFolder('Axis');
+        axisFolder.add(this.contents, 'axisVisible').onChange((value) => { this.contents.toggleAxis(value); }).name('visible');
+        axisFolder.open();
     }
 }
 
