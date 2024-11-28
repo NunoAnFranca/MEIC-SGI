@@ -237,6 +237,8 @@ class MyContents {
         const rectangleMesh = new THREE.Mesh(rectangle, objectMaterial);
        
         rectangleMesh.position.set(object.xy1.x + width / 2, object.xy1.y + height / 2, object.xy1.z);
+        rectangleMesh.castShadow = object.castShadow;
+        rectangleMesh.receiveShadow = object.receiveShadow;
 
         return rectangleMesh;
     }
@@ -281,7 +283,10 @@ class MyContents {
 
         const box = new THREE.BoxGeometry(Math.abs(width), Math.abs(height), Math.abs(depth), object.parts_x, object.parts_y, object.parts_z);
         const boxMesh = new THREE.Mesh(box, this.materials[object.material]);
+
         boxMesh.position.set(object.xyz1.x + width / 2, object.xyz1.y + height / 2, object.xyz1.z + depth / 2);
+        boxMesh.castShadow = object.castShadow;
+        boxMesh.receiveShadow = object.receiveShadow;
 
         return boxMesh;
     }
@@ -292,6 +297,9 @@ class MyContents {
 
         const cylinder = new THREE.CylinderGeometry(object.top, object.base, object.height, object.slices, object.stacks, object.capsclose, thetaStart, thetaLength);
         const cylinderMesh = new THREE.Mesh(cylinder, this.materials[object.material]);
+
+        cylinderMesh.castShadow = object.castShadow;
+        cylinderMesh.receiveShadow = object.receiveShadow;
 
         return cylinderMesh;
     }
@@ -304,6 +312,9 @@ class MyContents {
 
         const sphere = new THREE.SphereGeometry(object.radius, object.slices, object.stacks, thetaStart, thetaLength, phiStart, phiLength);
         const sphereMesh = new THREE.Mesh(sphere, this.materials[object.material]);
+
+        sphereMesh.castShadow = object.castShadow;
+        sphereMesh.receiveShadow = object.receiveShadow;
 
         return sphereMesh;
     }
@@ -318,6 +329,9 @@ class MyContents {
 
         geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
         const triangleMesh = new THREE.Mesh(geometry, this.materials[object.material]);
+
+        triangleMesh.castShadow = object.castShadow;
+        triangleMesh.receiveShadow = object.receiveShadow;
 
         return triangleMesh;
     }
@@ -351,6 +365,9 @@ class MyContents {
         const controlPoints = this.convertControlPoints(object.controlpoints, object.degree_u, object.degree_v);
         const surfaceData = this.builder.build(controlPoints, object.degree_u, object.degree_v, object.parts_u, object.parts_v, this.materials[object.material]);
         const mesh = new THREE.Mesh(surfaceData, this.materials[object.material]);
+
+        mesh.castShadow = object.castShadow;
+        mesh.receiveShadow = object.receiveShadow;
 
         return mesh;
     }
