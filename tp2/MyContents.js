@@ -26,6 +26,7 @@ class MyContents {
     constructor(app) {
         this.app = app;
         this.axis = null;
+        this.axisVisible = false;
 
         this.reader = new MyFileReader(this.onSceneLoaded.bind(this));
         this.reader.open("scenes/demo.json");
@@ -53,8 +54,9 @@ class MyContents {
         // create once 
         if (this.axis === null) {
             // create and attach the axis to the scene
-            this.axis = new MyAxis(this)
-            this.app.scene.add(this.axis)
+            this.axis = new MyAxis(this);
+            this.app.scene.add(this.axis);
+            this.axis.visible = this.axisVisible;
         }
     }
 
