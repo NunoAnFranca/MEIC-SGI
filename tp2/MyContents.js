@@ -316,7 +316,7 @@ class MyContents {
             boxMesh.position.set(object.xyz1.x + width / 2, object.xyz1.y + height / 2, object.xyz1.z + depth / 2);
         
         }
-        else{
+        else {
             boxMesh = new THREE.Mesh(box, this.materials[object.material]);
         }
 
