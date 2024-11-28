@@ -7,6 +7,7 @@ import { MyNurbsBuilder } from './MyNurbsBuilder.js';
 
 import { MyPointLight } from './objects/MyPointLight.js';
 import { MySpotLight } from './objects/MySpotLight.js';
+import { MyDirectionalLight } from './objects/MyDirectionalLight.js';
 
 import { MyBox } from './objects/primitives/MyBox.js';
 import { MyCylinder } from './objects/primitives/MyCylinder.js';
@@ -218,7 +219,10 @@ class MyContents {
         const pointLightHelper = new THREE.PointLightHelper(pointLight);
         pointLightHelper.name = object.name;
 
-        this.lights.push([pointLight, pointLightHelper]);
+        object.setLight(pointLight);
+        object.setLightHelper(pointLightHelper);
+
+        this.lights.push(object);
 
         this.app.scene.add(pointLight);
         this.app.scene.add(pointLightHelper);
@@ -236,17 +240,49 @@ class MyContents {
             spotLight.shadow.mapSize.width = object.shadowMapSize;
             spotLight.shadow.mapSize.height = object.shadowMapSize;
             spotLight.shadow.camera.far = object.shadowFar;
+            spotLight.shadow.camera.near = 0.5;
         }
 
         const spotLightHelper = new THREE.SpotLightHelper(spotLight);
         spotLightHelper.name = object.name;
 
-        this.lights.push([spotLight, spotLightHelper]);
+        object.setLight(spotLight);
+        object.setLightHelper(spotLightHelper);
+
+        this.lights.push(object);
         
         this.app.scene.add(spotLight);
         this.app.scene.add(spotLightHelper);
     }
 
+    createDirectionalLight(object) {
+        const directionalLight = new THREE.DirectionalLight(object.color, object.intensity);
+        directionalLight.name = object.name;
+        directionalLight.visible = object.enabled;
+        directionalLight.position.set(object.position.x, object.position.y, object.position.z);
+        directionalLight.castShadow = object.castShadow;
+        
+        if (object.castShadow) {    
+            directionalLight.shadow.camera.left = object.shadowLeft;
+            directionalLight.shadow.camera.right = object.shadowRight;
+            directionalLight.shadow.camera.top = object.shadowTop;
+            directionalLight.shadow.camera.bottom = object.shadowBottom;
+            directionalLight.shadow.camera.far = object.shadowFar;
+            directionalLight.shadow.mapSize.width = object.shadowMapSize;
+            directionalLight.shadow.mapSize.height = object.shadowMapSize;
+        }
+
+        const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight);
+        directionalLightHelper.name = object.name;
+
+        object.setLight(directionalLight);
+        object.setLightHelper(directionalLightHelper);
+
+        this.lights.push(object);
+
+        this.app.scene.add(directionalLight);
+        this.app.scene.add(directionalLightHelper);
+    }
     getmaterialLenSLenT(object) {
         for (let [name, values] of Object.entries(this.yasf.materials)) {
             if (object === name) {
@@ -415,6 +451,8 @@ class MyContents {
                 this.createPointLight(object);
             } else if (object instanceof MySpotLight) {
                 this.createSpotLight(object);
+            } else if (object instanceof MyDirectionalLight) {
+                this.createDirectionalLight(object);
             } else if (object instanceof MyBox) {
                 addObject = this.createBox(object);
             } else if (object instanceof MyCylinder) {

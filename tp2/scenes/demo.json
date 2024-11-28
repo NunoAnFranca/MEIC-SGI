@@ -582,20 +582,20 @@
                         "enabled": true,
                         "color": {
                             "r": 1.0,
-                            "g": 0.0,
+                            "g": 1.0,
                             "b": 0.0
                         },
                         "intensity": 500.0,
-                        "distance": 1000,
+                        "distance": 100,
                         "decay": 2.0,
                         "castshadow": false,
                         "position": {
-                            "x": 10,
+                            "x": 20,
                             "y": 10,
-                            "z": 10
+                            "z": 20
                         }
                     },
-                    "spotLight": {
+                    "spotLight1": {
                         "type": "spotlight",
                         "enabled": true,
                         "color": {
@@ -603,10 +603,10 @@
                             "g": 1.0,
                             "b": 1.0
                         },
-                        "intensity": 500.0,
-                        "distance": 1000,
-                        "decay": 2.0,
-                        "castshadow": false,
+                        "intensity": 800.0,
+                        "distance": 50,
+                        "decay": 1.5,
+                        "castshadow": true,
                         "angle": 30,
                         "penumbra": 0.1,
                         "position": {
@@ -618,6 +618,20 @@
                             "x": 17,
                             "y": 5,
                             "z": -10
+                        }
+                    },
+                    "directionalLight1": {
+                        "type": "directionallight",
+                        "color": {
+                            "r": 0.4,
+                            "g": 0.4,
+                            "b": 0.4
+                        },
+                        "intensity": 2.0,
+                        "position": {
+                            "x": 0,
+                            "y": 40,
+                            "z": 0
                         }
                     }
                 }

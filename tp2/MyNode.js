@@ -2,6 +2,7 @@ import * as THREE from 'three';
 
 import { MyPointLight } from './objects/MyPointLight.js';
 import { MySpotLight } from './objects/MySpotLight.js';
+import { MyDirectionalLight } from './objects/MyDirectionalLight.js';
 
 import { MyBox } from './objects/primitives/MyBox.js';
 import { MyCylinder } from './objects/primitives/MyCylinder.js';
@@ -90,6 +91,8 @@ class MyNode {
                         this.children.push(new MyPointLight(name, valueAttr));
                     } else if (valueAttr.type === "spotlight") {
                         this.children.push(new MySpotLight(name, valueAttr));
+                    } else if (valueAttr.type === "directionallight") {
+                        this.children.push(new MyDirectionalLight(name, valueAttr));
                     } else if (PRIMITIVE_CLASSES[valueAttr.type]) {
                         this.children.push(new PRIMITIVE_CLASSES[valueAttr.type](valueAttr, [this.transforms, this.material, this.castshadows, this.receiveshadows]));
                     } else {
