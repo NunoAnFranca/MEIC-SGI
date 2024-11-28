@@ -183,6 +183,8 @@ class MyContents {
         const skybox = new THREE.Mesh(skyboxGeometry, skyBoxMaterials);
         skybox.translateY(this.yasf.globals.skybox.size.y / 2);
         skybox.position.set(this.yasf.globals.skybox.center.x,this.yasf.globals.skybox.center.y,this.yasf.globals.skybox.center.z);
+        skybox.castShadow = true;
+        skybox.receiveShadow = true;
 
         this.app.scene.add(skybox);
     }
@@ -210,6 +212,7 @@ class MyContents {
             pointLight.shadow.mapSize.width = object.shadowMapSize;
             pointLight.shadow.mapSize.height = object.shadowMapSize;
             pointLight.shadow.camera.far = object.shadowFar;
+            pointLight.shadow.camera.near = 0.5;
         }
 
         this.lights.push(pointLight);
@@ -259,6 +262,9 @@ class MyContents {
         const texValues = this.getmaterialLenSLenT(object.material);
         let objectMaterial = this.materials[object.material].clone();
     
+        const box = new THREE.BoxGeometry(Math.abs(width), Math.abs(height), Math.abs(depth), object.parts_x, object.parts_y, object.parts_z);
+        let  boxMesh = null;
+        
         if (objectMaterial && objectMaterial.map) {
             let originalMap = objectMaterial.map.clone();
             originalMap.wrapS = THREE.RepeatWrapping;
@@ -282,20 +288,18 @@ class MyContents {
                 materials.push(tempMaterial);
             });
     
-            const box = new THREE.BoxGeometry(Math.abs(width), Math.abs(height), Math.abs(depth), object.parts_x, object.parts_y, object.parts_z);
-            const boxMesh = new THREE.Mesh(box, materials);
+            boxMesh = new THREE.Mesh(box, materials);
             boxMesh.position.set(object.xyz1.x + width / 2, object.xyz1.y + height / 2, object.xyz1.z + depth / 2);
-    
-            return boxMesh;
+        
         }
-
-        const box = new THREE.BoxGeometry(Math.abs(width), Math.abs(height), Math.abs(depth), object.parts_x, object.parts_y, object.parts_z);
-        const boxMesh = new THREE.Mesh(box, this.materials[object.material]);
+        else{
+            boxMesh = new THREE.Mesh(box, this.materials[object.material]);
+        }
 
         boxMesh.position.set(object.xyz1.x + width / 2, object.xyz1.y + height / 2, object.xyz1.z + depth / 2);
         boxMesh.castShadow = object.castShadow;
         boxMesh.receiveShadow = object.receiveShadow;
-
+        
         return boxMesh;
     }
 
