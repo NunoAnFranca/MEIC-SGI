@@ -34,10 +34,16 @@ class MyGuiInterface  {
 
         // Lights folder
         const lightsFolder = this.datgui.addFolder('Lights');
-        lights.forEach(light => {
+        lights.forEach(object => {
+            console.log(object);
+            const light = object[0];
+            const lightHelper = object[1];
+
+            console.log(light, lightHelper);
             if (light.type === "PointLight") {
                 const lightFolder = lightsFolder.addFolder(light.name);
                 lightFolder.add(light, 'visible').onChange((value) => { light.visible = value; }).name("visible");
+                lightFolder.add(lightHelper, 'visible').onChange((value) => { lightHelper.visible = value; }).name("helper");
                 lightFolder.addColor(light, 'color').onChange((value) => { light.color.set(value); }).name('color');
                 lightFolder.add(light, 'intensity', 0, 1000).onChange((value) => { light.intensity = value; }).name('intensity');
                 lightFolder.add(light, 'distance', 0, 1000).onChange((value) => { light.distance = value; }).name('distance');
@@ -59,6 +65,7 @@ class MyGuiInterface  {
             } else if (light.type === "SpotLight") {
                 const lightFolder = lightsFolder.addFolder(light.name);
                 lightFolder.add(light, 'visible').onChange((value) => { light.visible = value; }).name("visible");
+                lightFolder.add(lightHelper, 'visible').onChange((value) => { lightHelper.visible = value; }).name("helper");
                 lightFolder.addColor(light, 'color').onChange((value) => { light.color.set(value); }).name('color');
                 lightFolder.add(light, 'intensity', 0, 1000).onChange((value) => { light.intensity = value; }).name('intensity');
                 lightFolder.add(light, 'distance', 0, 1000).onChange((value) => { light.distance = value; }).name('distance');

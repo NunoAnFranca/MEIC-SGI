@@ -214,11 +214,12 @@ class MyContents {
             pointLight.shadow.camera.far = object.shadowFar;
         }
 
-        this.lights.push(pointLight);
-        this.app.scene.add(pointLight);
-
-        // helper
         const pointLightHelper = new THREE.PointLightHelper(pointLight);
+        pointLightHelper.name = object.name;
+
+        this.lights.push([pointLight, pointLightHelper]);
+
+        this.app.scene.add(pointLight);
         this.app.scene.add(pointLightHelper);
     }
 
@@ -236,11 +237,12 @@ class MyContents {
             spotLight.shadow.camera.far = object.shadowFar;
         }
 
-        this.lights.push(spotLight);
-        this.app.scene.add(spotLight);
-
-        // helper
         const spotLightHelper = new THREE.SpotLightHelper(spotLight);
+        spotLightHelper.name = object.name;
+
+        this.lights.push([spotLight, spotLightHelper]);
+        
+        this.app.scene.add(spotLight);
         this.app.scene.add(spotLightHelper);
     }
 
