@@ -25,10 +25,8 @@ class MyContents {
     */
     constructor(app) {
         this.app = app;
-        this.gui = null;
         this.axis = null;
         this.axisVisible = false;
-        this.activeCameraName = null;
 
         this.reader = new MyFileReader(this.onSceneLoaded.bind(this));
         this.reader.open("scenes/demo.json");
@@ -60,15 +58,6 @@ class MyContents {
             this.app.scene.add(this.axis);
             this.axis.visible = this.axisVisible;
         }
-    }
-
-    setGui(gui) {
-        this.gui = gui;
-    }
-
-    setActiveCamera(name) {
-        this.activeCameraName = name;
-        this.app.setActiveCamera(name);
     }
 
     /**
@@ -149,17 +138,13 @@ class MyContents {
             if (name !== "initial") {
                 if (values.type === "perspective") {
                     this.cameras[name] = new THREE.PerspectiveCamera(75, aspect, values.near, values.far);
-                    this.cameras[name].position.set(values.location.x, values.location.y, values.location.z);
-                    this.cameras[name].lookAt(values.target.x, values.target.y, values.target.z);
-                    this.app.cameras[name] = this.cameras[name];
                 } else if (values.type === "orthogonal") {
                     this.cameras[name] = new THREE.OrthographicCamera(-window.innerWidth / 2, window.innerWidth / 2, window.innerHeight / 2, -window.innerHeight / 2, values.near, values.far);
-                    this.cameras[name].position.set(values.location.x, values.location.y, values.location.z);
-                    this.cameras[name].lookAt(values.target.x, values.target.y, values.target.z);
-                    this.app.cameras[name] = this.cameras[name];
                 }
+                this.cameras[name].position.set(values.location.x, values.location.y, values.location.z);
+                this.cameras[name].lookAt(values.target.x, values.target.y, values.target.z);
+                this.app.cameras[name] = this.cameras[name];
             } else {
-                this.activeCameraName = values;
                 this.app.setActiveCamera(values);
             }
         }
@@ -408,7 +393,7 @@ class MyContents {
         this.createSkybox();
         this.createGraph(this.graph.rootNode, this.graphGroup);
 
-        this.gui.setCameras(Object.keys(this.cameras));
+        this.app.gui.setCameras(Object.keys(this.cameras));
         this.app.scene.add(this.graphGroup);
     }
 

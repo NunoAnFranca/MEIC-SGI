@@ -31,7 +31,7 @@ class MyGuiInterface  {
 
         // Cameras folder
         const camerasFolder = this.datgui.addFolder('Cameras');
-        camerasFolder.add(this.contents, 'activeCameraName', this.cameras).onChange((value) => { this.contents.setActiveCamera(value); }).name('active');
+        camerasFolder.add(this.app, 'activeCameraName', this.cameras).onChange((value) => { this.app.setActiveCamera(value); }).name('active');
         camerasFolder.open();
     }
 

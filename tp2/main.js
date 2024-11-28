@@ -24,8 +24,9 @@ gui.setContents(contents)
 // interface elements may control contents items
 gui.init();
 
-// set the gui interface object in the contents object
-contents.setGui(gui);
+// set the gui interface object in the application object
+app.setGui(gui);
+
 
 // main animation loop - calls every 50-60 ms.
 app.render()
