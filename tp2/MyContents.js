@@ -25,8 +25,10 @@ class MyContents {
     */
     constructor(app) {
         this.app = app;
+        this.gui = null;
         this.axis = null;
         this.axisVisible = false;
+        this.activeCameraName = null;
 
         this.reader = new MyFileReader(this.onSceneLoaded.bind(this));
         this.reader.open("scenes/demo.json");
@@ -58,6 +60,15 @@ class MyContents {
             this.app.scene.add(this.axis);
             this.axis.visible = this.axisVisible;
         }
+    }
+
+    setGui(gui) {
+        this.gui = gui;
+    }
+
+    setActiveCamera(name) {
+        this.activeCameraName = name;
+        this.app.setActiveCamera(name);
     }
 
     /**
@@ -147,6 +158,9 @@ class MyContents {
                     this.cameras[name].lookAt(values.target.x, values.target.y, values.target.z);
                     this.app.cameras[name] = this.cameras[name];
                 }
+            } else {
+                this.activeCameraName = values;
+                this.app.setActiveCamera(values);
             }
         }
     }
@@ -390,9 +404,11 @@ class MyContents {
         this.createGlobals();
         this.createFog();
         this.createMaterialsAndTexture();
+        this.createCameras();
         this.createSkybox();
         this.createGraph(this.graph.rootNode, this.graphGroup);
 
+        this.gui.setCameras(Object.keys(this.cameras));
         this.app.scene.add(this.graphGroup);
     }
 

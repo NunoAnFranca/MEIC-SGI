@@ -15,6 +15,7 @@ class MyGuiInterface  {
         this.app = app
         this.datgui =  new GUI();
         this.contents = null
+        this.cameras = []
     }
 
     /**
@@ -23,6 +24,15 @@ class MyGuiInterface  {
      */
     setContents(contents) {
         this.contents = contents
+    }
+
+    setCameras(cameras) {
+        this.cameras = cameras;
+
+        // Cameras folder
+        const camerasFolder = this.datgui.addFolder('Cameras');
+        camerasFolder.add(this.contents, 'activeCameraName', this.cameras).onChange((value) => { this.contents.setActiveCamera(value); }).name('active');
+        camerasFolder.open();
     }
 
     /**
