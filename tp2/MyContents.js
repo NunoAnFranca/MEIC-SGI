@@ -201,9 +201,17 @@ class MyContents {
 
     createPointLight(object) {
         const pointLight = new THREE.PointLight(object.color, object.intensity, object.distance, object.decay);
-        pointLight.castShadow = object.castShadow;
-        pointLight.position.set(object.position.x, object.position.y, object.position.z);
         pointLight.name = object.name;
+        pointLight.visible = object.enabled;
+        pointLight.position.set(object.position.x, object.position.y, object.position.z);
+        pointLight.castShadow = object.castShadow;
+
+        if (object.castShadow) {
+            pointLight.shadow.mapSize.width = object.shadowMapSize;
+            pointLight.shadow.mapSize.height = object.shadowMapSize;
+            pointLight.shadow.camera.far = object.shadowFar;
+        }
+
         this.lights.push(pointLight);
         this.app.scene.add(pointLight);
 

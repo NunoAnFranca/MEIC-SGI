@@ -602,16 +602,12 @@
                 "children": {
                     "pointLight2": {
                         "type": "pointlight",
-                        "enabled": true,
                         "color": {
                             "r": 1.0,
                             "g": 0.0,
                             "b": 1.0
                         },
                         "intensity": 500.0,
-                        "distance": 1000,
-                        "decay": 2.0,
-                        "castshadow": false,
                         "position": {
                             "x": -10,
                             "y": 10,
