@@ -35,27 +35,57 @@ class MyGuiInterface  {
         // Lights folder
         const lightsFolder = this.datgui.addFolder('Lights');
         lights.forEach(light => {
-            console.log(light);
-            const lightFolder = lightsFolder.addFolder(light.name);
-            lightFolder.add(light, 'visible').onChange((value) => { light.visible = value; }).name("visible");
-            lightFolder.addColor(light, 'color').onChange((value) => { light.color.set(value); }).name('color');
-            lightFolder.add(light, 'intensity', 0, 1000).onChange((value) => { light.intensity = value; }).name('intensity');
-            lightFolder.add(light, 'distance', 0, 1000).onChange((value) => { light.distance = value; }).name('distance');
-            lightFolder.add(light, 'decay', 0, 5).onChange((value) => { light.decay = value; }).name('decay');
-            // positions
-            const positionFolder = lightFolder.addFolder('position');
-            positionFolder.add(light.position, 'x', -25, 25).onChange((value) => { light.position.x = value; }).name('x');
-            positionFolder.add(light.position, 'y', -25, 25).onChange((value) => { light.position.y = value; }).name('y');
-            positionFolder.add(light.position, 'z', -25, 25).onChange((value) => { light.position.z = value; }).name('z');
-            positionFolder.close();
-            // shadows
-            const shadowsFolder = lightFolder.addFolder('shadows');
-            shadowsFolder.add(light, 'castShadow').onChange((value) => { light.castShadow = value; }).name('castShadow');
-            shadowsFolder.add(light.shadow.mapSize, 'x', 0, 2048).onChange((value) => { light.shadow.mapSize.x = value; }).name('mapSize.x');
-            shadowsFolder.add(light.shadow.mapSize, 'y', 0, 2048).onChange((value) => { light.shadow.mapSize.y = value; }).name('mapSize.y');
-            shadowsFolder.add(light.shadow.camera, 'far', 0, 1000).onChange((value) => { light.shadow.camera.far = value; }).name('camera.far');
-            shadowsFolder.close();
-            lightFolder.close();
+            if (light.type === "PointLight") {
+                const lightFolder = lightsFolder.addFolder(light.name);
+                lightFolder.add(light, 'visible').onChange((value) => { light.visible = value; }).name("visible");
+                lightFolder.addColor(light, 'color').onChange((value) => { light.color.set(value); }).name('color');
+                lightFolder.add(light, 'intensity', 0, 1000).onChange((value) => { light.intensity = value; }).name('intensity');
+                lightFolder.add(light, 'distance', 0, 1000).onChange((value) => { light.distance = value; }).name('distance');
+                lightFolder.add(light, 'decay', 0, 5).onChange((value) => { light.decay = value; }).name('decay');
+                // positions
+                const positionFolder = lightFolder.addFolder('position');
+                positionFolder.add(light.position, 'x', -25, 25).onChange((value) => { light.position.x = value; }).name('x');
+                positionFolder.add(light.position, 'y', -25, 25).onChange((value) => { light.position.y = value; }).name('y');
+                positionFolder.add(light.position, 'z', -25, 25).onChange((value) => { light.position.z = value; }).name('z');
+                positionFolder.close();
+                // shadows
+                const shadowsFolder = lightFolder.addFolder('shadows');
+                shadowsFolder.add(light, 'castShadow').onChange((value) => { light.castShadow = value; }).name('castShadow');
+                shadowsFolder.add(light.shadow.mapSize, 'x', 0, 2048).onChange((value) => { light.shadow.mapSize.x = value; }).name('mapSize.x');
+                shadowsFolder.add(light.shadow.mapSize, 'y', 0, 2048).onChange((value) => { light.shadow.mapSize.y = value; }).name('mapSize.y');
+                shadowsFolder.add(light.shadow.camera, 'far', 0, 1000).onChange((value) => { light.shadow.camera.far = value; }).name('camera.far');
+                shadowsFolder.close();
+                lightFolder.close();
+            } else if (light.type === "SpotLight") {
+                const lightFolder = lightsFolder.addFolder(light.name);
+                lightFolder.add(light, 'visible').onChange((value) => { light.visible = value; }).name("visible");
+                lightFolder.addColor(light, 'color').onChange((value) => { light.color.set(value); }).name('color');
+                lightFolder.add(light, 'intensity', 0, 1000).onChange((value) => { light.intensity = value; }).name('intensity');
+                lightFolder.add(light, 'distance', 0, 1000).onChange((value) => { light.distance = value; }).name('distance');
+                lightFolder.add(light, 'angle', 0, Math.PI).onChange((value) => { light.angle = value; }).name('angle');
+                lightFolder.add(light, 'decay', 0, 5).onChange((value) => { light.decay = value; }).name('decay');
+                lightFolder.add(light, 'penumbra', 0, 1).onChange((value) => { light.penumbra = value; }).name('penumbra');
+                // positions
+                const positionFolder = lightFolder.addFolder('position');
+                positionFolder.add(light.position, 'x', -25, 25).onChange((value) => { light.position.x = value; }).name('x');
+                positionFolder.add(light.position, 'y', -25, 25).onChange((value) => { light.position.y = value; }).name('y');
+                positionFolder.add(light.position, 'z', -25, 25).onChange((value) => { light.position.z = value; }).name('z');
+                positionFolder.close();
+                // targets
+                // const targetFolder = lightFolder.addFolder('target');
+                // targetFolder.add(light.target.position, 'x', -25, 25).onChange((value) => { light.target.position.x = value; }).name('x');
+                // targetFolder.add(light.target.position, 'y', -25, 25).onChange((value) => { light.target.position.y = value; }).name('y');
+                // targetFolder.add(light.target.position, 'z', -25, 25).onChange((value) => { light.target.position.z = value; }).name('z');
+                // targetFolder.close();
+                // shadows
+                const shadowsFolder = lightFolder.addFolder('shadows');
+                shadowsFolder.add(light, 'castShadow').onChange((value) => { light.castShadow = value; }).name('castShadow');
+                shadowsFolder.add(light.shadow.mapSize, 'x', 0, 2048).onChange((value) => { light.shadow.mapSize.x = value; }).name('mapSize.x');
+                shadowsFolder.add(light.shadow.mapSize, 'y', 0, 2048).onChange((value) => { light.shadow.mapSize.y = value; }).name('mapSize.y');
+                shadowsFolder.add(light.shadow.camera, 'far', 0, 1000).onChange((value) => { light.shadow.camera.far = value; }).name('camera.far');
+                shadowsFolder.close();
+                lightFolder.close();
+            }
         });
     }
 

@@ -594,6 +594,31 @@
                             "y": 10,
                             "z": 10
                         }
+                    },
+                    "spotLight": {
+                        "type": "spotlight",
+                        "enabled": true,
+                        "color": {
+                            "r": 1.0,
+                            "g": 1.0,
+                            "b": 1.0
+                        },
+                        "intensity": 500.0,
+                        "distance": 1000,
+                        "decay": 2.0,
+                        "castshadow": false,
+                        "angle": 30,
+                        "penumbra": 0.1,
+                        "position": {
+                            "x": 17,
+                            "y": 2,
+                            "z": 5
+                        },
+                        "target": {
+                            "x": 17,
+                            "y": 5,
+                            "z": -10
+                        }
                     }
                 }
             },

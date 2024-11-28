@@ -6,6 +6,8 @@ import { MyNode } from './MyNode.js';
 import { MyNurbsBuilder } from './MyNurbsBuilder.js';
 
 import { MyPointLight } from './objects/MyPointLight.js';
+import { MySpotLight } from './objects/MySpotLight.js';
+
 import { MyBox } from './objects/primitives/MyBox.js';
 import { MyCylinder } from './objects/primitives/MyCylinder.js';
 import { MyNurbs } from './objects/primitives/MyNurbs.js';
@@ -155,7 +157,7 @@ class MyContents {
         const skyboxGeometry = new THREE.BoxGeometry(this.yasf.globals.skybox.size.x, this.yasf.globals.skybox.size.y, this.yasf.globals.skybox.size.z);
         const emissiveColor = new THREE.Color( this.yasf.globals.skybox.emissive.r, this.yasf.globals.skybox.emissive.g, this.yasf.globals.skybox.emissive.b);
         const intensityLevel = this.yasf.globals.skybox.intensity;
-        
+
         const skyBoxTextures = [
             this.loader.load(this.yasf.globals.skybox.right),
             this.loader.load(this.yasf.globals.skybox.left),
@@ -164,25 +166,25 @@ class MyContents {
             this.loader.load(this.yasf.globals.skybox.back),
             this.loader.load(this.yasf.globals.skybox.front),
         ];
-        skyBoxTextures[0].colorSpace = THREE.SRGBColorSpace;
-        skyBoxTextures[1].colorSpace = THREE.SRGBColorSpace;
-        skyBoxTextures[2].colorSpace = THREE.SRGBColorSpace;
-        skyBoxTextures[3].colorSpace = THREE.SRGBColorSpace;
-        skyBoxTextures[4].colorSpace = THREE.SRGBColorSpace;
-        skyBoxTextures[5].colorSpace = THREE.SRGBColorSpace;
 
-        const skyBoxMaterials = [
-            new THREE.MeshPhongMaterial({emissive: emissiveColor, emissiveIntensity: intensityLevel, map:skyBoxTextures[0], side: THREE.BackSide}),
-            new THREE.MeshPhongMaterial({emissive: emissiveColor, emissiveIntensity: intensityLevel, map:skyBoxTextures[1], side: THREE.BackSide}),
-            new THREE.MeshPhongMaterial({emissive: emissiveColor, emissiveIntensity: intensityLevel, map:skyBoxTextures[2], side: THREE.BackSide}),
-            new THREE.MeshPhongMaterial({emissive: emissiveColor, emissiveIntensity: intensityLevel, map:skyBoxTextures[3], side: THREE.BackSide}),
-            new THREE.MeshPhongMaterial({emissive: emissiveColor, emissiveIntensity: intensityLevel, map:skyBoxTextures[4], side: THREE.BackSide}),
-            new THREE.MeshPhongMaterial({emissive: emissiveColor, emissiveIntensity: intensityLevel, map:skyBoxTextures[5], side: THREE.BackSide})
-        ];
+        skyBoxTextures.forEach(texture => {
+            texture.colorSpace = THREE.SRGBColorSpace;
+        });
+
+        const skyBoxMaterials = skyBoxTextures.map(texture => 
+            new THREE.MeshPhongMaterial({
+                emissive: emissiveColor,
+                emissiveIntensity: intensityLevel,
+                map: texture,
+                side: THREE.BackSide
+            })
+        );
 
         const skybox = new THREE.Mesh(skyboxGeometry, skyBoxMaterials);
         skybox.translateY(this.yasf.globals.skybox.size.y / 2);
         skybox.position.set(this.yasf.globals.skybox.center.x,this.yasf.globals.skybox.center.y,this.yasf.globals.skybox.center.z);
+        skybox.castShadow = true;
+        skybox.receiveShadow = true;
 
         this.app.scene.add(skybox);
     }
@@ -218,6 +220,28 @@ class MyContents {
         // helper
         const pointLightHelper = new THREE.PointLightHelper(pointLight);
         this.app.scene.add(pointLightHelper);
+    }
+
+    createSpotLight(object) {
+        const spotLight = new THREE.SpotLight(object.color, object.intensity, object.distance, object.angle, object.penumbra, object.decay);
+        spotLight.name = object.name;
+        spotLight.visible = object.enabled;
+        spotLight.position.set(object.position.x, object.position.y, object.position.z);
+        spotLight.target.position.set(object.target.x, object.target.y, object.target.z);
+        spotLight.castShadow = object.castShadow;
+
+        if (object.castShadow) {
+            spotLight.shadow.mapSize.width = object.shadowMapSize;
+            spotLight.shadow.mapSize.height = object.shadowMapSize;
+            spotLight.shadow.camera.far = object.shadowFar;
+        }
+
+        this.lights.push(spotLight);
+        this.app.scene.add(spotLight);
+
+        // helper
+        const spotLightHelper = new THREE.SpotLightHelper(spotLight);
+        this.app.scene.add(spotLightHelper);
     }
 
     getmaterialLenSLenT(object) {
@@ -385,6 +409,8 @@ class MyContents {
             let addObject = null;
             if (object instanceof MyPointLight) {
                 this.createPointLight(object);
+            } else if (object instanceof MySpotLight) {
+                this.createSpotLight(object);
             } else if (object instanceof MyBox) {
                 addObject = this.createBox(object);
             } else if (object instanceof MyCylinder) {
