@@ -38,6 +38,7 @@ class MyContents {
         this.textures = {};
         this.materials = {};
         this.cameras = [];
+        this.lights = [];
 
         // texture loader
         this.loader = new THREE.TextureLoader();
@@ -202,6 +203,8 @@ class MyContents {
         const pointLight = new THREE.PointLight(object.color, object.intensity, object.distance, object.decay);
         pointLight.castShadow = object.castShadow;
         pointLight.position.set(object.position.x, object.position.y, object.position.z);
+        pointLight.name = object.name;
+        this.lights.push(pointLight);
         this.app.scene.add(pointLight);
 
         // helper
@@ -393,7 +396,7 @@ class MyContents {
         this.createSkybox();
         this.createGraph(this.graph.rootNode, this.graphGroup);
 
-        this.app.gui.setCameras(Object.keys(this.cameras));
+        this.app.gui.setCamerasAndLightsInterface(Object.keys(this.cameras), this.lights);
         this.app.scene.add(this.graphGroup);
     }
 

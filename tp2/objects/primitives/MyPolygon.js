@@ -1,8 +1,8 @@
 import { MyPrimitive } from './MyPrimitive.js';
 
 class MyPolygon extends MyPrimitive {
-  constructor(node, transforms, material) {
-    super(transforms, material);
+  constructor(node, properties) {
+    super(properties);
     this.radius = node.radius;
     this.slices = node.slices;
     this.stacks = node.stacks;

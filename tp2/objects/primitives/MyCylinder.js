@@ -1,8 +1,8 @@
 import { MyPrimitive } from './MyPrimitive.js';
 
 class MyCylinder extends MyPrimitive {
-  constructor(node, transforms, material) {
-    super(transforms, material);
+  constructor(node, properties) {
+    super(properties);
     this.base = node.base;
     this.top = node.top;
     this.height = node.height;

@@ -568,6 +568,8 @@
             "rootid": "scene",
             "scene": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "children": {
                     "nodeList": [
                         "mainLevel",

@@ -15,7 +15,6 @@ class MyGuiInterface  {
         this.app = app
         this.datgui =  new GUI();
         this.contents = null
-        this.cameras = []
     }
 
     /**
@@ -26,13 +25,24 @@ class MyGuiInterface  {
         this.contents = contents
     }
 
-    setCameras(cameras) {
-        this.cameras = cameras;
+    setCamerasAndLightsInterface(cameras, lights) {
 
         // Cameras folder
         const camerasFolder = this.datgui.addFolder('Cameras');
-        camerasFolder.add(this.app, 'activeCameraName', this.cameras).onChange((value) => { this.app.setActiveCamera(value); }).name('active');
+        camerasFolder.add(this.app, 'activeCameraName', cameras).onChange((value) => { this.app.setActiveCamera(value); }).name('active');
         camerasFolder.open();
+
+        // Lights folder
+        const lightsFolder = this.datgui.addFolder('Lights');
+        lights.forEach(light => {
+            console.log(light);
+            const lightFolder = lightsFolder.addFolder(light.name);
+            lightFolder.add(light, 'visible').onChange((value) => { light.visible = value; }).name("visible");
+            lightFolder.add(light, 'intensity', 0, 1000).onChange((value) => { light.intensity = value; }).name('intensity');
+            lightFolder.addColor(light, 'color').onChange((value) => { light.color.set(value); }).name('color');
+            lightFolder.add(light, 'castShadow').onChange((value) => { light.castShadow = value; }).name('castShadow');
+            lightFolder.close();
+        });
     }
 
     /**

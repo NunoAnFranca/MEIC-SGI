@@ -13,7 +13,7 @@ class MyGraph {
         this.app = app;
         this.node = node;
         this.rootid = node.rootid;
-        this.rootNode = new MyNode(this.rootid, this.node, "");
+        this.rootNode = new MyNode(this.rootid, this.node, "", false, false);
     }
 }
 

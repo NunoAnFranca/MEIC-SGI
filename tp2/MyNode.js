@@ -30,10 +30,12 @@ const PRIMITIVE_CLASSES = {
 };
 
 class MyNode {
-    constructor(name, node, material) {
+    constructor(name, node, material, castshadows, receiveshadows) {
         this.name = name;
         this.node = node;
         this.material = material;
+        this.castshadows = castshadows;
+        this.receiveshadows = receiveshadows;
         this.children = [];
         this.transforms = {};
 
@@ -65,6 +67,10 @@ class MyNode {
                 this.createTransforms(value);
             } else if (name === "materialref") {
                 this.material = value.materialId;
+            } else if (name === "castshadows" && value) {
+                this.castshadows = value;
+            } else if (name === "receiveshadows" && value) {
+                this.receiveshadows = value;
             } else if (name === "children") {
                 for (const [name, valueAttr] of Object.entries(value)) {
                     if (PRIMITIVES.includes(valueAttr.type)) {
@@ -76,12 +82,12 @@ class MyNode {
                     }
                     if (name === "nodeList") {
                         for(let i in valueAttr){
-                            this.children.push(new MyNode(valueAttr[i], this.node, this.material));
+                            this.children.push(new MyNode(valueAttr[i], this.node, this.material, this.castshadows, this.receiveshadows));
                         }
                     } else if (valueAttr.type === "pointlight") {
-                        this.children.push(new MyPointLight(valueAttr));
+                        this.children.push(new MyPointLight(name, valueAttr));
                     } else if (PRIMITIVE_CLASSES[valueAttr.type]) {
-                        this.children.push(new PRIMITIVE_CLASSES[valueAttr.type](valueAttr, this.transforms, this.material));
+                        this.children.push(new PRIMITIVE_CLASSES[valueAttr.type](valueAttr, [this.transforms, this.material, this.castshadows, this.receiveshadows]));
                     } else {
                         console.warn(`Unknown node type: ${valueAttr.type}`);
                     }
