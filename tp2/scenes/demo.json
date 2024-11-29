@@ -524,6 +524,27 @@
                 "shininess": 10,
                 "transparent": false,
                 "opacity": 1.0
+            },
+            "goombaBrown1": {
+                "color": {
+                    "r": 0.5,
+                    "g": 0.2,
+                    "b": 0.2
+                },
+                "emissive": {
+                    "r": 0.01,
+                    "g": 0.01,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "twosided": true
             }
         },
         "cameras": {
@@ -575,7 +596,8 @@
                         "mainLevel",
                         "leftLake",
                         "pointLight2",
-                        "castleRight"
+                        "castleRight",
+                        "goombaConstructor"
                     ],
                     "pointLight1": {
                         "type": "pointlight",
@@ -652,6 +674,213 @@
                             "y": 10,
                             "z": -10
                         }
+                    }
+                }
+            },
+            "goombaConstructor": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "goombaBrown1"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 20.0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodeList":["goombaHead1", "goombaHead2"]
+                }
+            },
+            "goombaHead1": {
+                "type": "node",
+                "children": {
+                    "head":{
+                        "type": "nurbs",
+                        "degree_u": 3,
+                        "degree_v": 3,
+                        "parts_u": 64,
+                        "parts_v": 64,
+                        "controlpoints": [
+                            {
+                                "x": 0.2,
+                                "y": 0,
+                                "z": 0
+                            },
+                            {
+                                "x": 1,
+                                "y": 0.2,
+                                "z": 0
+                            },
+                            {
+                                "x": 0.4,
+                                "y": 0.9,
+                                "z": 0
+                            },
+                            {
+                                "x": 0,
+                                "y": 1,
+                                "z": 0
+                            },
+                            {
+                                "x": 0.2,
+                                "y": 0,
+                                "z": 0.266666
+                            },
+                            {
+                                "x": 1,
+                                "y": 0.2,
+                                "z": 1.333333
+                            },
+                            {
+                                "x": 0.4,
+                                "y": 0.9,
+                                "z": 0.53333
+                            },
+                            {
+                                "x": 0,
+                                "y": 1,
+                                "z": 0
+                            },
+                            {
+                                "x": -0.2,
+                                "y": 0,
+                                "z": 0.266666
+                            },
+                            {
+                                "x": -1,
+                                "y": 0.2,
+                                "z": 1.333333
+                            },
+                            {
+                                "x": -0.4,
+                                "y": 0.9,
+                                "z": 0.53333
+                            },
+                            {
+                                "x": 0,
+                                "y": 1,
+                                "z": 0
+                            },
+                            {
+                                "x": -0.2,
+                                "y": 0,
+                                "z": 0
+                            },
+                            {
+                                "x": -1,
+                                "y": 0.2,
+                                "z": 0
+                            },
+                            {
+                                "x": -0.4,
+                                "y": 0.9,
+                                "z": 0
+                            },
+                            {
+                                "x": 0,
+                                "y": 1,
+                                "z": 0
+                            }
+                        ]
+                    }
+                }
+            },
+            "goombaHead2": {
+                "type": "node",
+                "children": {
+                    "head":{
+                        "type": "nurbs",
+                        "degree_u": 3,
+                        "degree_v": 3,
+                        "parts_u": 64,
+                        "parts_v": 64,
+                        "controlpoints": [
+                            {
+                                "x": 0.2,
+                                "y": 0,
+                                "z": 0
+                            },
+                            {
+                                "x": 1,
+                                "y": 0.2,
+                                "z": 0
+                            },
+                            {
+                                "x": 0.4,
+                                "y": 0.9,
+                                "z": 0
+                            },
+                            {
+                                "x": 0,
+                                "y": 1,
+                                "z": 0
+                            },
+                            {
+                                "x": 0.2,
+                                "y": 0,
+                                "z": -0.266666
+                            },
+                            {
+                                "x": 1,
+                                "y": 0.2,
+                                "z": -1.333333
+                            },
+                            {
+                                "x": 0.4,
+                                "y": 0.9,
+                                "z": -0.53333
+                            },
+                            {
+                                "x": 0,
+                                "y": 1,
+                                "z": 0
+                            },
+                            {
+                                "x": -0.2,
+                                "y": 0,
+                                "z": -0.266666
+                            },
+                            {
+                                "x": -1,
+                                "y": 0.2,
+                                "z": -1.333333
+                            },
+                            {
+                                "x": -0.4,
+                                "y": 0.9,
+                                "z": -0.53333
+                            },
+                            {
+                                "x": 0,
+                                "y": 1,
+                                "z": 0
+                            },
+                            {
+                                "x": -0.2,
+                                "y": 0,
+                                "z": 0
+                            },
+                            {
+                                "x": -1,
+                                "y": 0.2,
+                                "z": 0
+                            },
+                            {
+                                "x": -0.4,
+                                "y": 0.9,
+                                "z": 0
+                            },
+                            {
+                                "x": 0,
+                                "y": 1,
+                                "z": 0
+                            }
+                        ]
                     }
                 }
             },
