@@ -29,7 +29,7 @@
                 },
                 "center": {
                     "x": 0.0,
-                    "y": 25.0,
+                    "y": 0.0,
                     "z": 0.0
                 },
                 "emissive": {
@@ -527,8 +527,8 @@
             }
         },
         "cameras": {
-            "initial": "cam1",
-            "cam1": {
+            "initial": "perspective1",
+            "perspective1": {
                 "type": "perspective",
                 "angle": 60,
                 "near": 0.1,
@@ -544,24 +544,116 @@
                     "z": 0
                 }
             },
-            "cam2": {
+            "perspective2": {
+                "type": "perspective",
+                "angle": 120,
+                "near": 0.1,
+                "far": 1000,
+                "location": {
+                    "x": -10,
+                    "y": 1,
+                    "z": 0
+                },
+                "target": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            },
+            "front": {
                 "type": "orthogonal",
                 "near": 0.1,
                 "far": 1000,
                 "location": {
                     "x": 0,
-                    "y": 15,
-                    "z": 15
+                    "y": 0,
+                    "z": 30
                 },
                 "target": {
                     "x": 0,
-                    "y": 15,
+                    "y": 0,
                     "z": 0
                 },
-                "left": -5,
-                "right": 5,
-                "bottom": -5,
-                "top": 5
+                "left": -50,
+                "right": 50,
+                "bottom": -25,
+                "top": 25
+            },
+            "back": {
+                "type": "orthogonal",
+                "near": 0.1,
+                "far": 1000,
+                "location": {
+                    "x": 0,
+                    "y": 0,
+                    "z": -30
+                },
+                "target": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                },
+                "left": -50,
+                "right": 50,
+                "bottom": -25,
+                "top": 25
+            },
+            "right": {
+                "type": "orthogonal",
+                "near": 0.1,
+                "far": 1000,
+                "location": {
+                    "x": 30,
+                    "y": 0,
+                    "z": 0
+                },
+                "target": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                },
+                "left": -50,
+                "right": 50,
+                "bottom": -25,
+                "top": 25
+            },
+            "left": {
+                "type": "orthogonal",
+                "near": 0.1,
+                "far": 1000,
+                "location": {
+                    "x": -30,
+                    "y": 0,
+                    "z": 0
+                },
+                "target": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                },
+                "left": -50,
+                "right": 50,
+                "bottom": -25,
+                "top": 25
+            },
+            "top": {
+                "type": "orthogonal",
+                "near": 0.1,
+                "far": 1000,
+                "location": {
+                    "x": 0,
+                    "y": 30,
+                    "z": 0
+                },
+                "target": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                },
+                "left": -50,
+                "right": 50,
+                "bottom": -25,
+                "top": 25
             }
         },
         "graph": {
@@ -570,6 +662,16 @@
                 "type": "node",
                 "castshadows": true,
                 "receiveshadows": true,
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": -25,
+                            "z": 0
+                        }
+                    }
+                ],
                 "children": {
                     "nodeList": [
                         "mainLevel",
@@ -2066,7 +2168,7 @@
                         "type": "translate",
                         "amount": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 8.0,
                             "z": -20.0
                         }
                     }

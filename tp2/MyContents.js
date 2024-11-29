@@ -114,8 +114,7 @@ class MyContents {
                     texture.colorSpace = THREE.SRGBColorSpace;
                     texture.minFilter = THREE.LinearFilter;
                     texture.magFilter = THREE.LinearFilter;
-                }
-                else {
+                } else {
                     texture = this.loader.load(textureValues.filepath);
                     texture.colorSpace = THREE.SRGBColorSpace;
                     texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
@@ -141,9 +140,9 @@ class MyContents {
         for (let [name, values] of Object.entries(this.yasf.cameras)) {
             if (name !== "initial") {
                 if (values.type === "perspective") {
-                    this.cameras[name] = new THREE.PerspectiveCamera(75, aspect, values.near, values.far);
+                    this.cameras[name] = new THREE.PerspectiveCamera(values.angle, aspect, values.near, values.far);
                 } else if (values.type === "orthogonal") {
-                    this.cameras[name] = new THREE.OrthographicCamera(-window.innerWidth / 2, window.innerWidth / 2, window.innerHeight / 2, -window.innerHeight / 2, values.near, values.far);
+                    this.cameras[name] = new THREE.OrthographicCamera(values.left, values.right, values.top, values.bottom, values.near, values.far);
                 }
                 this.cameras[name].position.set(values.location.x, values.location.y, values.location.z);
                 this.cameras[name].lookAt(values.target.x, values.target.y, values.target.z);
@@ -476,6 +475,8 @@ class MyContents {
 
             if (addObject) group.add(addObject);
         }
+
+        this.transforms(nodes, group);
     }
 
     onAfterSceneLoadedAndBeforeRender(data) {
