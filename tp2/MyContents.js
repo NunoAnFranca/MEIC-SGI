@@ -116,6 +116,12 @@ class MyContents {
                     texture.magFilter = THREE.LinearFilter;
                 } else {
                     texture = this.loader.load(textureValues.filepath);
+
+                    texture.generateMipmaps = true;
+                    texture.magFilter = THREE.NearestFilter;
+                    texture.minFilter = THREE.LinearMipMapLinearFilter; 
+                    texture.needsUpdate = true;
+
                     texture.colorSpace = THREE.SRGBColorSpace;
                     texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
                     texture.repeat.set(values.texlength_s || 1, values.texlength_t || 1);
