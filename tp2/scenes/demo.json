@@ -524,6 +524,90 @@
                 "shininess": 10,
                 "transparent": false,
                 "opacity": 1.0
+            },
+            "goombaBrown1": {
+                "color": {
+                    "r": 0.6,
+                    "g": 0.1,
+                    "b": 0.1
+                },
+                "emissive": {
+                    "r": 0.01,
+                    "g": 0.01,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "twosided": true
+            },
+            "goombaBrown2": {
+                "color": {
+                    "r": 0.7058823529411765,
+                    "g": 0.6431372549019608,
+                    "b": 0.5607843137254902
+                },
+                "emissive": {
+                    "r": 0.01,
+                    "g": 0.01,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "twosided": true
+            },
+            "goombaEyeInner": {
+                "color": {
+                    "r": 0.05,
+                    "g": 0.05,
+                    "b": 0.05
+                },
+                "emissive": {
+                    "r": 0.01,
+                    "g": 0.01,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "twosided": true
+            },
+            "goombaEyeOuter": {
+                "color": {
+                    "r": 0.9,
+                    "g": 0.9,
+                    "b": 0.9
+                },
+                "emissive": {
+                    "r": 0.01,
+                    "g": 0.01,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "twosided": true
             }
         },
         "cameras": {
@@ -780,7 +864,147 @@
                         "greenTube3",
                         "centerBoxes",
                         "BottomCave",
-                        "stairwayToHeaven"
+                        "stairwayToHeaven",
+                        "goombaLevel1",
+                        "goombaLevel2",
+                        "goombaLevel3",
+                        "goombaLevel4"
+                    ]
+                }
+            },
+            "goombaLevel1":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 1.08,
+                            "z": 4.0
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.8,
+                            "y": 0.8,
+                            "z": 0.8
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 60,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodeList": [
+                        "goombaConstructor"
+                    ]
+                }
+            },
+            "goombaLevel2":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 1.08,
+                            "z": 15.0
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.8,
+                            "y": 0.8,
+                            "z": 0.8
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 60,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodeList": [
+                        "goombaConstructor"
+                    ]
+                }
+            },
+            "goombaLevel3":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 6.58,
+                            "z": 8.0
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.8,
+                            "y": 0.8,
+                            "z": 0.8
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 30,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodeList": [
+                        "goombaConstructor"
+                    ]
+                }
+            },
+            "goombaLevel4":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 9.1,
+                            "z": -15.7
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.8,
+                            "y": 0.8,
+                            "z": 0.8
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 80,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodeList": [
+                        "goombaConstructor"
                     ]
                 }
             },
@@ -1134,7 +1358,10 @@
                         }
                     },
                     "nodeList": [
-                        "BottomLeftCave", "BottomRightCave", "BottomGreenTube", "coinFamily"
+                        "BottomLeftCave",
+                        "BottomRightCave",
+                        "BottomGreenTube",
+                        "coinFamily"
                     ]
                 }
             },
@@ -1151,7 +1378,16 @@
                     }
                 ],
                 "children": {
-                    "nodeList":["BottomCaveCoin1","BottomCaveCoin2","BottomCaveCoin3","BottomCaveCoin4","BottomCaveCoin5","BottomCaveCoin6","BottomCaveCoin7","BottomCaveCoin8"]
+                    "nodeList": [
+                        "BottomCaveCoin1",
+                        "BottomCaveCoin2",
+                        "BottomCaveCoin3",
+                        "BottomCaveCoin4",
+                        "BottomCaveCoin5",
+                        "BottomCaveCoin6",
+                        "BottomCaveCoin7",
+                        "BottomCaveCoin8"
+                    ]
                 }
             },
             "BottomCaveCoin1": {
@@ -1167,7 +1403,9 @@
                     }
                 ],
                 "children": {
-                    "nodeList":["coinConstructor"]
+                    "nodeList": [
+                        "coinConstructor"
+                    ]
                 }
             },
             "BottomCaveCoin2": {
@@ -1183,7 +1421,9 @@
                     }
                 ],
                 "children": {
-                    "nodeList":["coinConstructor"]
+                    "nodeList": [
+                        "coinConstructor"
+                    ]
                 }
             },
             "BottomCaveCoin3": {
@@ -1199,7 +1439,9 @@
                     }
                 ],
                 "children": {
-                    "nodeList":["coinConstructor"]
+                    "nodeList": [
+                        "coinConstructor"
+                    ]
                 }
             },
             "BottomCaveCoin4": {
@@ -1215,7 +1457,9 @@
                     }
                 ],
                 "children": {
-                    "nodeList":["coinConstructor"]
+                    "nodeList": [
+                        "coinConstructor"
+                    ]
                 }
             },
             "BottomCaveCoin5": {
@@ -1231,7 +1475,9 @@
                     }
                 ],
                 "children": {
-                    "nodeList":["coinConstructor"]
+                    "nodeList": [
+                        "coinConstructor"
+                    ]
                 }
             },
             "BottomCaveCoin6": {
@@ -1247,7 +1493,9 @@
                     }
                 ],
                 "children": {
-                    "nodeList":["coinConstructor"]
+                    "nodeList": [
+                        "coinConstructor"
+                    ]
                 }
             },
             "BottomCaveCoin7": {
@@ -1263,7 +1511,9 @@
                     }
                 ],
                 "children": {
-                    "nodeList":["coinConstructor"]
+                    "nodeList": [
+                        "coinConstructor"
+                    ]
                 }
             },
             "BottomCaveCoin8": {
@@ -1279,7 +1529,9 @@
                     }
                 ],
                 "children": {
-                    "nodeList":["coinConstructor"]
+                    "nodeList": [
+                        "coinConstructor"
+                    ]
                 }
             },
             "BottomLeftCave": {
@@ -1338,7 +1590,7 @@
                     }
                 }
             },
-            "BottomGreenTube":{
+            "BottomGreenTube": {
                 "type": "node",
                 "transforms": [
                     {
@@ -1350,8 +1602,8 @@
                         }
                     }
                 ],
-                "materialref":{
-                    "materialId":"greenTubeMaterial"
+                "materialref": {
+                    "materialId": "greenTubeMaterial"
                 },
                 "children": {
                     "base": {
@@ -1366,8 +1618,8 @@
                         "BottomGreenTubePart1"
                     ]
                 }
-            }, 
-            "BottomGreenTubePart1":{
+            },
+            "BottomGreenTubePart1": {
                 "type": "node",
                 "transforms": [
                     {
@@ -1377,7 +1629,6 @@
                             "y": -2,
                             "z": -1.0
                         }
-                        
                     },
                     {
                         "type": "rotate",
@@ -1386,7 +1637,6 @@
                             "y": 0.0,
                             "z": 0.0
                         }
-                        
                     }
                 ],
                 "children": {
@@ -1402,8 +1652,8 @@
                         "BottomGreenTubePart2"
                     ]
                 }
-            },       
-            "BottomGreenTubePart2":{
+            },
+            "BottomGreenTubePart2": {
                 "type": "node",
                 "transforms": [
                     {
@@ -1413,7 +1663,6 @@
                             "y": -0.6,
                             "z": 0
                         }
-                        
                     }
                 ],
                 "children": {
@@ -1429,8 +1678,8 @@
                         "BottomGreenTubePart3"
                     ]
                 }
-            },    
-            "BottomGreenTubePart3":{
+            },
+            "BottomGreenTubePart3": {
                 "type": "node",
                 "transforms": [
                     {
@@ -1440,11 +1689,10 @@
                             "y": -0.002,
                             "z": 0
                         }
-                        
                     }
                 ],
-                "materialref":{
-                    "materialId":"blackTubeMaterial"
+                "materialref": {
+                    "materialId": "blackTubeMaterial"
                 },
                 "children": {
                     "cylinder": {
@@ -1456,7 +1704,7 @@
                         "stacks": 64
                     }
                 }
-            },                  
+            },
             "castleRight": {
                 "type": "node",
                 "materialref": {
@@ -3256,6 +3504,746 @@
                             "y": 0.15,
                             "z": 0.5
                         }
+                    }
+                }
+            },
+            "goombaConstructor": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "goombaBrown1"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodeList": [
+                        "goombaHead1",
+                        "goombaHead2",
+                        "goombaTorso1",
+                        "goombaTorso2",
+                        "goombaEye1",
+                        "goombaEye2",
+                        "goombaFoot1",
+                        "goombaFoot2"
+                    ]
+                }
+            },
+            "goombaHead1": {
+                "type": "node",
+                "children": {
+                    "head": {
+                        "type": "nurbs",
+                        "degree_u": 3,
+                        "degree_v": 3,
+                        "parts_u": 64,
+                        "parts_v": 64,
+                        "controlpoints": [
+                            {
+                                "x": 0.2,
+                                "y": 0.4,
+                                "z": 0
+                            },
+                            {
+                                "x": 1.2,
+                                "y": 0.2,
+                                "z": 0
+                            },
+                            {
+                                "x": 0.4,
+                                "y": 1.3,
+                                "z": 0
+                            },
+                            {
+                                "x": 0,
+                                "y": 1.3,
+                                "z": 0
+                            },
+                            {
+                                "x": 0.2,
+                                "y": 0.4,
+                                "z": 0.266666
+                            },
+                            {
+                                "x": 1.2,
+                                "y": 0.2,
+                                "z": 1.599999
+                            },
+                            {
+                                "x": 0.4,
+                                "y": 1.3,
+                                "z": 0.53333
+                            },
+                            {
+                                "x": 0,
+                                "y": 1.3,
+                                "z": 0
+                            },
+                            {
+                                "x": -0.2,
+                                "y": 0.4,
+                                "z": 0.266666
+                            },
+                            {
+                                "x": -1.2,
+                                "y": 0.2,
+                                "z": 1.599999
+                            },
+                            {
+                                "x": -0.4,
+                                "y": 1.3,
+                                "z": 0.53333
+                            },
+                            {
+                                "x": 0,
+                                "y": 1.3,
+                                "z": 0
+                            },
+                            {
+                                "x": -0.2,
+                                "y": 0.4,
+                                "z": 0
+                            },
+                            {
+                                "x": -1.2,
+                                "y": 0.2,
+                                "z": 0
+                            },
+                            {
+                                "x": -0.4,
+                                "y": 1.3,
+                                "z": 0
+                            },
+                            {
+                                "x": 0,
+                                "y": 1.3,
+                                "z": 0
+                            }
+                        ]
+                    }
+                }
+            },
+            "goombaHead2": {
+                "type": "node",
+                "children": {
+                    "head": {
+                        "type": "nurbs",
+                        "degree_u": 3,
+                        "degree_v": 3,
+                        "parts_u": 64,
+                        "parts_v": 64,
+                        "controlpoints": [
+                            {
+                                "x": 0.2,
+                                "y": 0.4,
+                                "z": 0
+                            },
+                            {
+                                "x": 1.2,
+                                "y": 0.2,
+                                "z": 0
+                            },
+                            {
+                                "x": 0.4,
+                                "y": 1.3,
+                                "z": 0
+                            },
+                            {
+                                "x": 0,
+                                "y": 1.3,
+                                "z": 0
+                            },
+                            {
+                                "x": 0.2,
+                                "y": 0.4,
+                                "z": -0.266666
+                            },
+                            {
+                                "x": 1.2,
+                                "y": 0.2,
+                                "z": -1.599999
+                            },
+                            {
+                                "x": 0.4,
+                                "y": 1.3,
+                                "z": -0.533333
+                            },
+                            {
+                                "x": 0,
+                                "y": 1.3,
+                                "z": 0
+                            },
+                            {
+                                "x": -0.2,
+                                "y": 0.4,
+                                "z": -0.266666
+                            },
+                            {
+                                "x": -1.2,
+                                "y": 0.2,
+                                "z": -1.5999999
+                            },
+                            {
+                                "x": -0.4,
+                                "y": 1.3,
+                                "z": -0.53333
+                            },
+                            {
+                                "x": 0,
+                                "y": 1.3,
+                                "z": 0
+                            },
+                            {
+                                "x": -0.2,
+                                "y": 0.4,
+                                "z": 0
+                            },
+                            {
+                                "x": -1.2,
+                                "y": 0.2,
+                                "z": 0
+                            },
+                            {
+                                "x": -0.4,
+                                "y": 1.3,
+                                "z": 0
+                            },
+                            {
+                                "x": 0,
+                                "y": 1.3,
+                                "z": 0
+                            }
+                        ]
+                    }
+                }
+            },
+            "goombaTorso1": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "goombaBrown2"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": -0.3,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.8,
+                            "y": 0.6,
+                            "z": 0.8
+                        }
+                    }
+                ],
+                "children": {
+                    "head": {
+                        "type": "nurbs",
+                        "degree_u": 3,
+                        "degree_v": 3,
+                        "parts_u": 64,
+                        "parts_v": 64,
+                        "controlpoints": [
+                            {
+                                "x": 0,
+                                "y": 0.4,
+                                "z": 0
+                            },
+                            {
+                                "x": 0.6,
+                                "y": 0.5,
+                                "z": 0
+                            },
+                            {
+                                "x": 0.4,
+                                "y": 1.3,
+                                "z": 0
+                            },
+                            {
+                                "x": 0,
+                                "y": 1.3,
+                                "z": 0
+                            },
+                            {
+                                "x": 0,
+                                "y": 0.4,
+                                "z": 0
+                            },
+                            {
+                                "x": 0.6,
+                                "y": 0.5,
+                                "z": 0.799999
+                            },
+                            {
+                                "x": 0.4,
+                                "y": 1.3,
+                                "z": 0.53333
+                            },
+                            {
+                                "x": 0,
+                                "y": 1.3,
+                                "z": 0
+                            },
+                            {
+                                "x": 0,
+                                "y": 0.4,
+                                "z": 0
+                            },
+                            {
+                                "x": -0.6,
+                                "y": 0.5,
+                                "z": 0.799999
+                            },
+                            {
+                                "x": -0.4,
+                                "y": 1.3,
+                                "z": 0.53333
+                            },
+                            {
+                                "x": 0,
+                                "y": 1.3,
+                                "z": 0
+                            },
+                            {
+                                "x": 0,
+                                "y": 0.4,
+                                "z": 0
+                            },
+                            {
+                                "x": -0.6,
+                                "y": 0.5,
+                                "z": 0
+                            },
+                            {
+                                "x": -0.4,
+                                "y": 1.3,
+                                "z": 0
+                            },
+                            {
+                                "x": 0,
+                                "y": 1.3,
+                                "z": 0
+                            }
+                        ]
+                    }
+                }
+            },
+            "goombaTorso2": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "goombaBrown2"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": -0.3,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.8,
+                            "y": 0.6,
+                            "z": 0.8
+                        }
+                    }
+                ],
+                "children": {
+                    "head": {
+                        "type": "nurbs",
+                        "degree_u": 3,
+                        "degree_v": 3,
+                        "parts_u": 64,
+                        "parts_v": 64,
+                        "controlpoints": [
+                            {
+                                "x": 0,
+                                "y": 0.4,
+                                "z": 0
+                            },
+                            {
+                                "x": 0.6,
+                                "y": 0.5,
+                                "z": 0
+                            },
+                            {
+                                "x": 0.4,
+                                "y": 1.3,
+                                "z": 0
+                            },
+                            {
+                                "x": 0,
+                                "y": 1.3,
+                                "z": 0
+                            },
+                            {
+                                "x": 0,
+                                "y": 0.4,
+                                "z": 0
+                            },
+                            {
+                                "x": 0.6,
+                                "y": 0.5,
+                                "z": -0.799999
+                            },
+                            {
+                                "x": 0.4,
+                                "y": 1.3,
+                                "z": -0.533333
+                            },
+                            {
+                                "x": 0,
+                                "y": 1.3,
+                                "z": 0
+                            },
+                            {
+                                "x": 0,
+                                "y": 0.4,
+                                "z": 0
+                            },
+                            {
+                                "x": -0.6,
+                                "y": 0.5,
+                                "z": -0.799999
+                            },
+                            {
+                                "x": -0.4,
+                                "y": 1.3,
+                                "z": -0.53333
+                            },
+                            {
+                                "x": 0,
+                                "y": 1.3,
+                                "z": 0
+                            },
+                            {
+                                "x": 0,
+                                "y": 0.4,
+                                "z": 0
+                            },
+                            {
+                                "x": -0.6,
+                                "y": 0.5,
+                                "z": 0
+                            },
+                            {
+                                "x": -0.4,
+                                "y": 1.3,
+                                "z": 0
+                            },
+                            {
+                                "x": 0,
+                                "y": 1.3,
+                                "z": 0
+                            }
+                        ]
+                    }
+                }
+            },
+            "goombaEye1": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "goombaEyeOuter"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.30,
+                            "y": 0.85,
+                            "z": 0.45
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.8,
+                            "y": 0.8,
+                            "z": 0.8
+                        }
+                    }
+                ],
+                "children": {
+                    "head": {
+                        "type": "sphere",
+                        "radius": 0.2,
+                        "slices": 64,
+                        "stacks": 64
+                    },
+                    "nodeList": [
+                        "goombaEyeInner1",
+                        "goombaEyeBrown1"
+                    ]
+                }
+            },
+            "goombaEyeInner1": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "goombaEyeInner"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -0.03,
+                            "y": 0.05,
+                            "z": 0.15
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.8,
+                            "y": 0.8,
+                            "z": 0.8
+                        }
+                    }
+                ],
+                "children": {
+                    "head": {
+                        "type": "sphere",
+                        "radius": 0.1,
+                        "slices": 64,
+                        "stacks": 64
+                    }
+                }
+            },
+            "goombaEyeBrown1": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "goombaEyeInner"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -0.1,
+                            "y": 0.17,
+                            "z": -0.15
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 30
+                        }
+                    }
+                ],
+                "children": {
+                    "head": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.25,
+                            "y": 0.05,
+                            "z": 0.1
+                        }
+                    }
+                }
+            },
+            "goombaEye2": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "goombaEyeOuter"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -0.30,
+                            "y": 0.85,
+                            "z": 0.45
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.8,
+                            "y": 0.8,
+                            "z": 0.8
+                        }
+                    }
+                ],
+                "children": {
+                    "head": {
+                        "type": "sphere",
+                        "radius": 0.2,
+                        "slices": 64,
+                        "stacks": 64
+                    },
+                    "nodeList": [
+                        "goombaEyeInner2",
+                        "goombaEyeBrown2"
+                    ]
+                }
+            },
+            "goombaEyeInner2": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "goombaEyeInner"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.03,
+                            "y": 0.05,
+                            "z": 0.15
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.8,
+                            "y": 0.8,
+                            "z": 0.8
+                        }
+                    }
+                ],
+                "children": {
+                    "head": {
+                        "type": "sphere",
+                        "radius": 0.1,
+                        "slices": 64,
+                        "stacks": 64
+                    }
+                }
+            },
+            "goombaEyeBrown2": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "goombaEyeInner"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -0.1,
+                            "y": 0.3,
+                            "z": -0.15
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": -30
+                        }
+                    }
+                ],
+                "children": {
+                    "head": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.25,
+                            "y": 0.05,
+                            "z": 0.1
+                        }
+                    }
+                }
+            },
+            "goombaFoot1": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "goombaEyeInner"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.25,
+                            "y": 0.0,
+                            "z": 0.1
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.15,
+                            "y": 0.09,
+                            "z": 0.3
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 15,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "head": {
+                        "type": "sphere",
+                        "radius": 1  ,
+                        "slices": 64,
+                        "stacks": 64
+                    }
+                }
+            },
+            "goombaFoot2": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "goombaEyeInner"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -0.25,
+                            "y": 0.0,
+                            "z": 0.1
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.15,
+                            "y": 0.09,
+                            "z": 0.3
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": -15,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "head": {
+                        "type": "sphere",
+                        "radius": 1  ,
+                        "slices": 64,
+                        "stacks": 64
                     }
                 }
             }
