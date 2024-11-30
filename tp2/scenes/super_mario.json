@@ -80,7 +80,7 @@
                 "isVideo": false
             },
             "sandTexture": {
-                "filepath": "scenes/textures/elements/sand.jpg",
+                "filepath": "scenes/textures/elements/sand.png",
                 "isVideo": false
             },
             "questionMarkTex": {
@@ -198,7 +198,7 @@
                 "color": {
                     "r": 1,
                     "g": 1,
-                    "b": 0.0
+                    "b": 1
                 },
                 "emissive": {
                     "r": 0.0,
@@ -675,7 +675,7 @@
                 "children": {
                     "nodeList": [
                         "mainLevel",
-                        "leftLake",
+                        "lakes",
                         "pointLight2",
                         "castleRight"
                     ],
@@ -1573,7 +1573,7 @@
                     {
                         "type": "scale",
                         "amount": {
-                            "x": 0.001,
+                            "x": 0.005,
                             "y": 0.75,
                             "z": 1
                         }
@@ -1668,7 +1668,7 @@
                     {
                         "type": "scale",
                         "amount": {
-                            "x": 0.001,
+                            "x": 0.005,
                             "y": 0.25,
                             "z": 0.5
                         }
@@ -1698,7 +1698,7 @@
                     {
                         "type": "scale",
                         "amount": {
-                            "x": 0.001,
+                            "x": 0.005,
                             "y": 0.25,
                             "z": 0.5
                         }
@@ -1728,7 +1728,7 @@
                     {
                         "type": "scale",
                         "amount": {
-                            "x": 0.001,
+                            "x": 0.005,
                             "y": 0.25,
                             "z": 0.5
                         }
@@ -2182,7 +2182,19 @@
                     ]
                 }
             },
-            "leftLake": {
+            "lakes": {
+                "type": "node",
+                "children": {
+                    "nodeList": [
+                        "lake1",
+                        "lake2",
+                        "lake3",
+                        "lake4",
+                        "lake5"
+                    ]
+                }
+            },
+            "lake1": {
                 "type": "node",
                 "materialref": {
                     "materialId": "sandApp"
@@ -2193,10 +2205,95 @@
                         "amount": {
                             "x": -25.0,
                             "y": 0,
-                            "z": -20.0
+                            "z": -21.0
                         }
                     }
                 ],
+                "children": {
+                    "nodeList": ["lakeUnit"]
+                }
+            },
+            "lake2": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "sandApp"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -25.0,
+                            "y": 0,
+                            "z": -11.0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodeList": ["lakeUnit"]
+                }
+            },
+            "lake3": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "sandApp"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -25.0,
+                            "y": 0,
+                            "z": -1
+                        }
+                    }
+                ],
+                "children": {
+                    "nodeList": ["lakeUnit"]
+                }
+            },
+            "lake4": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "sandApp"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -25.0,
+                            "y": 0,
+                            "z": 9.0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodeList": ["lakeUnit"]
+                }
+            },
+            "lake5": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "sandApp"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -25.0,
+                            "y": 0,
+                            "z": 19.0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodeList": ["lakeUnit"]
+                }
+            },
+            "lakeUnit": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "sandApp"
+                },
                 "children": {
                     "nodeList": [
                         "leftLakeBasePart",
@@ -2209,9 +2306,6 @@
             },
             "leftLakeBasePart": {
                 "type": "node",
-                "materialref": {
-                    "materialId": "sandApp"
-                },
                 "transforms": [
                     {
                         "type": "translate",
@@ -2237,9 +2331,9 @@
                     {
                         "type": "translate",
                         "amount": {
-                            "x": 0,
+                            "x": -1,
                             "y": 0,
-                            "z": 5
+                            "z": 7
                         }
                     },
                     {
@@ -2265,7 +2359,7 @@
                         "amount": {
                             "x": 5,
                             "y": 0,
-                            "z": 6
+                            "z": 5
                         }
                     },
                     {
@@ -2289,7 +2383,7 @@
                     {
                         "type": "translate",
                         "amount": {
-                            "x": 0,
+                            "x": 1,
                             "y": 0,
                             "z": 5
                         }
@@ -2307,9 +2401,9 @@
                     {
                         "type": "translate",
                         "amount": {
-                            "x": 1,
+                            "x": -1,
                             "y": 0,
-                            "z": 0
+                            "z": -1
                         }
                     }
                 ],
@@ -2333,9 +2427,9 @@
                             "z": 0
                         },
                         "xyz2": {
-                            "x": 5,
+                            "x": 6,
                             "y": 1,
-                            "z": 1
+                            "z": 2
                         }
                     }
                 }
@@ -2764,7 +2858,7 @@
                         "type": "translate",
                         "amount": {
                             "x": 0,
-                            "y": 3.001,
+                            "y": 3.005,
                             "z": 0
                         }
                     }
@@ -2800,7 +2894,7 @@
                         "type": "translate",
                         "amount": {
                             "x": 0,
-                            "y": 5.001,
+                            "y": 5.005,
                             "z": 0
                         }
                     }

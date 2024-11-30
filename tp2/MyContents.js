@@ -32,7 +32,7 @@ class MyContents {
         this.axisVisible = false;
 
         this.reader = new MyFileReader(this.onSceneLoaded.bind(this));
-        this.reader.open("scenes/demo.json");
+        this.reader.open("scenes/super_mario.json");
 
         this.backgroundColor = null;
         this.ambientColor = null;
@@ -151,7 +151,7 @@ class MyContents {
                     this.cameras[name] = new THREE.OrthographicCamera(values.left, values.right, values.top, values.bottom, values.near, values.far);
                 }
                 this.cameras[name].position.set(values.location.x, values.location.y, values.location.z);
-                this.cameras[name].lookAt(values.target.x, values.target.y, values.target.z);
+                this.cameras[name].lookAt(new THREE.Vector3(values.target.x, values.target.y, values.target.z));
                 this.app.cameras[name] = this.cameras[name];
             } else {
                 this.app.setActiveCamera(values);
