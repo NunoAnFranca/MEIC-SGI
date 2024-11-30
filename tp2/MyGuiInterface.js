@@ -46,7 +46,7 @@ class MyGuiInterface  {
             
             lightFolder.add(light, 'visible').onChange((value) => { light.visible = value; }).name("visible");
             lightFolder.add(lightHelper, 'visible').onChange((value) => { lightHelper.visible = value; }).name("helper");
-            lightFolder.addColor(light, 'color').onChange((value) => { light.color.set(value); }).name('color');
+            lightFolder.addColor(light, 'color').onChange((value) => { light.color.set(value); object.updateLightHelper(); }).name('color');
             lightFolder.add(light, 'intensity', 0, 1000).onChange((value) => { light.intensity = value; }).name('intensity');
 
             if (light.type === "PointLight" || light.type === "SpotLight") {
@@ -64,7 +64,7 @@ class MyGuiInterface  {
             // positions
             const positionFolder = lightFolder.addFolder('position');
             positionFolder.add(light.position, 'x', -30, 30).onChange((value) => { light.position.x = value; }).name('x');
-            positionFolder.add(light.position, 'y', 0, 70).onChange((value) => { light.position.y = value; }).name('y');
+            positionFolder.add(light.position, 'y', -30, 30).onChange((value) => { light.position.y = value; }).name('y');
             positionFolder.add(light.position, 'z', -30, 30).onChange((value) => { light.position.z = value; }).name('z');
             positionFolder.close();
 
@@ -76,7 +76,7 @@ class MyGuiInterface  {
                 // targets
                 const targetFolder = lightFolder.addFolder('target');
                 targetFolder.add(light.target.position, 'x', -30, 30).onChange(() => { object.updateLightHelper(); }).name('x');
-                targetFolder.add(light.target.position, 'y', 0, 70).onChange(() => { object.updateLightHelper(); }).name('y');
+                targetFolder.add(light.target.position, 'y', -30, 30).onChange(() => { object.updateLightHelper(); }).name('y');
                 targetFolder.add(light.target.position, 'z', -30, 30).onChange(() => { object.updateLightHelper(); }).name('z');
                 targetFolder.close();
             } else if (light.type === "DirectionalLight") {

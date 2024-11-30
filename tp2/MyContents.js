@@ -161,7 +161,7 @@ class MyContents {
 
     createSkybox() {
         const skyboxGeometry = new THREE.BoxGeometry(this.yasf.globals.skybox.size.x, this.yasf.globals.skybox.size.y, this.yasf.globals.skybox.size.z);
-        const emissiveColor = new THREE.Color( this.yasf.globals.skybox.emissive.r, this.yasf.globals.skybox.emissive.g, this.yasf.globals.skybox.emissive.b);
+        const emissiveColor = new THREE.Color(this.yasf.globals.skybox.emissive.r, this.yasf.globals.skybox.emissive.g, this.yasf.globals.skybox.emissive.b);
         const intensityLevel = this.yasf.globals.skybox.intensity;
 
         const skyBoxTextures = [
@@ -223,6 +223,7 @@ class MyContents {
 
         const pointLightHelper = new THREE.PointLightHelper(pointLight);
         pointLightHelper.name = object.name;
+        pointLightHelper.visible = false;
 
         object.setLight(pointLight);
         object.setLightHelper(pointLightHelper);
@@ -250,6 +251,7 @@ class MyContents {
 
         const spotLightHelper = new THREE.SpotLightHelper(spotLight);
         spotLightHelper.name = object.name;
+        spotLightHelper.visible = false;
 
         object.setLight(spotLight);
         object.setLightHelper(spotLightHelper);
@@ -279,6 +281,7 @@ class MyContents {
 
         const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight);
         directionalLightHelper.name = object.name;
+        directionalLightHelper.visible = false;
 
         object.setLight(directionalLight);
         object.setLightHelper(directionalLightHelper);
@@ -288,6 +291,7 @@ class MyContents {
         this.app.scene.add(directionalLight);
         this.app.scene.add(directionalLightHelper);
     }
+
     getmaterialLenSLenT(object) {
         for (let [name, values] of Object.entries(this.yasf.materials)) {
             if (object === name) {
@@ -328,7 +332,7 @@ class MyContents {
         let objectMaterial = this.materials[object.material].clone();
     
         const box = new THREE.BoxGeometry(Math.abs(width), Math.abs(height), Math.abs(depth), object.parts_x, object.parts_y, object.parts_z);
-        let  boxMesh = null;
+        let boxMesh = null;
         
         if (objectMaterial && objectMaterial.map) {
             let originalMap = objectMaterial.map.clone();
@@ -364,7 +368,7 @@ class MyContents {
         boxMesh.position.set(object.xyz1.x + width / 2, object.xyz1.y + height / 2, object.xyz1.z + depth / 2);
         boxMesh.castShadow = object.castShadow;
         boxMesh.receiveShadow = object.receiveShadow;
-        
+
         return boxMesh;
     }
 

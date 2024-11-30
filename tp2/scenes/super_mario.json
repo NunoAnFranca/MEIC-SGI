@@ -83,6 +83,10 @@
                 "filepath": "scenes/textures/elements/sand.png",
                 "isVideo": false
             },
+            "soilTexture": {
+                "filepath": "scenes/textures/elements/soil.png",
+                "isVideo": false
+            },
             "questionMarkTex": {
                 "filepath": "scenes/textures/elements/questionMarkBrick.png",
                 "isVideo": false
@@ -341,6 +345,29 @@
                 "opacity": 1.0,
                 "textureref": "brickTex4"
             },
+            "grassApp": {
+                "color": {
+                    "r": 1,
+                    "g": 1,
+                    "b": 1
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "grassTex",
+                "texlength_s": 2.0,
+                "texlength_t": 2.0
+            },
             "blackTubeMaterial": {
                 "color": {
                     "r": 0,
@@ -463,6 +490,27 @@
                 "transparent": false,
                 "opacity": 1.0,
                 "twosided": true
+            },
+            "soilApp": {
+                "color": {
+                    "r": 1,
+                    "g": 1,
+                    "b": 1
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "soilTexture"
             },
             "questionMarkApp": {
                 "color": {
@@ -760,10 +808,10 @@
                     "nodeList": [
                         "mainLevel",
                         "lakes",
-                        "pointLight2",
-                        "castleRight"
+                        "castleRight",
+                        "terrain"
                     ],
-                    "pointLight1": {
+                    "coins": {
                         "type": "pointlight",
                         "enabled": true,
                         "color": {
@@ -771,17 +819,62 @@
                             "g": 1.0,
                             "b": 0.0
                         },
-                        "intensity": 500.0,
+                        "intensity": 60,
                         "distance": 100,
                         "decay": 2.0,
-                        "castshadow": false,
+                        "castshadow": true,
                         "position": {
-                            "x": 20,
-                            "y": -15,
+                            "x": 2,
+                            "y": -20,
+                            "z": 13
+                        }
+                    },
+                    "lake1": {
+                        "type": "pointlight",
+                        "color": {
+                            "r": 1.0,
+                            "g": 1.0,
+                            "b": 0.0
+                        },
+                        "intensity": 40,
+                        "distance": 15,
+                        "position": {
+                            "x": -15,
+                            "y": -20,
+                            "z": -20
+                        }
+                    },
+                    "lake2": {
+                        "type": "pointlight",
+                        "color": {
+                            "r": 1.0,
+                            "g": 1.0,
+                            "b": 0.0
+                        },
+                        "intensity": 400.0,
+                        "distance": 15,
+                        "position": {
+                            "x": -15,
+                            "y": -10,
+                            "z": 0
+                        }
+                    },
+                    "lake3": {
+                        "type": "pointlight",
+                        "color": {
+                            "r": 1.0,
+                            "g": 1.0,
+                            "b": 0.0
+                        },
+                        "intensity": 40,
+                        "distance": 15,
+                        "position": {
+                            "x": -15,
+                            "y": -20,
                             "z": 20
                         }
                     },
-                    "spotLight1": {
+                    "castle": {
                         "type": "spotlight",
                         "enabled": true,
                         "color": {
@@ -806,7 +899,7 @@
                             "z": -10
                         }
                     },
-                    "directionalLight1": {
+                    "ambient": {
                         "type": "directionallight",
                         "color": {
                             "r": 0.4,
@@ -818,25 +911,6 @@
                             "x": 0,
                             "y": 15,
                             "z": 0
-                        }
-                    }
-                }
-            },
-            "pointLight2": {
-                "type": "noderef",
-                "children": {
-                    "pointLight2": {
-                        "type": "pointlight",
-                        "color": {
-                            "r": 1.0,
-                            "g": 0.0,
-                            "b": 1.0
-                        },
-                        "intensity": 500.0,
-                        "position": {
-                            "x": -10,
-                            "y": -15,
-                            "z": -10
                         }
                     }
                 }
@@ -870,6 +944,169 @@
                         "goombaLevel3",
                         "goombaLevel4"
                     ]
+                }
+            },
+            "terrain": {
+                "type": "node",
+                "children": {
+                    "nodeList": [
+                        "level1",
+                        "level2",
+                        "level3"
+                    ]
+                }
+            },
+            "level1": {
+                "type": "node",
+                "children": {
+                    "nodeList": [
+                        "soil1",
+                        "grass1"
+                    ]
+                }
+            },
+            "soil1": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "soilApp"
+                },
+                "children": {
+                    "soil": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 10,
+                            "y": 0,
+                            "z": 10
+                        },
+                        "xyz2": {
+                            "x": 25,
+                            "y": 3,
+                            "z": 25
+                        }
+                    }
+                }
+            },
+            "grass1": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "grassApp"
+                },
+                "children": {
+                    "grass": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 9,
+                            "y": 3,
+                            "z": 9
+                        },
+                        "xyz2": {
+                            "x": 25,
+                            "y": 3.5,
+                            "z": 25
+                        }
+                    }
+                }
+            },
+            "level2": {
+                "type": "node",
+                "children": {
+                    "nodeList": [
+                        "soil2",
+                        "grass2"
+                    ]
+                }
+            },
+            "soil2": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "soilApp"
+                },
+                "children": {
+                    "soil": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 15,
+                            "y": 3.5,
+                            "z": 15
+                        },
+                        "xyz2": {
+                            "x": 25,
+                            "y": 6,
+                            "z": 25
+                        }
+                    }
+                }
+            },
+            "grass2": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "grassApp"
+                },
+                "children": {
+                    "grass": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 14,
+                            "y": 6,
+                            "z": 14
+                        },
+                        "xyz2": {
+                            "x": 25,
+                            "y": 6.5,
+                            "z": 25
+                        }
+                    }
+                }
+            },
+            "level3": {
+                "type": "node",
+                "children": {
+                    "nodeList": [
+                        "soil3",
+                        "grass3"
+                    ]
+                }
+            },
+            "soil3": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "soilApp"
+                },
+                "children": {
+                    "soil": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 20,
+                            "y": 6.5,
+                            "z": 20
+                        },
+                        "xyz2": {
+                            "x": 25,
+                            "y": 8.5,
+                            "z": 25
+                        }
+                    }
+                }
+            },
+            "grass3": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "grassApp"
+                },
+                "children": {
+                    "grass": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 19,
+                            "y": 8.5,
+                            "z": 19
+                        },
+                        "xyz2": {
+                            "x": 25,
+                            "y": 9,
+                            "z": 25
+                        }
+                    }
                 }
             },
             "goombaLevel1":{
@@ -1686,7 +1923,7 @@
                         "type": "translate",
                         "amount": {
                             "x": 0.0,
-                            "y": -0.002,
+                            "y": -0.005,
                             "z": 0
                         }
                     }
@@ -2416,7 +2653,7 @@
                         "type": "translate",
                         "amount": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 8.0,
                             "z": -21.0
                         }
                     }
@@ -2436,9 +2673,7 @@
                     "nodeList": [
                         "lake1",
                         "lake2",
-                        "lake3",
-                        "lake4",
-                        "lake5"
+                        "lake3"
                     ]
                 }
             },
@@ -2472,25 +2707,6 @@
                         "amount": {
                             "x": -25.0,
                             "y": 0,
-                            "z": -11.0
-                        }
-                    }
-                ],
-                "children": {
-                    "nodeList": ["lakeUnit"]
-                }
-            },
-            "lake3": {
-                "type": "node",
-                "materialref": {
-                    "materialId": "sandApp"
-                },
-                "transforms": [
-                    {
-                        "type": "translate",
-                        "amount": {
-                            "x": -25.0,
-                            "y": 0,
                             "z": -1
                         }
                     }
@@ -2499,26 +2715,7 @@
                     "nodeList": ["lakeUnit"]
                 }
             },
-            "lake4": {
-                "type": "node",
-                "materialref": {
-                    "materialId": "sandApp"
-                },
-                "transforms": [
-                    {
-                        "type": "translate",
-                        "amount": {
-                            "x": -25.0,
-                            "y": 0,
-                            "z": 9.0
-                        }
-                    }
-                ],
-                "children": {
-                    "nodeList": ["lakeUnit"]
-                }
-            },
-            "lake5": {
+            "lake3": {
                 "type": "node",
                 "materialref": {
                     "materialId": "sandApp"
@@ -2751,7 +2948,20 @@
                 "children": {
                     "nodeList": [
                         "barSeven"
-                    ]
+                    ],
+                    "anotherBar": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 1
+                        },
+                        "xyz2": {
+                            "x": 7,
+                            "y": 1,
+                            "z": 2
+                        }
+                    }
                 }
             },
             "leftLakeFountain2": {
@@ -2762,7 +2972,7 @@
                         "amount": {
                             "x": 0,
                             "y": 0,
-                            "z": 1
+                            "z": 2
                         }
                     }
                 ],
@@ -2820,7 +3030,20 @@
                 "children": {
                     "nodeList": [
                         "barSeven"
-                    ]
+                    ],
+                    "anotherBar": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 1
+                        },
+                        "xyz2": {
+                            "x": 7,
+                            "y": 1,
+                            "z": 2
+                        }
+                    }
                 }
             },
             "leftLakeFountainWater2": {
@@ -2849,7 +3072,7 @@
                         "xyz2": {
                             "x": 1,
                             "y": 11,
-                            "z": 1
+                            "z": 2
                         }
                     }
                 }
