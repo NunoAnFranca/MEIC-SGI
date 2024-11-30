@@ -3154,7 +3154,7 @@
                         "type": "translate",
                         "amount": {
                             "x": 0,
-                            "y": 6,
+                            "y": 8.1,
                             "z": 0
                         }
                     }
@@ -3167,7 +3167,7 @@
                         "type": "cylinder",
                         "base": 0.2,
                         "top": 0.2,
-                        "height": 12,
+                        "height": 16,
                         "slices": 64,
                         "stacks": 64
                     }
@@ -3180,7 +3180,7 @@
                         "type": "translate",
                         "amount": {
                             "x": 0,
-                            "y": 12,
+                            "y": 16,
                             "z": 0
                         }
                     }
@@ -3204,7 +3204,7 @@
                         "type": "translate",
                         "amount": {
                             "x": 0,
-                            "y": 9.5,
+                            "y": 13.5,
                             "z": 0
                         }
                     }
