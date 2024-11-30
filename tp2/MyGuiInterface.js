@@ -14,7 +14,8 @@ class MyGuiInterface  {
     constructor(app) {
         this.app = app
         this.datgui =  new GUI();
-        this.contents = null
+        this.contents = null;
+        this.wireframes = []; 
     }
 
     /**
@@ -24,6 +25,27 @@ class MyGuiInterface  {
     setContents(contents) {
         this.contents = contents
     }
+
+    setWireframeInterface() {
+        const wireframesFolder = this.datgui.addFolder('Wireframes');
+        const allWireframesFolder = this.datgui.addFolder('All Wireframes');
+
+        this.wireframes = this.app.contents.wireframes;
+
+        this.wireframes.forEach((wireframe, index) => {
+            wireframesFolder.add(wireframe, 'visible').name(`Wireframe ${index + 1}`);
+        });
+
+        let toggleAll = { visible: false }; // Global flag for all wireframes
+        allWireframesFolder.add(toggleAll, 'visible').name('Toggle All').onChange((value) => {
+            this.wireframes.forEach(wireframe => {
+                wireframe.visible = value;
+            });
+        });
+
+
+        wireframesFolder.close();
+    };
 
     setCamerasAndLightsInterface(cameras, lights) {
 

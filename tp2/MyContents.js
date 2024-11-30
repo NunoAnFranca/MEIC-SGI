@@ -42,6 +42,7 @@ class MyContents {
         this.materials = {};
         this.cameras = [];
         this.lights = [];
+        this.wireframes = [];
 
         // texture loader
         this.loader = new THREE.TextureLoader();
@@ -341,6 +342,14 @@ class MyContents {
         }
     }
 
+    getMaterialWireframe(object) {
+        for (let [name, values] of Object.entries(this.yasf.materials)) {
+            if (object === name) {
+                return values.wireframe;
+            }
+        }
+    }
+
     createRectangle(object) {
         const width = object.xy2.x - object.xy1.x;
         const height = object.xy2.y - object.xy1.y;
@@ -362,6 +371,22 @@ class MyContents {
         rectangleMesh.receiveShadow = object.receiveShadow;
 
         return rectangleMesh;
+    }
+
+    createWireframeRectangle(object){
+        const width = object.xy2.x - object.xy1.x;
+        const height = object.xy2.y - object.xy1.y;
+        const rectangle = new THREE.PlaneGeometry(Math.abs(width), Math.abs(height), object.parts_x, object.parts_y);
+
+        const wireframe = new THREE.WireframeGeometry( rectangle );
+        const line = new THREE.LineSegments( wireframe );
+        line.material.depthTest = false; 
+        line.material.opacity = 0.25; 
+        line.material.transparent = true; 
+
+        line.position.set(object.xy1.x + width / 2, object.xy1.y + height / 2, object.xy1.z);
+
+        return line;
     }
 
     createBox(object) {
@@ -432,6 +457,23 @@ class MyContents {
         return boxMesh;
     }
 
+    createWireframeBox(object){
+        const width = object.xyz2.x - object.xyz1.x;
+        const height = object.xyz2.y - object.xyz1.y;
+        const depth = object.xyz2.z - object.xyz1.z;
+
+        const box = new THREE.BoxGeometry(Math.abs(width), Math.abs(height), Math.abs(depth), object.parts_x, object.parts_y, object.parts_z);
+
+        const wireframe = new THREE.WireframeGeometry( box );
+        const line = new THREE.LineSegments( wireframe );
+        line.material.depthTest = false; 
+        line.material.opacity = 0.25; 
+        line.material.transparent = true; 
+        line.position.set(object.xyz1.x + width / 2, object.xyz1.y + height / 2, object.xyz1.z + depth / 2);
+
+        return line;
+    }
+
     createCylinder(object) {
         let thetaStart = (object.thetastart ?? 0) * Math.PI / 180;
         let thetaLength = (object.thetalength ?? 360) * Math.PI / 180;
@@ -443,6 +485,21 @@ class MyContents {
         cylinderMesh.receiveShadow = object.receiveShadow;
 
         return cylinderMesh;
+    }
+
+    createWireframeCylinder(object){
+        let thetaStart = (object.thetastart ?? 0) * Math.PI / 180;
+        let thetaLength = (object.thetalength ?? 360) * Math.PI / 180;
+
+        const cylinder = new THREE.CylinderGeometry(object.top, object.base, object.height, object.slices, object.stacks, object.capsclose, thetaStart, thetaLength);
+
+        const wireframe = new THREE.WireframeGeometry( cylinder );
+        const line = new THREE.LineSegments( wireframe );
+        line.material.depthTest = false; 
+        line.material.opacity = 0.25; 
+        line.material.transparent = true; 
+
+        return line;
     }
 
     createSphere(object) {
@@ -460,6 +517,23 @@ class MyContents {
         return sphereMesh;
     }
 
+    createWireframeSphere(object){
+        let thetaStart = (object.thetastart ?? 0) * Math.PI / 180;
+        let thetaLength = (object.thetalength ?? 360) * Math.PI / 180;
+        let phiStart = (object.phistart ?? 0) * Math.PI / 180;
+        let phiLength = (object.philength ?? 360) * Math.PI / 180;
+
+        const sphere = new THREE.SphereGeometry(object.radius, object.slices, object.stacks, phiStart, phiLength, thetaStart, thetaLength);
+
+        const wireframe = new THREE.WireframeGeometry( sphere );
+        const line = new THREE.LineSegments( wireframe );
+        line.material.depthTest = false; 
+        line.material.opacity = 0.25; 
+        line.material.transparent = true; 
+
+        return line;
+    }
+
     createTriangle(object) {
         const geometry = new THREE.BufferGeometry();
         const vertices = new Float32Array([
@@ -475,6 +549,25 @@ class MyContents {
         triangleMesh.receiveShadow = object.receiveShadow;
 
         return triangleMesh;
+    }
+
+    createWireframeTriangle(object){
+        const geometry = new THREE.BufferGeometry();
+        const vertices = new Float32Array([
+            object.coords.xyz1.x, object.coords.xyz1.y, object.coords.xyz1.z,  // Vertex 1
+            object.coords.xyz2.x, object.coords.xyz2.y, object.coords.xyz2.z,  // Vertex 2
+            object.coords.xyz3.x, object.coords.xyz3.y, object.coords.xyz3.z   // Vertex 3
+        ]);
+
+        geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+
+        const wireframe = new THREE.WireframeGeometry( geometry );
+        const line = new THREE.LineSegments( wireframe );
+        line.material.depthTest = false; 
+        line.material.opacity = 0.25; 
+        line.material.transparent = true; 
+
+        return line;
     }
 
     convertControlPoints(controlPoints, degree_u, degree_v) {
@@ -512,10 +605,25 @@ class MyContents {
 
         return mesh;
     }
+
+    createWireframeNurbs(object){
+        const controlPoints = this.convertControlPoints(object.controlpoints, object.degree_u, object.degree_v);
+        const surfaceData = this.builder.build(controlPoints, object.degree_u, object.degree_v, object.parts_u, object.parts_v, this.materials[object.material]);
+
+        const wireframe = new THREE.WireframeGeometry( surfaceData );
+        const line = new THREE.LineSegments( wireframe );
+        line.material.depthTest = false; 
+        line.material.opacity = 0.25; 
+        line.material.transparent = true; 
+
+        return line;
+    }
+    
     
     createGraph(nodes, group) {
         for (let [_, object] of Object.entries(nodes.children)) {
             let addObject = null;
+            let addWireframe = null;
             if (object instanceof MyPointLight) {
                 this.createPointLight(object);
             } else if (object instanceof MySpotLight) {
@@ -524,18 +632,24 @@ class MyContents {
                 this.createDirectionalLight(object);
             } else if (object instanceof MyBox) {
                 addObject = this.createBox(object);
+                addWireframe = this.createWireframeBox(object);
             } else if (object instanceof MyCylinder) {
                 addObject = this.createCylinder(object);
+                addWireframe = this.createWireframeCylinder(object);
             } else if (object instanceof MyNurbs) {
                 addObject = this.createNurbs(object);
+                addWireframe = this.createWireframeNurbs(object);
             } else if (object instanceof MyPolygon) {
-                addObject = this.createTriangle(object);
+                addObject = this.createTriangle(object); //?????
             } else if (object instanceof MyRectangle) {
                 addObject = this.createRectangle(object);
+                addWireframe = this.createWireframeRectangle(object);
             } else if (object instanceof MySphere) {
                 addObject = this.createSphere(object);
+                addWireframe = this.createWireframeSphere(object);
             } else if (object instanceof MyTriangle) {
                 addObject = this.createTriangle(object);
+                addWireframe = this.createWireframeTriangle(object);
             } else if (object instanceof MyNode) {
                 let temp = new THREE.Group();
                 this.createGraph(object, temp);
@@ -544,9 +658,29 @@ class MyContents {
             }
 
             if (addObject) group.add(addObject);
+            if (addWireframe) {
+                group.add(addWireframe);
+
+                let wireframeVisible = this.getMaterialWireframe(object.material);
+                addWireframe.visible = wireframeVisible;
+
+                this.wireframes.push(addWireframe);
+
+                if (wireframeVisible) {
+                    addWireframe.visible = true;
+                } else {
+                    addWireframe.visible = false;
+                }
+            }
         }
 
         this.transforms(nodes, group);
+    }
+
+    toggleWireframe(index, visible) {
+        if (this.wireframes[index]) {
+            this.wireframes[index].visible = visible;
+        }
     }
 
     onAfterSceneLoadedAndBeforeRender(data) {
@@ -561,6 +695,7 @@ class MyContents {
         this.createGraph(this.graph.rootNode, this.graphGroup);
 
         this.app.gui.setCamerasAndLightsInterface(Object.keys(this.cameras), this.lights);
+        this.app.gui.setWireframeInterface();
         this.app.scene.add(this.graphGroup);
     }
 
