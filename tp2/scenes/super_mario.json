@@ -698,6 +698,27 @@
                 "transparent": false,
                 "opacity": 1.0,
                 "twosided": true
+            },
+            "TubePlantWhite": {
+                "color": {
+                    "r": 0.7058823529411765,
+                    "g": 0.6431372549019608,
+                    "b": 0.5607843137254902
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "twosided": true
             }
         },
         "cameras": {
@@ -2695,7 +2716,7 @@
                         "type": "translate",
                         "amount": {
                             "x": 0.0,
-                            "y": 8.0,
+                            "y": 0.0,
                             "z": -21.0
                         }
                     }
@@ -3294,15 +3315,25 @@
                 "children": {
                     "tube":{
                         "type":"cylinder",
-                        "base": 0.15,
-                        "top": 0.15,
+                        "base": 0.12,
+                        "top": 0.12,
                         "height": 1.5,
                         "slices": 64,
                         "stacks": 64
                     },
                     "nodeList": [
                         "GreenPlantHead1",
-                        "GreenPlantHead2"
+                        "GreenPlantHead2",
+                        "GreenPlantLeaf1",
+                        "GreenPlantLeaf2",
+                        "GreenPlantStain1",
+                        "GreenPlantStain2",
+                        "GreenPlantStain3",
+                        "GreenPlantStain4",
+                        "GreenPlantStain5",
+                        "GreenPlantStain6",
+                        "GreenPlantStain7",
+                        "GreenPlantStain8"
                     ]
                 }
             },
@@ -3367,6 +3398,436 @@
                         "philength":360,
                         "thetastart":156.6,
                         "thetalength":134.28
+                    }
+                }
+            },
+            "GreenPlantLeaf1": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.2,
+                            "z": 0.6
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.25,
+                            "y": 0.25,
+                            "z": 0.25
+                        }
+                    }
+                    ,
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 30
+                        }
+                    }
+                ],
+                "children": {
+                    "leaf":{
+                        "type": "nurbs",
+                        "degree_u": 2,
+                        "degree_v": 3,
+                        "parts_u": 32,
+                        "parts_v": 32,
+                        "controlpoints": [
+                            {"x": -0.5, "y": 0.0, "z": -2.0},
+                            {"x": -1.5, "y": 1.25, "z": -1.0},
+                            {"x": -0.25, "y": 0.0, "z": 2.0},
+                            {"x": 0.0, "y": 0.0, "z": 2.1},
+                            
+                            {"x": 0.0, "y": 0.25, "z": -2.0},
+                            {"x": 0.0, "y": 1.35, "z": -1.0},
+                            {"x": 0.0, "y": 0.0, "z": 2.0},
+                            {"x": 0.0, "y": 0.0, "z": 2.1},
+                            
+                            {"x": 0.5, "y": 0.0, "z": -2.0},
+                            {"x": 1.5, "y": 1.25, "z": -1.0},
+                            {"x": 0.25, "y": 0.0, "z": 2.0},
+                            {"x": 0.0, "y": 0.0, "z": 2.1}
+                        ]
+                    }
+                }
+            },
+            "GreenPlantLeaf2": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.2,
+                            "z": -0.6
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.25,
+                            "y": 0.25,
+                            "z": 0.25
+                        }
+                    }
+                    ,
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 180,
+                            "z": 30
+                        }
+                    }
+                ],
+                "children": {
+                    "leaf":{
+                        "type": "nurbs",
+                        "degree_u": 2,
+                        "degree_v": 3,
+                        "parts_u": 32,
+                        "parts_v": 32,
+                        "controlpoints": [
+                            {"x": -0.5, "y": 0.0, "z": -2.0},
+                            {"x": -1.5, "y": 1.25, "z": -1.0},
+                            {"x": -0.25, "y": 0.0, "z": 2.0},
+                            {"x": 0.0, "y": 0.0, "z": 2.1},
+                            
+                            {"x": 0.0, "y": 0.25, "z": -2.0},
+                            {"x": 0.0, "y": 1.35, "z": -1.0},
+                            {"x": 0.0, "y": 0.0, "z": 2.0},
+                            {"x": 0.0, "y": 0.0, "z": 2.1},
+                            
+                            {"x": 0.5, "y": 0.0, "z": -2.0},
+                            {"x": 1.5, "y": 1.25, "z": -1.0},
+                            {"x": 0.25, "y": 0.0, "z": 2.0},
+                            {"x": 0.0, "y": 0.0, "z": 2.1}
+                        ]
+                    }
+                }
+            },
+            "GreenPlantStain1": {
+                "type": "node",
+                "materialref":{ 
+                    "materialId": "TubePlantWhite"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.7,
+                            "y": 1.3,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": -5
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.1,
+                            "y": 1,
+                            "z": 1.2
+                        }
+                    }
+                ],
+                "children": {
+                    "sphere":{
+                        "type": "sphere",
+                        "slices":64,
+                        "stacks":64,
+                        "radius": 0.1
+                    }
+                }
+            },
+            "GreenPlantStain2": {
+                "type": "node",
+                "materialref":{ 
+                    "materialId": "TubePlantWhite"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 1.45,
+                            "z": 0.68
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": -2,
+                            "y": 0,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.8,
+                            "y": 1.8,
+                            "z": 0.3
+                        }
+                    }
+                ],
+                "children": {
+                    "sphere":{
+                        "type": "sphere",
+                        "slices":64,
+                        "stacks":64,
+                        "radius": 0.1
+                    }
+                }
+            },
+            "GreenPlantStain3": {
+                "type": "node",
+                "materialref":{ 
+                    "materialId": "TubePlantWhite"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -0.7,
+                            "y": 1.3,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 5
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.1,
+                            "y": 1,
+                            "z": 1.2
+                        }
+                    }
+                ],
+                "children": {
+                    "sphere":{
+                        "type": "sphere",
+                        "slices":64,
+                        "stacks":64,
+                        "radius": 0.1
+                    }
+                }
+            },
+            "GreenPlantStain4": {
+                "type": "node",
+                "materialref":{ 
+                    "materialId": "TubePlantWhite"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 1.2,
+                            "z": -0.65
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": -15,
+                            "y": 0,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.8,
+                            "y": 1.8,
+                            "z": 0.3
+                        }
+                    }
+                ],
+                "children": {
+                    "sphere":{
+                        "type": "sphere",
+                        "slices":64,
+                        "stacks":64,
+                        "radius": 0.1
+                    }
+                }
+            },
+            "GreenPlantStain5": {
+                "type": "node",
+                "materialref":{ 
+                    "materialId": "TubePlantWhite"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.46,
+                            "y": 1.2,
+                            "z": 0.46
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 24,
+                            "y": 45,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.8,
+                            "y": 1.8,
+                            "z": 0.3
+                        }
+                    }
+                ],
+                "children": {
+                    "sphere":{
+                        "type": "sphere",
+                        "slices":64,
+                        "stacks":64,
+                        "radius": 0.1
+                    }
+                }
+            },
+            "GreenPlantStain6": {
+                "type": "node",
+                "materialref":{ 
+                    "materialId": "TubePlantWhite"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -0.46,
+                            "y": 1.2,
+                            "z": -0.46
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": -24,
+                            "y": 45,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.8,
+                            "y": 1.8,
+                            "z": 0.3
+                        }
+                    }
+                ],
+                "children": {
+                    "sphere":{
+                        "type": "sphere",
+                        "slices":64,
+                        "stacks":64,
+                        "radius": 0.1
+                    }
+                }
+            },
+            "GreenPlantStain7": {
+                "type": "node",
+                "materialref":{ 
+                    "materialId": "TubePlantWhite"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.4,
+                            "y": 1,
+                            "z": -0.4
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": -45,
+                            "y": -35,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.2,
+                            "y": 1.2,
+                            "z": 0.3
+                        }
+                    }
+                ],
+                "children": {
+                    "sphere":{
+                        "type": "sphere",
+                        "slices":64,
+                        "stacks":64,
+                        "radius": 0.1
+                    }
+                }
+            },
+            "GreenPlantStain8": {
+                "type": "node",
+                "materialref":{ 
+                    "materialId": "TubePlantWhite"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -0.4,
+                            "y": 1,
+                            "z": 0.4
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 45,
+                            "y": -35,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.2,
+                            "y": 1.2,
+                            "z": 0.3
+                        }
+                    }
+                ],
+                "children": {
+                    "sphere":{
+                        "type": "sphere",
+                        "slices":64,
+                        "stacks":64,
+                        "radius": 0.1
                     }
                 }
             },
