@@ -3324,6 +3324,7 @@
                     "nodeList": [
                         "GreenPlantHead1",
                         "GreenPlantHead2",
+                        "GreenPlantHead3",
                         "GreenPlantLeaf1",
                         "GreenPlantLeaf2",
                         "GreenPlantStain1",
@@ -3384,6 +3385,50 @@
                         "amount": {
                             "x": 0.0,
                             "y": 1.4,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 45,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "children": {
+                    "sphere":{
+                        "type": "sphere",
+                        "slices":32,
+                        "stacks":32,
+                        "radius": 0.7,
+                        "phistart":0,
+                        "philength":360,
+                        "thetastart":156.6,
+                        "thetalength":134.28
+                    }
+                }
+            },
+            "GreenPlantHead3": {
+                "type": "node",
+                "materialref":{ 
+                    "materialId": "TubePlantRed"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 1.4,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": -45,
+                            "y": 0.0,
                             "z": 0.0
                         }
                     }
