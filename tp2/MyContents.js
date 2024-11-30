@@ -94,11 +94,40 @@ class MyContents {
     createFog() {
         this.app.scene.fog = new THREE.Fog(new THREE.Color(this.yasf.globals.fog.color.r, this.yasf.globals.fog.color.g, this.yasf.globals.fog.color.b), this.yasf.globals.fog.near, this.yasf.globals.fog.far);
     }
+    
+    getTextureType(object, value){
+        const textureValues = this.yasf.textures[value];
+
+        if (textureValues.isVideo) {
+            const video = document.createElement('video');
+            video.src = textureValues.filepath;
+            video.loop = true;
+            video.muted = true;
+            video.play();
+            
+            object = new THREE.VideoTexture(video);
+            object.colorSpace = THREE.SRGBColorSpace;
+            object.minFilter = THREE.LinearFilter;
+            object.magFilter = THREE.LinearFilter;
+        } else {
+            object = this.loader.load(textureValues.filepath);
+            object.generateMipmaps = false;
+            object.repeat.set(1,1);
+            object.wrapS = object.wrapT = THREE.RepeatWrapping;
+        }
+        return object;
+    }
 
     createMaterialsAndTexture() {
         for (let [name, values] of Object.entries(this.yasf.materials)) {
             let texture = null;
             const textureRef = values.textureref;
+
+            let textureBump = null;
+            const textureBumpRef = values.bumpref;
+
+            let textureSpecular = null;
+            const textureSpecularRef = values.specularref;
 
             if (textureRef && this.yasf.textures[textureRef]) {
                 const textureValues = this.yasf.textures[textureRef];
@@ -128,12 +157,24 @@ class MyContents {
                 }
             }
 
+            if (textureBumpRef && this.yasf.textures[textureBumpRef]) {
+                textureBump =  this.getTextureType(textureBump,textureBumpRef);
+            }
+
+            if (textureSpecularRef && this.yasf.textures[textureSpecularRef]) {
+                textureSpecular =  this.getTextureType(textureSpecular,textureSpecularRef);
+            }
+
             this.materials[name] = new THREE.MeshPhongMaterial({
                 color: new THREE.Color(values.color.r, values.color.g, values.color.b),
                 emissive: new THREE.Color(values.emissive.r, values.emissive.g, values.emissive.b),
                 specular: new THREE.Color(values.specular.r, values.specular.g, values.specular.b),
                 shininess: values.shininess, transparent: values.transparent,
-                opacity: values.opacity, map: texture,
+                opacity: values.opacity, 
+                map: texture,
+                bumpMap: textureBump,
+                bumpScale: values.bumpscale ?? 1.0,
+                specularMap: textureSpecular,
                 side: values.twosided ? THREE.DoubleSide : THREE.FrontSide
             });
         }
@@ -354,6 +395,25 @@ class MyContents {
                 let tempMaterial = objectMaterial.clone();
                 tempMaterial.map = originalMap.clone();
                 tempMaterial.map.repeat.set(u / (texValues.s || 1), v / (texValues.t || 1));
+
+                if(tempMaterial.bumpMap){
+                    let originalBumpMap = objectMaterial.bumpMap.clone();
+                    originalBumpMap.wrapS = THREE.RepeatWrapping;
+                    originalBumpMap.wrapT = THREE.RepeatWrapping;
+
+                    tempMaterial.bumpMap = originalBumpMap.clone();
+                    tempMaterial.bumpMap.repeat.set(u / (texValues.s || 1), v / (texValues.t || 1));
+                }
+                
+                if(tempMaterial.specularMap){
+                    let originalspecularMap = objectMaterial.specularMap.clone();
+                    originalspecularMap.wrapS = THREE.RepeatWrapping;
+                    originalspecularMap.wrapT = THREE.RepeatWrapping;
+
+                    tempMaterial.specularMap = originalspecularMap.clone();
+                    tempMaterial.specularMap.repeat.set(u / (texValues.s || 1), v / (texValues.t || 1));                
+                }
+
                 materials.push(tempMaterial);
             });
     

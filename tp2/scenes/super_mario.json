@@ -63,6 +63,10 @@
                 "filepath": "scenes/textures/elements/brick4.png",
                 "isVideo": false
             },
+            "brickTex4Bump": {
+                "filepath": "scenes/textures/elements/brick4Bump.png",
+                "isVideo": false
+            },
             "grassTex": {
                 "filepath": "scenes/textures/elements/grass.png",
                 "isVideo": false
@@ -343,7 +347,10 @@
                 "shininess": 10,
                 "transparent": false,
                 "opacity": 1.0,
-                "textureref": "brickTex4"
+                "textureref": "brickTex4",
+                "bumpref":"brickTex4Bump",
+                "bumpscale":2.0,
+                "specularref": "brickTex4"
             },
             "grassApp": {
                 "color": {
