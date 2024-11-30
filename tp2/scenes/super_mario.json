@@ -656,6 +656,48 @@
                 "transparent": false,
                 "opacity": 1.0,
                 "twosided": true
+            },
+            "TubePlantGreen": {
+                "color": {
+                    "r": 0.0,
+                    "g": 0.2549019607843137,
+                    "b": 0.0
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "twosided": true
+            },
+            "TubePlantRed": {
+                "color": {
+                    "r": 0.2549019607843137,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "twosided": true
             }
         },
         "cameras": {
@@ -3229,8 +3271,103 @@
                         "baseBrick3",
                         "greenTubeLongBase",
                         "greenTubeLongTop1",
-                        "greenTubeLongTop2"
+                        "greenTubeLongTop2",
+                        "greenTubePlant"
                     ]
+                }
+            },
+            "greenTubePlant": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 5.5,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "materialref":{ 
+                    "materialId": "TubePlantGreen"
+                },
+                "children": {
+                    "tube":{
+                        "type":"cylinder",
+                        "base": 0.15,
+                        "top": 0.15,
+                        "height": 1.5,
+                        "slices": 64,
+                        "stacks": 64
+                    },
+                    "nodeList": [
+                        "GreenPlantHead1",
+                        "GreenPlantHead2"
+                    ]
+                }
+            },
+            "GreenPlantHead1": {
+                "type": "node",
+                "materialref":{ 
+                    "materialId": "TubePlantRed"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 1.4,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": -45.0,
+                            "y": 0,
+                            "z": 90.0
+                        }
+                    }
+                ],
+                "children": {
+                    "sphere":{
+                        "type": "sphere",
+                        "slices":32,
+                        "stacks":32,
+                        "radius": 0.7,
+                        "thetastart":0,
+                        "thetalength":360,
+                        "phistart":0,
+                        "philength":90
+                    }
+                }
+            },
+            "GreenPlantHead2": {
+                "type": "node",
+                "materialref":{ 
+                    "materialId": "TubePlantRed"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 1.4,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "children": {
+                    "sphere":{
+                        "type": "sphere",
+                        "slices":32,
+                        "stacks":32,
+                        "radius": 0.7,
+                        "phistart":0,
+                        "philength":360,
+                        "thetastart":156.6,
+                        "thetalength":134.28
+                    }
                 }
             },
             "greenTubeSmallMain": {

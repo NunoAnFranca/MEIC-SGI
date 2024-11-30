@@ -391,7 +391,7 @@ class MyContents {
         let phiStart = (object.phistart ?? 0) * Math.PI / 180;
         let phiLength = (object.philength ?? 360) * Math.PI / 180;
 
-        const sphere = new THREE.SphereGeometry(object.radius, object.slices, object.stacks, thetaStart, thetaLength, phiStart, phiLength);
+        const sphere = new THREE.SphereGeometry(object.radius, object.slices, object.stacks, phiStart, phiLength, thetaStart, thetaLength);
         const sphereMesh = new THREE.Mesh(sphere, this.materials[object.material]);
 
         sphereMesh.castShadow = object.castShadow;
