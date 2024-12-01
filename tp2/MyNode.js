@@ -83,7 +83,7 @@ class MyNode {
                             continue;
                         }
                     }
-                    if (name === "nodeList") {
+                    if (name === "nodelist") {
                         for(let i in valueAttr){
                             this.children.push(new MyNode(valueAttr[i], this.node, this.material, this.castshadows, this.receiveshadows));
                         }

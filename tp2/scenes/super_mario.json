@@ -812,7 +812,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "mainLevel",
                         "lakes",
                         "castleRight",
@@ -938,7 +938,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "flagParent",
                         "centerPath",
                         "greenTube1",
@@ -957,7 +957,7 @@
             "terrain": {
                 "type": "node",
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "level1",
                         "level2",
                         "level3"
@@ -967,7 +967,7 @@
             "level1": {
                 "type": "node",
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "soil1",
                         "grass1"
                     ]
@@ -1018,7 +1018,7 @@
             "level2": {
                 "type": "node",
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "soil2",
                         "grass2"
                     ]
@@ -1069,7 +1069,7 @@
             "level3": {
                 "type": "node",
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "soil3",
                         "grass3"
                     ]
@@ -1146,7 +1146,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "goombaConstructor"
                     ]
                 }
@@ -1180,7 +1180,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "goombaConstructor"
                     ]
                 }
@@ -1214,7 +1214,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "goombaConstructor"
                     ]
                 }
@@ -1248,7 +1248,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "goombaConstructor"
                     ]
                 }
@@ -1282,7 +1282,7 @@
                             "z": -19
                         }
                     },
-                    "nodeList": [
+                    "nodelist": [
                         "stairwayToHeaven1",
                         "stairwayToHeaven2",
                         "stairwayToHeaven3",
@@ -1602,7 +1602,7 @@
                             "z": 19
                         }
                     },
-                    "nodeList": [
+                    "nodelist": [
                         "BottomLeftCave",
                         "BottomRightCave",
                         "BottomGreenTube",
@@ -1623,7 +1623,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "BottomCaveCoin1",
                         "BottomCaveCoin2",
                         "BottomCaveCoin3",
@@ -1648,7 +1648,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "coinConstructor"
                     ]
                 }
@@ -1666,7 +1666,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "coinConstructor"
                     ]
                 }
@@ -1684,7 +1684,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "coinConstructor"
                     ]
                 }
@@ -1702,7 +1702,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "coinConstructor"
                     ]
                 }
@@ -1720,7 +1720,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "coinConstructor"
                     ]
                 }
@@ -1738,7 +1738,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "coinConstructor"
                     ]
                 }
@@ -1756,7 +1756,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "coinConstructor"
                     ]
                 }
@@ -1774,7 +1774,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "coinConstructor"
                     ]
                 }
@@ -1859,7 +1859,7 @@
                         "slices": 64,
                         "stacks": 64
                     },
-                    "nodeList": [
+                    "nodelist": [
                         "BottomGreenTubePart1"
                     ]
                 }
@@ -1893,7 +1893,7 @@
                         "slices": 64,
                         "stacks": 64
                     },
-                    "nodeList": [
+                    "nodelist": [
                         "BottomGreenTubePart2"
                     ]
                 }
@@ -1919,7 +1919,7 @@
                         "slices": 64,
                         "stacks": 64
                     },
-                    "nodeList": [
+                    "nodelist": [
                         "BottomGreenTubePart3"
                     ]
                 }
@@ -1979,7 +1979,7 @@
                             "z": 8
                         }
                     },
-                    "nodeList": [
+                    "nodelist": [
                         "castleWall1",
                         "castleWall2",
                         "castleWall3",
@@ -2017,7 +2017,7 @@
                             "z": 8
                         }
                     },
-                    "nodeList": [
+                    "nodelist": [
                         "castleWallBrick1",
                         "castleWallBrick2",
                         "castleWallBrick3",
@@ -2046,7 +2046,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "castleWall",
                         "castleDoor"
                     ]
@@ -2076,7 +2076,7 @@
                     "materialId": "doormaterial"
                 },
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "castleDoorBottom",
                         "castleDoorTop"
                     ]
@@ -2171,7 +2171,7 @@
                     "materialId": "doormaterial"
                 },
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "castleWindowBottom",
                         "castleWindowTop"
                     ]
@@ -2201,7 +2201,7 @@
                     "materialId": "doormaterial"
                 },
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "castleWindowBottom",
                         "castleWindowTop"
                     ]
@@ -2231,7 +2231,7 @@
                     "materialId": "doormaterial"
                 },
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "castleWindowBottom",
                         "castleWindowTop"
                     ]
@@ -2315,7 +2315,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "castleWall",
                         "castleDoor"
                     ]
@@ -2342,7 +2342,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "castleWall",
                         "castleDoor"
                     ]
@@ -2369,7 +2369,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "castleWall",
                         "castleDoor"
                     ]
@@ -2476,7 +2476,7 @@
                             "z": 6
                         }
                     },
-                    "nodeList": [
+                    "nodelist": [
                         "castleWallSmall1",
                         "castleWallSmall2",
                         "castleWallSmall3",
@@ -2513,7 +2513,7 @@
                             "z": 6
                         }
                     },
-                    "nodeList": [
+                    "nodelist": [
                         "castleWallSmallBrick1",
                         "castleWallSmallBrick2",
                         "castleWindow1",
@@ -2543,7 +2543,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "castleWallSmall"
                     ]
                 }
@@ -2569,7 +2569,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "castleWallSmall"
                     ]
                 }
@@ -2587,7 +2587,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "castleWallSmall"
                     ]
                 }
@@ -2613,7 +2613,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "castleWallSmall"
                     ]
                 }
@@ -2667,7 +2667,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "baseBrick1",
                         "flagTube",
                         "flagTop",
@@ -2678,7 +2678,7 @@
             "lakes": {
                 "type": "node",
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "lake1",
                         "lake2",
                         "lake3"
@@ -2701,7 +2701,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": ["lakeUnit"]
+                    "nodelist": ["lakeUnit"]
                 }
             },
             "lake2": {
@@ -2720,7 +2720,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": ["lakeUnit"]
+                    "nodelist": ["lakeUnit"]
                 }
             },
             "lake3": {
@@ -2739,7 +2739,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": ["lakeUnit"]
+                    "nodelist": ["lakeUnit"]
                 }
             },
             "lakeUnit": {
@@ -2748,7 +2748,7 @@
                     "materialId": "sandapp"
                 },
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "leftLakeBasePart",
                         "leftLakeWater",
                         "leftLakeFountain",
@@ -2770,7 +2770,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "leftLakeBasePart1",
                         "leftLakeBasePart2",
                         "leftLakeBasePart3",
@@ -2799,7 +2799,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "leftLakeBasePartUnit"
                     ]
                 }
@@ -2825,7 +2825,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "leftLakeBasePartUnit"
                     ]
                 }
@@ -2843,7 +2843,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "leftLakeBasePartUnit"
                     ]
                 }
@@ -2861,7 +2861,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "leftLakeBasePartUnit"
                     ]
                 }
@@ -2934,7 +2934,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "leftLakeFountain1",
                         "leftLakeFountain2",
                         "leftLakeFountain3"
@@ -2954,7 +2954,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "barSeven"
                     ],
                     "anotherBar": {
@@ -2985,7 +2985,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "barSeven"
                     ]
                 }
@@ -3003,7 +3003,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "barSeven"
                     ]
                 }
@@ -3014,7 +3014,7 @@
                     "materialId": "waterfountainapp"
                 },
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "leftLakeFountainWater1",
                         "leftLakeFountainWater2"
                     ]
@@ -3036,7 +3036,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "barSeven"
                     ],
                     "anotherBar": {
@@ -3215,7 +3215,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "greenTubeSmallMain"
                     ]
                 }
@@ -3233,7 +3233,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "baseBrick3",
                         "greenTubeLongBase",
                         "greenTubeLongTop1",
@@ -3266,7 +3266,7 @@
                         "slices": 64,
                         "stacks": 64
                     },
-                    "nodeList": [
+                    "nodelist": [
                         "GreenPlantHead1",
                         "GreenPlantHead2",
                         "GreenPlantHead3",
@@ -3824,7 +3824,7 @@
             "greenTubeSmallMain": {
                 "type": "node",
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "baseBrick3",
                         "greenTubeSmallBase",
                         "greenTubeSmallTop1",
@@ -3845,7 +3845,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "greenTubeBase"
                     ]
                 }
@@ -3871,7 +3871,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "greenTubeBase"
                     ]
                 }
@@ -3905,7 +3905,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "greenTubeTop1"
                     ]
                 }
@@ -3923,7 +3923,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "greenTubeTop2"
                     ]
                 }
@@ -3941,7 +3941,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "greenTubeTop1"
                     ]
                 }
@@ -3959,7 +3959,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "greenTubeTop2"
                     ]
                 }
@@ -4009,7 +4009,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "centerBox1",
                         "centerBox2",
                         "centerBox3",
@@ -4036,7 +4036,7 @@
                     "materialId": "brick2app"
                 },
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "brickConstructor2"
                     ]
                 }
@@ -4057,7 +4057,7 @@
                     "materialId": "brick2app"
                 },
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "brickConstructor2"
                     ]
                 }
@@ -4075,7 +4075,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "questionMarkConstructor"
                     ]
                 }
@@ -4096,7 +4096,7 @@
                     "materialId": "brick2app"
                 },
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "brickConstructor2"
                     ]
                 }
@@ -4114,7 +4114,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "questionMarkConstructor"
                     ]
                 }
@@ -4135,7 +4135,7 @@
                     "materialId": "brick2app"
                 },
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "brickConstructor2"
                     ]
                 }
@@ -4153,7 +4153,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "questionMarkConstructor"
                     ]
                 }
@@ -4344,7 +4344,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "coinCylinder",
                         "coinCenter"
                     ]
@@ -4428,7 +4428,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList": [
+                    "nodelist": [
                         "goombaHead1",
                         "goombaHead2",
                         "goombaTorso1",
@@ -4888,7 +4888,7 @@
                         "slices": 64,
                         "stacks": 64
                     },
-                    "nodeList": [
+                    "nodelist": [
                         "goombaeyeinner1",
                         "goombaEyeBrown1"
                     ]
@@ -4995,7 +4995,7 @@
                         "slices": 64,
                         "stacks": 64
                     },
-                    "nodeList": [
+                    "nodelist": [
                         "goombaeyeinner2",
                         "goombaEyeBrown2"
                     ]
@@ -5173,7 +5173,7 @@
                     }
                 ],
                 "children": {
-                    "nodeList":["polygonboxc1","polygonboxc2","polygonboxc3","polygonboxc4","polygonboxc5","polygonboxc6"]
+                    "nodelist":["polygonboxc1","polygonboxc2","polygonboxc3","polygonboxc4","polygonboxc5","polygonboxc6"]
                 }
             },
             "polygonboxc1":{
