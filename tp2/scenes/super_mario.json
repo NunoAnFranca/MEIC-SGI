@@ -986,10 +986,6 @@
                     {
                         "nodeId": "test_lod2",
                         "mindist": 15
-                    },
-                    {
-                        "nodeId": "test_lod3",
-                        "mindist": 30
                     }
                 ]
             },
@@ -1033,37 +1029,6 @@
                 "children": {
                     "sphere":{
                         "type":"cylinder"
-                    }
-                }
-            },
-            "test_lod3": {
-                "type": "node",
-                "materialref": {
-                    "materialId": "brick3app"
-                },
-                "transforms": [
-                    {
-                        "type": "translate",
-                        "amount": {
-                            "x": 0.0,
-                            "y": 10,
-                            "z": 0.0
-                        }
-                    }
-                ],
-                "children": {
-                    "sphere":{
-                        "type":"box",
-                        "xyz1": {
-                            "x": 0,
-                            "y": 0,
-                            "z": 0
-                        },
-                        "xyz2": {
-                            "x": 5,
-                            "y": 5,
-                            "z": 5
-                        }
                     }
                 }
             },
