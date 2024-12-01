@@ -813,9 +813,9 @@
                 ],
                 "children": {
                     "nodelist": [
-                        "mainLevel",
+                        "mainlevel",
                         "lakes",
-                        "castleRight",
+                        "castleright",
                         "terrain"
                     ],
                     "coins": {
@@ -922,7 +922,7 @@
                     }
                 }
             },
-            "mainLevel": {
+            "mainlevel": {
                 "type": "node",
                 "materialref": {
                     "materialId": "brick3app"
@@ -939,17 +939,17 @@
                 ],
                 "children": {
                     "nodelist": [
-                        "flagParent",
-                        "centerPath",
-                        "greenTube1",
-                        "greenTube3",
-                        "centerBoxes",
-                        "BottomCave",
-                        "stairwayToHeaven",
-                        "goombaLevel1",
-                        "goombaLevel2",
-                        "goombaLevel3",
-                        "goombaLevel4",
+                        "flagparent",
+                        "centerpath",
+                        "greentube1",
+                        "greentube3",
+                        "centerboxes",
+                        "bottomcave",
+                        "stairwaytoheaven",
+                        "goombalevel1",
+                        "goombalevel2",
+                        "goombalevel3",
+                        "goombalevel4",
                         "polygonbox"
                     ]
                 }
@@ -1117,7 +1117,7 @@
                     }
                 }
             },
-            "goombaLevel1":{
+            "goombalevel1":{
                 "type": "node",
                 "transforms": [
                     {
@@ -1147,11 +1147,11 @@
                 ],
                 "children": {
                     "nodelist": [
-                        "goombaConstructor"
+                        "goombaconstructor"
                     ]
                 }
             },
-            "goombaLevel2":{
+            "goombalevel2":{
                 "type": "node",
                 "transforms": [
                     {
@@ -1181,11 +1181,11 @@
                 ],
                 "children": {
                     "nodelist": [
-                        "goombaConstructor"
+                        "goombaconstructor"
                     ]
                 }
             },
-            "goombaLevel3":{
+            "goombalevel3":{
                 "type": "node",
                 "transforms": [
                     {
@@ -1215,11 +1215,11 @@
                 ],
                 "children": {
                     "nodelist": [
-                        "goombaConstructor"
+                        "goombaconstructor"
                     ]
                 }
             },
-            "goombaLevel4":{
+            "goombalevel4":{
                 "type": "node",
                 "transforms": [
                     {
@@ -1249,11 +1249,11 @@
                 ],
                 "children": {
                     "nodelist": [
-                        "goombaConstructor"
+                        "goombaconstructor"
                     ]
                 }
             },
-            "stairwayToHeaven": {
+            "stairwaytoheaven": {
                 "type": "node",
                 "transforms": [
                     {
@@ -1283,18 +1283,18 @@
                         }
                     },
                     "nodelist": [
-                        "stairwayToHeaven1",
-                        "stairwayToHeaven2",
-                        "stairwayToHeaven3",
-                        "stairwayToHeaven4",
-                        "stairwayToHeaven5",
-                        "stairwayToHeaven6",
-                        "stairwayToHeaven7",
-                        "stairwayToHeaven8"
+                        "stairwaytoheaven1",
+                        "stairwaytoheaven2",
+                        "stairwaytoheaven3",
+                        "stairwaytoheaven4",
+                        "stairwaytoheaven5",
+                        "stairwaytoheaven6",
+                        "stairwaytoheaven7",
+                        "stairwaytoheaven8"
                     ]
                 }
             },
-            "stairwayToHeaven1": {
+            "stairwaytoheaven1": {
                 "type": "node",
                 "transforms": [
                     {
@@ -1325,7 +1325,7 @@
                     }
                 }
             },
-            "stairwayToHeaven2": {
+            "stairwaytoheaven2": {
                 "type": "node",
                 "transforms": [
                     {
@@ -1356,7 +1356,7 @@
                     }
                 }
             },
-            "stairwayToHeaven3": {
+            "stairwaytoheaven3": {
                 "type": "node",
                 "transforms": [
                     {
@@ -1387,7 +1387,7 @@
                     }
                 }
             },
-            "stairwayToHeaven4": {
+            "stairwaytoheaven4": {
                 "type": "node",
                 "transforms": [
                     {
@@ -1418,7 +1418,7 @@
                     }
                 }
             },
-            "stairwayToHeaven5": {
+            "stairwaytoheaven5": {
                 "type": "node",
                 "transforms": [
                     {
@@ -1449,7 +1449,7 @@
                     }
                 }
             },
-            "stairwayToHeaven6": {
+            "stairwaytoheaven6": {
                 "type": "node",
                 "transforms": [
                     {
@@ -1480,7 +1480,7 @@
                     }
                 }
             },
-            "stairwayToHeaven7": {
+            "stairwaytoheaven7": {
                 "type": "node",
                 "transforms": [
                     {
@@ -1511,7 +1511,7 @@
                     }
                 }
             },
-            "stairwayToHeaven8": {
+            "stairwaytoheaven8": {
                 "type": "node",
                 "transforms": [
                     {
@@ -1542,7 +1542,7 @@
                     }
                 }
             },
-            "centerPath": {
+            "centerpath": {
                 "type": "node",
                 "materialref": {
                     "materialId": "brick3app"
@@ -1573,7 +1573,7 @@
                     }
                 }
             },
-            "BottomCave": {
+            "bottomcave": {
                 "type": "node",
                 "materialref": {
                     "materialId": "brick3appblue"
@@ -1603,9 +1603,9 @@
                         }
                     },
                     "nodelist": [
-                        "BottomLeftCave",
-                        "BottomRightCave",
-                        "BottomGreenTube",
+                        "bottomleftcave",
+                        "bottomrightcave",
+                        "bottomgreentube",
                         "coinFamily"
                     ]
                 }
@@ -1624,18 +1624,18 @@
                 ],
                 "children": {
                     "nodelist": [
-                        "BottomCaveCoin1",
-                        "BottomCaveCoin2",
-                        "BottomCaveCoin3",
-                        "BottomCaveCoin4",
-                        "BottomCaveCoin5",
-                        "BottomCaveCoin6",
-                        "BottomCaveCoin7",
-                        "BottomCaveCoin8"
+                        "bottomcavecoin1",
+                        "bottomcavecoin2",
+                        "bottomcavecoin3",
+                        "bottomcavecoin4",
+                        "bottomcavecoin5",
+                        "bottomcavecoin6",
+                        "bottomcavecoin7",
+                        "bottomcavecoin8"
                     ]
                 }
             },
-            "BottomCaveCoin1": {
+            "bottomcavecoin1": {
                 "type": "node",
                 "transforms": [
                     {
@@ -1653,7 +1653,7 @@
                     ]
                 }
             },
-            "BottomCaveCoin2": {
+            "bottomcavecoin2": {
                 "type": "node",
                 "transforms": [
                     {
@@ -1671,7 +1671,7 @@
                     ]
                 }
             },
-            "BottomCaveCoin3": {
+            "bottomcavecoin3": {
                 "type": "node",
                 "transforms": [
                     {
@@ -1689,7 +1689,7 @@
                     ]
                 }
             },
-            "BottomCaveCoin4": {
+            "bottomcavecoin4": {
                 "type": "node",
                 "transforms": [
                     {
@@ -1707,7 +1707,7 @@
                     ]
                 }
             },
-            "BottomCaveCoin5": {
+            "bottomcavecoin5": {
                 "type": "node",
                 "transforms": [
                     {
@@ -1725,7 +1725,7 @@
                     ]
                 }
             },
-            "BottomCaveCoin6": {
+            "bottomcavecoin6": {
                 "type": "node",
                 "transforms": [
                     {
@@ -1743,7 +1743,7 @@
                     ]
                 }
             },
-            "BottomCaveCoin7": {
+            "bottomcavecoin7": {
                 "type": "node",
                 "transforms": [
                     {
@@ -1761,7 +1761,7 @@
                     ]
                 }
             },
-            "BottomCaveCoin8": {
+            "bottomcavecoin8": {
                 "type": "node",
                 "transforms": [
                     {
@@ -1779,7 +1779,7 @@
                     ]
                 }
             },
-            "BottomLeftCave": {
+            "bottomleftcave": {
                 "type": "node",
                 "transforms": [
                     {
@@ -1807,7 +1807,7 @@
                     }
                 }
             },
-            "BottomRightCave": {
+            "bottomrightcave": {
                 "type": "node",
                 "transforms": [
                     {
@@ -1835,7 +1835,7 @@
                     }
                 }
             },
-            "BottomGreenTube": {
+            "bottomgreentube": {
                 "type": "node",
                 "transforms": [
                     {
@@ -1860,11 +1860,11 @@
                         "stacks": 64
                     },
                     "nodelist": [
-                        "BottomGreenTubePart1"
+                        "bottomgreentubepart1"
                     ]
                 }
             },
-            "BottomGreenTubePart1": {
+            "bottomgreentubepart1": {
                 "type": "node",
                 "transforms": [
                     {
@@ -1894,11 +1894,11 @@
                         "stacks": 64
                     },
                     "nodelist": [
-                        "BottomGreenTubePart2"
+                        "bottomgreentubepart2"
                     ]
                 }
             },
-            "BottomGreenTubePart2": {
+            "bottomgreentubepart2": {
                 "type": "node",
                 "transforms": [
                     {
@@ -1920,11 +1920,11 @@
                         "stacks": 64
                     },
                     "nodelist": [
-                        "BottomGreenTubePart3"
+                        "bottomgreentubepart3"
                     ]
                 }
             },
-            "BottomGreenTubePart3": {
+            "bottomgreentubepart3": {
                 "type": "node",
                 "transforms": [
                     {
@@ -1950,7 +1950,7 @@
                     }
                 }
             },
-            "castleRight": {
+            "castleright": {
                 "type": "node",
                 "materialref": {
                     "materialId": "brick3app"
@@ -1984,7 +1984,7 @@
                         "castleWall2",
                         "castleWall3",
                         "castleWall4",
-                        "castleRightTop"
+                        "castlerighttop"
                     ]
                 }
             },
@@ -2447,7 +2447,7 @@
                     }
                 }
             },
-            "castleRightTop": {
+            "castlerighttop": {
                 "type": "node",
                 "materialref": {
                     "materialId": "brick3app"
@@ -2654,7 +2654,7 @@
                     }
                 }
             },
-            "flagParent": {
+            "flagparent": {
                 "type": "node",
                 "transforms": [
                     {
@@ -3202,7 +3202,7 @@
                     }
                 }
             },
-            "greenTube1": {
+            "greentube1": {
                 "type": "node",
                 "transforms": [
                     {
@@ -3220,7 +3220,7 @@
                     ]
                 }
             },
-            "greenTube3": {
+            "greentube3": {
                 "type": "node",
                 "transforms": [
                     {
@@ -3996,7 +3996,7 @@
                     }
                 }
             },
-            "centerBoxes": {
+            "centerboxes": {
                 "type": "node",
                 "transforms": [
                     {
@@ -4412,7 +4412,7 @@
                     }
                 }
             },
-            "goombaConstructor": {
+            "goombaconstructor": {
                 "type": "node",
                 "materialref": {
                     "materialId": "goombabrown1"
