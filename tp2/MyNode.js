@@ -84,12 +84,12 @@ class MyNode {
                             continue;
                         }
                     }
-                    if (name === "nodeslist") {
+                    if (name === "nodesList") {
                         for(let i in valueAttr){
                             this.children.push(new MyNode(valueAttr[i], this.node, this.material, this.castshadows, this.receiveshadows));
                         }
                     } 
-                    //else if (name === "lodslist") {
+                    //else if (name === "lodsList") {
                     //    for(let i in valueAttr){
                     //        this.children.push(new MyNode(valueAttr[i], this.node, this.material, this.castshadows, this.receiveshadows));
                     //    }

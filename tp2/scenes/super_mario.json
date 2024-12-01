@@ -812,7 +812,7 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "mainlevel",
                         "lakes",
                         "castleright",
@@ -939,7 +939,7 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "flagparent",
                         "centerpath",
                         "greentube1",
@@ -971,7 +971,7 @@
                     }
                 ],
                 "children": {
-                    "lodslist": [
+                    "lodsList": [
                         "test_lod"
                     ]
                 }
@@ -1070,7 +1070,7 @@
             "terrain": {
                 "type": "node",
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "level1",
                         "level2",
                         "level3"
@@ -1080,7 +1080,7 @@
             "level1": {
                 "type": "node",
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "soil1",
                         "grass1"
                     ]
@@ -1131,7 +1131,7 @@
             "level2": {
                 "type": "node",
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "soil2",
                         "grass2"
                     ]
@@ -1182,7 +1182,7 @@
             "level3": {
                 "type": "node",
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "soil3",
                         "grass3"
                     ]
@@ -1259,7 +1259,7 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "goombaconstructor"
                     ]
                 }
@@ -1293,7 +1293,7 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "goombaconstructor"
                     ]
                 }
@@ -1327,7 +1327,7 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "goombaconstructor"
                     ]
                 }
@@ -1361,7 +1361,7 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "goombaconstructor"
                     ]
                 }
@@ -1395,7 +1395,7 @@
                             "z": -19
                         }
                     },
-                    "nodeslist": [
+                    "nodesList": [
                         "stairwaytoheaven1",
                         "stairwaytoheaven2",
                         "stairwaytoheaven3",
@@ -1715,7 +1715,7 @@
                             "z": 19
                         }
                     },
-                    "nodeslist": [
+                    "nodesList": [
                         "bottomleftcave",
                         "bottomrightcave",
                         "bottomgreentube",
@@ -1736,7 +1736,7 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "bottomcavecoin1",
                         "bottomcavecoin2",
                         "bottomcavecoin3",
@@ -1761,8 +1761,8 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
-                        "coinConstructor"
+                    "nodesList": [
+                        "coinconstructor"
                     ]
                 }
             },
@@ -1779,8 +1779,8 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
-                        "coinConstructor"
+                    "nodesList": [
+                        "coinconstructor"
                     ]
                 }
             },
@@ -1797,8 +1797,8 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
-                        "coinConstructor"
+                    "nodesList": [
+                        "coinconstructor"
                     ]
                 }
             },
@@ -1815,8 +1815,8 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
-                        "coinConstructor"
+                    "nodesList": [
+                        "coinconstructor"
                     ]
                 }
             },
@@ -1833,8 +1833,8 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
-                        "coinConstructor"
+                    "nodesList": [
+                        "coinconstructor"
                     ]
                 }
             },
@@ -1851,8 +1851,8 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
-                        "coinConstructor"
+                    "nodesList": [
+                        "coinconstructor"
                     ]
                 }
             },
@@ -1869,8 +1869,8 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
-                        "coinConstructor"
+                    "nodesList": [
+                        "coinconstructor"
                     ]
                 }
             },
@@ -1887,8 +1887,8 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
-                        "coinConstructor"
+                    "nodesList": [
+                        "coinconstructor"
                     ]
                 }
             },
@@ -1972,7 +1972,7 @@
                         "slices": 64,
                         "stacks": 64
                     },
-                    "nodeslist": [
+                    "nodesList": [
                         "bottomgreentubepart1"
                     ]
                 }
@@ -2006,7 +2006,7 @@
                         "slices": 64,
                         "stacks": 64
                     },
-                    "nodeslist": [
+                    "nodesList": [
                         "bottomgreentubepart2"
                     ]
                 }
@@ -2032,7 +2032,7 @@
                         "slices": 64,
                         "stacks": 64
                     },
-                    "nodeslist": [
+                    "nodesList": [
                         "bottomgreentubepart3"
                     ]
                 }
@@ -2092,7 +2092,7 @@
                             "z": 8
                         }
                     },
-                    "nodeslist": [
+                    "nodesList": [
                         "castlewall1",
                         "castlewall2",
                         "castlewall3",
@@ -2130,7 +2130,7 @@
                             "z": 8
                         }
                     },
-                    "nodeslist": [
+                    "nodesList": [
                         "castlewallbrick1",
                         "castlewallbrick2",
                         "castlewallbrick3",
@@ -2159,7 +2159,7 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "castlewall",
                         "castledoor"
                     ]
@@ -2189,7 +2189,7 @@
                     "materialId": "doormaterial"
                 },
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "castledoorbottom",
                         "castledoortop"
                     ]
@@ -2284,7 +2284,7 @@
                     "materialId": "doormaterial"
                 },
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "castlewindowbottom",
                         "castlewindowtop"
                     ]
@@ -2314,7 +2314,7 @@
                     "materialId": "doormaterial"
                 },
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "castlewindowbottom",
                         "castlewindowtop"
                     ]
@@ -2344,7 +2344,7 @@
                     "materialId": "doormaterial"
                 },
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "castlewindowbottom",
                         "castlewindowtop"
                     ]
@@ -2428,7 +2428,7 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "castlewall",
                         "castledoor"
                     ]
@@ -2455,7 +2455,7 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "castlewall",
                         "castledoor"
                     ]
@@ -2482,7 +2482,7 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "castlewall",
                         "castledoor"
                     ]
@@ -2589,7 +2589,7 @@
                             "z": 6
                         }
                     },
-                    "nodeslist": [
+                    "nodesList": [
                         "castlewallsmall1",
                         "castlewallsmall2",
                         "castlewallsmall3",
@@ -2635,7 +2635,7 @@
                             "b":0    
                         }
                     },
-                    "nodeslist": [
+                    "nodesList": [
                         "castletubeflag",
                         "castleflag",
                         "castletopobject"
@@ -2827,7 +2827,7 @@
                             "z": 6
                         }
                     },
-                    "nodeslist": [
+                    "nodesList": [
                         "castlewallsmallbrick1",
                         "castlewallsmallbrick2",
                         "castlewindow1",
@@ -2857,7 +2857,7 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "castlewallsmall"
                     ]
                 }
@@ -2883,7 +2883,7 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "castlewallsmall"
                     ]
                 }
@@ -2901,7 +2901,7 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "castlewallsmall"
                     ]
                 }
@@ -2927,7 +2927,7 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "castlewallsmall"
                     ]
                 }
@@ -2981,7 +2981,7 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "basebrick1",
                         "flagtube",
                         "flagtop",
@@ -2992,7 +2992,7 @@
             "lakes": {
                 "type": "node",
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "lake1",
                         "lake2",
                         "lake3"
@@ -3015,7 +3015,7 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": ["lakeunit"]
+                    "nodesList": ["lakeunit"]
                 }
             },
             "lake2": {
@@ -3034,7 +3034,7 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": ["lakeunit"]
+                    "nodesList": ["lakeunit"]
                 }
             },
             "lake3": {
@@ -3053,7 +3053,7 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": ["lakeunit"]
+                    "nodesList": ["lakeunit"]
                 }
             },
             "lakeunit": {
@@ -3062,7 +3062,7 @@
                     "materialId": "sandapp"
                 },
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "leftlakebasepart",
                         "leftlakewater",
                         "leftlakefountain",
@@ -3084,7 +3084,7 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "leftlakebasepart1",
                         "leftlakebasepart2",
                         "leftlakebasepart3",
@@ -3113,7 +3113,7 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "leftlakebasepartunit"
                     ]
                 }
@@ -3139,7 +3139,7 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "leftlakebasepartunit"
                     ]
                 }
@@ -3157,7 +3157,7 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "leftlakebasepartunit"
                     ]
                 }
@@ -3175,7 +3175,7 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "leftlakebasepartunit"
                     ]
                 }
@@ -3248,7 +3248,7 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "leftlakefountain1",
                         "leftlakefountain2",
                         "leftlakefountain3"
@@ -3268,7 +3268,7 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "barSeven"
                     ],
                     "anotherBar": {
@@ -3299,7 +3299,7 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "barSeven"
                     ]
                 }
@@ -3317,7 +3317,7 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "barSeven"
                     ]
                 }
@@ -3328,7 +3328,7 @@
                     "materialId": "waterfountainapp"
                 },
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "leftlakefountainwater1",
                         "leftlakefountainwater2"
                     ]
@@ -3350,7 +3350,7 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "barSeven"
                     ],
                     "anotherBar": {
@@ -3529,8 +3529,8 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
-                        "greenTubeSmallMain"
+                    "nodesList": [
+                        "greentubesmallmain"
                     ]
                 }
             },
@@ -3547,16 +3547,16 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "basebrick3",
-                        "greenTubeLongBase",
-                        "greenTubeLongTop1",
-                        "greenTubeLongTop2",
-                        "greenTubePlant"
+                        "greentubelongbase",
+                        "greentubelongtop1",
+                        "greentubelongtop2",
+                        "greentubeplant"
                     ]
                 }
             },
-            "greenTubePlant": {
+            "greentubeplant": {
                 "type": "node",
                 "transforms": [
                     {
@@ -3580,24 +3580,24 @@
                         "slices": 64,
                         "stacks": 64
                     },
-                    "nodeslist": [
-                        "GreenPlantHead1",
-                        "GreenPlantHead2",
-                        "GreenPlantHead3",
-                        "GreenPlantLeaf1",
-                        "GreenPlantLeaf2",
-                        "GreenPlantStain1",
-                        "GreenPlantStain2",
-                        "GreenPlantStain3",
-                        "GreenPlantStain4",
-                        "GreenPlantStain5",
-                        "GreenPlantStain6",
-                        "GreenPlantStain7",
-                        "GreenPlantStain8"
+                    "nodesList": [
+                        "greenplanthead1",
+                        "greenplanthead2",
+                        "greenplanthead3",
+                        "greenplantleaf1",
+                        "greenplantleaf2",
+                        "greenplantstain1",
+                        "greenplantstain2",
+                        "greenplantstain3",
+                        "greenplantstain4",
+                        "greenplantstain5",
+                        "greenplantstain6",
+                        "greenplantstain7",
+                        "greenplantstain8"
                     ]
                 }
             },
-            "GreenPlantHead1": {
+            "greenplanthead1": {
                 "type": "node",
                 "materialref":{ 
                     "materialId": "tubeplantred"
@@ -3633,7 +3633,7 @@
                     }
                 }
             },
-            "GreenPlantHead2": {
+            "greenplanthead2": {
                 "type": "node",
                 "materialref":{ 
                     "materialId": "tubeplantred"
@@ -3669,7 +3669,7 @@
                     }
                 }
             },
-            "GreenPlantHead3": {
+            "greenplanthead3": {
                 "type": "node",
                 "materialref":{ 
                     "materialId": "tubeplantred"
@@ -3705,7 +3705,7 @@
                     }
                 }
             },
-            "GreenPlantLeaf1": {
+            "greenplantleaf1": {
                 "type": "node",
                 "transforms": [
                     {
@@ -3760,7 +3760,7 @@
                     }
                 }
             },
-            "GreenPlantLeaf2": {
+            "greenplantleaf2": {
                 "type": "node",
                 "transforms": [
                     {
@@ -3815,7 +3815,7 @@
                     }
                 }
             },
-            "GreenPlantStain1": {
+            "greenplantstain1": {
                 "type": "node",
                 "materialref":{ 
                     "materialId": "tubeplantwhite"
@@ -3855,7 +3855,7 @@
                     }
                 }
             },
-            "GreenPlantStain2": {
+            "greenplantstain2": {
                 "type": "node",
                 "materialref":{ 
                     "materialId": "tubeplantwhite"
@@ -3895,7 +3895,7 @@
                     }
                 }
             },
-            "GreenPlantStain3": {
+            "greenplantstain3": {
                 "type": "node",
                 "materialref":{ 
                     "materialId": "tubeplantwhite"
@@ -3935,7 +3935,7 @@
                     }
                 }
             },
-            "GreenPlantStain4": {
+            "greenplantstain4": {
                 "type": "node",
                 "materialref":{ 
                     "materialId": "tubeplantwhite"
@@ -3975,7 +3975,7 @@
                     }
                 }
             },
-            "GreenPlantStain5": {
+            "greenplantstain5": {
                 "type": "node",
                 "materialref":{ 
                     "materialId": "tubeplantwhite"
@@ -4015,7 +4015,7 @@
                     }
                 }
             },
-            "GreenPlantStain6": {
+            "greenplantstain6": {
                 "type": "node",
                 "materialref":{ 
                     "materialId": "tubeplantwhite"
@@ -4055,7 +4055,7 @@
                     }
                 }
             },
-            "GreenPlantStain7": {
+            "greenplantstain7": {
                 "type": "node",
                 "materialref":{ 
                     "materialId": "tubeplantwhite"
@@ -4095,7 +4095,7 @@
                     }
                 }
             },
-            "GreenPlantStain8": {
+            "greenplantstain8": {
                 "type": "node",
                 "materialref":{ 
                     "materialId": "tubeplantwhite"
@@ -4135,18 +4135,18 @@
                     }
                 }
             },
-            "greenTubeSmallMain": {
+            "greentubesmallmain": {
                 "type": "node",
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "basebrick3",
-                        "greenTubeSmallBase",
-                        "greenTubeSmallTop1",
-                        "greenTubeSmallTop2"
+                        "greentubesmallbase",
+                        "greentubesmalltop1",
+                        "greentubesmalltop2"
                     ]
                 }
             },
-            "greenTubeSmallBase": {
+            "greentubesmallbase": {
                 "type": "node",
                 "transforms": [
                     {
@@ -4159,12 +4159,12 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
-                        "greenTubeBase"
+                    "nodesList": [
+                        "greentubebase"
                     ]
                 }
             },
-            "greenTubeLongBase": {
+            "greentubelongbase": {
                 "type": "node",
                 "transforms": [
                     {
@@ -4185,12 +4185,12 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
-                        "greenTubeBase"
+                    "nodesList": [
+                        "greentubebase"
                     ]
                 }
             },
-            "greenTubeBase": {
+            "greentubebase": {
                 "type": "node",
                 "materialref": {
                     "materialId": "greentubematerial"
@@ -4206,7 +4206,7 @@
                     }
                 }
             },
-            "greenTubeSmallTop1": {
+            "greentubesmalltop1": {
                 "type": "node",
                 "transforms": [
                     {
@@ -4219,12 +4219,12 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "greenTubeTop1"
                     ]
                 }
             },
-            "greenTubeSmallTop2": {
+            "greentubesmalltop2": {
                 "type": "node",
                 "transforms": [
                     {
@@ -4237,12 +4237,12 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "greenTubeTop2"
                     ]
                 }
             },
-            "greenTubeLongTop1": {
+            "greentubelongtop1": {
                 "type": "node",
                 "transforms": [
                     {
@@ -4255,12 +4255,12 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "greenTubeTop1"
                     ]
                 }
             },
-            "greenTubeLongTop2": {
+            "greentubelongtop2": {
                 "type": "node",
                 "transforms": [
                     {
@@ -4273,7 +4273,7 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
+                    "nodesList": [
                         "greenTubeTop2"
                     ]
                 }
@@ -4323,18 +4323,18 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
-                        "centerBox1",
-                        "centerBox2",
-                        "centerBox3",
-                        "centerBox4",
-                        "centerBox5",
-                        "centerBox6",
-                        "centerBox7"
+                    "nodesList": [
+                        "centerbox1",
+                        "centerbox2",
+                        "centerbox3",
+                        "centerbox4",
+                        "centerbox5",
+                        "centerbox6",
+                        "centerbox7"
                     ]
                 }
             },
-            "centerBox1": {
+            "centerbox1": {
                 "type": "node",
                 "transforms": [
                     {
@@ -4350,12 +4350,12 @@
                     "materialId": "brick2app"
                 },
                 "children": {
-                    "nodeslist": [
-                        "brickConstructor2"
+                    "nodesList": [
+                        "brickconstructor2"
                     ]
                 }
             },
-            "centerBox2": {
+            "centerbox2": {
                 "type": "node",
                 "transforms": [
                     {
@@ -4371,12 +4371,12 @@
                     "materialId": "brick2app"
                 },
                 "children": {
-                    "nodeslist": [
-                        "brickConstructor2"
+                    "nodesList": [
+                        "brickconstructor2"
                     ]
                 }
             },
-            "centerBox3": {
+            "centerbox3": {
                 "type": "node",
                 "transforms": [
                     {
@@ -4389,12 +4389,12 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
-                        "questionMarkConstructor"
+                    "nodesList": [
+                        "questionmarkconstructor"
                     ]
                 }
             },
-            "centerBox4": {
+            "centerbox4": {
                 "type": "node",
                 "transforms": [
                     {
@@ -4410,12 +4410,12 @@
                     "materialId": "brick2app"
                 },
                 "children": {
-                    "nodeslist": [
-                        "brickConstructor2"
+                    "nodesList": [
+                        "brickconstructor2"
                     ]
                 }
             },
-            "centerBox5": {
+            "centerbox5": {
                 "type": "node",
                 "transforms": [
                     {
@@ -4428,12 +4428,12 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
-                        "questionMarkConstructor"
+                    "nodesList": [
+                        "questionmarkconstructor"
                     ]
                 }
             },
-            "centerBox6": {
+            "centerbox6": {
                 "type": "node",
                 "transforms": [
                     {
@@ -4449,12 +4449,12 @@
                     "materialId": "brick2app"
                 },
                 "children": {
-                    "nodeslist": [
-                        "brickConstructor2"
+                    "nodesList": [
+                        "brickconstructor2"
                     ]
                 }
             },
-            "centerBox7": {
+            "centerbox7": {
                 "type": "node",
                 "transforms": [
                     {
@@ -4467,8 +4467,8 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
-                        "questionMarkConstructor"
+                    "nodesList": [
+                        "questionmarkconstructor"
                     ]
                 }
             },
@@ -4532,7 +4532,7 @@
                     }
                 }
             },
-            "brickConstructor": {
+            "brickconstructor": {
                 "type": "node",
                 "children": {
                     "brick": {
@@ -4550,7 +4550,7 @@
                     }
                 }
             },
-            "brickConstructor1": {
+            "brickconstructor1": {
                 "type": "node",
                 "materialref": {
                     "materialId": "brick1app"
@@ -4571,7 +4571,7 @@
                     }
                 }
             },
-            "brickConstructor2": {
+            "brickconstructor2": {
                 "type": "node",
                 "materialref": {
                     "materialId": "brick2app"
@@ -4592,7 +4592,7 @@
                     }
                 }
             },
-            "brickConstructor3": {
+            "brickconstructor3": {
                 "type": "node",
                 "materialref": {
                     "materialId": "brick3app"
@@ -4613,7 +4613,7 @@
                     }
                 }
             },
-            "questionMarkConstructor": {
+            "questionmarkconstructor": {
                 "type": "node",
                 "materialref": {
                     "materialId": "questionmarkapp"
@@ -4634,7 +4634,7 @@
                     }
                 }
             },
-            "coinConstructor": {
+            "coinconstructor": {
                 "type": "node",
                 "materialref": {
                     "materialId": "outercoinmaterial"
@@ -4658,13 +4658,13 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
-                        "coinCylinder",
-                        "coinCenter"
+                    "nodesList": [
+                        "coincylinder",
+                        "coincenter"
                     ]
                 }
             },
-            "coinCylinder": {
+            "coincylinder": {
                 "type": "node",
                 "transforms": [
                     {
@@ -4695,7 +4695,7 @@
                     }
                 }
             },
-            "coinCenter": {
+            "coincenter": {
                 "type": "node",
                 "transforms": [
                     {
@@ -4742,19 +4742,19 @@
                     }
                 ],
                 "children": {
-                    "nodeslist": [
-                        "goombaHead1",
-                        "goombaHead2",
-                        "goombaTorso1",
-                        "goombaTorso2",
-                        "goombaEye1",
-                        "goombaEye2",
-                        "goombaFoot1",
-                        "goombaFoot2"
+                    "nodesList": [
+                        "goombahead1",
+                        "goombahead2",
+                        "goombatorso1",
+                        "goombatorso2",
+                        "goombaeye1",
+                        "goombaeye2",
+                        "goombafoot1",
+                        "goombafoot2"
                     ]
                 }
             },
-            "goombaHead1": {
+            "goombahead1": {
                 "type": "node",
                 "children": {
                     "head": {
@@ -4848,7 +4848,7 @@
                     }
                 }
             },
-            "goombaHead2": {
+            "goombahead2": {
                 "type": "node",
                 "children": {
                     "head": {
@@ -4942,7 +4942,7 @@
                     }
                 }
             },
-            "goombaTorso1": {
+            "goombatorso1": {
                 "type": "node",
                 "materialref": {
                     "materialId": "goombabrown2"
@@ -5057,7 +5057,7 @@
                     }
                 }
             },
-            "goombaTorso2": {
+            "goombatorso2": {
                 "type": "node",
                 "materialref": {
                     "materialId": "goombabrown2"
@@ -5172,7 +5172,7 @@
                     }
                 }
             },
-            "goombaEye1": {
+            "goombaeye1": {
                 "type": "node",
                 "materialref": {
                     "materialId": "goombaeyeouter"
@@ -5202,9 +5202,9 @@
                         "slices": 64,
                         "stacks": 64
                     },
-                    "nodeslist": [
+                    "nodesList": [
                         "goombaeyeinner1",
-                        "goombaEyeBrown1"
+                        "goombaeyebrown1"
                     ]
                 }
             },
@@ -5240,7 +5240,7 @@
                     }
                 }
             },
-            "goombaEyeBrown1": {
+            "goombaeyebrown1": {
                 "type": "node",
                 "materialref": {
                     "materialId": "goombaeyeinner"
@@ -5279,7 +5279,7 @@
                     }
                 }
             },
-            "goombaEye2": {
+            "goombaeye2": {
                 "type": "node",
                 "materialref": {
                     "materialId": "goombaeyeouter"
@@ -5309,9 +5309,9 @@
                         "slices": 64,
                         "stacks": 64
                     },
-                    "nodeslist": [
+                    "nodesList": [
                         "goombaeyeinner2",
-                        "goombaEyeBrown2"
+                        "goombaeyebrown2"
                     ]
                 }
             },
@@ -5347,7 +5347,7 @@
                     }
                 }
             },
-            "goombaEyeBrown2": {
+            "goombaeyebrown2": {
                 "type": "node",
                 "materialref": {
                     "materialId": "goombaeyeinner"
@@ -5386,7 +5386,7 @@
                     }
                 }
             },
-            "goombaFoot1": {
+            "goombafoot1": {
                 "type": "node",
                 "materialref": {
                     "materialId": "goombaeyeinner"
@@ -5426,7 +5426,7 @@
                     }
                 }
             },
-            "goombaFoot2": {
+            "goombafoot2": {
                 "type": "node",
                 "materialref": {
                     "materialId": "goombaeyeinner"
@@ -5487,7 +5487,7 @@
                     }
                 ],
                 "children": {
-                    "nodeslist":["polygonboxc1","polygonboxc2","polygonboxc3","polygonboxc4","polygonboxc5","polygonboxc6"]
+                    "nodesList":["polygonboxc1","polygonboxc2","polygonboxc3","polygonboxc4","polygonboxc5","polygonboxc6"]
                 }
             },
             "polygonboxc1":{
