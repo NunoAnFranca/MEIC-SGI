@@ -39,6 +39,7 @@ class MyNode {
         this.material = material;
         this.castshadows = castshadows;
         this.receiveshadows = receiveshadows;
+        this.lods = [];
         this.children = [];
         this.transforms = {};
 
@@ -83,11 +84,20 @@ class MyNode {
                             continue;
                         }
                     }
-                    if (name === "nodelist") {
+                    if (name === "nodeslist") {
                         for(let i in valueAttr){
                             this.children.push(new MyNode(valueAttr[i], this.node, this.material, this.castshadows, this.receiveshadows));
                         }
-                    } else if (valueAttr.type === "pointlight") {
+                    } 
+                    //else if (name === "lodslist") {
+                    //    for(let i in valueAttr){
+                    //        this.children.push(new MyNode(valueAttr[i], this.node, this.material, this.castshadows, this.receiveshadows));
+                    //    }
+                    //} 
+                    //else if(valueAttr === "lodNodes"){
+                    //    console.log(valueAttr);
+                    //}
+                    else if (valueAttr.type === "pointlight") {
                         this.children.push(new MyPointLight(name, valueAttr));
                     } else if (valueAttr.type === "spotlight") {
                         this.children.push(new MySpotLight(name, valueAttr));

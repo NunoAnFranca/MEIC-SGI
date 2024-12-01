@@ -721,6 +721,8 @@ class MyContents {
             } else if (object instanceof MyTriangle) {
                 addObject = this.createTriangle(object);
                 addWireframe = this.createWireframeTriangle(object);
+            }  else if(object.type === "lod"){
+                console.log(object);
             } else if (object instanceof MyNode) {
                 let temp = new THREE.Group();
                 this.createGraph(object, temp);

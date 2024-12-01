@@ -812,11 +812,12 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "mainlevel",
                         "lakes",
                         "castleright",
-                        "terrain"
+                        "terrain",
+                        "test"
                     ],
                     "coins": {
                         "type": "pointlight",
@@ -938,7 +939,7 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "flagparent",
                         "centerpath",
                         "greentube1",
@@ -950,14 +951,126 @@
                         "goombalevel2",
                         "goombalevel3",
                         "goombalevel4",
-                        "polygonbox"
+                        "polygonbox"                    
                     ]
+                }
+            },
+            "test": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "brick3app"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 10,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "children": {
+                    "lodslist": [
+                        "test_lod"
+                    ]
+                }
+            },
+            "test_lod": {
+                "type": "lod",
+                "lodNodes": [
+                    {
+                        "nodeId": "test_lod1",
+                        "mindist": 0
+                    },
+                    {
+                        "nodeId": "test_lod2",
+                        "mindist": 15
+                    },
+                    {
+                        "nodeId": "test_lod3",
+                        "mindist": 30
+                    }
+                ]
+            },
+            "test_lod1": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "brick3app"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 10,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "children": {
+                    "sphere":{
+                        "type":"sphere",
+                        "radius": 3
+                    }
+                }
+            },
+            "test_lod2": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "brick3app"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 10,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "children": {
+                    "sphere":{
+                        "type":"cylinder"
+                    }
+                }
+            },
+            "test_lod3": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "brick3app"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 10,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "children": {
+                    "sphere":{
+                        "type":"box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 5,
+                            "y": 5,
+                            "z": 5
+                        }
+                    }
                 }
             },
             "terrain": {
                 "type": "node",
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "level1",
                         "level2",
                         "level3"
@@ -967,7 +1080,7 @@
             "level1": {
                 "type": "node",
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "soil1",
                         "grass1"
                     ]
@@ -1018,7 +1131,7 @@
             "level2": {
                 "type": "node",
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "soil2",
                         "grass2"
                     ]
@@ -1069,7 +1182,7 @@
             "level3": {
                 "type": "node",
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "soil3",
                         "grass3"
                     ]
@@ -1146,7 +1259,7 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "goombaconstructor"
                     ]
                 }
@@ -1180,7 +1293,7 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "goombaconstructor"
                     ]
                 }
@@ -1214,7 +1327,7 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "goombaconstructor"
                     ]
                 }
@@ -1248,7 +1361,7 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "goombaconstructor"
                     ]
                 }
@@ -1282,7 +1395,7 @@
                             "z": -19
                         }
                     },
-                    "nodelist": [
+                    "nodeslist": [
                         "stairwaytoheaven1",
                         "stairwaytoheaven2",
                         "stairwaytoheaven3",
@@ -1602,7 +1715,7 @@
                             "z": 19
                         }
                     },
-                    "nodelist": [
+                    "nodeslist": [
                         "bottomleftcave",
                         "bottomrightcave",
                         "bottomgreentube",
@@ -1623,7 +1736,7 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "bottomcavecoin1",
                         "bottomcavecoin2",
                         "bottomcavecoin3",
@@ -1648,7 +1761,7 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "coinConstructor"
                     ]
                 }
@@ -1666,7 +1779,7 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "coinConstructor"
                     ]
                 }
@@ -1684,7 +1797,7 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "coinConstructor"
                     ]
                 }
@@ -1702,7 +1815,7 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "coinConstructor"
                     ]
                 }
@@ -1720,7 +1833,7 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "coinConstructor"
                     ]
                 }
@@ -1738,7 +1851,7 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "coinConstructor"
                     ]
                 }
@@ -1756,7 +1869,7 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "coinConstructor"
                     ]
                 }
@@ -1774,7 +1887,7 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "coinConstructor"
                     ]
                 }
@@ -1859,7 +1972,7 @@
                         "slices": 64,
                         "stacks": 64
                     },
-                    "nodelist": [
+                    "nodeslist": [
                         "bottomgreentubepart1"
                     ]
                 }
@@ -1893,7 +2006,7 @@
                         "slices": 64,
                         "stacks": 64
                     },
-                    "nodelist": [
+                    "nodeslist": [
                         "bottomgreentubepart2"
                     ]
                 }
@@ -1919,7 +2032,7 @@
                         "slices": 64,
                         "stacks": 64
                     },
-                    "nodelist": [
+                    "nodeslist": [
                         "bottomgreentubepart3"
                     ]
                 }
@@ -1979,16 +2092,16 @@
                             "z": 8
                         }
                     },
-                    "nodelist": [
-                        "castleWall1",
-                        "castleWall2",
-                        "castleWall3",
-                        "castleWall4",
+                    "nodeslist": [
+                        "castlewall1",
+                        "castlewall2",
+                        "castlewall3",
+                        "castlewall4",
                         "castlerighttop"
                     ]
                 }
             },
-            "castleWall": {
+            "castlewall": {
                 "type": "node",
                 "materialref": {
                     "materialId": "brick4app"
@@ -2017,15 +2130,15 @@
                             "z": 8
                         }
                     },
-                    "nodelist": [
-                        "castleWallBrick1",
-                        "castleWallBrick2",
-                        "castleWallBrick3",
-                        "castleWallBrick4"
+                    "nodeslist": [
+                        "castlewallbrick1",
+                        "castlewallbrick2",
+                        "castlewallbrick3",
+                        "castlewallbrick4"
                     ]
                 }
             },
-            "castleWall1": {
+            "castlewall1": {
                 "type": "node",
                 "transforms": [
                     {
@@ -2046,13 +2159,13 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
-                        "castleWall",
-                        "castleDoor"
+                    "nodeslist": [
+                        "castlewall",
+                        "castledoor"
                     ]
                 }
             },
-            "castleDoor": {
+            "castledoor": {
                 "type": "node",
                 "transforms": [
                     {
@@ -2076,13 +2189,13 @@
                     "materialId": "doormaterial"
                 },
                 "children": {
-                    "nodelist": [
-                        "castleDoorBottom",
-                        "castleDoorTop"
+                    "nodeslist": [
+                        "castledoorbottom",
+                        "castledoortop"
                     ]
                 }
             },
-            "castleDoorBottom": {
+            "castledoorbottom": {
                 "type": "node",
                 "transforms": [
                     {
@@ -2118,7 +2231,7 @@
                     }
                 }
             },
-            "castleDoorTop": {
+            "castledoortop": {
                 "type": "node",
                 "transforms": [
                     {
@@ -2147,7 +2260,7 @@
                     }
                 }
             },
-            "castleWindow1": {
+            "castlewindow1": {
                 "type": "node",
                 "transforms": [
                     {
@@ -2171,13 +2284,13 @@
                     "materialId": "doormaterial"
                 },
                 "children": {
-                    "nodelist": [
-                        "castleWindowBottom",
-                        "castleWindowTop"
+                    "nodeslist": [
+                        "castlewindowbottom",
+                        "castlewindowtop"
                     ]
                 }
             },
-            "castleWindow2": {
+            "castlewindow2": {
                 "type": "node",
                 "transforms": [
                     {
@@ -2201,13 +2314,13 @@
                     "materialId": "doormaterial"
                 },
                 "children": {
-                    "nodelist": [
-                        "castleWindowBottom",
-                        "castleWindowTop"
+                    "nodeslist": [
+                        "castlewindowbottom",
+                        "castlewindowtop"
                     ]
                 }
             },
-            "castleWindow3": {
+            "castlewindow3": {
                 "type": "node",
                 "transforms": [
                     {
@@ -2231,13 +2344,13 @@
                     "materialId": "doormaterial"
                 },
                 "children": {
-                    "nodelist": [
-                        "castleWindowBottom",
-                        "castleWindowTop"
+                    "nodeslist": [
+                        "castlewindowbottom",
+                        "castlewindowtop"
                     ]
                 }
             },
-            "castleWindowBottom": {
+            "castlewindowbottom": {
                 "type": "node",
                 "transforms": [
                     {
@@ -2273,7 +2386,7 @@
                     }
                 }
             },
-            "castleWindowTop": {
+            "castlewindowtop": {
                 "type": "node",
                 "transforms": [
                     {
@@ -2302,7 +2415,7 @@
                     }
                 }
             },
-            "castleWall2": {
+            "castlewall2": {
                 "type": "node",
                 "transforms": [
                     {
@@ -2315,13 +2428,13 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
-                        "castleWall",
-                        "castleDoor"
+                    "nodeslist": [
+                        "castlewall",
+                        "castledoor"
                     ]
                 }
             },
-            "castleWall3": {
+            "castlewall3": {
                 "type": "node",
                 "transforms": [
                     {
@@ -2342,13 +2455,13 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
-                        "castleWall",
-                        "castleDoor"
+                    "nodeslist": [
+                        "castlewall",
+                        "castledoor"
                     ]
                 }
             },
-            "castleWall4": {
+            "castlewall4": {
                 "type": "node",
                 "transforms": [
                     {
@@ -2369,13 +2482,13 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
-                        "castleWall",
-                        "castleDoor"
+                    "nodeslist": [
+                        "castlewall",
+                        "castledoor"
                     ]
                 }
             },
-            "castleWallBrick1": {
+            "castlewallbrick1": {
                 "type": "node",
                 "children": {
                     "brick": {
@@ -2393,7 +2506,7 @@
                     }
                 }
             },
-            "castleWallBrick2": {
+            "castlewallbrick2": {
                 "type": "node",
                 "children": {
                     "brick": {
@@ -2411,7 +2524,7 @@
                     }
                 }
             },
-            "castleWallBrick3": {
+            "castlewallbrick3": {
                 "type": "node",
                 "children": {
                     "brick": {
@@ -2429,7 +2542,7 @@
                     }
                 }
             },
-            "castleWallBrick4": {
+            "castlewallbrick4": {
                 "type": "node",
                 "children": {
                     "brick": {
@@ -2476,11 +2589,11 @@
                             "z": 6
                         }
                     },
-                    "nodelist": [
-                        "castleWallSmall1",
-                        "castleWallSmall2",
-                        "castleWallSmall3",
-                        "castleWallSmall4",
+                    "nodeslist": [
+                        "castlewallsmall1",
+                        "castlewallsmall2",
+                        "castlewallsmall3",
+                        "castlewallsmall4",
                         "castletopbaseflag"
                     ]
                 }
@@ -2522,7 +2635,7 @@
                             "b":0    
                         }
                     },
-                    "nodelist": [
+                    "nodeslist": [
                         "castletubeflag",
                         "castleflag",
                         "castletopobject"
@@ -2685,7 +2798,7 @@
                     }
                 }
             },
-            "castleWallSmall": {
+            "castlewallsmall": {
                 "type": "node",
                 "materialref": {
                     "materialId": "brick4app"
@@ -2714,16 +2827,16 @@
                             "z": 6
                         }
                     },
-                    "nodelist": [
-                        "castleWallSmallBrick1",
-                        "castleWallSmallBrick2",
-                        "castleWindow1",
-                        "castleWindow2",
-                        "castleWindow3"
+                    "nodeslist": [
+                        "castlewallsmallbrick1",
+                        "castlewallsmallbrick2",
+                        "castlewindow1",
+                        "castlewindow2",
+                        "castlewindow3"
                     ]
                 }
             },
-            "castleWallSmall1": {
+            "castlewallsmall1": {
                 "type": "node",
                 "transforms": [
                     {
@@ -2744,12 +2857,12 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
-                        "castleWallSmall"
+                    "nodeslist": [
+                        "castlewallsmall"
                     ]
                 }
             },
-            "castleWallSmall2": {
+            "castlewallsmall2": {
                 "type": "node",
                 "transforms": [
                     {
@@ -2770,12 +2883,12 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
-                        "castleWallSmall"
+                    "nodeslist": [
+                        "castlewallsmall"
                     ]
                 }
             },
-            "castleWallSmall3": {
+            "castlewallsmall3": {
                 "type": "node",
                 "transforms": [
                     {
@@ -2788,12 +2901,12 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
-                        "castleWallSmall"
+                    "nodeslist": [
+                        "castlewallsmall"
                     ]
                 }
             },
-            "castleWallSmall4": {
+            "castlewallsmall4": {
                 "type": "node",
                 "transforms": [
                     {
@@ -2814,12 +2927,12 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
-                        "castleWallSmall"
+                    "nodeslist": [
+                        "castlewallsmall"
                     ]
                 }
             },
-            "castleWallSmallBrick1": {
+            "castlewallsmallbrick1": {
                 "type": "node",
                 "children": {
                     "brick": {
@@ -2837,7 +2950,7 @@
                     }
                 }
             },
-            "castleWallSmallBrick2": {
+            "castlewallsmallbrick2": {
                 "type": "node",
                 "children": {
                     "brick": {
@@ -2868,18 +2981,18 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
-                        "baseBrick1",
-                        "flagTube",
-                        "flagTop",
-                        "flagFlag"
+                    "nodeslist": [
+                        "basebrick1",
+                        "flagtube",
+                        "flagtop",
+                        "flagflag"
                     ]
                 }
             },
             "lakes": {
                 "type": "node",
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "lake1",
                         "lake2",
                         "lake3"
@@ -2902,7 +3015,7 @@
                     }
                 ],
                 "children": {
-                    "nodelist": ["lakeUnit"]
+                    "nodeslist": ["lakeunit"]
                 }
             },
             "lake2": {
@@ -2921,7 +3034,7 @@
                     }
                 ],
                 "children": {
-                    "nodelist": ["lakeUnit"]
+                    "nodeslist": ["lakeunit"]
                 }
             },
             "lake3": {
@@ -2940,25 +3053,25 @@
                     }
                 ],
                 "children": {
-                    "nodelist": ["lakeUnit"]
+                    "nodeslist": ["lakeunit"]
                 }
             },
-            "lakeUnit": {
+            "lakeunit": {
                 "type": "node",
                 "materialref": {
                     "materialId": "sandapp"
                 },
                 "children": {
-                    "nodelist": [
-                        "leftLakeBasePart",
-                        "leftLakeWater",
-                        "leftLakeFountain",
-                        "leftLakeFountainWater1",
-                        "leftLakeFountainWater2"
+                    "nodeslist": [
+                        "leftlakebasepart",
+                        "leftlakewater",
+                        "leftlakefountain",
+                        "leftlakefountainwater1",
+                        "leftlakefountainwater2"
                     ]
                 }
             },
-            "leftLakeBasePart": {
+            "leftlakebasepart": {
                 "type": "node",
                 "transforms": [
                     {
@@ -2971,15 +3084,15 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
-                        "leftLakeBasePart1",
-                        "leftLakeBasePart2",
-                        "leftLakeBasePart3",
-                        "leftLakeBasePart4"
+                    "nodeslist": [
+                        "leftlakebasepart1",
+                        "leftlakebasepart2",
+                        "leftlakebasepart3",
+                        "leftlakebasepart4"
                     ]
                 }
             },
-            "leftLakeBasePart1": {
+            "leftlakebasepart1": {
                 "type": "node",
                 "transforms": [
                     {
@@ -3000,12 +3113,12 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
-                        "leftLakeBasePartUnit"
+                    "nodeslist": [
+                        "leftlakebasepartunit"
                     ]
                 }
             },
-            "leftLakeBasePart2": {
+            "leftlakebasepart2": {
                 "type": "node",
                 "transforms": [
                     {
@@ -3026,12 +3139,12 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
-                        "leftLakeBasePartUnit"
+                    "nodeslist": [
+                        "leftlakebasepartunit"
                     ]
                 }
             },
-            "leftLakeBasePart3": {
+            "leftlakebasepart3": {
                 "type": "node",
                 "transforms": [
                     {
@@ -3044,12 +3157,12 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
-                        "leftLakeBasePartUnit"
+                    "nodeslist": [
+                        "leftlakebasepartunit"
                     ]
                 }
             },
-            "leftLakeBasePart4": {
+            "leftlakebasepart4": {
                 "type": "node",
                 "transforms": [
                     {
@@ -3062,12 +3175,12 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
-                        "leftLakeBasePartUnit"
+                    "nodeslist": [
+                        "leftlakebasepartunit"
                     ]
                 }
             },
-            "leftLakeBasePartUnit": {
+            "leftlakebasepartunit": {
                 "type": "node",
                 "materialref": {
                     "materialId": "sandapp"
@@ -3088,7 +3201,7 @@
                     }
                 }
             },
-            "leftLakeWater": {
+            "leftlakewater": {
                 "type": "node",
                 "materialref": {
                     "materialId": "lakewaterapp"
@@ -3119,7 +3232,7 @@
                     }
                 }
             },
-            "leftLakeFountain": {
+            "leftlakefountain": {
                 "type": "node",
                 "materialref": {
                     "materialId": "brick1app"
@@ -3135,14 +3248,14 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
-                        "leftLakeFountain1",
-                        "leftLakeFountain2",
-                        "leftLakeFountain3"
+                    "nodeslist": [
+                        "leftlakefountain1",
+                        "leftlakefountain2",
+                        "leftlakefountain3"
                     ]
                 }
             },
-            "leftLakeFountain1": {
+            "leftlakefountain1": {
                 "type": "node",
                 "transforms": [
                     {
@@ -3155,7 +3268,7 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "barSeven"
                     ],
                     "anotherBar": {
@@ -3173,7 +3286,7 @@
                     }
                 }
             },
-            "leftLakeFountain2": {
+            "leftlakefountain2": {
                 "type": "node",
                 "transforms": [
                     {
@@ -3186,12 +3299,12 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "barSeven"
                     ]
                 }
             },
-            "leftLakeFountain3": {
+            "leftlakefountain3": {
                 "type": "node",
                 "transforms": [
                     {
@@ -3204,24 +3317,24 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "barSeven"
                     ]
                 }
             },
-            "leftLakeFountainWater": {
+            "leftlakefountainwater": {
                 "type": "node",
                 "materialref": {
                     "materialId": "waterfountainapp"
                 },
                 "children": {
-                    "nodelist": [
-                        "leftLakeFountainWater1",
-                        "leftLakeFountainWater2"
+                    "nodeslist": [
+                        "leftlakefountainwater1",
+                        "leftlakefountainwater2"
                     ]
                 }
             },
-            "leftLakeFountainWater1": {
+            "leftlakefountainwater1": {
                 "type": "node",
                 "materialref": {
                     "materialId": "watervideoapp"
@@ -3237,7 +3350,7 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "barSeven"
                     ],
                     "anotherBar": {
@@ -3255,7 +3368,7 @@
                     }
                 }
             },
-            "leftLakeFountainWater2": {
+            "leftlakefountainwater2": {
                 "type": "node",
                 "materialref": {
                     "materialId": "watervideoapp"
@@ -3286,7 +3399,7 @@
                     }
                 }
             },
-            "flagTube": {
+            "flagtube": {
                 "type": "node",
                 "transforms": [
                     {
@@ -3312,7 +3425,7 @@
                     }
                 }
             },
-            "flagTop": {
+            "flagtop": {
                 "type": "node",
                 "transforms": [
                     {
@@ -3336,7 +3449,7 @@
                     }
                 }
             },
-            "flagFlag": {
+            "flagflag": {
                 "type": "node",
                 "transforms": [
                     {
@@ -3416,7 +3529,7 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "greenTubeSmallMain"
                     ]
                 }
@@ -3434,8 +3547,8 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
-                        "baseBrick3",
+                    "nodeslist": [
+                        "basebrick3",
                         "greenTubeLongBase",
                         "greenTubeLongTop1",
                         "greenTubeLongTop2",
@@ -3467,7 +3580,7 @@
                         "slices": 64,
                         "stacks": 64
                     },
-                    "nodelist": [
+                    "nodeslist": [
                         "GreenPlantHead1",
                         "GreenPlantHead2",
                         "GreenPlantHead3",
@@ -4025,8 +4138,8 @@
             "greenTubeSmallMain": {
                 "type": "node",
                 "children": {
-                    "nodelist": [
-                        "baseBrick3",
+                    "nodeslist": [
+                        "basebrick3",
                         "greenTubeSmallBase",
                         "greenTubeSmallTop1",
                         "greenTubeSmallTop2"
@@ -4046,7 +4159,7 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "greenTubeBase"
                     ]
                 }
@@ -4072,7 +4185,7 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "greenTubeBase"
                     ]
                 }
@@ -4106,7 +4219,7 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "greenTubeTop1"
                     ]
                 }
@@ -4124,7 +4237,7 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "greenTubeTop2"
                     ]
                 }
@@ -4142,7 +4255,7 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "greenTubeTop1"
                     ]
                 }
@@ -4160,7 +4273,7 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "greenTubeTop2"
                     ]
                 }
@@ -4210,7 +4323,7 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "centerBox1",
                         "centerBox2",
                         "centerBox3",
@@ -4237,7 +4350,7 @@
                     "materialId": "brick2app"
                 },
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "brickConstructor2"
                     ]
                 }
@@ -4258,7 +4371,7 @@
                     "materialId": "brick2app"
                 },
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "brickConstructor2"
                     ]
                 }
@@ -4276,7 +4389,7 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "questionMarkConstructor"
                     ]
                 }
@@ -4297,7 +4410,7 @@
                     "materialId": "brick2app"
                 },
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "brickConstructor2"
                     ]
                 }
@@ -4315,7 +4428,7 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "questionMarkConstructor"
                     ]
                 }
@@ -4336,7 +4449,7 @@
                     "materialId": "brick2app"
                 },
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "brickConstructor2"
                     ]
                 }
@@ -4354,7 +4467,7 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "questionMarkConstructor"
                     ]
                 }
@@ -4377,7 +4490,7 @@
                     }
                 }
             },
-            "baseBrick1": {
+            "basebrick1": {
                 "type": "node",
                 "materialref": {
                     "materialId": "brick1app"
@@ -4398,7 +4511,7 @@
                     }
                 }
             },
-            "baseBrick3": {
+            "basebrick3": {
                 "type": "node",
                 "materialref": {
                     "materialId": "brick3app"
@@ -4545,7 +4658,7 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "coinCylinder",
                         "coinCenter"
                     ]
@@ -4629,7 +4742,7 @@
                     }
                 ],
                 "children": {
-                    "nodelist": [
+                    "nodeslist": [
                         "goombaHead1",
                         "goombaHead2",
                         "goombaTorso1",
@@ -5089,7 +5202,7 @@
                         "slices": 64,
                         "stacks": 64
                     },
-                    "nodelist": [
+                    "nodeslist": [
                         "goombaeyeinner1",
                         "goombaEyeBrown1"
                     ]
@@ -5196,7 +5309,7 @@
                         "slices": 64,
                         "stacks": 64
                     },
-                    "nodelist": [
+                    "nodeslist": [
                         "goombaeyeinner2",
                         "goombaEyeBrown2"
                     ]
@@ -5374,7 +5487,7 @@
                     }
                 ],
                 "children": {
-                    "nodelist":["polygonboxc1","polygonboxc2","polygonboxc3","polygonboxc4","polygonboxc5","polygonboxc6"]
+                    "nodeslist":["polygonboxc1","polygonboxc2","polygonboxc3","polygonboxc4","polygonboxc5","polygonboxc6"]
                 }
             },
             "polygonboxc1":{
