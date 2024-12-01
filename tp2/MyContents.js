@@ -619,6 +619,75 @@ class MyContents {
         return line;
     }
     
+    createPolygon(object) {
+        const radius = object.radius;
+        const stacks = object.stacks;
+        const slices = object.slices;
+    
+        const colorCenter = new THREE.Color(object.color_c.r, object.color_c.g, object.color_c.b);
+        const colorPeriphery = new THREE.Color(object.color_p.r, object.color_p.g, object.color_p.b);
+
+        const vertices = [];
+        const indices = [];
+        const colors = [];
+        const normals = [];
+    
+        // Generate vertices, normals, and colors
+        for (let i = 0; i <= stacks; i++) {
+            const stackRadius = (radius * i) / stacks;
+    
+            for (let j = 0; j <= slices; j++) {
+                const angle = (2 * Math.PI * j) / slices;
+                const x = Math.cos(angle) * stackRadius;
+                const y = Math.sin(angle) * stackRadius;
+    
+                // Position vertex
+                vertices.push(x, y, 0);
+    
+                // Normal vector (facing Z+ direction for flat surface)
+                normals.push(0, 0, 1);
+    
+                // Interpolate colors between center and periphery
+                const interpolatedColor = colorCenter.clone().lerp(colorPeriphery, i / stacks);
+                colors.push(interpolatedColor.r, interpolatedColor.g, interpolatedColor.b);
+            }
+        }
+    
+        // Generate indices for triangles
+        for (let i = 0; i < stacks; i++) {
+            for (let j = 0; j < slices; j++) {
+                const current = i * (slices + 1) + j;
+                const next = current + slices + 1;
+    
+                // First triangle (current, next, current + 1)
+                indices.push(current, next, current + 1);
+    
+                // Second triangle (current + 1, next, next + 1)
+                indices.push(current + 1, next, next + 1);
+            }
+        }
+    
+        // Create buffer geometry
+        const geometry = new THREE.BufferGeometry();
+        geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+        geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+        geometry.setAttribute('normal', new THREE.Float32BufferAttribute(normals, 3));
+        geometry.setIndex(indices);
+    
+        const material = new THREE.MeshStandardMaterial({ vertexColors: true, side: THREE.DoubleSide });
+
+        const mesh = new THREE.Mesh(geometry, material);
+        mesh.castShadow = object.castShadow;
+        mesh.receiveShadow = object.receiveShadow;
+    
+        const wireframe = new THREE.WireframeGeometry( geometry );
+        const line = new THREE.LineSegments( wireframe );
+        line.material.depthTest = false; 
+        line.material.opacity = 0.25; 
+        line.material.transparent = true; 
+
+        return {m:mesh, l:line};
+    }
     
     createGraph(nodes, group) {
         for (let [_, object] of Object.entries(nodes.children)) {
@@ -640,7 +709,9 @@ class MyContents {
                 addObject = this.createNurbs(object);
                 addWireframe = this.createWireframeNurbs(object);
             } else if (object instanceof MyPolygon) {
-                addObject = this.createTriangle(object); //?????
+                let polygon = this.createPolygon(object);
+                addObject = polygon.m;
+                addWireframe = polygon.l;
             } else if (object instanceof MyRectangle) {
                 addObject = this.createRectangle(object);
                 addWireframe = this.createWireframeRectangle(object);

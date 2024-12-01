@@ -1012,7 +1012,8 @@
                         "goombaLevel1",
                         "goombaLevel2",
                         "goombaLevel3",
-                        "goombaLevel4"
+                        "goombaLevel4",
+                        "polygonbox"
                     ]
                 }
             },
@@ -5211,6 +5212,264 @@
                         "radius": 1  ,
                         "slices": 64,
                         "stacks": 64
+                    }
+                }
+            },
+            "polygonbox":{
+                "type":"node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 14,
+                            "z": 9
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodeList":["polygonboxc1","polygonboxc2","polygonboxc3","polygonboxc4","polygonboxc5","polygonboxc6"]
+                }
+            },
+            "polygonboxc1":{
+                "type":"node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 45
+                        }
+                    }
+                ],
+                "children": {
+                    "octagonPrimitive":{
+                        "type":"polygon",
+                        "radius":0.7071067811865476,
+                        "slices":4,
+                        "stacks":10,
+                        "color_p":{
+                            "r":1,
+                            "g":0.06274509803921569,
+                            "b":0.9411764705882353
+                        },
+                        "color_c":{
+                            "r":1,
+                            "g":1,
+                            "b":0    
+                        }
+                    }
+                }
+            },
+            "polygonboxc2":{
+                "type":"node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 1 
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 45
+                        }
+                    }
+                ],
+                "children": {
+                    "octagonPrimitive":{
+                        "type":"polygon",
+                        "radius":0.7071067811865476,
+                        "slices":4,
+                        "stacks":10,
+                        "color_p":{
+                            "r":1,
+                            "g":0.06274509803921569,
+                            "b":0.9411764705882353
+                        },
+                        "color_c":{
+                            "r":1,
+                            "g":1,
+                            "b":0    
+                        }
+                    }
+                }
+            },
+            "polygonboxc3":{
+                "type":"node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0.5,
+                            "z": 0.5 
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 90,
+                            "y": 0,
+                            "z": 45
+                        }
+                    }
+                ],
+                "children": {
+                    "octagonPrimitive":{
+                        "type":"polygon",
+                        "radius":0.7071067811865476,
+                        "slices":4,
+                        "stacks":10,
+                        "color_p":{
+                            "r":1,
+                            "g":0.06274509803921569,
+                            "b":0.9411764705882353
+                        },
+                        "color_c":{
+                            "r":1,
+                            "g":1,
+                            "b":0    
+                        }
+                    }
+                }
+            },
+            "polygonboxc4":{
+                "type":"node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": -0.5,
+                            "z": 0.5 
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 90,
+                            "y": 0,
+                            "z": 45
+                        }
+                    }
+                ],
+                "children": {
+                    "octagonPrimitive":{
+                        "type":"polygon",
+                        "radius":0.7071067811865476,
+                        "slices":4,
+                        "stacks":10,
+                        "color_p":{
+                            "r":1,
+                            "g":0.06274509803921569,
+                            "b":0.9411764705882353
+                        },
+                        "color_c":{
+                            "r":1,
+                            "g":1,
+                            "b":0    
+                        }
+                    }
+                }
+            },
+            "polygonboxc5":{
+                "type":"node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.5,
+                            "y": 0,
+                            "z": 0.5 
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 90,
+                            "z": 45
+                        }
+                    }
+                ],
+                "children": {
+                    "octagonPrimitive":{
+                        "type":"polygon",
+                        "radius":0.7071067811865476,
+                        "slices":4,
+                        "stacks":10,
+                        "color_p":{
+                            "r":1,
+                            "g":0.06274509803921569,
+                            "b":0.9411764705882353
+                        },
+                        "color_c":{
+                            "r":1,
+                            "g":1,
+                            "b":0    
+                        }
+                    }
+                }
+            },
+            "polygonboxc6":{
+                "type":"node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -0.5,
+                            "y": 0,
+                            "z": 0.5 
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 90,
+                            "z": 45
+                        }
+                    }
+                ],
+                "children": {
+                    "octagonPrimitive":{
+                        "type":"polygon",
+                        "radius":0.7071067811865476,
+                        "slices":4,
+                        "stacks":10,
+                        "color_p":{
+                            "r":1,
+                            "g":0.06274509803921569,
+                            "b":0.9411764705882353
+                        },
+                        "color_c":{
+                            "r":1,
+                            "g":1,
+                            "b":0    
+                        }
                     }
                 }
             }
