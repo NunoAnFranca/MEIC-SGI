@@ -2480,8 +2480,209 @@
                         "castleWallSmall1",
                         "castleWallSmall2",
                         "castleWallSmall3",
-                        "castleWallSmall4"
+                        "castleWallSmall4",
+                        "castletopbaseflag"
                     ]
+                }
+            },
+            "castletopbaseflag": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 3.5,
+                            "y": 7.001,
+                            "z": 4.5
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 90.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "children": {
+                    "base": {
+                        "type": "polygon",
+                        "radius":1,
+                        "slices":8,
+                        "stacks":10,
+                        "color_p":{
+                            "r":1,
+                            "g":0.06274509803921569,
+                            "b":0.9411764705882353
+                        },
+                        "color_c":{
+                            "r":1,
+                            "g":1,
+                            "b":0    
+                        }
+                    },
+                    "nodelist": [
+                        "castletubeflag",
+                        "castleflag",
+                        "castletopobject"
+                    ]
+                }
+            },
+            "castletubeflag": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": -2
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 90,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "tubeflagmaterial"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "cylinder",
+                        "base": 0.1,
+                        "top": 0.1,
+                        "height": 4,
+                        "slices": 64,
+                        "stacks": 64
+                    }
+                }
+            },
+            "castletopobject": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": -4
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 90,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "topflagmaterial"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": -0.15,
+                            "y": -0.15,
+                            "z": -0.15
+                        },
+                        "xyz2": {
+                            "x": 0.15,
+                            "y": 0.15,
+                            "z": 0.15
+                        }
+                    }
+                }
+            },
+            "castleflag": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": -3.7
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 90,
+                            "y": 90,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.4,
+                            "y": 0.4,
+                            "z": 0.4
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "blacktubematerial"
+                },
+                "children": {
+                    "rectanglePrim": {
+                        "type": "nurbs",
+                        "degree_u": 3,
+                        "degree_v": 1,
+                        "parts_u": 64,
+                        "parts_v": 64,
+                        "controlpoints": [
+                            {
+                                "x": 0,
+                                "y": 0,
+                                "z": 0
+                            },
+                            {
+                                "x": 0,
+                                "y": 2,
+                                "z": 0
+                            },
+                            {
+                                "x": 0.5,
+                                "y": 0,
+                                "z": -0.5
+                            },
+                            {
+                                "x": 0.5,
+                                "y": 2,
+                                "z": -0.5
+                            },
+                            {
+                                "x": -0.5,
+                                "y": 0,
+                                "z": -1
+                            },
+                            {
+                                "x": -0.5,
+                                "y": 2,
+                                "z": -1
+                            },
+                            {
+                                "x": 0,
+                                "y": 1,
+                                "z": -4
+                            },
+                            {
+                                "x": 0,
+                                "y": 1,
+                                "z": -4
+                            }
+                        ]
+                    }
                 }
             },
             "castleWallSmall": {
