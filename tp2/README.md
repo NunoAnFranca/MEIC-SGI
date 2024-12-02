@@ -68,7 +68,7 @@ Due to size limitations, a video can't be used to showcase the fountains, but th
 |:------------------------------------------:|
 | Image 7 - Terrain        |
 
-Terrain consists of 6 different box geometries with different textures.
+Terrain consists of 6 different box geometries with different textures, where the top of the terrain is a grass texture using mipmapping.
 
 ### Objects of the Castle
 
