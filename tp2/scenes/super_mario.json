@@ -65,7 +65,14 @@
             },
             "grassTex": {
                 "filepath": "scenes/textures/elements/grass.png",
-                "isVideo": false
+                "isVideo": false,
+                "mipmap0": "scenes/textures/elements/grass.512.png",
+                "mipmap1": "scenes/textures/elements/grass.256.png",
+                "mipmap2": "scenes/textures/elements/grass.128.png",
+                "mipmap3": "scenes/textures/elements/grass.64.png",
+                "mipmap4": "scenes/textures/elements/grass.32.png",
+                "mipmap5": "scenes/textures/elements/grass.16.png",
+                "mipmap6": "scenes/textures/elements/grass.8.png"
             },
             "waterTex": {
                 "filepath": "scenes/textures/elements/water.png",

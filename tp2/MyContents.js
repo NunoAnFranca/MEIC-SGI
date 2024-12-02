@@ -116,12 +116,20 @@ class MyContents {
                     texture.magFilter = THREE.LinearFilter;
                 } else {
                     texture = this.loader.load(textureValues.filepath);
+                    texture.generateMipmaps = false;
 
-                    texture.generateMipmaps = true;
-                    texture.magFilter = THREE.NearestFilter;
-                    texture.minFilter = THREE.LinearMipMapLinearFilter; 
+                    if (textureValues.mipmap0) {
+                        for (let i = 0; i <= 7; i++) {
+                            if (textureValues[`mipmap${i}`]) {
+                                this.loadMipmap(texture, i, textureValues[`mipmap${i}`]);
+                            }
+                        }
+                    } else {
+                        texture.magFilter = THREE.NearestFilter;
+                        texture.minFilter = THREE.LinearMipMapLinearFilter; 
+                    }
+
                     texture.needsUpdate = true;
-
                     texture.colorSpace = THREE.SRGBColorSpace;
                     texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
                     texture.repeat.set(values.texlength_s || 1, values.texlength_t || 1);
@@ -137,6 +145,44 @@ class MyContents {
                 side: values.twosided ? THREE.DoubleSide : THREE.FrontSide
             });
         }
+    }
+
+    /**
+     * load an image and create a mipmap to be added to a texture at the defined level.
+     * In between, add the image some text and control squares. These items become part of the picture
+     * 
+     * @param {*} parentTexture the texture to which the mipmap is added
+     * @param {*} level the level of the mipmap
+     * @param {*} path the path for the mipmap image
+    // * @param {*} size if size not null inscribe the value in the mipmap. null by default
+    // * @param {*} color a color to be used for demo
+     */
+    loadMipmap(parentTexture, level, path)
+    {
+        // load texture. On loaded call the function to create the mipmap for the specified level 
+        new THREE.TextureLoader().load(path, 
+            function(mipmapTexture)  // onLoad callback
+            {
+                const canvas = document.createElement('canvas')
+                const ctx = canvas.getContext('2d')
+                ctx.scale(1, 1);
+                
+                // const fontSize = 48
+                const img = mipmapTexture.image         
+                canvas.width = img.width;
+                canvas.height = img.height
+
+                // first draw the image
+                ctx.drawImage(img, 0, 0 )
+                             
+                // set the mipmap image in the parent texture in the appropriate level
+                parentTexture.mipmaps[level] = canvas
+            },
+            undefined, // onProgress callback currently not supported
+            function(err) {
+                console.error('Unable to load the image ' + path + ' as mipmap level ' + level + ".", err)
+            }
+        )
     }
 
     createCameras() {
@@ -305,10 +351,16 @@ class MyContents {
         const height = object.xy2.y - object.xy1.y;
 
         const texValues = this.getmaterialLenSLenT(object.material);
-        let objectMaterial = this.materials[object.material].clone();
+
+        let objectMaterial = null;
+
+        if (this.materials[object.material]) {
+            objectMaterial = this.materials[object.material].clone();
+        } else {
+            objectMaterial = new THREE.MeshPhongMaterial({ color: new THREE.Color(1, 1, 1) });
+        }
 
         if (objectMaterial && objectMaterial.map) {
-            objectMaterial.map = objectMaterial.map.clone();
             objectMaterial.map.repeat.set(Math.abs(width) / (texValues.s || 1), Math.abs(height) / (texValues.t || 1));
             objectMaterial.map.wrapS = THREE.RepeatWrapping;
             objectMaterial.map.wrapT = THREE.RepeatWrapping;
@@ -329,13 +381,21 @@ class MyContents {
         const depth = object.xyz2.z - object.xyz1.z;
     
         const texValues = this.getmaterialLenSLenT(object.material);
-        let objectMaterial = this.materials[object.material].clone();
-    
+
+        let objectMaterial = null;
+        
+        if (this.materials[object.material]) {
+            objectMaterial = this.materials[object.material].clone();
+        } else {
+            objectMaterial = new THREE.MeshPhongMaterial({ color: new THREE.Color(1, 1, 1) });
+        }
+
         const box = new THREE.BoxGeometry(Math.abs(width), Math.abs(height), Math.abs(depth), object.parts_x, object.parts_y, object.parts_z);
         let boxMesh = null;
-        
+
         if (objectMaterial && objectMaterial.map) {
             let originalMap = objectMaterial.map.clone();
+            originalMap.mipmaps = objectMaterial.map.mipmaps;
             originalMap.wrapS = THREE.RepeatWrapping;
             originalMap.wrapT = THREE.RepeatWrapping;
     
@@ -349,19 +409,19 @@ class MyContents {
                 { u: Math.abs(width), v: Math.abs(height) },
                 { u: Math.abs(width), v: Math.abs(height) },
             ];
-            
+
             dimensions.forEach(({ u, v }) => {
                 let tempMaterial = objectMaterial.clone();
                 tempMaterial.map = originalMap.clone();
+                tempMaterial.map.mipmaps = originalMap.mipmaps;
                 tempMaterial.map.repeat.set(u / (texValues.s || 1), v / (texValues.t || 1));
                 materials.push(tempMaterial);
             });
-    
+
             boxMesh = new THREE.Mesh(box, materials);
             boxMesh.position.set(object.xyz1.x + width / 2, object.xyz1.y + height / 2, object.xyz1.z + depth / 2);
         
-        }
-        else {
+        } else {
             boxMesh = new THREE.Mesh(box, this.materials[object.material]);
         }
 
