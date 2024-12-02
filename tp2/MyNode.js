@@ -114,14 +114,6 @@ class MyNode {
                             this.children.push(new MyNode(valueAttr[i], this.node, this.material, this.castshadows, this.receiveshadows));
                         }
                     } 
-                    //else if (name === "lodsList") {
-                    //    for(let i in valueAttr){
-                    //        this.children.push(new MyNode(valueAttr[i], this.node, this.material, this.castshadows, this.receiveshadows));
-                    //    }
-                    //} 
-                    //else if(valueAttr === "lodNodes"){
-                    //    console.log(valueAttr);
-                    //}
                     else if (valueAttr.type === "pointlight") {
                         // Push pointlight to children
                         this.children.push(new MyPointLight(name, valueAttr));

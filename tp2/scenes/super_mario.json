@@ -146,48 +146,6 @@
                 "opacity": 0.8,
                 "textureref": "watervideotex"
             },
-            "lakewaterapp": {
-                "color": {
-                    "r": 0.5,
-                    "g": 0.5,
-                    "b": 0.5
-                },
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "specular": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "shininess": 10,
-                "transparent": true,
-                "opacity": 0.8,
-                "textureref": "watertex"
-            },
-            "waterfountainapp": {
-                "color": {
-                    "r": 0.5,
-                    "g": 0.5,
-                    "b": 0.5
-                },
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "specular": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "shininess": 10,
-                "transparent": true,
-                "opacity": 0.8,
-                "textureref": "watertex"
-            },
             "sandapp": {
                 "color": {
                     "r": 1,
@@ -823,8 +781,7 @@
                         "mainlevel",
                         "lakes",
                         "castleright",
-                        "terrain",
-                        "test"
+                        "terrain"
                     ],
                     "coins": {
                         "type": "pointlight",
@@ -960,83 +917,6 @@
                         "goombalevel4",
                         "polygonbox"                    
                     ]
-                }
-            },
-            "test": {
-                "type": "node",
-                "materialref": {
-                    "materialId": "brick3app"
-                },
-                "transforms": [
-                    {
-                        "type": "translate",
-                        "amount": {
-                            "x": 0.0,
-                            "y": 10,
-                            "z": 0.0
-                        }
-                    }
-                ],
-                "children": {
-                    "lodsList": [
-                        "test_lod"
-                    ]
-                }
-            },
-            "test_lod": {
-                "type": "lod",
-                "lodNodes": [
-                    {
-                        "nodeId": "test_lod1",
-                        "mindist": 0
-                    },
-                    {
-                        "nodeId": "test_lod2",
-                        "mindist": 15
-                    }
-                ]
-            },
-            "test_lod1": {
-                "type": "node",
-                "materialref": {
-                    "materialId": "brick3app"
-                },
-                "transforms": [
-                    {
-                        "type": "translate",
-                        "amount": {
-                            "x": 0.0,
-                            "y": 10,
-                            "z": 0.0
-                        }
-                    }
-                ],
-                "children": {
-                    "sphere":{
-                        "type":"sphere",
-                        "radius": 3
-                    }
-                }
-            },
-            "test_lod2": {
-                "type": "node",
-                "materialref": {
-                    "materialId": "brick3app"
-                },
-                "transforms": [
-                    {
-                        "type": "translate",
-                        "amount": {
-                            "x": 0.0,
-                            "y": 10,
-                            "z": 0.0
-                        }
-                    }
-                ],
-                "children": {
-                    "sphere":{
-                        "type":"cylinder"
-                    }
                 }
             },
             "terrain": {
@@ -3176,7 +3056,7 @@
             "leftlakewater": {
                 "type": "node",
                 "materialref": {
-                    "materialId": "lakewaterapp"
+                    "materialId": "waterapp"
                 },
                 "transforms": [
                     {
@@ -3297,7 +3177,7 @@
             "leftlakefountainwater": {
                 "type": "node",
                 "materialref": {
-                    "materialId": "waterfountainapp"
+                    "materialId": "waterapp"
                 },
                 "children": {
                     "nodesList": [
