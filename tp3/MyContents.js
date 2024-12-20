@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { MyAxis } from "./MyAxis.js";
 import { MyTrack } from "./MyTrack.js";
+import { MyReader } from "./MyReader.js";
 
 /**
  *  This class contains the contents of out application
@@ -34,7 +35,7 @@ class MyContents {
         // NOTICE: not a ThreeJS facility
         // this.notPickableObjIds = []
         // this.notPickableObjIds = ["col_0_0", "col_2_0", "col_1_1"]
-        this.notPickableObjIds = ["A", "B"]
+        this.notPickableObjIds = ["A", "B", "track"]
       
         //register events
 
@@ -60,9 +61,7 @@ class MyContents {
             this.app.scene.add(this.axis);
         }
 
-        //setup lights
-        this.buildLights()
-
+        //this.reader = new MyReader(this.app);
 
         //build boxes by columnS
         this.buildBaloonsColumn("col_0_", "#ff0000", 10)
@@ -79,6 +78,8 @@ class MyContents {
 
         // create the track
         this.track = new MyTrack(this.app);
+        this.track.name = "track";
+
     }
 
     /*
@@ -222,6 +223,7 @@ class MyContents {
         if (intersects.length > 0) {
             const obj = intersects[0].object
             if (this.notPickableObjIds.includes(obj.name)) {
+                console.log(obj)
                 if(this.lastPickedObj){
                     console.log("Object to choose");
                     if(!this.initialPoistions.includes(this.lastPickedObj.name)){
@@ -246,8 +248,6 @@ class MyContents {
      */
     transverseRaycastProperties(intersects) {
         for (var i = 0; i < intersects.length; i++) {
-
-            console.log(intersects[i]);
 
             /*
             An intersection has the following properties :
