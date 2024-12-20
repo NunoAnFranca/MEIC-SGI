@@ -23,7 +23,7 @@ class MyTrack {
 
         // curve related attributes
         this.closedCurve = false;
-        this.segments = 100;
+        this.segments = 250;
         this.showLine = true;
         this.showMesh = true;
         this.showWireframe = false;
@@ -33,15 +33,23 @@ class MyTrack {
 
         this.path =
             new THREE.CatmullRomCurve3([
-                new THREE.Vector3(0, 0, 5),
-                new THREE.Vector3(10, 0, 5),
-                new THREE.Vector3(10, 0, -5),
-                new THREE.Vector3(5, 0, -5),
-                new THREE.Vector3(0, 0, 0),
                 new THREE.Vector3(-5, 0, -5),
-                new THREE.Vector3(-10, 0, -5),
-                new THREE.Vector3(-10, 0, 5),
-                new THREE.Vector3(0, 0, 5)
+                new THREE.Vector3(-5, 0, -20),
+                new THREE.Vector3(2, 0, -20),
+                new THREE.Vector3(4, 0, -8),
+                new THREE.Vector3(10, 0, -8),
+                new THREE.Vector3(10, 0, -4),
+                new THREE.Vector3(4, 0, -4),
+                new THREE.Vector3(4, 0, 0),
+                new THREE.Vector3(15, 0, 0),
+                new THREE.Vector3(15, 0, 4),
+                new THREE.Vector3(0, 0, 4),
+                new THREE.Vector3(-4, 0, 10),
+                new THREE.Vector3(-8, 0, 10),
+                new THREE.Vector3(-15, 0, 10),
+                new THREE.Vector3(-15, 0, 0),
+                new THREE.Vector3(-5, 0, 0),
+                new THREE.Vector3(-5, 0, -5),
             ]);
         
         this.buildCurve()
@@ -102,7 +110,7 @@ class MyTrack {
         this.curve.add(this.line);
 
         this.curve.rotateZ(Math.PI);
-        this.curve.scale.set(1, 0.2, 1);
+        this.curve.scale.set(2, 1, 2);
         this.app.scene.add(this.curve);
     }
 
