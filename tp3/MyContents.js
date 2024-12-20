@@ -58,6 +58,7 @@ class MyContents {
         if (this.axis === null) {
             // create and attach the axis to the scene
             this.axis = new MyAxis(this);
+            this.axis.visible = false;
             this.app.scene.add(this.axis);
         }
 
@@ -78,8 +79,8 @@ class MyContents {
 
         // create the track
         this.track = new MyTrack(this.app);
-        this.track.name = "track";
-
+        
+        this.notPickableObjIds.push(this.track.mesh.name)
     }
 
     /*
@@ -221,7 +222,7 @@ class MyContents {
     */
     pickingHelper(intersects) {
         if (intersects.length > 0) {
-            const obj = intersects[0].object
+            const obj = intersects[0].object;
             if (this.notPickableObjIds.includes(obj.name)) {
                 console.log(obj)
                 if(this.lastPickedObj){
