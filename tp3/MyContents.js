@@ -14,20 +14,6 @@ class MyContents {
         this.app = app;
         this.axis = null;
 
-        // box related attributes
-        this.boxMesh = null;
-
-        // plane related attributes
-        this.diffusePlaneColor = "#00ffff";
-        this.specularPlaneColor = "#777777";
-        this.planeShininess = 30;
-        this.planeMaterial = new THREE.MeshPhongMaterial({
-            color: this.diffusePlaneColor,
-            specular: this.specularPlaneColor,
-            emissive: "#000000",
-            shininess: this.planeShininess,
-        });
-
         //picking: read documentation of THREE.Raycaster
 
         this.raycaster = new THREE.Raycaster()
@@ -48,7 +34,7 @@ class MyContents {
         // NOTICE: not a ThreeJS facility
         // this.notPickableObjIds = []
         // this.notPickableObjIds = ["col_0_0", "col_2_0", "col_1_1"]
-        this.notPickableObjIds = ["myplane"]
+        this.notPickableObjIds = ["A", "B"]
       
         //register events
 
@@ -218,14 +204,13 @@ class MyContents {
         this.lastPickedObj = null;
     }
 
-    changeObjectPosition(lastObj, obj) {
+    changeObjectPosition( obj) {
         if (this.lastPickedObj != obj) {
             if (this.lastPickedObj){
                 this.lastPickedObj.position.set(obj.position.x,obj.position.y+0.8,obj.position.z);
             }
-            this.lastPickedObj = obj;
-            this.lastPickedObj.currentHex = this.lastPickedObj.material.color.getHex();
-            this.lastPickedObj.material.color.setHex(this.pickingColor);
+            this.lastPickedObj.material.color.setHex(this.lastPickedObj.currentHex);
+            this.lastPickedObj = null;
         }
     }
 
@@ -237,13 +222,16 @@ class MyContents {
         if (intersects.length > 0) {
             const obj = intersects[0].object
             if (this.notPickableObjIds.includes(obj.name)) {
-                this.restoreColorOfFirstPickedObj()
-                console.log("Object cannot be picked !")
-            }
-            else if(this.initialPoistions.includes(obj.name)){
-                console.log("Object to choose");
-                console.log(this.lastPickedObj);
-                this.changeObjectPosition(this.lastPickedObj, obj);
+                if(this.lastPickedObj){
+                    console.log("Object to choose");
+                    if(!this.initialPoistions.includes(this.lastPickedObj.name)){
+                        this.changeObjectPosition(obj)
+                    }
+                }
+                else{
+                    this.restoreColorOfFirstPickedObj()
+                    console.log("Object cannot be picked !")
+                }
             }
             else
                 this.changeColorOfFirstPickedObj(obj)
