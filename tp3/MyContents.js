@@ -80,6 +80,8 @@ class MyContents {
 
         // create the track
         this.track = new MyTrack(this.app);
+        
+        this.notPickableObjIds.push(this.track.mesh.name)
     }
 
     /*
@@ -221,7 +223,7 @@ class MyContents {
     */
     pickingHelper(intersects) {
         if (intersects.length > 0) {
-            const obj = intersects[0].object
+            const obj = intersects[0].object;
             if (this.notPickableObjIds.includes(obj.name)) {
                 if(this.lastPickedObj){
                     console.log("Object to choose");

@@ -27,7 +27,7 @@ class MyTrack {
         this.showLine = true;
         this.showMesh = true;
         this.showWireframe = false;
-        this.textureRepeatX = 5;
+        this.textureRepeatX = 10;
         this.textureRepeatY = 1;
         this.width = 1;
 
@@ -71,6 +71,7 @@ class MyTrack {
         texture.wrapS = THREE.RepeatWrapping;
 
         this.material = new THREE.MeshBasicMaterial({ map: texture });
+        this.material.name = "track";
         this.material.map.repeat.set(this.textureRepeatX, this.textureRepeatY);
         this.material.map.wrapS = THREE.RepeatWrapping;
         this.material.map.wrapT = THREE.RepeatWrapping;
