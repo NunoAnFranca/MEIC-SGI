@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { MyAxis } from "./MyAxis.js";
-
+import { MyTrack } from "./MyTrack.js";
 
 /**
  *  This class contains the contents of out application
@@ -59,6 +59,8 @@ class MyContents {
             // list of events: https://developer.mozilla.org/en-US/docs/Web/API/Element
             this.onPointerMove.bind(this)
         );
+
+        this.track = null;
     }
 
     /**
@@ -88,9 +90,9 @@ class MyContents {
         this.initialPoistions = ["A","B"];
         this.buildInitialPosition("A",3,2);
         this.buildInitialPosition("B",3,-2);
-        // Create a Plane Mesh with basic material
-        this.buildPlane()
 
+        // create the track
+        this.track = new MyTrack(this.app);
     }
 
     /*
@@ -113,21 +115,6 @@ class MyContents {
         const ambientLight = new THREE.AmbientLight(0x555555)
         this.app.scene.add(ambientLight)
     }
-
-    /*
-    *
-    * Setup plane
-    *
-    */
-    buildPlane() {
-        let plane = new THREE.PlaneGeometry(10, 10);
-        this.planeMesh = new THREE.Mesh(plane, this.planeMaterial);
-        this.planeMesh.name = "myplane"
-        this.planeMesh.rotation.x = -Math.PI / 2;
-        this.planeMesh.position.y = 0;
-        this.app.scene.add(this.planeMesh);   // plane is not in any layer
-    }
-
 
     buildBaloonsColumn(name, color, posz) {
         for (let i = 0; i < 3; i++) {
@@ -307,6 +294,10 @@ class MyContents {
         this.pickingHelper(intersects)
 
         this.transverseRaycastProperties(intersects)
+    }
+
+    updateTrack() {
+        this.track.updateCurve()
     }
 
 

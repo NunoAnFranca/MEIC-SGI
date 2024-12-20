@@ -37,7 +37,18 @@ class MyGuiInterface {
 
         const pickFolder = this.datgui.addFolder('Picking');
         pickFolder.addColor(data_pic_color, 'picking color').onChange((value) => { this.contents.updatePickingColor(value) });
-        pickFolder.open()
+        pickFolder.open();
+
+        const trackFolder = this.datgui.addFolder('Track');
+        trackFolder.add(this.contents.track, 'showMesh').onChange(() => { this.contents.track.updateMeshVisibility() });
+        trackFolder.add(this.contents.track, 'showLine').onChange(() => { this.contents.track.updateLineVisibility() });
+        trackFolder.add(this.contents.track, 'showWireframe').onChange(() => { this.contents.track.updateWireframeVisibility() });
+        trackFolder.add(this.contents.track, 'segments', 1, 200, 1).onChange(() => { this.contents.track.updateCurve() });
+        trackFolder.add(this.contents.track, 'width', 0.1, 5).onChange(() => { this.contents.track.updateCurve() });
+        trackFolder.add(this.contents.track, 'textureRepeatX', 1, 10, 1).onChange(() => { this.contents.track.updateTextureRepeat() });
+        trackFolder.add(this.contents.track, 'textureRepeatY', 1, 10, 1).onChange(() => { this.contents.track.updateTextureRepeat() });
+        trackFolder.add(this.contents.track, 'closedCurve').onChange(() => { this.contents.updateTrack() });
+        trackFolder.close();
     }
 }
 
