@@ -27,67 +27,22 @@ class MyTrack {
         this.showLine = true;
         this.showMesh = true;
         this.showWireframe = false;
-        this.textureRepeatX = 1;
+        this.textureRepeatX = 5;
         this.textureRepeatY = 1;
         this.width = 1;
 
-        this.path = [
+        this.path =
             new THREE.CatmullRomCurve3([
-                new THREE.Vector3(-8, 0, 5),
-                new THREE.Vector3(0, 0, 4.9),
-                new THREE.Vector3(5, 0, 5)
-            ]),
-            new THREE.CatmullRomCurve3([
-                new THREE.Vector3(5, 0, 5),
+                new THREE.Vector3(0, 0, 5),
                 new THREE.Vector3(10, 0, 5),
-                new THREE.Vector3(10, 0, 0)
-            ]),
-            new THREE.CatmullRomCurve3([
-                new THREE.Vector3(10, 0, 0),
-                new THREE.Vector3(10, 0, -6),
-                new THREE.Vector3(10, 0, -9)
-            ]),
-            new THREE.CatmullRomCurve3([
-                new THREE.Vector3(10, 0, -9),
-                new THREE.Vector3(10, 0, -14),
-                new THREE.Vector3(5, 0, -14)
-            ]),
-            new THREE.CatmullRomCurve3([
-                new THREE.Vector3(5, 0, -14),
-                new THREE.Vector3(2.5, 0, -14),
-                new THREE.Vector3(2.5, 0, -6)
-            ]),
-            new THREE.CatmullRomCurve3([
-                new THREE.Vector3(2.5, 0, -6),
-                new THREE.Vector3(2.5, 0, -3),
-                new THREE.Vector3(-2.5, 0, -3)
-            ]),
-            new THREE.CatmullRomCurve3([
-                new THREE.Vector3(-2.5, 0, -3),
-                new THREE.Vector3(-5, 0, -3),
-                new THREE.Vector3(-5, 0, -9)
-            ]),
-            new THREE.CatmullRomCurve3([
-                new THREE.Vector3(-5, 0, -9),
-                new THREE.Vector3(-5, 0, -14),
-                new THREE.Vector3(-10, 0, -14)
-            ]),
-            new THREE.CatmullRomCurve3([
-                new THREE.Vector3(-10, 0, -14),
-                new THREE.Vector3(-12.5, 0, -14),
-                new THREE.Vector3(-12.5, 0, -9)
-            ]),
-            new THREE.CatmullRomCurve3([
-                new THREE.Vector3(-12.5, 0, -9),
-                new THREE.Vector3(-12.5, 0, -6),
-                new THREE.Vector3(-12.5, 0, 0)
-            ]),
-            new THREE.CatmullRomCurve3([
-                new THREE.Vector3(-12.5, 0, 0),
-                new THREE.Vector3(-12.5, 0, 5),
-                new THREE.Vector3(-8, 0, 5)
-            ]),
-        ];
+                new THREE.Vector3(10, 0, -5),
+                new THREE.Vector3(5, 0, -5),
+                new THREE.Vector3(0, 0, 0),
+                new THREE.Vector3(-5, 0, -5),
+                new THREE.Vector3(-10, 0, -5),
+                new THREE.Vector3(-10, 0, 5),
+                new THREE.Vector3(0, 0, 5)
+            ]);
         
         this.buildCurve()
     }
@@ -97,10 +52,7 @@ class MyTrack {
      */
     buildCurve() {
         this.createCurveMaterialsTextures();
-
-        for (let i = 0; i < this.path.length; i++) {
-            this.createCurveObjects(this.path[i]);
-        }
+        this.createCurveObjects();
     }
 
       /**
@@ -128,12 +80,12 @@ class MyTrack {
     /**
      * Creates the mesh, the line and the wireframe used to visualize the curve
      */
-    createCurveObjects(path) {
-        let geometry = new THREE.TubeGeometry(path, this.segments, this.width, 3, this.closedCurve);
+    createCurveObjects() {
+        let geometry = new THREE.TubeGeometry(this.path, this.segments, this.width, 3, this.closedCurve);
         this.mesh = new THREE.Mesh(geometry, this.material);
         this.wireframe = new THREE.Mesh(geometry, this.wireframeMaterial);
 
-        let points = path.getPoints(this.segments);
+        let points = this.path.getPoints(this.segments);
         let bGeometry = new THREE.BufferGeometry().setFromPoints(points);
 
         // Create the final object to add to the scene
