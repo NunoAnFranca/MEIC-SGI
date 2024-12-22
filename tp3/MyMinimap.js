@@ -1,5 +1,6 @@
 import * as THREE from "three";
-
+import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 
 
 class MyMinimap {
@@ -51,13 +52,35 @@ class MyMinimap {
         const geometry = new THREE.BoxGeometry(100,0.1,0);
         const material = new THREE.MeshBasicMaterial({color: 0x0000ff});
 
-        for(let i = 0; i< 4; i++){
+        let cardinals = ['N','S','E','W'];
+
+        for(let i = 0; i< 5; i++){
             let bar = new THREE.Mesh(geometry, material);
-            bar.position.set(0, 5 + 3*i,0);
+            bar.position.set(0, 2 + 3*i,0);
             this.miniScene.add(bar);
+
+            this.buildLetter(cardinals[i], -20, 3+3*i,0);
         }
 
         
+    }
+
+    buildLetter(letter,x,y,z){
+        const fontLoader = new FontLoader();
+        fontLoader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', (font) => {
+            const textGeometry = new TextGeometry(letter, {
+                font: font,
+                size: 1.5,
+                curveSegments: 12
+            });
+        
+            const textMaterial = new THREE.MeshStandardMaterial({ color: 0x000000 });
+            const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+        
+            this.miniScene.add(textMesh);
+            textMesh.position.set(x, y, z);
+            textMesh.scale.set(3,1,0);
+        });
     }
 
 }

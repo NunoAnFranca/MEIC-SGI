@@ -3,7 +3,8 @@ import { MyAxis } from "./MyAxis.js";
 import { MyTrack } from "./MyTrack.js";
 import { MyReader } from "./MyReader.js";
 import { MyBaloon } from "./MyBaloon.js";
-
+import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 /**
  *  This class contains the contents of out application
  */
@@ -107,6 +108,7 @@ class MyContents {
         // create the track
         this.track = new MyTrack(this.app);
         
+        this.testLetter();
         this.notPickableObjIds.push(this.track.mesh.name)
         this.lastPickedObj = null   
     }
@@ -326,6 +328,33 @@ class MyContents {
                 - uv : intersection point in the object's UV coordinates (THREE.Vector2)
             */
         }
+    }
+
+    /**
+     * FUNCTION 
+     * TEST 
+     * LETTER 
+     * */
+    testLetter(){
+        const fontLoader = new FontLoader();
+        fontLoader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', (font) => {
+            const textGeometry = new TextGeometry('Hello, Three.js!', {
+                font: font,
+                size: 1,
+                height: 0.5,
+                curveSegments: 12,
+                bevelEnabled: true,
+                bevelThickness: 0.03,
+                bevelSize: 0.02,
+                bevelSegments: 5
+            });
+        
+            const textMaterial = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
+            const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+        
+            this.app.scene.add(textMesh);
+            textMesh.position.set(-5, 0, 0);
+        });
     }
 
     onPointerMove(event) {

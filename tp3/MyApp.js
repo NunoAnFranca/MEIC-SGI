@@ -218,7 +218,6 @@ class MyApp {
     updateMinimap() {
         if (this.contents && this.contents.player) {
             const player = this.contents.player; // The balloon or player object
-            console.log(player)
             this.minimap.minimapMarker.position.set(0, player.yPos, 0);
         }
     } 
