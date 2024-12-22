@@ -38,6 +38,58 @@ class MyBaloon {
 
         this.app.scene.add(baloonMesh)
     }
+
+    setPosition(xPos, yPos, zPos) {
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.zPos = zPos;
+
+        this.app.scene.getObjectByName(this.name).position.x = this.xPos;
+        this.app.scene.getObjectByName(this.name).position.y = this.yPos;
+        this.app.scene.getObjectByName(this.name).position.z = this.zPos;
+    }
+    
+    moveWind() {
+        if (this.yPos < 1) {
+            this.moveForward();
+        } else if (this.yPos < 2) {
+            this.moveLeft();
+        } else if (this.yPos < 3) {
+            this.moveBackward();
+        } else if (this.yPos < 4) {
+            this.moveRight();
+        }
+    }
+
+    moveUp() {
+        this.yPos += 0.1;
+        this.app.scene.getObjectByName(this.name).position.y = this.yPos;
+    }
+
+    moveDown() {
+        this.yPos -= 0.1;
+        this.app.scene.getObjectByName(this.name).position.y = this.yPos;
+    }
+
+    moveLeft() {
+        this.xPos -= 0.1;
+        this.app.scene.getObjectByName(this.name).position.x = this.xPos;
+    }
+
+    moveRight() {
+        this.xPos += 0.1;
+        this.app.scene.getObjectByName(this.name).position.x = this.xPos;
+    }
+
+    moveForward() {
+        this.zPos -= 0.1;
+        this.app.scene.getObjectByName(this.name).position.z = this.zPos;
+    }
+
+    moveBackward() {
+        this.zPos += 0.1;
+        this.app.scene.getObjectByName(this.name).position.z = this.zPos;
+    }
 }
 
 export { MyBaloon };

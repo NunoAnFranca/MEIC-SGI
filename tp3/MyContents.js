@@ -26,6 +26,10 @@ class MyContents {
         this.intersectedObj = null
         this.pickingColor = "0x00ff00"
 
+        this.track = null;
+        this.ballons = {};
+        this.player1Baloon = null;
+        this.player2Baloon = null;
 
         // structure of layers: each layer will contain its objects
         // this can be used to select objects that are pickeable     
@@ -48,8 +52,23 @@ class MyContents {
             this.onPointerMove.bind(this)
         );
 
-        this.ballons = [];
-        this.track = null;
+        document.addEventListener("keydown", (event) => {
+            if (event.key === 'w') {
+                if (this.player1Baloon) {
+                    this.ballons[this.player1Baloon].moveUp();
+                }
+            } else if (event.key === 's') {
+                if (this.player1Baloon) {
+                    this.ballons[this.player1Baloon].moveDown();
+                }
+            } else if (event.key === 'p') {
+                if (this.player1Baloon) {
+                    setInterval(() => {
+                        this.ballons[this.player1Baloon].moveWind();
+                    }, 30);
+                }
+            }
+        });
     }
 
     /**
@@ -113,7 +132,7 @@ class MyContents {
 
     buildBaloonsColumn(name, color, zPos) {
         for (let i = 0; i < 3; i++) {
-            this.ballons.push(new MyBaloon(this.app, name + i, color, i * 2, 0, zPos));
+            this.ballons[name + i] = new MyBaloon(this.app, name + i, color, i * 2, 0, zPos);
         }
     }
 
@@ -186,7 +205,7 @@ class MyContents {
     changeObjectPosition( obj) {
         if (this.lastPickedObj != obj) {
             if (this.lastPickedObj){
-                this.lastPickedObj.position.set(obj.position.x,obj.position.y+0.8,obj.position.z);
+                this.ballons[this.lastPickedObj.name].setPosition(obj.position.x, obj.position.y + 0.8, obj.position.z);
             }
 
             this.lastPickedObj.material.color.setHex(this.lastPickedObj.currentHex);
@@ -207,12 +226,14 @@ class MyContents {
                         case "R":
                             if (obj.name === "A" && this.initialPositions["A"] === null) {
                                 this.initialPositions["A"] = this.lastPickedObj.name;
+                                this.player1Baloon = this.lastPickedObj.name;
                                 this.changeObjectPosition(obj)
                             }
                             break;
                         case "B":
                             if (obj.name === "B" && this.initialPositions["B"] === null) {
                                 this.initialPositions["B"] = obj.name;
+                                this.player2Baloon = this.lastPickedObj.name;
                                 this.changeObjectPosition(obj)
                             }
                             break;
@@ -248,7 +269,6 @@ class MyContents {
             */
         }
     }
-
 
     onPointerMove(event) {
 
