@@ -19,7 +19,7 @@ class MyAxis extends THREE.Object3D {
         super();
         this.app = app;
         this.type = 'Group';
-        this.size = size || 2;
+        this.size = size || 5;
         this.baseRadius = baseRadius || 0.05;
         this.xxColor = xxColor || 0xff0000
         this.yyColor = yyColor || 0x00ff00
@@ -47,11 +47,9 @@ class MyAxis extends THREE.Object3D {
         zzMesh.position.set(0,0,this.size/2);
         zzMesh.rotation.x = Math.PI / 2;
         this.add( zzMesh ); 
+    }
 
-        // an axis helper
-        const axesHelper = new THREE.AxesHelper( 5 );
-        axesHelper.setColors ( new THREE.Color( this.xxColor ),  new THREE.Color( this.yyColor ),  new THREE.Color( this.zzColor ))
-        this.add( axesHelper );
+    update() {
     }
 }
 

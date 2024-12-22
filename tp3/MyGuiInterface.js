@@ -36,7 +36,7 @@ class MyGuiInterface {
         };
 
         const axisFolder = this.datgui.addFolder('Axis');
-        axisFolder.add(this.contents.axis, 'visible').onChange(() => { this.contents.axis.updateVisibility() });
+        axisFolder.add(this.contents.axis, 'visible').onChange(() => { this.contents.updateAxis() });
         axisFolder.close();
 
         const pickFolder = this.datgui.addFolder('Picking');

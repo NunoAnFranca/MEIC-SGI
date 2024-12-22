@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { MyAxis } from "./MyAxis.js";
 import { MyTrack } from "./MyTrack.js";
 import { MyReader } from "./MyReader.js";
+import { MyBaloon } from "./MyBaloon.js";
 
 /**
  *  This class contains the contents of out application
@@ -47,6 +48,7 @@ class MyContents {
             this.onPointerMove.bind(this)
         );
 
+        this.ballons = [];
         this.track = null;
     }
 
@@ -64,23 +66,28 @@ class MyContents {
 
         //this.reader = new MyReader(this.app);
 
-        //build boxes by columnS
-        this.buildBaloonsColumn("col_0_", "#ff0000", 10)
-        this.buildBaloonsColumn("col_1_", "#ff0000", 8)
-        this.buildBaloonsColumn("col_2_", "#ff0000", 6)
+        // create temp lights so we can see the objects to not render the entire scene
+        this.buildLights();
 
-        this.buildBaloonsColumn("col_3_", "#0000ff", -10)
-        this.buildBaloonsColumn("col_4_", "#0000ff", -8)
-        this.buildBaloonsColumn("col_5_", "#0000ff", -6)
+        // red baloons
+        this.buildBaloonsColumn("R_col_0_", "#ff0000", 10)
+        this.buildBaloonsColumn("R_col_1_", "#ff0000", 8)
+        this.buildBaloonsColumn("R_col_2_", "#ff0000", 6)
+
+        // blue baloons
+        this.buildBaloonsColumn("B_col_3_", "#0000ff", -10)
+        this.buildBaloonsColumn("B_col_4_", "#0000ff", -8)
+        this.buildBaloonsColumn("B_col_5_", "#0000ff", -6)
         
-        this.initialPoistions = ["A","B"];
-        this.buildInitialPosition("A",3,2);
-        this.buildInitialPosition("B",3,-2);
+        this.initialPositions = {"A": null, "B": null};
+        this.buildInitialPosition("A", 3, 2);
+        this.buildInitialPosition("B", 3, -2);
 
         // create the track
         this.track = new MyTrack(this.app);
         
         this.notPickableObjIds.push(this.track.mesh.name)
+        this.lastPickedObj = null
     }
 
     /*
@@ -104,9 +111,9 @@ class MyContents {
         this.app.scene.add(ambientLight)
     }
 
-    buildBaloonsColumn(name, color, posz) {
+    buildBaloonsColumn(name, color, zPos) {
         for (let i = 0; i < 3; i++) {
-            this.buildBaloon(name + i, color, i * 2, 2, posz)
+            this.ballons.push(new MyBaloon(this.app, name + i, color, i * 2, 0, zPos));
         }
     }
 
@@ -120,45 +127,11 @@ class MyContents {
             shininess: 90,
         });
 
-
-
         this.mesh = new THREE.Mesh(geometry, positionsMaterial);
         this.mesh.position.set(xpos,0.5,zpos);
         this.mesh.name = name;
         this.app.scene.add(this.mesh);
 
-    }
-
-    /**
-     * builds the box mesh with material assigned
-     */
-    buildBaloon(name, color, xpos, ypos, zpos) {
-
-        this.radius = 0.5;
-        this.slices = 64;
-        this.stacks = 64;
-
-        let baloonMaterial = new THREE.MeshPhongMaterial({
-            color: color,
-            specular: "#000000",
-            emissive: "#000000",
-            shininess: 90,
-        });
-
-        // Create a Cube Mesh with basic material
-        let baloon = new THREE.SphereGeometry(
-            this.radius,
-            this.slices,
-            this.stacks
-        );
-
-        this.baloonMesh = new THREE.Mesh(baloon, baloonMaterial);
-        this.baloonMesh.name = name
-        this.baloonMesh.position.x = xpos;
-        this.baloonMesh.position.y = ypos;
-        this.baloonMesh.position.z = zpos;
-
-        this.app.scene.add(this.baloonMesh)
     }
 
     /*
@@ -188,8 +161,10 @@ class MyContents {
     */
     changeColorOfFirstPickedObj(obj) {
         if (this.lastPickedObj != obj) {
-            if (this.lastPickedObj)
+            if (this.lastPickedObj) {
                 this.lastPickedObj.material.color.setHex(this.lastPickedObj.currentHex);
+            }
+
             this.lastPickedObj = obj;
             this.lastPickedObj.currentHex = this.lastPickedObj.material.color.getHex();
             this.lastPickedObj.material.color.setHex(this.pickingColor);
@@ -201,8 +176,10 @@ class MyContents {
      *
      */
     restoreColorOfFirstPickedObj() {
-        if (this.lastPickedObj)
+        if (this.lastPickedObj) {
             this.lastPickedObj.material.color.setHex(this.lastPickedObj.currentHex);
+        }
+
         this.lastPickedObj = null;
     }
 
@@ -211,6 +188,7 @@ class MyContents {
             if (this.lastPickedObj){
                 this.lastPickedObj.position.set(obj.position.x,obj.position.y+0.8,obj.position.z);
             }
+
             this.lastPickedObj.material.color.setHex(this.lastPickedObj.currentHex);
             this.lastPickedObj = null;
         }
@@ -224,20 +202,29 @@ class MyContents {
         if (intersects.length > 0) {
             const obj = intersects[0].object;
             if (this.notPickableObjIds.includes(obj.name)) {
-                console.log(obj)
-                if(this.lastPickedObj){
-                    console.log("Object to choose");
-                    if(!this.initialPoistions.includes(this.lastPickedObj.name)){
-                        this.changeObjectPosition(obj)
+                if (this.lastPickedObj) {
+                    switch (this.lastPickedObj.name.charAt(0)) {
+                        case "R":
+                            if (obj.name === "A" && this.initialPositions["A"] === null) {
+                                this.initialPositions["A"] = this.lastPickedObj.name;
+                                this.changeObjectPosition(obj)
+                            }
+                            break;
+                        case "B":
+                            if (obj.name === "B" && this.initialPositions["B"] === null) {
+                                this.initialPositions["B"] = obj.name;
+                                this.changeObjectPosition(obj)
+                            }
+                            break;
+                        default:
+                            break;
                     }
-                }
-                else{
+                } else {
                     this.restoreColorOfFirstPickedObj()
-                    console.log("Object cannot be picked !")
                 }
-            }
-            else
+            } else {
                 this.changeColorOfFirstPickedObj(obj)
+            }
         } else {
             this.restoreColorOfFirstPickedObj()
         }
@@ -289,6 +276,9 @@ class MyContents {
         this.track.updateCurve()
     }
 
+    updateAxis() {
+        this.axis.update();
+    }
 
     /**
      * updates the contents
