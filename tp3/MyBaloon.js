@@ -50,13 +50,13 @@ class MyBaloon {
     }
     
     moveWind() {
-        if (this.yPos < 1) {
+        if (this.yPos < 5) {
             this.moveForward();
-        } else if (this.yPos < 2) {
+        } else if (this.yPos < 8) {
             this.moveLeft();
-        } else if (this.yPos < 3) {
+        } else if (this.yPos < 11) {
             this.moveBackward();
-        } else if (this.yPos < 4) {
+        } else if (this.yPos < 14) {
             this.moveRight();
         }
     }

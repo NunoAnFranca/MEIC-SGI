@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { MyContents } from './MyContents.js';
 import { MyGuiInterface } from './MyGuiInterface.js';
+import { MyMinimap } from './MyMinimap.js';
 import Stats from 'three/addons/libs/stats.module.js'
 
 /**
@@ -14,6 +15,7 @@ class MyApp {
      */
     constructor() {
         this.scene = null
+        this.miniScene = null
         this.stats = null
 
         // camera related attributes
@@ -43,8 +45,13 @@ class MyApp {
         this.stats.showPanel(1) // 0: fps, 1: ms, 2: mb, 3+: custom
         document.body.appendChild(this.stats.dom)
 
+        this.minimap = new MyMinimap();
         this.initCameras();
-        this.setActiveCamera('Perspective')
+        this.minimap.initMinimapCamera();
+        this.minimap.initMinimapRenderer();
+        this.setActiveCamera('Perspective');
+
+        this.minimap.createMinimap();
 
         // Create a renderer with Antialiasing
         this.renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -70,8 +77,8 @@ class MyApp {
         const aspect = window.innerWidth / window.innerHeight;
 
         // Create a basic perspective camera
-        const perspective1 = new THREE.PerspectiveCamera(75, aspect, 0.1, 1000)
-        perspective1.position.set(10, 10, 3)
+        const perspective1 = new THREE.PerspectiveCamera(60, aspect, 0.1, 1000)
+        perspective1.position.set(0, 75, 0)
         this.cameras['Perspective'] = perspective1
 
         // defines the frustum size for the orthographic cameras
@@ -183,26 +190,38 @@ class MyApp {
     * the main render function. Called in a requestAnimationFrame loop
     */
     render() {
-        this.stats.begin()
-        this.updateCameraIfRequired()
-
-        // update the animation if contents were provided
+        this.stats.begin();
+        this.updateCameraIfRequired();
+    
+        // Update the animation if contents were provided
         if (this.activeCamera !== undefined && this.activeCamera !== null) {
-            this.contents.update()
+            this.contents.update();
         }
-
-        // required if controls.enableDamping or controls.autoRotate are set to true
+    
+        // Update player position for minimap (assuming player is in this.contents)
+        this.updateMinimap();
+        // Update the controls for the main camera
         this.controls.update();
-
-        // render the scene
+    
+        // Render the main scene
         this.renderer.render(this.scene, this.activeCamera);
-
-        // subsequent async calls to the render loop
+    
+        // Render the minimap scene
+        this.minimap.minimapRenderer.render(this.minimap.miniScene, this.minimap.minimapCamera);
+    
+        // Call the next frame
         requestAnimationFrame(this.render.bind(this));
-
-        this.lastCameraName = this.activeCameraName
-        this.stats.end()
+    
+        this.stats.end();
     }
+
+    updateMinimap() {
+        if (this.contents && this.contents.player) {
+            const player = this.contents.player; // The balloon or player object
+            console.log(player)
+            this.minimap.minimapMarker.position.set(0, player.yPos, 0);
+        }
+    } 
 }
 
 

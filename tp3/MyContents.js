@@ -64,6 +64,7 @@ class MyContents {
             } else if (event.key === 'p') {
                 if (this.player1Baloon) {
                     setInterval(() => {
+                        this.player = this.ballons[this.player1Baloon];
                         this.ballons[this.player1Baloon].moveWind();
                     }, 30);
                 }
@@ -82,6 +83,7 @@ class MyContents {
             this.axis.visible = false;
             this.app.scene.add(this.axis);
         }
+        this.createStartMenu();
 
         //this.reader = new MyReader(this.app);
 
@@ -89,24 +91,24 @@ class MyContents {
         this.buildLights();
 
         // red baloons
-        this.buildBaloonsColumn("R_col_0_", "#ff0000", 10)
-        this.buildBaloonsColumn("R_col_1_", "#ff0000", 8)
-        this.buildBaloonsColumn("R_col_2_", "#ff0000", 6)
+        this.buildBaloonsColumn("R_col_0_", "#ff0000", 30)
+        this.buildBaloonsColumn("R_col_1_", "#ff0000", 28)
+        this.buildBaloonsColumn("R_col_2_", "#ff0000", 26)
 
         // blue baloons
-        this.buildBaloonsColumn("B_col_3_", "#0000ff", -10)
-        this.buildBaloonsColumn("B_col_4_", "#0000ff", -8)
-        this.buildBaloonsColumn("B_col_5_", "#0000ff", -6)
+        this.buildBaloonsColumn("B_col_3_", "#0000ff", 10)
+        this.buildBaloonsColumn("B_col_4_", "#0000ff", 8)
+        this.buildBaloonsColumn("B_col_5_", "#0000ff", 6)
         
         this.initialPositions = {"A": null, "B": null};
-        this.buildInitialPosition("A", 3, 2);
-        this.buildInitialPosition("B", 3, -2);
+        this.buildInitialPosition("A", 21.5, -15);
+        this.buildInitialPosition("B", 17, -15);
 
         // create the track
         this.track = new MyTrack(this.app);
         
         this.notPickableObjIds.push(this.track.mesh.name)
-        this.lastPickedObj = null
+        this.lastPickedObj = null   
     }
 
     /*
@@ -130,9 +132,9 @@ class MyContents {
         this.app.scene.add(ambientLight)
     }
 
-    buildBaloonsColumn(name, color, zPos) {
+    buildBaloonsColumn(name, color, xPos) {
         for (let i = 0; i < 3; i++) {
-            this.ballons[name + i] = new MyBaloon(this.app, name + i, color, i * 2, 0, zPos);
+            this.ballons[name + i] = new MyBaloon(this.app, name + i, color, xPos, 2.0, i * 2 -15);
         }
     }
 
@@ -147,7 +149,7 @@ class MyContents {
         });
 
         this.mesh = new THREE.Mesh(geometry, positionsMaterial);
-        this.mesh.position.set(xpos,0.5,zpos);
+        this.mesh.position.set(xpos,1.5,zpos);
         this.mesh.name = name;
         this.app.scene.add(this.mesh);
 
@@ -251,6 +253,62 @@ class MyContents {
         }
     }
 
+    createStartMenu() {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+              
+        canvas.width = 1920;
+        canvas.height = 1080;
+
+        const backgroundImage = new Image();
+        backgroundImage.src = 'images/menu.jpg';
+      
+        backgroundImage.onload = () => {
+        ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = '#000000';
+        ctx.font = 'bold 90px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('PLAY', canvas.width / 2, canvas.height / 2);
+
+        texture.needsUpdate = true;
+        };
+      
+        const texture = new THREE.CanvasTexture(canvas);
+        const material = new THREE.MeshBasicMaterial({ map: texture });
+        const plane = new THREE.Mesh(new THREE.PlaneGeometry(128, 72), material);
+        plane.rotation.x= -Math.PI/2;
+        
+        const box = new THREE.BoxGeometry(15,5,5);
+        const boxMaterial = new THREE.MeshPhongMaterial({color:0x0000ff});
+        const boxMesh = new THREE.Mesh(box, boxMaterial);
+        boxMesh.position.set(0,20,0);
+        boxMesh.visible = false;
+        this.app.scene.add(boxMesh);
+
+        plane.position.set(0, 20, 0);
+        this.app.scene.add(plane);
+     
+            
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+
+        const onMouseClick = (event) => {
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, this.app.getActiveCamera());
+            const intersects = raycaster.intersectObject(boxMesh);
+
+            if (intersects.length > 0) {
+                this.app.scene.remove(boxMesh);
+                this.app.scene.remove(plane);
+            }
+        };
+
+        window.addEventListener('click', onMouseClick);
+    }
 
     /**
      * Print to console information about the intersected objects
