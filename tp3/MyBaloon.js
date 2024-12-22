@@ -8,6 +8,8 @@ class MyBaloon {
         this.xPos = xPos;
         this.yPos = yPos;
         this.zPos = zPos;
+        this.maxHeight = 15;
+        this.minHeight = 2;
 
         this.radius = 0.5;
         this.slices = 64;
@@ -62,13 +64,23 @@ class MyBaloon {
     }
 
     moveUp() {
-        this.yPos += 0.1;
-        this.app.scene.getObjectByName(this.name).position.y = this.yPos;
+        if(this.yPos < this.maxHeight){
+            this.yPos += 0.1;
+            this.app.scene.getObjectByName(this.name).position.y = this.yPos;
+        }
+        else {
+            console.log("Balloon at Max Height!");
+        }
     }
 
     moveDown() {
-        this.yPos -= 0.1;
-        this.app.scene.getObjectByName(this.name).position.y = this.yPos;
+        if(this.yPos > this.minHeight){
+            this.yPos -= 0.1;
+            this.app.scene.getObjectByName(this.name).position.y = this.yPos;
+        }
+        else {
+            console.log("Balloon at Min Height!");
+        }
     }
 
     moveLeft() {

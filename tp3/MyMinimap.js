@@ -16,7 +16,7 @@ class MyMinimap {
         const left = -size / 2;
         const right = size / 2;
         const top = 15;
-        const bottom = -1;
+        const bottom = 1;
         const near = 0;
         const far = 100;
     
@@ -41,7 +41,7 @@ class MyMinimap {
         const geometry = new THREE.SphereGeometry(1, 32, 32);
         const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
         this.minimapMarker = new THREE.Mesh(geometry, material);
-        this.minimapMarker.scale.set(1,0.35,0);
+        this.minimapMarker.scale.set(1,0.25,0);
         this.miniScene.add(this.minimapMarker);
 
         this.buildCardinalDirections();
