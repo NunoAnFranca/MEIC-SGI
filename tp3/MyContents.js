@@ -16,8 +16,6 @@ class MyContents {
         this.app = app;
         this.axis = null;
 
-        //picking: read documentation of THREE.Raycaster
-
         this.raycaster = new THREE.Raycaster()
         this.raycaster.near = 1
         this.raycaster.far = 20
@@ -41,6 +39,15 @@ class MyContents {
         // this.notPickableObjIds = []
         // this.notPickableObjIds = ["col_0_0", "col_2_0", "col_1_1"]
         this.notPickableObjIds = ["A", "B", "track"]
+
+        this.GAME_STATE = {
+            "INIT": 0,
+            "PLAY": 1,
+            "PAUSE": 2,
+            "END": 3
+        }
+
+        this.gameState = this.GAME_STATE.INIT;
       
         //register events
 
@@ -53,21 +60,20 @@ class MyContents {
         );
 
         document.addEventListener("keydown", (event) => {
-            if (event.key === 'w') {
-                if (this.player1Baloon) {
-                    this.ballons[this.player1Baloon].moveUp();
-                }
-            } else if (event.key === 's') {
-                if (this.player1Baloon) {
-                    this.ballons[this.player1Baloon].moveDown();
-                }
-            } else if (event.key === 'p') {
-                if (this.player1Baloon) {
+            if (this.gameState === this.GAME_STATE.INIT) {
+                if (event.key === 'p' && this.player1Baloon && this.player2Baloon) {
+                    this.gameState = this.GAME_STATE.PLAY;
                     setInterval(() => {
                         this.ballons[this.player1Baloon].moveWind();
                     }, 30);
                 }
-            }
+            } else if (this.gameState === this.GAME_STATE.PLAY) {
+                if (event.key === 'w') {
+                    this.ballons[this.player1Baloon].moveUp();
+                } else if (event.key === 's') {
+                    this.ballons[this.player1Baloon].moveDown();
+                }
+            } 
         });
     }
 
@@ -88,15 +94,8 @@ class MyContents {
         // create temp lights so we can see the objects to not render the entire scene
         this.buildLights();
 
-        // red baloons
-        this.buildBaloonsColumn("R_col_0_", "#ff0000", 10)
-        this.buildBaloonsColumn("R_col_1_", "#ff0000", 8)
-        this.buildBaloonsColumn("R_col_2_", "#ff0000", 6)
-
-        // blue baloons
-        this.buildBaloonsColumn("B_col_3_", "#0000ff", -10)
-        this.buildBaloonsColumn("B_col_4_", "#0000ff", -8)
-        this.buildBaloonsColumn("B_col_5_", "#0000ff", -6)
+        // build baloons
+        this.buildBaloons();
         
         this.initialPositions = {"A": null, "B": null};
         this.buildInitialPosition("A", 3, 2);
@@ -130,9 +129,12 @@ class MyContents {
         this.app.scene.add(ambientLight)
     }
 
-    buildBaloonsColumn(name, color, zPos) {
+    buildBaloons() {
         for (let i = 0; i < 3; i++) {
-            this.ballons[name + i] = new MyBaloon(this.app, name + i, color, i * 2, 0, zPos);
+            for (let j = 0; j < 3; j++) {
+                this.ballons["R_col_" + i + "_" + j] = new MyBaloon(this.app, "R_col_" + i + "_" + j, j * 6, 4, 6 * (i + 1), (i + j) % 5 + 1);
+                this.ballons["B_col_" + i + "_" + j] = new MyBaloon(this.app, "B_col_" + i + "_" + j, j * 6, 4, -6 * (i + 1), (i + j) % 5 + 1);
+            }
         }
     }
 
@@ -202,10 +204,10 @@ class MyContents {
         this.lastPickedObj = null;
     }
 
-    changeObjectPosition( obj) {
+    changeObjectPosition(obj) {
         if (this.lastPickedObj != obj) {
-            if (this.lastPickedObj){
-                this.ballons[this.lastPickedObj.name].setPosition(obj.position.x, obj.position.y + 0.8, obj.position.z);
+            if (this.lastPickedObj) {
+                this.ballons[this.lastPickedObj.name].setPosition(obj.position.x, obj.position.y + 4, obj.position.z);
             }
 
             this.lastPickedObj.material.color.setHex(this.lastPickedObj.currentHex);
