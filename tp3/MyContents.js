@@ -64,6 +64,7 @@ class MyContents {
             if (this.gameState === this.GAME_STATE.INIT) {
                 if (event.key === 'p' && this.player1Baloon && this.player2Baloon) {
                     this.gameState = this.GAME_STATE.PLAY;
+                    this.removeInitialPositions();
                     setInterval(() => {
                         this.player = this.ballons[this.player1Baloon];
                         this.ballons[this.player1Baloon].moveWind();
@@ -152,11 +153,17 @@ class MyContents {
             shininess: 90,
         });
 
-        this.mesh = new THREE.Mesh(geometry, positionsMaterial);
-        this.mesh.position.set(xPos, 0.8, zPos);
-        this.mesh.name = name;
-        this.app.scene.add(this.mesh);
+        let mesh = new THREE.Mesh(geometry, positionsMaterial);
+        mesh.position.set(xPos, 0.8, zPos);
+        mesh.name = name;
+        this.app.scene.add(mesh);
+    }
 
+    removeInitialPositions() {
+        for (let key in this.initialPositions) {
+            console.log(key)
+            this.app.scene.remove(this.app.scene.getObjectByName(key));
+        }
     }
 
     /*
