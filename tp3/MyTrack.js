@@ -29,7 +29,7 @@ class MyTrack {
         this.showWireframe = false;
         this.textureRepeatX = 10;
         this.textureRepeatY = 1;
-        this.width = 1;
+        this.width = 1.2;
 
         this.path =
             new THREE.CatmullRomCurve3([
@@ -111,7 +111,7 @@ class MyTrack {
         this.curve.add(this.line);
 
         this.curve.rotateZ(Math.PI);
-        this.curve.scale.set(2, 1, 2);
+        this.curve.scale.set(4, 1, 4);
         this.app.scene.add(this.curve);
     }
 

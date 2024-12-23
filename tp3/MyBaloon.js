@@ -10,6 +10,9 @@ class MyBaloon {
         this.zPos = zPos;
         this.textureN = textureN;
 
+        this.maxHeight = 15;
+        this.minHeight = 1;
+
         this.radius = 0.5;
         this.slices = 64;
         this.stacks = 64;
@@ -91,28 +94,36 @@ class MyBaloon {
     }
     
     moveWind() {
-        if (this.yPos < 1) {
+        if (this.yPos <= 5 && this.yPos > 2) {
             this.moveForward();
-        } else if (this.yPos < 2) {
-            this.moveLeft();
-        } else if (this.yPos < 3) {
+        } else if (this.yPos <= 8 && this.yPos > 5) {
             this.moveBackward();
-        } else if (this.yPos < 4) {
+        } else if (this.yPos <= 11 && this.yPos > 8) {
+            this.moveLeft();
+        } else if (this.yPos <= 14 && this.yPos > 11) {
             this.moveRight();
         }
     }
 
     moveUp() {
-        this.yPos += 0.1;
-        for (let i = 0; i < this.baloonGroup.children.length; i++) {
-            this.baloonGroup.children[i].position.y = this.yPos;
+        if (this.yPos < this.maxHeight) {
+            this.yPos += 0.1;
+            for (let i = 0; i < this.baloonGroup.children.length; i++) {
+                this.baloonGroup.children[i].position.y = this.yPos;
+            }
+        } else {
+            console.log("Baloon reached maximum height");
         }
     }
 
     moveDown() {
-        this.yPos -= 0.1;
-        for (let i = 0; i < this.baloonGroup.children.length; i++) {
-            this.baloonGroup.children[i].position.y = this.yPos;
+        if (this.yPos < this.maxHeight) {
+            this.yPos -= 0.1;
+            for (let i = 0; i < this.baloonGroup.children.length; i++) {
+                this.baloonGroup.children[i].position.y = this.yPos;
+            }
+        } else {
+            console.log("Baloon reached maximum height");
         }
     }
 

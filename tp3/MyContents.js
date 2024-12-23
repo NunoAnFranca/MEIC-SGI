@@ -3,7 +3,8 @@ import { MyAxis } from "./MyAxis.js";
 import { MyTrack } from "./MyTrack.js";
 import { MyReader } from "./MyReader.js";
 import { MyBaloon } from "./MyBaloon.js";
-
+import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 /**
  *  This class contains the contents of out application
  */
@@ -64,6 +65,7 @@ class MyContents {
                 if (event.key === 'p' && this.player1Baloon && this.player2Baloon) {
                     this.gameState = this.GAME_STATE.PLAY;
                     setInterval(() => {
+                        this.player = this.ballons[this.player1Baloon];
                         this.ballons[this.player1Baloon].moveWind();
                     }, 30);
                 }
@@ -88,6 +90,7 @@ class MyContents {
             this.axis.visible = false;
             this.app.scene.add(this.axis);
         }
+        this.createStartMenu();
 
         //this.reader = new MyReader(this.app);
 
@@ -98,14 +101,15 @@ class MyContents {
         this.buildBaloons();
         
         this.initialPositions = {"A": null, "B": null};
-        this.buildInitialPosition("A", 3, 2);
-        this.buildInitialPosition("B", 3, -2);
+        this.buildInitialPosition("A", 21.5, -15);
+        this.buildInitialPosition("B", 17, -15);
 
         // create the track
         this.track = new MyTrack(this.app);
         
+        this.testLetter();
         this.notPickableObjIds.push(this.track.mesh.name)
-        this.lastPickedObj = null
+        this.lastPickedObj = null   
     }
 
     /*
@@ -132,8 +136,8 @@ class MyContents {
     buildBaloons() {
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
-                this.ballons["R_col_" + i + "_" + j] = new MyBaloon(this.app, "R_col_" + i + "_" + j, j * 6, 4, 6 * (i + 1), (i + j) % 5 + 1);
-                this.ballons["B_col_" + i + "_" + j] = new MyBaloon(this.app, "B_col_" + i + "_" + j, j * 6, 4, -6 * (i + 1), (i + j) % 5 + 1);
+                this.ballons["R_col_" + i + "_" + j] = new MyBaloon(this.app, "R_col_" + i + "_" + j, j * 6 + 28, 4, - 6 * (i + 1) - 5, (i + j) % 5 + 1);
+                this.ballons["B_col_" + i + "_" + j] = new MyBaloon(this.app, "B_col_" + i + "_" + j, j * 6 - 4, 4, - 6 * (i + 1) - 5, (i + j) % 5 + 1);
             }
         }
     }
@@ -149,7 +153,7 @@ class MyContents {
         });
 
         this.mesh = new THREE.Mesh(geometry, positionsMaterial);
-        this.mesh.position.set(xpos,0.5,zpos);
+        this.mesh.position.set(xpos,1.5,zpos);
         this.mesh.name = name;
         this.app.scene.add(this.mesh);
 
@@ -253,6 +257,62 @@ class MyContents {
         }
     }
 
+    createStartMenu() {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+              
+        canvas.width = 1920;
+        canvas.height = 1080;
+
+        const backgroundImage = new Image();
+        backgroundImage.src = 'images/menu.jpg';
+      
+        backgroundImage.onload = () => {
+        ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = '#000000';
+        ctx.font = 'bold 90px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('PLAY', canvas.width / 2, canvas.height / 2);
+
+        texture.needsUpdate = true;
+        };
+      
+        const texture = new THREE.CanvasTexture(canvas);
+        const material = new THREE.MeshBasicMaterial({ map: texture });
+        const plane = new THREE.Mesh(new THREE.PlaneGeometry(128, 72), material);
+        plane.rotation.x= -Math.PI/2;
+        
+        const box = new THREE.BoxGeometry(15,5,5);
+        const boxMaterial = new THREE.MeshPhongMaterial({color:0x0000ff});
+        const boxMesh = new THREE.Mesh(box, boxMaterial);
+        boxMesh.position.set(0,20,0);
+        boxMesh.visible = false;
+        this.app.scene.add(boxMesh);
+
+        plane.position.set(0, 20, 0);
+        this.app.scene.add(plane);
+     
+            
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+
+        const onMouseClick = (event) => {
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, this.app.getActiveCamera());
+            const intersects = raycaster.intersectObject(boxMesh);
+
+            if (intersects.length > 0) {
+                this.app.scene.remove(boxMesh);
+                this.app.scene.remove(plane);
+            }
+        };
+
+        window.addEventListener('click', onMouseClick);
+    }
 
     /**
      * Print to console information about the intersected objects
@@ -270,6 +330,33 @@ class MyContents {
                 - uv : intersection point in the object's UV coordinates (THREE.Vector2)
             */
         }
+    }
+
+    /**
+     * FUNCTION 
+     * TEST 
+     * LETTER 
+     * */
+    testLetter(){
+        const fontLoader = new FontLoader();
+        fontLoader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', (font) => {
+            const textGeometry = new TextGeometry('Hello, Three.js!', {
+                font: font,
+                size: 1,
+                height: 0.5,
+                curveSegments: 12,
+                bevelEnabled: true,
+                bevelThickness: 0.03,
+                bevelSize: 0.02,
+                bevelSegments: 5
+            });
+        
+            const textMaterial = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
+            const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+        
+            this.app.scene.add(textMesh);
+            textMesh.position.set(-5, 0, 0);
+        });
     }
 
     onPointerMove(event) {
