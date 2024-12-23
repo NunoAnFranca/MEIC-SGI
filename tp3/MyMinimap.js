@@ -37,35 +37,35 @@ class MyMinimap {
         this.minimapRenderer.domElement.style.right = '10px';
     }
 
-
     createMinimap() {
         const geometry = new THREE.SphereGeometry(1, 32, 32);
         const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
         this.minimapMarker = new THREE.Mesh(geometry, material);
-        this.minimapMarker.scale.set(1,0.25,0);
+        this.minimapMarker.scale.set(1, 0.25, 0);
         this.miniScene.add(this.minimapMarker);
 
         this.buildCardinalDirections();
     }
     
-    buildCardinalDirections(){
-        const geometry = new THREE.BoxGeometry(100,0.1,0);
-        const material = new THREE.MeshBasicMaterial({color: 0x0000ff});
+    buildCardinalDirections() {
+        const geometry = new THREE.BoxGeometry(100, 0.1, 0);
+        const material = new THREE.MeshBasicMaterial({ color: 0x0000ff });
 
-        let cardinals = ['N','S','E','W'];
+        let cardinals = ['N', 'S', 'E', 'W'];
+        let bar = new THREE.Mesh(geometry, material);
+        bar.position.set(0, 2, 0);
+        this.miniScene.add(bar);
 
-        for(let i = 0; i< 5; i++){
-            let bar = new THREE.Mesh(geometry, material);
-            bar.position.set(0, 2 + 3*i,0);
+        for (let i = 0; i < 4; i++) {
+            bar = new THREE.Mesh(geometry, material);
+            bar.position.set(0, 5 + 3 * i, 0);
             this.miniScene.add(bar);
 
-            this.buildLetter(cardinals[i], -20, 3+3*i,0);
+            this.buildLetter(cardinals[i], -20, 6 + 3 * i, 0);
         }
-
-        
     }
 
-    buildLetter(letter,x,y,z){
+    buildLetter(letter, x, y, z) {
         const fontLoader = new FontLoader();
         fontLoader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', (font) => {
             const textGeometry = new TextGeometry(letter, {
@@ -78,11 +78,10 @@ class MyMinimap {
             const textMesh = new THREE.Mesh(textGeometry, textMaterial);
         
             this.miniScene.add(textMesh);
-            textMesh.position.set(x, y, z);
-            textMesh.scale.set(3,1,0);
+            textMesh.position.set(x, y - 3, z);
+            textMesh.scale.set(3, 1, 0);
         });
     }
-
 }
 
 export { MyMinimap };

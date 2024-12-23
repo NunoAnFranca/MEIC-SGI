@@ -10,8 +10,8 @@ class MyBaloon {
         this.zPos = zPos;
         this.textureN = textureN;
 
-        this.maxHeight = 15;
-        this.minHeight = 1;
+        this.maxHeight = 17;
+        this.minHeight = 5;
 
         this.radius = 0.5;
         this.slices = 64;
@@ -63,20 +63,39 @@ class MyBaloon {
         const surfaceData = this.builder.build(controlPoints, orderU, orderV, this.samplesU, this.samplesV, baloonMaterial);
                 
         for (let i = 0; i < this.nMeshes; i++) {
-            const baloonPart = new THREE.Object3D();
             const baloonMesh = new THREE.Mesh(surfaceData, baloonMaterial);
-
-            baloonMesh.name = this.name
+            baloonMesh.name = this.name;
             baloonMesh.receiveShadow = true;
             baloonMesh.castShadow = true;
-            baloonPart.add(baloonMesh);
-            baloonPart.rotation.x = Math.PI / 2;
-            baloonPart.rotation.z = i / 6 * 2 * Math.PI;
-            baloonPart.position.x = this.xPos;
-            baloonPart.position.y = this.yPos;
-            baloonPart.position.z = this.zPos;
-            this.baloonGroup.add(baloonPart);
+            baloonMesh.rotation.x = Math.PI / 2;
+            baloonMesh.rotation.z = i / 6 * 2 * Math.PI;
+            baloonMesh.position.x = this.xPos;
+            baloonMesh.position.y = this.yPos;
+            baloonMesh.position.z = this.zPos;
+            this.baloonGroup.add(baloonMesh);
         }
+
+        for (let i = 0; i < 2; i++) {
+            for (let j = 0; j < 2; j++) {
+                const boxGeometry = new THREE.BoxGeometry(0.1, 1, 0.1);
+                const boxMaterial = new THREE.MeshPhongMaterial({ color: "#540e09" });
+                const boxMesh = new THREE.Mesh(boxGeometry, boxMaterial);
+                boxMesh.name = "cable" + i + j;
+                boxMesh.position.x = this.xPos + (i === 0 ? -0.5 : 0.5);
+                boxMesh.position.y = this.yPos - 3;
+                boxMesh.position.z = this.zPos + (j === 0 ? -0.5 : 0.5);
+                this.baloonGroup.add(boxMesh);
+            }
+        }
+
+        const basketGeometry = new THREE.BoxGeometry(1.2, 1, 1.2);
+        const basketMaterial = new THREE.MeshPhongMaterial({ color: "#540e09" });
+        const basketMesh = new THREE.Mesh(basketGeometry, basketMaterial);
+        basketMesh.name = "basket";
+        basketMesh.position.x = this.xPos;
+        basketMesh.position.y = this.yPos - 4;
+        basketMesh.position.z = this.zPos;
+        this.baloonGroup.add(basketMesh);
 
         this.app.scene.add(this.baloonGroup);
     }
@@ -86,72 +105,79 @@ class MyBaloon {
         this.yPos = yPos;
         this.zPos = zPos;
 
+        const positionOffsets = {
+            basket: { x: 0, y: -4, z: 0 },
+            cable00: { x: -0.5, y: -3, z: -0.5 },
+            cable01: { x: 0.5, y: -3, z: 0.5 },
+            cable10: { x: 0.5, y: -3, z: -0.5 },
+            cable11: { x: -0.5, y: -3, z: 0.5 },
+            default: { x: 0, y: 0, z: 0 }
+        };
+
         for (let i = 0; i < this.baloonGroup.children.length; i++) {
-            this.baloonGroup.children[i].position.x = this.xPos;
-            this.baloonGroup.children[i].position.y = this.yPos;
-            this.baloonGroup.children[i].position.z = this.zPos;
+            const child = this.baloonGroup.children[i];
+            const offset = positionOffsets[child.name] || positionOffsets.default;
+            child.position.x = this.xPos + offset.x;
+            child.position.y = this.yPos + offset.y;
+            child.position.z = this.zPos + offset.z;
         }
     }
     
     moveWind() {
-        if (this.yPos <= 5 && this.yPos > 2) {
+        if (this.yPos <= 8 && this.yPos > 5) {
             this.moveForward();
-        } else if (this.yPos <= 8 && this.yPos > 5) {
-            this.moveBackward();
         } else if (this.yPos <= 11 && this.yPos > 8) {
-            this.moveLeft();
+            this.moveBackward();
         } else if (this.yPos <= 14 && this.yPos > 11) {
+            this.moveLeft();
+        } else if (this.yPos <= 17 && this.yPos > 14) {
             this.moveRight();
         }
     }
 
     moveUp() {
-        if (this.yPos < this.maxHeight) {
+        if (this.yPos + 0.1 < this.maxHeight) {
             this.yPos += 0.1;
             for (let i = 0; i < this.baloonGroup.children.length; i++) {
-                this.baloonGroup.children[i].position.y = this.yPos;
+                this.baloonGroup.children[i].position.y += 0.1;
             }
-        } else {
-            console.log("Baloon reached maximum height");
         }
     }
 
     moveDown() {
-        if (this.yPos < this.maxHeight) {
+        if (this.yPos - 0.1 > this.minHeight) {
             this.yPos -= 0.1;
             for (let i = 0; i < this.baloonGroup.children.length; i++) {
-                this.baloonGroup.children[i].position.y = this.yPos;
+                this.baloonGroup.children[i].position.y -= 0.1;
             }
-        } else {
-            console.log("Baloon reached maximum height");
         }
     }
 
     moveLeft() {
         this.xPos -= 0.1;
         for (let i = 0; i < this.baloonGroup.children.length; i++) {
-            this.baloonGroup.children[i].position.x = this.xPos;
+            this.baloonGroup.children[i].position.x -= 0.1;
         }
     }
 
     moveRight() {
         this.xPos += 0.1;
         for (let i = 0; i < this.baloonGroup.children.length; i++) {
-            this.baloonGroup.children[i].position.x = this.xPos;
+            this.baloonGroup.children[i].position.x += 0.1;
         }
     }
 
     moveForward() {
         this.zPos -= 0.1;
         for (let i = 0; i < this.baloonGroup.children.length; i++) {
-            this.baloonGroup.children[i].position.z = this.zPos;
+            this.baloonGroup.children[i].position.z -= 0.1;
         }
     }
 
     moveBackward() {
         this.zPos += 0.1;
         for (let i = 0; i < this.baloonGroup.children.length; i++) {
-            this.baloonGroup.children[i].position.z = this.zPos;
+            this.baloonGroup.children[i].position.z += 0.1;
         }
     }
 }

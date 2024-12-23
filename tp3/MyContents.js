@@ -142,7 +142,7 @@ class MyContents {
         }
     }
 
-    buildInitialPosition(name, xpos, zpos) {
+    buildInitialPosition(name, xPos, zPos) {
         let geometry = new THREE.CylinderGeometry(1,1,0.2,64);
 
         let positionsMaterial = new THREE.MeshPhongMaterial({
@@ -153,7 +153,7 @@ class MyContents {
         });
 
         this.mesh = new THREE.Mesh(geometry, positionsMaterial);
-        this.mesh.position.set(xpos,1.5,zpos);
+        this.mesh.position.set(xPos, 0.8, zPos);
         this.mesh.name = name;
         this.app.scene.add(this.mesh);
 
@@ -211,7 +211,7 @@ class MyContents {
     changeObjectPosition(obj) {
         if (this.lastPickedObj != obj) {
             if (this.lastPickedObj) {
-                this.ballons[this.lastPickedObj.name].setPosition(obj.position.x, obj.position.y + 4, obj.position.z);
+                this.ballons[this.lastPickedObj.name].setPosition(obj.position.x, obj.position.y + 5, obj.position.z);
             }
 
             this.lastPickedObj.material.color.setHex(this.lastPickedObj.currentHex);
