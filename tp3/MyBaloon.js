@@ -189,7 +189,7 @@ class MyBaloon {
 
     moveUp() {
         if (this.yPos + 0.1 < this.maxHeight) {
-            this.yPos += 0.5;
+            this.yPos += 0.1;
             for (let i = 0; i < this.baloonGroup.children.length; i++) {
                 this.baloonGroup.children[i].position.y += 0.1;
             }
@@ -198,7 +198,7 @@ class MyBaloon {
 
     moveDown() {
         if (this.yPos - 0.1 > this.minHeight) {
-            this.yPos -= 0.5;
+            this.yPos -= 0.1;
             for (let i = 0; i < this.baloonGroup.children.length; i++) {
                 this.baloonGroup.children[i].position.y -= 0.1;
             }
