@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { MyNurbsBuilder } from './MyNurbsBuilder.js';
 
-class MyBaloon {
+class MyBalloon {
     constructor(app, name, xPos, yPos, zPos, textureN) {
         this.app = app;
         this.name = name;
@@ -23,7 +23,7 @@ class MyBaloon {
 
         this.builder = new MyNurbsBuilder();
 
-        this.baloonGroup = new THREE.Group();
+        this.balloonGroup = new THREE.Group();
         
         this.trackPoints = null;
         this.distanceTreshold = 4.0;
@@ -34,9 +34,9 @@ class MyBaloon {
     init() {
         const orderU = 2;
         const orderV = 2;
-        const texture = new THREE.TextureLoader().load("./images/textures/baloon" + this.textureN + ".jpg");
+        const texture = new THREE.TextureLoader().load("./images/textures/balloon" + this.textureN + ".jpg");
 
-        const baloonMaterial = new THREE.MeshPhongMaterial({
+        const balloonMaterial = new THREE.MeshPhongMaterial({
             color: "#ffffff",
             specular: "#111111",
             emissive: "#000000",
@@ -63,19 +63,19 @@ class MyBaloon {
             ]
         ];
 
-        const surfaceData = this.builder.build(controlPoints, orderU, orderV, this.samplesU, this.samplesV, baloonMaterial);
+        const surfaceData = this.builder.build(controlPoints, orderU, orderV, this.samplesU, this.samplesV, balloonMaterial);
                 
         for (let i = 0; i < this.nMeshes; i++) {
-            const baloonMesh = new THREE.Mesh(surfaceData, baloonMaterial);
-            baloonMesh.name = this.name;
-            baloonMesh.receiveShadow = true;
-            baloonMesh.castShadow = true;
-            baloonMesh.rotation.x = Math.PI / 2;
-            baloonMesh.rotation.z = i / 6 * 2 * Math.PI;
-            baloonMesh.position.x = this.xPos;
-            baloonMesh.position.y = this.yPos;
-            baloonMesh.position.z = this.zPos;
-            this.baloonGroup.add(baloonMesh);
+            const balloonMesh = new THREE.Mesh(surfaceData, balloonMaterial);
+            balloonMesh.name = this.name;
+            balloonMesh.receiveShadow = true;
+            balloonMesh.castShadow = true;
+            balloonMesh.rotation.x = Math.PI / 2;
+            balloonMesh.rotation.z = i / 6 * 2 * Math.PI;
+            balloonMesh.position.x = this.xPos;
+            balloonMesh.position.y = this.yPos;
+            balloonMesh.position.z = this.zPos;
+            this.balloonGroup.add(balloonMesh);
         }
 
         for (let i = 0; i < 2; i++) {
@@ -87,7 +87,7 @@ class MyBaloon {
                 boxMesh.position.x = this.xPos + (i === 0 ? -0.5 : 0.5);
                 boxMesh.position.y = this.yPos - 3;
                 boxMesh.position.z = this.zPos + (j === 0 ? -0.5 : 0.5);
-                this.baloonGroup.add(boxMesh);
+                this.balloonGroup.add(boxMesh);
             }
         }
 
@@ -98,9 +98,9 @@ class MyBaloon {
         basketMesh.position.x = this.xPos;
         basketMesh.position.y = this.yPos - 4;
         basketMesh.position.z = this.zPos;
-        this.baloonGroup.add(basketMesh);
+        this.balloonGroup.add(basketMesh);
 
-        this.app.scene.add(this.baloonGroup);
+        this.app.scene.add(this.balloonGroup);
     }
 
     setPosition(xPos, yPos, zPos) {
@@ -117,8 +117,8 @@ class MyBaloon {
             default: { x: 0, y: 0, z: 0 }
         };
 
-        for (let i = 0; i < this.baloonGroup.children.length; i++) {
-            const child = this.baloonGroup.children[i];
+        for (let i = 0; i < this.balloonGroup.children.length; i++) {
+            const child = this.balloonGroup.children[i];
             const offset = positionOffsets[child.name] || positionOffsets.default;
             child.position.x = this.xPos + offset.x;
             child.position.y = this.yPos + offset.y;
@@ -143,9 +143,9 @@ class MyBaloon {
         this.xPos = x;
         this.zPos = z;
 
-        for (let i = 0; i < this.baloonGroup.children.length; i++) {
-            this.baloonGroup.children[i].position.x = x;
-            this.baloonGroup.children[i].position.z = z;
+        for (let i = 0; i < this.balloonGroup.children.length; i++) {
+            this.balloonGroup.children[i].position.x = x;
+            this.balloonGroup.children[i].position.z = z;
         }
     }
     
@@ -188,8 +188,8 @@ class MyBaloon {
     moveUp() {
         if (this.yPos + 0.1 < this.maxHeight) {
             this.yPos += 0.1;
-            for (let i = 0; i < this.baloonGroup.children.length; i++) {
-                this.baloonGroup.children[i].position.y += 0.1;
+            for (let i = 0; i < this.balloonGroup.children.length; i++) {
+                this.balloonGroup.children[i].position.y += 0.1;
             }
         }
     }
@@ -197,39 +197,39 @@ class MyBaloon {
     moveDown() {
         if (this.yPos - 0.1 > this.minHeight) {
             this.yPos -= 0.1;
-            for (let i = 0; i < this.baloonGroup.children.length; i++) {
-                this.baloonGroup.children[i].position.y -= 0.1;
+            for (let i = 0; i < this.balloonGroup.children.length; i++) {
+                this.balloonGroup.children[i].position.y -= 0.1;
             }
         }
     }
 
     moveLeft() {
         this.xPos -= 0.1;
-        for (let i = 0; i < this.baloonGroup.children.length; i++) {
-            this.baloonGroup.children[i].position.x -= 0.1;
+        for (let i = 0; i < this.balloonGroup.children.length; i++) {
+            this.balloonGroup.children[i].position.x -= 0.1;
         }
     }
 
     moveRight() {
         this.xPos += 0.1;
-        for (let i = 0; i < this.baloonGroup.children.length; i++) {
-            this.baloonGroup.children[i].position.x += 0.1;
+        for (let i = 0; i < this.balloonGroup.children.length; i++) {
+            this.balloonGroup.children[i].position.x += 0.1;
         }
     }
 
     moveForward() {
         this.zPos -= 0.1;
-        for (let i = 0; i < this.baloonGroup.children.length; i++) {
-            this.baloonGroup.children[i].position.z -= 0.1;
+        for (let i = 0; i < this.balloonGroup.children.length; i++) {
+            this.balloonGroup.children[i].position.z -= 0.1;
         }
     }
 
     moveBackward() {
         this.zPos += 0.1;
-        for (let i = 0; i < this.baloonGroup.children.length; i++) {
-            this.baloonGroup.children[i].position.z += 0.1;
+        for (let i = 0; i < this.balloonGroup.children.length; i++) {
+            this.balloonGroup.children[i].position.z += 0.1;
         }
     }
 }
 
-export { MyBaloon };
+export { MyBalloon };

@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { MyAxis } from "./MyAxis.js";
 import { MyTrack } from "./MyTrack.js";
 import { MyReader } from "./MyReader.js";
-import { MyBaloon } from "./MyBaloon.js";
+import { MyBalloon } from "./MyBalloon.js";
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 /**
@@ -26,9 +26,9 @@ class MyContents {
         this.pickingColor = "0x00ff00"
 
         this.track = null;
-        this.ballons = {};
-        this.player1Baloon = null;
-        this.player2Baloon = null;
+        this.balloons = {};
+        this.player1Balloon = null;
+        this.player2Balloon = null;
 
         // structure of layers: each layer will contain its objects
         // this can be used to select objects that are pickeable     
@@ -62,20 +62,20 @@ class MyContents {
 
         document.addEventListener("keydown", (event) => {
             if (this.gameState === this.GAME_STATE.INIT) {
-                if (event.key === 'p' && this.player1Baloon && this.player2Baloon) {
+                if (event.key === 'p' && this.player1Balloon && this.player2Balloon) {
                     this.restoreColorOfFirstPickedObj();
                     this.gameState = this.GAME_STATE.PLAY;
                     this.removeInitialPositions();
                     setInterval(() => {
-                        this.player = this.ballons[this.player1Baloon];
-                        this.ballons[this.player1Baloon].moveWind();
+                        this.player = this.balloons[this.player1Balloon];
+                        this.balloons[this.player1Balloon].moveWind();
                     }, 30);
                 }
             } else if (this.gameState === this.GAME_STATE.PLAY) {
                 if (event.key === 'w') {
-                    this.ballons[this.player1Baloon].moveUp();
+                    this.balloons[this.player1Balloon].moveUp();
                 } else if (event.key === 's') {
-                    this.ballons[this.player1Baloon].moveDown();
+                    this.balloons[this.player1Balloon].moveDown();
                 }
             } 
         });
@@ -99,8 +99,8 @@ class MyContents {
         // create temp lights so we can see the objects to not render the entire scene
         this.buildLights();
 
-        // build baloons
-        this.buildBaloons();
+        // build balloons
+        this.buildBalloons();
         
         this.initialPositions = {"A": null, "B": null};
         this.buildInitialPosition("A", 21.5, -15);
@@ -135,11 +135,11 @@ class MyContents {
         this.app.scene.add(ambientLight)
     }
 
-    buildBaloons() {
+    buildBalloons() {
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
-                this.ballons["R_col_" + i + "_" + j] = new MyBaloon(this.app, "R_col_" + i + "_" + j, j * 6 + 28, 4, - 6 * (i + 1) - 5, (i + j) % 5 + 1);
-                this.ballons["B_col_" + i + "_" + j] = new MyBaloon(this.app, "B_col_" + i + "_" + j, j * 6 - 4, 4, - 6 * (i + 1) - 5, (i + j) % 5 + 1);
+                this.balloons["R_col_" + i + "_" + j] = new MyBalloon(this.app, "R_col_" + i + "_" + j, j * 6 + 28, 4, - 6 * (i + 1) - 5, (i + j) % 5 + 1);
+                this.balloons["B_col_" + i + "_" + j] = new MyBalloon(this.app, "B_col_" + i + "_" + j, j * 6 - 4, 4, - 6 * (i + 1) - 5, (i + j) % 5 + 1);
             }
         }
     }
@@ -230,7 +230,7 @@ class MyContents {
     changeObjectPosition(obj) {
         if (this.lastPickedObj != obj) {
             if (this.lastPickedObj) {
-                this.ballons[this.lastPickedObj.name].setPosition(obj.position.x, obj.position.y + 5, obj.position.z);
+                this.balloons[this.lastPickedObj.name].setPosition(obj.position.x, obj.position.y + 5, obj.position.z);
             }
 
             this.lastPickedObj.material.color.setHex(this.lastPickedObj.currentHex);
@@ -256,14 +256,15 @@ class MyContents {
                         case "R":
                             if (obj.name === "A" && this.initialPositions["A"] === null) {
                                 this.initialPositions["A"] = this.lastPickedObj.name;
-                                this.player1Baloon = this.lastPickedObj.name;
+                                this.player1Balloon = this.lastPickedObj.name;
+                                this.balloons[this.player1Balloon].balloonGroup.children[10].add(this.app.cameras['Balloon']);
                                 this.changeObjectPosition(obj)
                             }
                             break;
                         case "B":
                             if (obj.name === "B" && this.initialPositions["B"] === null) {
                                 this.initialPositions["B"] = obj.name;
-                                this.player2Baloon = this.lastPickedObj.name;
+                                this.player2Balloon = this.lastPickedObj.name;
                                 this.changeObjectPosition(obj)
                             }
                             break;

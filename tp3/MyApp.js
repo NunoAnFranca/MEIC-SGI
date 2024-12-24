@@ -81,6 +81,11 @@ class MyApp {
         perspective1.position.set(0, 75, 0)
         this.cameras['Perspective'] = perspective1
 
+        // create a balloon perspective camera
+        const balloon = new THREE.PerspectiveCamera(60, aspect, 0.1, 1000)
+        balloon.position.set(50, 20, 50)
+        this.cameras['Balloon'] = balloon
+
         // defines the frustum size for the orthographic cameras
         const left = -this.frustumSize / 2 * aspect
         const right = this.frustumSize / 2 * aspect

@@ -39,6 +39,10 @@ class MyGuiInterface {
         axisFolder.add(this.contents.axis, 'visible').onChange(() => { this.contents.updateAxis() });
         axisFolder.close();
 
+        const cameraFolder = this.datgui.addFolder('Camera');
+        cameraFolder.add(this.app, 'activeCameraName', [ 'Balloon', 'Perspective', 'Left', 'Right', 'Top', 'Front', 'Back' ] ).name("active camera");
+        cameraFolder.close();
+
         const pickFolder = this.datgui.addFolder('Picking');
         pickFolder.addColor(data_pic_color, 'picking color').onChange((value) => { this.contents.updatePickingColor(value) });
         pickFolder.close();
