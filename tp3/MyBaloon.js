@@ -10,8 +10,8 @@ class MyBaloon {
         this.zPos = zPos;
         this.textureN = textureN;
 
-        this.maxHeight = 17;
-        this.minHeight = 5;
+        this.maxHeight = 18;
+        this.minHeight = 4;
 
         this.radius = 0.5;
         this.slices = 64;
@@ -24,6 +24,9 @@ class MyBaloon {
         this.builder = new MyNurbsBuilder();
 
         this.baloonGroup = new THREE.Group();
+        
+        this.trackPoints = null;
+        this.distanceTreshold = 4.0;
 
         this.init();
     }
@@ -122,16 +125,65 @@ class MyBaloon {
             child.position.z = this.zPos + offset.z;
         }
     }
+
+
+    nearestPoint(){
+        let x = this.trackPoints[0].x;
+        let z = this.trackPoints[0].z;
+        let distance = Number.MAX_SAFE_INTEGER;
+
+        for(let point of this.transformedPoints){
+            let distancePoints = Math.sqrt(Math.pow(point.x-this.xPos,2) + Math.pow(point.z-this.zPos,2));
+            if(distancePoints<distance){
+                distance = distancePoints;
+                x = point.x;
+                z = point.z;
+            }
+        }
+        
+        this.xPos = x;
+        this.zPos = z;
+
+        for (let i = 0; i < this.baloonGroup.children.length; i++) {
+
+            this.baloonGroup.children[i].position.x = x;
+            this.baloonGroup.children[i].position.z = z;
+        }
+
+    }
+    
+    checkPosition(){
+        this.trackPoints = this.app.contents.track.path.getPoints(10000);
+        
+        this.transformedPoints = this.trackPoints.map(point => {
+            let vector = new THREE.Vector3(point.x, point.y, point.z);
+            this.app.contents.track.curve.localToWorld(vector);
+            return vector;
+        });
+
+        for(let point of this.transformedPoints){
+            let distance = Math.sqrt(Math.pow(point.x-this.xPos,2) + Math.pow(point.z-this.zPos,2));
+            if(distance < this.distanceTreshold){
+                return true;
+            } 
+        }
+        console.log('Outside of the Track',this.xPos, this.zPos);
+        this.nearestPoint();
+        return false;
+    }
     
     moveWind() {
-        if (this.yPos <= 8 && this.yPos > 5) {
-            this.moveForward();
-        } else if (this.yPos <= 11 && this.yPos > 8) {
-            this.moveBackward();
-        } else if (this.yPos <= 14 && this.yPos > 11) {
-            this.moveLeft();
-        } else if (this.yPos <= 17 && this.yPos > 14) {
-            this.moveRight();
+        let log = this.checkPosition();
+        if(log == true){
+            if (this.yPos <= 8 && this.yPos > 5) {
+                this.moveForward();
+            } else if (this.yPos <= 11 && this.yPos > 8) {
+                this.moveBackward();
+            } else if (this.yPos <= 14 && this.yPos > 11) {
+                this.moveRight();
+            } else if (this.yPos <= 17 && this.yPos > 14) {
+                this.moveLeft();
+            }
         }
     }
 
