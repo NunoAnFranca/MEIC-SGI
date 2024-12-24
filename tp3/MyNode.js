@@ -109,7 +109,7 @@ class MyNode {
                     }
                     if (name === "nodesList") {
                         // Handle nodeslist
-                        for(let i in valueAttr){
+                        for (let i in valueAttr) {
                             // Push every element in te nodeslist to children
                             this.children.push(new MyNode(valueAttr[i], this.node, this.material, this.castshadows, this.receiveshadows));
                         }

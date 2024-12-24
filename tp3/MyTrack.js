@@ -113,7 +113,7 @@ class MyTrack {
 
         this.curve.rotateZ(Math.PI);
         this.curve.scale.set(this.trackSize, 1, this.trackSize);
-        this.curve.position.set(0,-1,0);
+        this.curve.position.set(0, -1, 0);
         this.app.scene.add(this.curve);
     }
 

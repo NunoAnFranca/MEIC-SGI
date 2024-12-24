@@ -126,15 +126,14 @@ class MyBaloon {
         }
     }
 
-
-    nearestPoint(){
+    nearestPoint() {
         let x = this.trackPoints[0].x;
         let z = this.trackPoints[0].z;
         let distance = Number.MAX_SAFE_INTEGER;
 
-        for(let point of this.transformedPoints){
-            let distancePoints = Math.sqrt(Math.pow(point.x-this.xPos,2) + Math.pow(point.z-this.zPos,2));
-            if(distancePoints<distance){
+        for (let point of this.transformedPoints) {
+            let distancePoints = Math.sqrt(Math.pow(point.x - this.xPos, 2) + Math.pow(point.z - this.zPos, 2));
+            if (distancePoints < distance) {
                 distance = distancePoints;
                 x = point.x;
                 z = point.z;
@@ -145,14 +144,12 @@ class MyBaloon {
         this.zPos = z;
 
         for (let i = 0; i < this.baloonGroup.children.length; i++) {
-
             this.baloonGroup.children[i].position.x = x;
             this.baloonGroup.children[i].position.z = z;
         }
-
     }
     
-    checkPosition(){
+    checkPosition() {
         this.trackPoints = this.app.contents.track.path.getPoints(10000);
         
         this.transformedPoints = this.trackPoints.map(point => {
@@ -161,20 +158,21 @@ class MyBaloon {
             return vector;
         });
 
-        for(let point of this.transformedPoints){
-            let distance = Math.sqrt(Math.pow(point.x-this.xPos,2) + Math.pow(point.z-this.zPos,2));
-            if(distance < this.distanceTreshold){
+        for (let point of this.transformedPoints) {
+            let distance = Math.sqrt(Math.pow(point.x - this.xPos, 2) + Math.pow(point.z - this.zPos, 2));
+            if (distance < this.distanceTreshold) {
                 return true;
             } 
         }
-        console.log('Outside of the Track',this.xPos, this.zPos);
+
         this.nearestPoint();
+
         return false;
     }
     
     moveWind() {
         let log = this.checkPosition();
-        if(log == true){
+        if (log) {
             if (this.yPos <= 8 && this.yPos > 5) {
                 this.moveForward();
             } else if (this.yPos <= 11 && this.yPos > 8) {

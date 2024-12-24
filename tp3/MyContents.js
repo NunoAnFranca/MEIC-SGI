@@ -361,7 +361,7 @@ class MyContents {
      * TEST 
      * LETTER 
      * */
-    testLetter(){
+    testLetter() {
         const fontLoader = new FontLoader();
         fontLoader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', (font) => {
             const textGeometry = new TextGeometry('Hello, Three.js!', {

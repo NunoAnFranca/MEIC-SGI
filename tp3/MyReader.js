@@ -82,7 +82,7 @@ class MyReader {
     }
     
     // function to change textures for bump/specular values
-    getTextureType(object, value){
+    getTextureType(object, value) {
         // Initialize texture values with json values
         const textureValues = this.yasf.textures[value];
 
