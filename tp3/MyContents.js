@@ -63,6 +63,7 @@ class MyContents {
         document.addEventListener("keydown", (event) => {
             if (this.gameState === this.GAME_STATE.INIT) {
                 if (event.key === 'p' && this.player1Baloon && this.player2Baloon) {
+                    this.restoreColorOfFirstPickedObj();
                     this.gameState = this.GAME_STATE.PLAY;
                     this.removeInitialPositions();
                     setInterval(() => {
@@ -161,7 +162,6 @@ class MyContents {
 
     removeInitialPositions() {
         for (let key in this.initialPositions) {
-            console.log(key)
             this.app.scene.remove(this.app.scene.getObjectByName(key));
         }
     }
@@ -195,11 +195,19 @@ class MyContents {
         if (this.lastPickedObj != obj) {
             if (this.lastPickedObj) {
                 this.lastPickedObj.material.color.setHex(this.lastPickedObj.currentHex);
+                for (let i = 6; i < this.lastPickedObj.parent.children.length; i++) {
+                    this.lastPickedObj.parent.children[i].material.color.setHex(this.lastPickedObj.parent.children[i].currentHex);
+                }
             }
 
             this.lastPickedObj = obj;
             this.lastPickedObj.currentHex = this.lastPickedObj.material.color.getHex();
             this.lastPickedObj.material.color.setHex(this.pickingColor);
+
+            for (let i = 6; i < this.lastPickedObj.parent.children.length; i++) {
+                this.lastPickedObj.parent.children[i].currentHex = this.lastPickedObj.parent.children[i].material.color.getHex();
+                this.lastPickedObj.parent.children[i].material.color.setHex(this.pickingColor);
+            }
         }
     }
 
@@ -210,6 +218,10 @@ class MyContents {
     restoreColorOfFirstPickedObj() {
         if (this.lastPickedObj) {
             this.lastPickedObj.material.color.setHex(this.lastPickedObj.currentHex);
+
+            for (let i = 6; i < this.lastPickedObj.parent.children.length; i++) {
+                this.lastPickedObj.parent.children[i].material.color.setHex(this.lastPickedObj.parent.children[i].currentHex);
+            }
         }
 
         this.lastPickedObj = null;
@@ -222,6 +234,11 @@ class MyContents {
             }
 
             this.lastPickedObj.material.color.setHex(this.lastPickedObj.currentHex);
+
+            for (let i = 6; i < this.lastPickedObj.parent.children.length; i++) {
+                this.lastPickedObj.parent.children[i].material.color.setHex(this.lastPickedObj.parent.children[i].currentHex);
+            }
+
             this.lastPickedObj = null;
         }
     }
@@ -231,7 +248,7 @@ class MyContents {
     *
     */
     pickingHelper(intersects) {
-        if (intersects.length > 0) {
+        if (intersects.length > 0 && this.gameState === this.GAME_STATE.INIT) {
             const obj = intersects[0].object;
             if (this.notPickableObjIds.includes(obj.name)) {
                 if (this.lastPickedObj) {
