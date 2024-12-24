@@ -100,6 +100,17 @@ class MyBalloon {
         basketMesh.position.z = this.zPos;
         this.balloonGroup.add(basketMesh);
 
+        const markerGeometry = new THREE.SphereGeometry(0.5,64,64);
+        const markerMaterial = new THREE.MeshPhongMaterial({color: "#0000ff"});
+        const markerMesh = new THREE.Mesh(markerGeometry, markerMaterial);
+        markerMesh.scale.set(1,0.25,1);
+        markerMesh.name = "markerR";
+        markerMesh.position.x = this.xPos;
+        markerMesh.position.y = -4;
+        markerMesh.position.z = this.zPos;
+        markerMesh.visible = false;
+        this.balloonGroup.add(markerMesh);
+
         this.app.scene.add(this.balloonGroup);
     }
 
@@ -114,15 +125,30 @@ class MyBalloon {
             cable01: { x: 0.5, y: -3, z: 0.5 },
             cable10: { x: 0.5, y: -3, z: -0.5 },
             cable11: { x: -0.5, y: -3, z: 0.5 },
+            marker: { x: 0, y: -6, z: 0},
             default: { x: 0, y: 0, z: 0 }
         };
-
+        
+        let typeBalloon = 'B';
         for (let i = 0; i < this.balloonGroup.children.length; i++) {
             const child = this.balloonGroup.children[i];
             const offset = positionOffsets[child.name] || positionOffsets.default;
             child.position.x = this.xPos + offset.x;
             child.position.y = this.yPos + offset.y;
             child.position.z = this.zPos + offset.z;
+
+            if (child.name.substring(0, 5) == 'R_col') {
+                typeBalloon = 'R';
+            }
+
+            if(child.name == 'marker'){
+                child.visible = true;         
+                if(typeBalloon == 'B'){
+                    console.log(child.material);
+                    child.material = new THREE.MeshBasicMaterial({color: "#ff0000"});
+                    child.material.needsUpdate = true;
+                }
+            }
         }
     }
 
@@ -189,7 +215,8 @@ class MyBalloon {
         if (this.yPos + 0.1 < this.maxHeight) {
             this.yPos += 0.1;
             for (let i = 0; i < this.balloonGroup.children.length; i++) {
-                this.balloonGroup.children[i].position.y += 0.1;
+                if(this.balloonGroup.children[i].name !== 'marker')
+                    this.balloonGroup.children[i].position.y += 0.1;
             }
         }
     }
@@ -198,7 +225,8 @@ class MyBalloon {
         if (this.yPos - 0.1 > this.minHeight) {
             this.yPos -= 0.1;
             for (let i = 0; i < this.balloonGroup.children.length; i++) {
-                this.balloonGroup.children[i].position.y -= 0.1;
+                if(this.balloonGroup.children[i].name !== 'marker')
+                    this.balloonGroup.children[i].position.y -= 0.1;
             }
         }
     }
