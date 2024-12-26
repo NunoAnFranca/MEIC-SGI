@@ -19,7 +19,7 @@
                     "b": 1.0
                 },
                 "near": 1.0,
-                "far": 1000.0
+                "far": 2000.0
             },
             "skybox": {
                 "size": {
@@ -74,11 +74,11 @@
                 "opacity": 0.8,
                 "textureref": "watertex"
             },
-            "tubeplantwhite": {
+            "wheelCar": {
                 "color": {
-                    "r": 0.7058823529411765,
-                    "g": 0.6431372549019608,
-                    "b": 0.5607843137254902
+                    "r": 0.05,
+                    "g": 0.05,
+                    "b": 0.05
                 },
                 "emissive": {
                     "r": 0.0,
@@ -92,7 +92,108 @@
                 },
                 "shininess": 10,
                 "transparent": false,
-                "opacity": 1.0,
+                "opacity": 1
+            },
+            "headLightMaterial": {
+                "color": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0.01
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.01
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0
+            },
+            "backLightMaterial": {
+                "color": {
+                    "r": 0.9,
+                    "g": 0,
+                    "b": 0
+                },
+                "emissive": {
+                    "r": 0.8,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": true,
+                "opacity": 0.9
+            },
+            "downCarChassi": {
+                "color": {
+                    "r": 0.2,
+                    "g": 0.2,
+                    "b": 0.2
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0
+            },
+            "chassiTopMaterial": {
+                "color": {
+                    "r": 0.10,
+                    "g": 0.18,
+                    "b": 0.8000
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.2,
+                    "g": 0.2,
+                    "b": 0.800
+                },
+                "shininess": 10,
+                "transparent": true,
+                "opacity": 0.95,
+                "twosided": true
+            },
+            "car1": {
+                "color": {
+                    "r": 0.8,
+                    "g": 0.8,
+                    "b": 0
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1,
                 "twosided": true
             }
         },
@@ -244,7 +345,7 @@
                 ],
                 "children": {
                     "nodesList": [
-
+                        "carBuilder"
                     ],
                     "ligh1": {
                         "type": "pointlight",
@@ -263,6 +364,582 @@
                             "y": -20,
                             "z": 13
                         }
+                    }
+                }
+            },
+            "car1": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 1,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList": [
+                        "carBuilder"
+                    ]
+                }
+            },
+            "carBuilder": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "car1"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList": [
+                        "topCarChassi",
+                        "centerCar",
+                        "frontCar",
+                        "backCar",
+                        "DownCarChassi"
+                    ]
+                }
+            },
+            "topCarChassi": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "chassiTopMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0.9,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "chassi": {
+                        "type": "nurbs",
+                        "degree_u": 3,
+                        "degree_v": 3,
+                        "parts_u": 64,
+                        "parts_v": 64,
+                        "controlpoints": [
+                            {
+                                "x": 1,
+                                "y": 0,
+                                "z": 0.3501,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 1,
+                                "y": 0,
+                                "z": 2,
+                                "w": 1
+                            },
+                            {
+                                "x": -1,
+                                "y": 0,
+                                "z": 2,
+                                "w": 1
+                            },
+                            {
+                                "x": -1,
+                                "y": 0,
+                                "z": 0.35,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 1,
+                                "y": 0,
+                                "z": 0.35,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 0.9,
+                                "y": 1,
+                                "z": 1.8,
+                                "w": 8
+                            },
+                            {
+                                "x": -0.9,
+                                "y": 1,
+                                "z": 1.8,
+                                "w": 8
+                            },
+                            {
+                                "x": -1,
+                                "y": 0,
+                                "z": 0.3501,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 1,
+                                "y": 0,
+                                "z": 0.35,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 0.9,
+                                "y": 1,
+                                "z": -1,
+                                "w": 20
+                            },
+                            {
+                                "x": -0.9,
+                                "y": 1,
+                                "z": -1,
+                                "w": 20
+                            },
+                            {
+                                "x": -1,
+                                "y": 0,
+                                "z": 0.35,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 1,
+                                "y": 0,
+                                "z": 0.35,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 1,
+                                "y": 0,
+                                "z": -1.1,
+                                "w": 1
+                            },
+                            {
+                                "x": -1,
+                                "y": 0,
+                                "z": -1.1,
+                                "w": 1
+                            },
+                            {
+                                "x": -1,
+                                "y": 0,
+                                "z": 0.35,
+                                "w": 0.1
+                            }
+                        ]
+                    }
+                }
+            },
+            "centerCar": {
+                "type": "node",
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 1.2,
+                            "y": 0,
+                            "z": 3.7
+                        },
+                        "xyz2": {
+                            "x": -1.2,
+                            "y": 0.9,
+                            "z": -1.6
+                        }
+                    }
+                }
+            },
+            "frontCar": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 3.7
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": -15,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 1.2,
+                            "y": 0,
+                            "z": 0.3
+                        },
+                        "xyz2": {
+                            "x": -1.2,
+                            "y": 0.9,
+                            "z": 0
+                        }
+                    },
+                    "nodesList": [
+                        "CarHeadLight1",
+                        "CarHeadLight2"
+                    ]
+                }
+            },
+            "backCar": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0.02,
+                            "z": -1.8
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 5,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 1.2,
+                            "y": 0,
+                            "z": 0.3
+                        },
+                        "xyz2": {
+                            "x": -1.2,
+                            "y": 0.9,
+                            "z": 0
+                        }
+                    },
+                    "nodesList": [
+                        "CarBackLight1",
+                        "CarBackLight2"
+                    ]
+                }
+            },
+            "CarHeadLight1": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "headLightMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.7,
+                            "y": 0.5,
+                            "z": 0.3
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 90,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "cylinder",
+                        "base": 0.2,
+                        "top": 0.2,
+                        "height": 0.2,
+                        "slices": 64,
+                        "stacks": 64
+                    }
+                }
+            },
+            "CarHeadLight2": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "headLightMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -0.7,
+                            "y": 0.5,
+                            "z": 0.3
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 90,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "cylinder",
+                        "base": 0.2,
+                        "top": 0.2,
+                        "height": 0.2,
+                        "slices": 64,
+                        "stacks": 64
+                    }
+                }
+            },
+            "CarBackLight1": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "backLightMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.8,
+                            "y": 0.5,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0.2,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": -0.2,
+                            "y": 0.3,
+                            "z": -0.1
+                        }
+                    }
+                }
+            },
+            "CarBackLight2": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "backLightMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -0.8,
+                            "y": 0.5,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0.2,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": -0.2,
+                            "y": 0.3,
+                            "z": -0.1
+                        }
+                    }
+                }
+            },
+            "DownCarChassi": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "downCarChassi"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": -0.15,
+                            "z": 1.0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 90,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "cylinder",
+                        "base": 0.1,
+                        "top": 0.1,
+                        "height": 3.9,
+                        "slices": 64,
+                        "stacks": 64
+                    },
+                    "nodesList": [
+                        "DownCarChassi1",
+                        "DownCarChassi2"
+                    ]
+                }
+            },
+            "DownCarChassi1": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "downCarChassi"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 1.7,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 90
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "cylinder",
+                        "base": 0.08,
+                        "top": 0.08,
+                        "height": 3,
+                        "slices": 64,
+                        "stacks": 64
+                    },
+                    "nodesList": [
+                        "wheelCar1",
+                        "wheelCar2"
+                    ]
+                }
+            },
+            "DownCarChassi2": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "downCarChassi"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": -1.8,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 90
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "cylinder",
+                        "base": 0.08,
+                        "top": 0.08,
+                        "height": 3,
+                        "slices": 64,
+                        "stacks": 64
+                    },
+                    "nodesList": [
+                        "wheelCar1",
+                        "wheelCar2"
+                    ]
+                }
+            },
+            "wheelCar1": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "wheelCar"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 1.5,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "cylinder",
+                        "base": 0.6,
+                        "top": 0.6,
+                        "height": 0.3,
+                        "slices": 64,
+                        "stacks": 64
+                    }
+                }
+            },
+            "wheelCar2": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "wheelCar"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": -1.5,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "cylinder",
+                        "base": 0.6,
+                        "top": 0.6,
+                        "height": 0.3,
+                        "slices": 64,
+                        "stacks": 64
                     }
                 }
             }

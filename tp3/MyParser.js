@@ -881,9 +881,10 @@ class MyParser {
                 let x = point.x;
                 let y = point.y;
                 let z = point.z;
+                let w = point.w;
 
                 // Add point with default w = 1
-                row.push([x, y, z, 1]);
+                row.push([x, y, z, w]);
 
                 idx++; // Move to next point
             }

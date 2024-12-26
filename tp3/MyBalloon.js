@@ -212,21 +212,21 @@ class MyBalloon {
     }
 
     moveUp() {
-        if (this.yPos + 0.1 < this.maxHeight) {
-            this.yPos += 0.1;
+        if (this.yPos + 0.5 < this.maxHeight) {
+            this.yPos += 0.5;
             for (let i = 0; i < this.balloonGroup.children.length; i++) {
                 if(this.balloonGroup.children[i].name !== 'marker')
-                    this.balloonGroup.children[i].position.y += 0.1;
+                    this.balloonGroup.children[i].position.y += 0.5;
             }
         }
     }
 
     moveDown() {
-        if (this.yPos - 0.1 > this.minHeight) {
-            this.yPos -= 0.1;
+        if (this.yPos - 0.5 > this.minHeight) {
+            this.yPos -= 0.5;
             for (let i = 0; i < this.balloonGroup.children.length; i++) {
                 if(this.balloonGroup.children[i].name !== 'marker')
-                    this.balloonGroup.children[i].position.y -= 0.1;
+                    this.balloonGroup.children[i].position.y -= 0.5;
             }
         }
     }
