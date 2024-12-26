@@ -11,6 +11,7 @@ import { MyPolygon } from './objects/primitives/MyPolygon.js';
 import { MyRectangle } from './objects/primitives/MyRectangle.js';
 import { MySphere } from './objects/primitives/MySphere.js';
 import { MyTriangle } from './objects/primitives/MyTriangle.js';
+import { MyLine } from './objects/primitives/MyLine.js';
 
 // Define a list of supported primitive types for validation.
 const PRIMITIVES = [
@@ -31,7 +32,8 @@ const PRIMITIVE_CLASSES = {
     "polygon": MyPolygon,
     "rectangle": MyRectangle,
     "sphere": MySphere,
-    "triangle": MyTriangle
+    "triangle": MyTriangle,
+    "line": MyLine
 };
 
 class MyNode {

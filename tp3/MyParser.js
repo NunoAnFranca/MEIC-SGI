@@ -16,6 +16,7 @@ import { MyRectangle } from './objects/primitives/MyRectangle.js';
 import { MySphere } from './objects/primitives/MySphere.js';
 import { MyPolygon } from './objects/primitives/MyPolygon.js';
 import { MyTriangle } from './objects/primitives/MyTriangle.js';
+import { MyLine } from './objects/primitives/MyLine.js';
 
 
 class MyParser {
@@ -998,6 +999,25 @@ class MyParser {
 
         return { m: mesh, l: line }; // Return both mesh and wireframe
     }
+
+    // Create a Line with a tube geometry;
+    createLine(object) {
+        let points = [];
+
+        for(let point of object.points){
+            points.push(new THREE.Vector3(point.x, point.y, point.z));
+        }
+
+        const curve = new THREE.CatmullRomCurve3(points);
+        const curvePoints = curve.getPoints(50);
+        const curvePath = new THREE.CurvePath();
+        curvePath.add(new THREE.CatmullRomCurve3(curvePoints));
+
+        const tube = new THREE.TubeGeometry(curvePath,object.parts,object.width,object.sides,object.closed);
+        const mesh = new THREE.Mesh(tube, this.materials[object.material]);
+
+        return mesh;
+    }
     
 // Function to recursively create and add objects and their wireframes to the scene graph
     createGraph(nodes, group) {
@@ -1016,6 +1036,8 @@ class MyParser {
             } else if (object instanceof MyBox) {
                 addObject = this.createBox(object);  // Create a box geometry
                 addWireframe = this.createWireframeBox(object);  // Create a wireframe for the box
+            } else if (object instanceof MyLine) {
+                addObject = this.createLine(object);  // Create a Line geometry
             } else if (object instanceof MyCylinder) {
                 addObject = this.createCylinder(object);  // Create a cylinder geometry
                 addWireframe = this.createWireframeCylinder(object);  // Create a wireframe for the cylinder
