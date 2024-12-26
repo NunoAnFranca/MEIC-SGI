@@ -30,7 +30,7 @@ class MyTrack {
         this.textureRepeatX = 10;
         this.textureRepeatY = 1;
         this.width = 1.2;
-        this.trackSize = 4;
+        this.trackSize = 5;
 
         this.path =
             new THREE.CatmullRomCurve3([

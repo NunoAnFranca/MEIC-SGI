@@ -103,8 +103,8 @@ class MyContents {
         this.buildBalloons();
         
         this.initialPositions = {"A": null, "B": null};
-        this.buildInitialPosition("A", 21.5, -15);
-        this.buildInitialPosition("B", 17, -15);
+        this.buildInitialPosition("A", 27, -15);
+        this.buildInitialPosition("B", 21, -15);
 
         // create the track
         this.track = new MyTrack(this.app);
@@ -138,8 +138,8 @@ class MyContents {
     buildBalloons() {
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
-                this.balloons["R_col_" + i + "_" + j] = new MyBalloon(this.app, "R_col_" + i + "_" + j, j * 6 + 28, 4, - 6 * (i + 1) - 5, (i + j) % 5 + 1);
-                this.balloons["B_col_" + i + "_" + j] = new MyBalloon(this.app, "B_col_" + i + "_" + j, j * 6 - 4, 4, - 6 * (i + 1) - 5, (i + j) % 5 + 1);
+                this.balloons["R_col_" + i + "_" + j] = new MyBalloon(this.app, "R_col_" + i + "_" + j, j * 6 + 35, 4, - 6 * (i + 1) - 5, (i + j) % 5 + 1);
+                this.balloons["B_col_" + i + "_" + j] = new MyBalloon(this.app, "B_col_" + i + "_" + j, j * 6, 4, - 6 * (i + 1) - 5, (i + j) % 5 + 1);
             }
         }
     }

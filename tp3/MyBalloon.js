@@ -26,7 +26,7 @@ class MyBalloon {
         this.balloonGroup = new THREE.Group();
         
         this.trackPoints = null;
-        this.distanceTreshold = 4.0;
+        this.distanceTreshold = 5.0;
 
         this.init();
     }
@@ -104,7 +104,7 @@ class MyBalloon {
         const markerMaterial = new THREE.MeshPhongMaterial({color: "#0000ff"});
         const markerMesh = new THREE.Mesh(markerGeometry, markerMaterial);
         markerMesh.scale.set(1,0.25,1);
-        markerMesh.name = "markerR";
+        markerMesh.name = "marker";
         markerMesh.position.x = this.xPos;
         markerMesh.position.y = -4;
         markerMesh.position.z = this.zPos;
