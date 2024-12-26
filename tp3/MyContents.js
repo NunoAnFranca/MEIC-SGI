@@ -94,7 +94,7 @@ class MyContents {
         }
         this.createStartMenu();
 
-        //this.reader = new MyParser(this.app);
+        this.reader = new MyParser(this.app);
 
         // create temp lights so we can see the objects to not render the entire scene
         this.buildLights();
