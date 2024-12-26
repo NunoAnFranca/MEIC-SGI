@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { MyAxis } from "./MyAxis.js";
 import { MyTrack } from "./MyTrack.js";
-import { MyReader } from "./MyReader.js";
+import { MyParser } from "./MyParser.js";
 import { MyBalloon } from "./MyBalloon.js";
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import { FontLoader } from 'three/addons/loaders/FontLoader.js';
@@ -94,7 +94,7 @@ class MyContents {
         }
         this.createStartMenu();
 
-        //this.reader = new MyReader(this.app);
+        //this.reader = new MyParser(this.app);
 
         // create temp lights so we can see the objects to not render the entire scene
         this.buildLights();

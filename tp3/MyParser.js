@@ -18,7 +18,7 @@ import { MyPolygon } from './objects/primitives/MyPolygon.js';
 import { MyTriangle } from './objects/primitives/MyTriangle.js';
 
 
-class MyReader {
+class MyParser {
     constructor(app) {
         this.app = app;
 
@@ -329,10 +329,29 @@ class MyReader {
             this.loader.load(this.yasf.globals.skybox.front),
         ];
 
-        // Load SRGBColorSpace for each skybox texture
-        skyBoxTextures.forEach(texture => {
+        skyBoxTextures.forEach((texture, index) => {
             texture.colorSpace = THREE.SRGBColorSpace;
+    
+            // Adjust UV mapping for all sides except top and bottom
+            if (index !== 2 && index !== 3) { // Exclude 'up' and 'down' textures
+                texture.repeat.set(1, 0.65); // Use only half height
+                texture.offset.set(0, 0.35); // Shift to show the top half
+                texture.wrapS = THREE.ClampToEdgeWrapping;
+                texture.wrapT = THREE.ClampToEdgeWrapping;
+            } if(index == 2) {
+                // Rotate 'up' and 'down' textures
+                texture.center.set(0.5, 0.5); // Set rotation center to middle of the texture
+                texture.rotation = Math.PI; // Rotate by 90 degrees (π/2 radians)
+            } if (index == 3)  {
+                // Scale the texture coordinates to the center portion
+                texture.repeat.set(25, 25); // Repeat 5 times in both directions
+                texture.offset.set(1.0, 1.0); // Focus on u=0.4–0.6 and v=0.4–0.6
+                // Focus on the center (u: 0.4–0.6, v: 0.4–0.6) and repeat
+                texture.wrapS = THREE.RepeatWrapping; // Allow repeating horizontally
+                texture.wrapT = THREE.RepeatWrapping; // Allow repeating vertically
+            }
         });
+    
 
         // Create materials for each texture
         const skyBoxMaterials = skyBoxTextures.map(texture => 
@@ -347,9 +366,9 @@ class MyReader {
         // create mesh skybox
         const skybox = new THREE.Mesh(skyboxGeometry, skyBoxMaterials);
         // skybox y adjustment
-        skybox.translateY(this.yasf.globals.skybox.size.y / 2);
+        skybox.translateY(this.yasf.globals.skybox.size.y / 2 + 100);
         // set skybox position
-        skybox.position.set(this.yasf.globals.skybox.center.x,this.yasf.globals.skybox.center.y,this.yasf.globals.skybox.center.z);
+        skybox.position.set(this.yasf.globals.skybox.center.x,this.yasf.globals.skybox.center.y+50,this.yasf.globals.skybox.center.z);
         //skybox cast shadow
         skybox.castShadow = true;
         //skybox receive shadow
@@ -1077,4 +1096,4 @@ class MyReader {
 
 
 
-export { MyReader };
+export { MyParser };
