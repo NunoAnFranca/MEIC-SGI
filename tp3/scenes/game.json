@@ -485,6 +485,27 @@
                 "transparent": false,
                 "opacity": 1.0,
                 "twosided": true
+            },
+            "woodMaterial": {
+                "color": {
+                    "r": 0.803921569,
+                    "g": 0.615686275,
+                    "b": 0.435294118
+                },
+                "emissive": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                },
+                "specular": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "twosided": true
             }
         },
         "cameras": {
@@ -637,7 +658,9 @@
                     "nodesList": [
                         "mountain",
                         "mainCarRoad",
-                        "cableCarMainNode"
+                        "cableCarMainNode",
+                        "balloonFenceEnemy",
+                        "balloonFencePlayer"
                     ],
                     "ligh1": {
                         "type": "pointlight",
@@ -655,6 +678,422 @@
                             "x": 2,
                             "y": -20,
                             "z": 13
+                        }
+                    }
+                }
+            },
+            "balloonFencePlayer":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 46,
+                            "y": 0,
+                            "z": -34
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 180,
+                            "z": 0
+                        } 
+                    }
+                ],
+                "children": {
+                    "nodesList":[
+                        "balloonFenceConstructor"
+                    ]
+                }
+            },
+            "balloonFenceEnemy":{
+                "type": "node",
+                "children": {
+                    "nodesList":[
+                        "balloonFenceConstructor"
+                    ]
+                }
+            },
+            "balloonFenceConstructor":{
+                "type": "node",
+                "materialref":{
+                    "materialId":"woodMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -2,
+                            "y": -1,
+                            "z": -9
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.2,
+                            "y": 0.2,
+                            "z": -16
+                        }
+                    },
+                    "nodesList":[
+                        "balloonFencePart1",
+                        "balloonFencePart2",
+                        "balloonFencePart3",
+                        "balloonFencePart4",
+                        "balloonFencePart5",
+                        "balloonFencePart6",
+                        "balloonFencePart7",
+                        "balloonFencePart8",
+                        "balloonFencePart9",
+                        "balloonFencePart10",
+                        "balloonFencePart11",
+                        "balloonFencePart12"
+
+                    ]
+                }
+            },
+            "balloonFencePart1":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 2,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.2,
+                            "y": 0.2,
+                            "z": -16
+                        }
+                    }
+                }
+            },
+            "balloonFencePart2":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 2,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 16,
+                            "y": 0.2,
+                            "z": 0.2
+                        }
+                    }
+                }
+            },
+            "balloonFencePart3":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 16,
+                            "y": 0.2,
+                            "z": 0.2
+                        }
+                    }
+                }
+            },
+            "balloonFencePart4":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 2,
+                            "z": -16
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 16,
+                            "y": 0.2,
+                            "z": 0.2
+                        }
+                    }
+                }
+            },
+            "balloonFencePart5":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": -16
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 16,
+                            "y": 0.2,
+                            "z": 0.2
+                        }
+                    }
+                }
+            },
+            "balloonFencePart6":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.2,
+                            "y": 2,
+                            "z": 0.2
+                        }
+                    }
+                }
+            },
+            "balloonFencePart7":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": -16
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.2,
+                            "y": 2,
+                            "z": 0.2
+                        }
+                    }
+                }
+            },
+            "balloonFencePart8":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 15.8,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.2,
+                            "y": 2,
+                            "z": 0.2
+                        }
+                    }
+                }
+            },
+            "balloonFencePart9":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 15.8,
+                            "y": 0,
+                            "z": -16
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.2,
+                            "y": 2,
+                            "z": 0.2
+                        }
+                    }
+                }
+            },
+            "balloonFencePart10":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": -8
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.2,
+                            "y": 2,
+                            "z": 0.2
+                        }
+                    }
+                }
+            },
+            "balloonFencePart11":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 7.9,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.2,
+                            "y": 2,
+                            "z": 0.2
+                        }
+                    }
+                }
+            },
+            "balloonFencePart12":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 7.9,
+                            "y": 0,
+                            "z": -16
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.2,
+                            "y": 2,
+                            "z": 0.2
                         }
                     }
                 }
