@@ -29,12 +29,6 @@ class MyGuiInterface {
      * Initialize the gui interface
      */
     init() {
-        // add a folder to the gui interface for the box
-
-        const data_pic_color = {
-            'picking color': this.contents.pickingColor
-        };
-
         const axisFolder = this.datgui.addFolder('Axis');
         axisFolder.add(this.contents.axis, 'visible').onChange(() => { this.contents.updateAxis() });
         axisFolder.close();
@@ -42,10 +36,6 @@ class MyGuiInterface {
         const cameraFolder = this.datgui.addFolder('Camera');
         cameraFolder.add(this.app, 'activeCameraName', [ 'Balloon', 'Perspective', 'Left', 'Right', 'Top', 'Front', 'Back' ] ).name("active camera");
         cameraFolder.close();
-
-        const pickFolder = this.datgui.addFolder('Picking');
-        pickFolder.addColor(data_pic_color, 'picking color').onChange((value) => { this.contents.updatePickingColor(value) });
-        pickFolder.close();
 
         const trackFolder = this.datgui.addFolder('Track');
         trackFolder.add(this.contents.track, 'showMesh').onChange(() => { this.contents.track.updateMeshVisibility() });

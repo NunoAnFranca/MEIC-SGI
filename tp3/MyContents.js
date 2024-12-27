@@ -63,7 +63,7 @@ class MyContents {
         document.addEventListener("keydown", (event) => {
             if (this.gameState === this.GAME_STATE.INIT) {
                 if (event.key === 'p' && this.player1Balloon && this.player2Balloon) {
-                    this.restoreColorOfFirstPickedObj();
+                    this.restoreTranslate();
                     this.gameState = this.GAME_STATE.PLAY;
                     this.removeInitialPositions();
                     setInterval(() => {
@@ -180,48 +180,27 @@ class MyContents {
     }
 
     /*
-    * Update the color of selected object
+    * Change the position of the first intersected object
     *
     */
-    updatePickingColor(value) {
-        this.pickingColor = value.replace('#', '0x');
-    }
-
-    /*
-    * Change the color of the first intersected object
-    *
-    */
-    changeColorOfFirstPickedObj(obj) {
+    changeTranslate(obj) {
         if (this.lastPickedObj != obj) {
             if (this.lastPickedObj) {
-                this.lastPickedObj.material.color.setHex(this.lastPickedObj.currentHex);
-                for (let i = 6; i < this.lastPickedObj.parent.children.length; i++) {
-                    this.lastPickedObj.parent.children[i].material.color.setHex(this.lastPickedObj.parent.children[i].currentHex);
-                }
+                this.lastPickedObj.parent.translateY(-1);
             }
 
             this.lastPickedObj = obj;
-            this.lastPickedObj.currentHex = this.lastPickedObj.material.color.getHex();
-            this.lastPickedObj.material.color.setHex(this.pickingColor);
-
-            for (let i = 6; i < this.lastPickedObj.parent.children.length; i++) {
-                this.lastPickedObj.parent.children[i].currentHex = this.lastPickedObj.parent.children[i].material.color.getHex();
-                this.lastPickedObj.parent.children[i].material.color.setHex(this.pickingColor);
-            }
+            this.lastPickedObj.parent.translateY(1);
         }
     }
 
     /*
-     * Restore the original color of the intersected object
+     * Restore the original position of the intersected object
      *
      */
-    restoreColorOfFirstPickedObj() {
+    restoreTranslate() {
         if (this.lastPickedObj) {
-            this.lastPickedObj.material.color.setHex(this.lastPickedObj.currentHex);
-
-            for (let i = 6; i < this.lastPickedObj.parent.children.length; i++) {
-                this.lastPickedObj.parent.children[i].material.color.setHex(this.lastPickedObj.parent.children[i].currentHex);
-            }
+            this.lastPickedObj.parent.translateY(-1);
         }
 
         this.lastPickedObj = null;
@@ -233,12 +212,7 @@ class MyContents {
                 this.balloons[this.lastPickedObj.name].setPosition(obj.position.x, obj.position.y + 5, obj.position.z);
             }
 
-            this.lastPickedObj.material.color.setHex(this.lastPickedObj.currentHex);
-
-            for (let i = 6; i < this.lastPickedObj.parent.children.length; i++) {
-                this.lastPickedObj.parent.children[i].material.color.setHex(this.lastPickedObj.parent.children[i].currentHex);
-            }
-
+            this.lastPickedObj.parent.translateY(-1);
             this.lastPickedObj = null;
         }
     }
@@ -272,13 +246,11 @@ class MyContents {
                             break;
                     }
                 } else {
-                    this.restoreColorOfFirstPickedObj()
+                    this.restoreTranslate();
                 }
             } else {
-                this.changeColorOfFirstPickedObj(obj)
+                this.changeTranslate(obj);
             }
-        } else {
-            this.restoreColorOfFirstPickedObj()
         }
     }
 
