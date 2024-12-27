@@ -145,7 +145,7 @@ class MyBalloon {
                 child.visible = true;         
                 if(typeBalloon == 'B'){
                     console.log(child.material);
-                    child.material = new THREE.MeshBasicMaterial({color: "#ff0000"});
+                    child.material = new THREE.MeshPhongMaterial({color: "#ff0000"});
                     child.material.needsUpdate = true;
                 }
             }

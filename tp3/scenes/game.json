@@ -1050,7 +1050,209 @@
                         "cableCarConnection5",
                         "cableCarConnection6",
                         "cableCarConnection7",
-                        "cableCarConnection8"
+                        "cableCarConnection8",
+                        "cableCar1",
+                        "cableCar2",
+                        "cableCar3",
+                        "cableCar4",
+                        "cableCar5",
+                        "cableCar6",
+                        "cableCar7"
+                    ]
+                }
+            },            
+            "cableCar1":{
+                "type": "node",
+                "materialref":{
+                    "materialId":"carDarkBlue"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -100,
+                            "y": -20.5,
+                            "z": 70
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList":[
+                        "cableCarBuilder"
+                    ]
+                }
+            },
+            "cableCar2":{
+                "type": "node",
+                "materialref":{
+                    "materialId":"carDarkGreen"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -60,
+                            "y": -46.3,
+                            "z": 68
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 10,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList":[
+                        "cableCarBuilder"
+                    ]
+                }
+            },
+            "cableCar3":{
+                "type": "node",
+                "materialref":{
+                    "materialId":"carLime"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": -62,
+                            "z": 57.5
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 10,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList":[
+                        "cableCarBuilder"
+                    ]
+                }
+            },
+            "cableCar4":{
+                "type": "node",
+                "materialref":{
+                    "materialId":"carYellow"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 45,
+                            "y": -64.7,
+                            "z": 31
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 35,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList":[
+                        "cableCarBuilder"
+                    ]
+                }
+            },
+            "cableCar5":{
+                "type": "node",
+                "materialref":{
+                    "materialId":"carViolet"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 40,
+                            "y": -64.7,
+                            "z": 22.2
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 215,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList":[
+                        "cableCarBuilder"
+                    ]
+                }
+            },
+            "cableCar6":{
+                "type": "node",
+                "materialref":{
+                    "materialId":"carDarkRed"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -30,
+                            "y": -58.4,
+                            "z": 52
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 190,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList":[
+                        "cableCarBuilder"
+                    ]
+                }
+            },
+            "cableCar7":{
+                "type": "node",
+                "materialref":{
+                    "materialId":"carRed"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -110,
+                            "y": -12,
+                            "z": 60
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 180,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList":[
+                        "cableCarBuilder"
                     ]
                 }
             },
@@ -3064,6 +3266,329 @@
                         "height": 18,
                         "slices": 64,
                         "stacks": 64
+                    }
+                }
+            },
+            "cableCarBuilder": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 2,
+                            "y": 0.3,
+                            "z": 5
+                        }
+                    },
+                    "nodesList":[
+                        "cableCarBack",
+                        "cableCarPiece1",
+                        "cableCarPiece2",
+                        "cableCarPiece3",
+                        "cableCarPiece4",
+                        "cableCarPiece5",
+                        "cableCarPiece6",
+                        "cableCarPiece7",
+                        "cableCarPiece8"
+                    ]
+                }
+            },
+            "cableCarBack": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 20
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.2,
+                            "y": 2.5,
+                            "z": 5
+                        }
+                    }
+                }
+            },
+            "cableCarPiece1": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "startMenuMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 1.6,
+                            "y": 0,
+                            "z": 0.2
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.2,
+                            "y": 1.5,
+                            "z": 0.2
+                        }
+                    }
+                }
+            },
+            "cableCarPiece2": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "startMenuMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 1.6,
+                            "y": 0,
+                            "z": 4.6
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.2,
+                            "y": 1.5,
+                            "z": 0.2
+                        }
+                    }
+                }
+            },
+            "cableCarPiece3": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "startMenuMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -0.3,
+                            "y": 1.3,
+                            "z": 0.2
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": -0.1,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 2.2,
+                            "y": 0.2,
+                            "z": 0.2
+                        }
+                    }
+                }
+            },
+            "cableCarPiece4": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "startMenuMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -0.3,
+                            "y": 1.3,
+                            "z": 4.6
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": -0.1,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 2.2,
+                            "y": 0.2,
+                            "z": 0.2
+                        }
+                    }
+                }
+            },
+            "cableCarPiece5": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "startMenuMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -1,
+                            "y": 0,
+                            "z": 2.4
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.2,
+                            "y": 7.2,
+                            "z": 0.2
+                        }
+                    }
+                }
+            },
+            "cableCarPiece6": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "startMenuMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -1,
+                            "y": 0,
+                            "z": 2.4
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": -1.4
+                        },
+                        "xyz2": {
+                            "x": 2.2,
+                            "y": -0.2,
+                            "z": 1.6
+                        }
+                    }
+                }
+            },
+            "cableCarPiece7": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "startMenuMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -1,
+                            "y": 7,
+                            "z": 2.4
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.2,
+                            "y": 0.2,
+                            "z": 1.2
+                        }
+                    }
+                }
+            },
+            "cableCarPiece8": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "startMenuMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -1,
+                            "y": 7,
+                            "z": 3.4
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.2,
+                            "y": -0.6,
+                            "z": 0.2
+                        }
                     }
                 }
             }
