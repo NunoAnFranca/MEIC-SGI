@@ -93,7 +93,7 @@ class MyContents {
             this.axis.visible = false;
             this.app.scene.add(this.axis);
         }
-        this.createStartMenu();
+        //this.createStartMenu();
 
         //this.reader = new MyParser(this.app);
 

@@ -173,7 +173,7 @@ class MyBalloon {
             if (child.name == 'marker') {
                 child.visible = true;         
                 if (typeBalloon == 'B') {
-                    child.material = new THREE.MeshBasicMaterial({color: "#ff0000"});
+                    child.material = new THREE.MeshPhongMaterial({ color: "#ff0000" });
                     child.material.needsUpdate = true;
                 }
             }

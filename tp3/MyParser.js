@@ -339,10 +339,6 @@ class MyParser {
                 texture.offset.set(0, 0.35); // Shift to show the top half
                 texture.wrapS = THREE.ClampToEdgeWrapping;
                 texture.wrapT = THREE.ClampToEdgeWrapping;
-            } if(index == 2) {
-                // Rotate 'up' and 'down' textures
-                texture.center.set(0.5, 0.5); // Set rotation center to middle of the texture
-                texture.rotation = Math.PI; // Rotate by 90 degrees (π/2 radians)
             } if (index == 3)  {
                 // Scale the texture coordinates to the center portion
                 texture.repeat.set(25, 25); // Repeat 5 times in both directions

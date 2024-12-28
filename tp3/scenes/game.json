@@ -38,12 +38,12 @@
                     "b": 0
                 },
                 "intensity": 3.0,
-                "front": "scenes/textures/skybox/pz.png",
-                "back": "scenes/textures/skybox/nz.png",
+                "front": "scenes/textures/skybox/nz.png",
+                "back": "scenes/textures/skybox/pz.png",
                 "up": "scenes/textures/skybox/py.png",
                 "down": "scenes/textures/skybox/ny.png",
-                "left": "scenes/textures/skybox/px.png",
-                "right": "scenes/textures/skybox/nx.png"
+                "left": "scenes/textures/skybox/nx.png",
+                "right": "scenes/textures/skybox/px.png"
             }
         },
         "textures": {
@@ -382,6 +382,130 @@
                 "transparent": false,
                 "opacity": 1,
                 "twosided": true
+            },
+            "mountainMainColor": {
+                "color": {
+                    "r": 0.6431,
+                    "g": 0.4627,
+                    "b": 0.2902
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1,
+                "twosided": true
+            },
+            "pillarMaterial": {
+                "color": {
+                    "r": 0.517647059,
+                    "g": 0.141176471,
+                    "b": 0.047058824
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1
+            },
+            "startMenuMaterial": {
+                "color": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                },
+                "emissive": {
+                    "r": 0.02,
+                    "g": 0.02,
+                    "b": 0.02
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 100,
+                "transparent": false,
+                "opacity": 1
+            },
+            "riverMaterial": {
+                "color": {
+                    "r": 0.2,
+                    "g": 0.2,
+                    "b": 0.8
+                },
+                "emissive": {
+                    "r": 0.02,
+                    "g": 0.02,
+                    "b": 0.02
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": true,
+                "opacity": 0.9,
+                "twosided": true
+            },
+            "lightGrayMaterial": {
+                "color": {
+                    "r": 0.2,
+                    "g": 0.2,
+                    "b": 0.2
+                },
+                "emissive": {
+                    "r": 0.02,
+                    "g": 0.02,
+                    "b": 0.02
+                },
+                "specular": {
+                    "r": 0.6,
+                    "g": 0.6,
+                    "b": 0.6
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "twosided": true
+            },
+            "woodMaterial": {
+                "color": {
+                    "r": 0.803921569,
+                    "g": 0.615686275,
+                    "b": 0.435294118
+                },
+                "emissive": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                },
+                "specular": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "twosided": true
             }
         },
         "cameras": {
@@ -532,7 +656,11 @@
                 ],
                 "children": {
                     "nodesList": [
-                        "mainCarRoad"
+                        "mountain",
+                        "mainCarRoad",
+                        "cableCarMainNode",
+                        "balloonFenceEnemy",
+                        "balloonFencePlayer"
                     ],
                     "ligh1": {
                         "type": "pointlight",
@@ -554,6 +682,1647 @@
                     }
                 }
             },
+            "balloonFencePlayer":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 46,
+                            "y": 0,
+                            "z": -34
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 180,
+                            "z": 0
+                        } 
+                    }
+                ],
+                "children": {
+                    "nodesList":[
+                        "balloonFenceConstructor"
+                    ]
+                }
+            },
+            "balloonFenceEnemy":{
+                "type": "node",
+                "children": {
+                    "nodesList":[
+                        "balloonFenceConstructor"
+                    ]
+                }
+            },
+            "balloonFenceConstructor":{
+                "type": "node",
+                "materialref":{
+                    "materialId":"woodMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -2,
+                            "y": -1,
+                            "z": -9
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.2,
+                            "y": 0.2,
+                            "z": -16
+                        }
+                    },
+                    "nodesList":[
+                        "balloonFencePart1",
+                        "balloonFencePart2",
+                        "balloonFencePart3",
+                        "balloonFencePart4",
+                        "balloonFencePart5",
+                        "balloonFencePart6",
+                        "balloonFencePart7",
+                        "balloonFencePart8",
+                        "balloonFencePart9",
+                        "balloonFencePart10",
+                        "balloonFencePart11",
+                        "balloonFencePart12"
+
+                    ]
+                }
+            },
+            "balloonFencePart1":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 2,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.2,
+                            "y": 0.2,
+                            "z": -16
+                        }
+                    }
+                }
+            },
+            "balloonFencePart2":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 2,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 16,
+                            "y": 0.2,
+                            "z": 0.2
+                        }
+                    }
+                }
+            },
+            "balloonFencePart3":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 16,
+                            "y": 0.2,
+                            "z": 0.2
+                        }
+                    }
+                }
+            },
+            "balloonFencePart4":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 2,
+                            "z": -16
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 16,
+                            "y": 0.2,
+                            "z": 0.2
+                        }
+                    }
+                }
+            },
+            "balloonFencePart5":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": -16
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 16,
+                            "y": 0.2,
+                            "z": 0.2
+                        }
+                    }
+                }
+            },
+            "balloonFencePart6":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.2,
+                            "y": 2,
+                            "z": 0.2
+                        }
+                    }
+                }
+            },
+            "balloonFencePart7":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": -16
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.2,
+                            "y": 2,
+                            "z": 0.2
+                        }
+                    }
+                }
+            },
+            "balloonFencePart8":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 15.8,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.2,
+                            "y": 2,
+                            "z": 0.2
+                        }
+                    }
+                }
+            },
+            "balloonFencePart9":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 15.8,
+                            "y": 0,
+                            "z": -16
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.2,
+                            "y": 2,
+                            "z": 0.2
+                        }
+                    }
+                }
+            },
+            "balloonFencePart10":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": -8
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.2,
+                            "y": 2,
+                            "z": 0.2
+                        }
+                    }
+                }
+            },
+            "balloonFencePart11":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 7.9,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.2,
+                            "y": 2,
+                            "z": 0.2
+                        }
+                    }
+                }
+            },
+            "balloonFencePart12":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 7.9,
+                            "y": 0,
+                            "z": -16
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.2,
+                            "y": 2,
+                            "z": 0.2
+                        }
+                    }
+                }
+            },
+            "mountain": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "mountainMainColor"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": -40,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "mountain":{
+                        "type": "nurbs",
+                        "degree_u": 8,
+                        "degree_v": 5,
+                        "parts_u": 256,
+                        "parts_v": 256,
+                        "controlpoints": [
+                            {
+                                "x": -125,
+                                "y": -35,
+                                "z": 125,
+                                "w": 0.01
+                            },
+                            {
+                                "x": -125,
+                                "y": -35,
+                                "z": 125,
+                                "w": 0.01
+                            },
+                            {
+                                "x": -100,
+                                "y": -35,
+                                "z": 125,
+                                "w": 0.01
+                            },
+                            {
+                                "x": -60,
+                                "y": -35,
+                                "z": 125,
+                                "w": 0.01
+                            },
+                            {
+                                "x": -40,
+                                "y": -35,
+                                "z": 125,
+                                "w": 0.01
+                            },
+                            {
+                                "x": -40,
+                                "y": -35,
+                                "z": 125,
+                                "w": 0.01
+                            },
+                            {
+                                "x": -125,
+                                "y": -35,
+                                "z": 125,
+                                "w": 0.01
+                            },
+                            {
+                                "x": -125,
+                                "y": 0,
+                                "z": 125,
+                                "w": 1
+                            },
+                            {
+                                "x": -100,
+                                "y": -10,
+                                "z": 125,
+                                "w": 1
+                            },
+                            {
+                                "x": -60,
+                                "y": -40,
+                                "z": 125,
+                                "w": 1
+                            },
+                            {
+                                "x": -40,
+                                "y": -35,
+                                "z": 125,
+                                "w": 10
+                            },
+                            {
+                                "x": -40,
+                                "y": -35,
+                                "z": 125,
+                                "w": 10
+                            },
+                            {
+                                "x": -125,
+                                "y": -35,
+                                "z": 90,
+                                "w": 0.01
+                            },
+                            {
+                                "x": -125,
+                                "y": -10,
+                                "z": 90,
+                                "w": 1
+                            },
+                            {
+                                "x": -100,
+                                "y": -20,
+                                "z": 90,
+                                "w": 1
+                            },
+                            {
+                                "x": -60,
+                                "y": -30,
+                                "z": 90,
+                                "w": 1
+                            },
+                            {
+                                "x": -40,
+                                "y": -35,
+                                "z": 90,
+                                "w": 10
+                            },
+                            {
+                                "x": -40,
+                                "y": -35,
+                                "z": 90,
+                                "w": 10
+                            },
+                            {
+                                "x": -125,
+                                "y": -35,
+                                "z": 55,
+                                "w": 0.01
+                            },
+                            {
+                                "x": -125,
+                                "y": 60,
+                                "z": 55,
+                                "w": 8
+                            },
+                            {
+                                "x": -100,
+                                "y": 50,
+                                "z": 55,
+                                "w": 8
+                            },
+                            {
+                                "x": -60,
+                                "y": -30,
+                                "z": 55,
+                                "w": 8
+                            },
+                            {
+                                "x": -45,
+                                "y": -30,
+                                "z": 55,
+                                "w": 10
+                            },
+                            {
+                                "x": -45,
+                                "y": -30,
+                                "z": 55,
+                                "w": 10
+                            },
+                            {
+                                "x": -125,
+                                "y": -35,
+                                "z": 55,
+                                "w": 0.01
+                            },
+                            {
+                                "x": -125,
+                                "y": -10,
+                                "z": 55,
+                                "w": 1
+                            },
+                            {
+                                "x": -100,
+                                "y": -20,
+                                "z": 55,
+                                "w": 1
+                            },
+                            {
+                                "x": -55,
+                                "y": -50,
+                                "z": 55,
+                                "w": 1
+                            },
+                            {
+                                "x": -45,
+                                "y": -35,
+                                "z": 55,
+                                "w": 10
+                            },
+                            {
+                                "x": -45,
+                                "y": -35,
+                                "z": 55,
+                                "w": 10
+                            },
+                            {
+                                "x": -125,
+                                "y": -35,
+                                "z": 40,
+                                "w": 0.01
+                            },
+                            {
+                                "x": -125,
+                                "y": -30,
+                                "z": 40,
+                                "w": 20
+                            },
+                            {
+                                "x": -100,
+                                "y": -40,
+                                "z": 40,
+                                "w": 20
+                            },
+                            {
+                                "x": -60,
+                                "y": -70,
+                                "z": 40,
+                                "w": 20
+                            },
+                            {
+                                "x": -40,
+                                "y": -70,
+                                "z": 40,
+                                "w": 20
+                            },
+                            {
+                                "x": -35,
+                                "y": -40,
+                                "z": 40,
+                                "w": 0.1
+                            },
+                            {
+                                "x": -125,
+                                "y": -35,
+                                "z": -20,
+                                "w": 0.01
+                            },
+                            {
+                                "x": -125,
+                                "y": 50,
+                                "z": -20,
+                                "w": 30
+                            },
+                            {
+                                "x": -100,
+                                "y": 50,
+                                "z": -20,
+                                "w": 30
+                            },
+                            {
+                                "x": -60,
+                                "y": 30,
+                                "z": -20,
+                                "w": 30
+                            },
+                            {
+                                "x": -40,
+                                "y": 30,
+                                "z": -20,
+                                "w": 30
+                            },
+                            {
+                                "x": -20,
+                                "y": -40,
+                                "z": -20,
+                                "w": 0.1
+                            },
+                            {
+                                "x": -125,
+                                "y": -35,
+                                "z": -125,
+                                "w": 0.01
+                            },
+                            {
+                                "x": -125,
+                                "y": 50,
+                                "z": -125,
+                                "w": 20
+                            },
+                            {
+                                "x": -100,
+                                "y": 50,
+                                "z": -125,
+                                "w": 20
+                            },
+                            {
+                                "x": -60,
+                                "y": 50,
+                                "z": -125,
+                                "w": 20
+                            },
+                            {
+                                "x": -40,
+                                "y": 50,
+                                "z": -125,
+                                "w": 20
+                            },
+                            {
+                                "x": -20,
+                                "y": -35,
+                                "z": -125,
+                                "w": 0.1
+                            },
+                            {
+                                "x": -125,
+                                "y": -35,
+                                "z": -125,
+                                "w": 0.01
+                            },
+                            {
+                                "x": -125,
+                                "y": -35,
+                                "z": -125,
+                                "w": 0.01
+                            },
+                            {
+                                "x": -100,
+                                "y": -35,
+                                "z": -125,
+                                "w": 0.01
+                            },
+                            {
+                                "x": -60,
+                                "y": -35,
+                                "z": -125,
+                                "w": 0.01
+                            },
+                            {
+                                "x": -40,
+                                "y": -35,
+                                "z": -125,
+                                "w": 0.01
+                            },
+                            {
+                                "x": -20,
+                                "y": -35,
+                                "z": -125,
+                                "w": 0.01
+                            }
+                        ]
+                    },
+                    "nodesList":[
+                        "startMenu",
+                        "river"
+                    ]
+                }
+            },
+            "cableCarMainNode": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "lightGrayMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList":[
+                        "cableCarPole1",
+                        "cableCarPole2",
+                        "cableCarPole3",
+                        "cableCarPole4",
+                        "cableCarConnection1",
+                        "cableCarConnection2",
+                        "cableCarConnection3",
+                        "cableCarConnection4",
+                        "cableCarConnection5",
+                        "cableCarConnection6",
+                        "cableCarConnection7",
+                        "cableCarConnection8",
+                        "cableCar1",
+                        "cableCar2",
+                        "cableCar3",
+                        "cableCar4",
+                        "cableCar5",
+                        "cableCar6",
+                        "cableCar7"
+                    ]
+                }
+            },            
+            "cableCar1":{
+                "type": "node",
+                "materialref":{
+                    "materialId":"carDarkBlue"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -100,
+                            "y": -20.5,
+                            "z": 70
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList":[
+                        "cableCarBuilder"
+                    ]
+                }
+            },
+            "cableCar2":{
+                "type": "node",
+                "materialref":{
+                    "materialId":"carDarkGreen"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -60,
+                            "y": -46.3,
+                            "z": 68
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 10,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList":[
+                        "cableCarBuilder"
+                    ]
+                }
+            },
+            "cableCar3":{
+                "type": "node",
+                "materialref":{
+                    "materialId":"carLime"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": -62,
+                            "z": 57.5
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 10,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList":[
+                        "cableCarBuilder"
+                    ]
+                }
+            },
+            "cableCar4":{
+                "type": "node",
+                "materialref":{
+                    "materialId":"carYellow"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 45,
+                            "y": -64.7,
+                            "z": 31
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 35,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList":[
+                        "cableCarBuilder"
+                    ]
+                }
+            },
+            "cableCar5":{
+                "type": "node",
+                "materialref":{
+                    "materialId":"carViolet"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 40,
+                            "y": -64.7,
+                            "z": 22.2
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 215,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList":[
+                        "cableCarBuilder"
+                    ]
+                }
+            },
+            "cableCar6":{
+                "type": "node",
+                "materialref":{
+                    "materialId":"carDarkRed"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -30,
+                            "y": -58.4,
+                            "z": 52
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 190,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList":[
+                        "cableCarBuilder"
+                    ]
+                }
+            },
+            "cableCar7":{
+                "type": "node",
+                "materialref":{
+                    "materialId":"carRed"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -110,
+                            "y": -12,
+                            "z": 60
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 180,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList":[
+                        "cableCarBuilder"
+                    ]
+                }
+            },
+            "cableCarPole1":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -122,
+                            "y": -12,
+                            "z": 65
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList":[
+                        "cableCarPoleBuilder"
+                    ]
+                }
+            },
+            "cableCarPole2":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -70,
+                            "y": -55,
+                            "z": 65
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList":[
+                        "cableCarPoleBuilder"
+                    ]
+                }
+            },
+            "cableCarPole3":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 10,
+                            "y": -75,
+                            "z": 50
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 20,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList":[
+                        "cableCarPoleBuilder"
+                    ]
+                }
+            },
+            "cableCarPole4":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 80,
+                            "y": -75,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 40,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList":[
+                        "cableCarPoleBuilder"
+                    ]
+                }
+            },
+            "cableCarConnection1":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 19,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "connection":{
+                        "type": "line",
+                        "parts": 32,
+                        "sides": 16,
+                        "width": 0.2,
+                        "closed": false,
+                        "points":[
+                            {
+                                "x": -122,
+                                "y": -12,
+                                "z": 73
+                            },
+                            {
+                                "x": -85,
+                                "y": -47,
+                                "z": 73
+                            },
+                            {
+                                "x": -70,
+                                "y": -55,
+                                "z": 73
+                            }
+                        ]
+                    }
+                }
+            },
+            "cableCarConnection2":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 19,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "connection":{
+                        "type": "line",
+                        "parts": 32,
+                        "sides": 16,
+                        "width": 0.2,
+                        "closed": false,
+                        "points":[
+                            {
+                                "x": -122,
+                                "y": -12,
+                                "z": 57
+                            },
+                            {
+                                "x": -85,
+                                "y": -47,
+                                "z": 57
+                            },
+                            {
+                                "x": -70,
+                                "y": -55,
+                                "z": 57
+                            }
+                        ]
+                    }
+                }
+            },
+            "cableCarConnection3":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 19,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "connection":{
+                        "type": "line",
+                        "parts": 32,
+                        "sides": 16,
+                        "width": 0.2,
+                        "closed": false,
+                        "points":[
+                            {
+                                "x": -70,
+                                "y": -55,
+                                "z": 57
+                            },
+                            {
+                                "x": -25,
+                                "y": -72,
+                                "z": 48
+                            },
+                            {
+                                "x": 7,
+                                "y": -75,
+                                "z": 42
+                            }
+                        ]
+                    }
+                }
+            },
+            "cableCarConnection4":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 19,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "connection":{
+                        "type": "line",
+                        "parts": 32,
+                        "sides": 16,
+                        "width": 0.2,
+                        "closed": false,
+                        "points":[
+                            {
+                                "x": -70,
+                                "y": -55,
+                                "z": 73
+                            },
+                            {
+                                "x": -20,
+                                "y": -72,
+                                "z": 64
+                            },
+                            {
+                                "x": 13,
+                                "y": -75,
+                                "z": 58
+                            }
+                        ]
+                    }
+                }
+            },
+            "cableCarConnection5":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 19,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "connection":{
+                        "type": "line",
+                        "parts": 32,
+                        "sides": 16,
+                        "width": 0.2,
+                        "closed": false,
+                        "points":[
+                            {
+                                "x": 7,
+                                "y": -75,
+                                "z": 42
+                            },
+                            {
+                                "x": 41,
+                                "y": -77,
+                                "z": 18
+                            },
+                            {
+                                "x": 75,
+                                "y": -75,
+                                "z": -6
+                            }
+                        ]
+                    }
+                }
+            },
+            "cableCarConnection6":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 19,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "connection":{
+                        "type": "line",
+                        "parts": 32,
+                        "sides": 16,
+                        "width": 0.2,
+                        "closed": false,
+                        "points":[
+                            {
+                                "x": 13,
+                                "y": -75,
+                                "z": 58
+                            },
+                            {
+                                "x": 49,
+                                "y": -77,
+                                "z": 32
+                            },
+                            {
+                                "x": 85,
+                                "y": -75,
+                                "z": 6
+                            }
+                        ]
+                    }
+                }
+            },
+            "cableCarConnection7":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 19,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "connection":{
+                        "type": "line",
+                        "parts": 32,
+                        "sides": 16,
+                        "width": 0.2,
+                        "closed": false,
+                        "points":[
+                            {
+                                "x": 75,
+                                "y": -75,
+                                "z": -6
+                            },
+                            {
+                                "x": 80,
+                                "y": -95,
+                                "z": -11
+                            }
+                        ]
+                    }
+                }
+            },
+            "cableCarConnection8":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 19,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "connection":{
+                        "type": "line",
+                        "parts": 32,
+                        "sides": 16,
+                        "width": 0.2,
+                        "closed": false,
+                        "points":[
+                            {
+                                "x": 85,
+                                "y": -75,
+                                "z": 6
+                            },
+                            {
+                                "x": 90,
+                                "y": -95,
+                                "z": 1
+                            }
+                        ]
+                    }
+                }
+            },
+            "startMenu": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "startMenuMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -75,
+                            "y": 50,
+                            "z": -75
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 60,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 32,
+                            "y": 18,
+                            "z": 2
+                        }
+                    },
+                    "nodesList":[
+                        "startMenuBar1",
+                        "startMenuBar2"
+                    ]
+                }
+            },
+            "river": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "riverMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "nurbs",
+                        "degree_u": 8,
+                        "degree_v": 1,
+                        "parts_u": 64,
+                        "parts_v": 64,
+                        "controlpoints": [
+                            {
+                                "x": -125,
+                                "y": 16,
+                                "z": 25,
+                                "w": 1
+                            },
+                            {
+                                "x": -125,
+                                "y": 16,
+                                "z": 20,
+                                "w": 1
+                            },
+                            {
+                                "x": -100,
+                                "y": 14,
+                                "z": 20,
+                                "w": 1
+                            },
+                            {
+                                "x": -100,
+                                "y": 10,
+                                "z": 10,
+                                "w": 1
+                            },
+                            {
+                                "x": -80,
+                                "y": -5,
+                                "z": 60,
+                                "w": 1
+                            },
+                            {
+                                "x": -80,
+                                "y": -8,
+                                "z": 10,
+                                "w": 1
+                            },
+                            {
+                                "x": -40,
+                                "y": -41.8,
+                                "z": 90,
+                                "w": 5.5
+                            },
+                            {
+                                "x": -40,
+                                "y": -38,
+                                "z": 70,
+                                "w": 5.5
+                            },
+                            {
+                                "x": -20,
+                                "y": -23,
+                                "z": 70,
+                                "w": 1
+                            },
+                            {
+                                "x": -20,
+                                "y": -33,
+                                "z": 20,
+                                "w": 1
+                            },
+                            {
+                                "x": 0,
+                                "y": -34.5,
+                                "z": 50,
+                                "w": 1
+                            },
+                            {
+                                "x": 0,
+                                "y": -34.5,
+                                "z": 0,
+                                "w": 1
+                            },
+                            {
+                                "x": 40,
+                                "y": -34.5,
+                                "z": 60,
+                                "w": 3
+                            },
+                            {
+                                "x": 40,
+                                "y": -34.5,
+                                "z": 0,
+                                "w": 3
+                            },
+                            {
+                                "x": 80,
+                                "y": -34.5,
+                                "z": 125,
+                                "w": 5
+                            },
+                            {
+                                "x": 80,
+                                "y": -34.5,
+                                "z": 0,
+                                "w": 1
+                            },
+                            {
+                                "x": 125,
+                                "y": -34.5,
+                                "z": 125,
+                                "w": 1
+                            },
+                            {
+                                "x": 125,
+                                "y": -34.5,
+                                "z": 0,
+                                "w": 1
+                            }
+                        ]
+                    }
+                }
+            },
+            "startMenuBar1": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "startMenuMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 28,
+                            "y": -5,
+                            "z": 1
+                        }
+                    }
+                ],
+                "children": {
+                    "pillar":{
+                        "type": "cylinder",
+                        "base": 0.5,
+                        "top": 0.5,
+                        "height": 18,
+                        "slices": 64,
+                        "stacks": 64
+                    }
+                }
+            },
+            "startMenuBar2": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "startMenuMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 4,
+                            "y": -5,
+                            "z": 1
+                        }
+                    }
+                ],
+                "children": {
+                    "pillar":{
+                        "type": "cylinder",
+                        "base": 0.5,
+                        "top": 0.5,
+                        "height": 18,
+                        "slices": 64,
+                        "stacks": 64
+                    }
+                }
+            },
             "mainCarRoad": {
                 "type": "node",
                 "transforms": [
@@ -570,6 +2339,7 @@
                     "nodesList": [
                         "road1",
                         "road2",
+                        "pillars",
                         "car1",
                         "car2",
                         "car3",
@@ -581,6 +2351,304 @@
                         "car9",
                         "car10"
                     ]
+                }
+            },
+            "pillars": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "pillarMaterial"
+                },
+                "children": {
+                    "nodesList":[
+                        "pillar1",
+                        "pillar2",
+                        "pillar3",
+                        "pillar4",
+                        "pillar5",
+                        "pillar6",
+                        "pillar7",
+                        "pillar8",
+                        "pillar9",
+                        "pillar10",
+                        "pillar11",
+                        "pillar12"
+                    ]
+                }
+            },
+            "pillar1": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 25,
+                            "y": 3,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "pillar":{
+                        "type": "cylinder",
+                        "base": 0.5,
+                        "top": 0.5,
+                        "height": 6,
+                        "slices": 64,
+                        "stacks": 64
+                    }
+                }
+            },
+            "pillar2": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 15,
+                            "y": 3,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "pillar":{
+                        "type": "cylinder",
+                        "base": 0.5,
+                        "top": 0.5,
+                        "height": 6,
+                        "slices": 64,
+                        "stacks": 64
+                    }
+                }
+            },
+            "pillar3": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 24,
+                            "y": 3,
+                            "z": 15
+                        }
+                    }
+                ],
+                "children": {
+                    "pillar":{
+                        "type": "cylinder",
+                        "base": 0.5,
+                        "top": 0.5,
+                        "height": 6,
+                        "slices": 64,
+                        "stacks": 64
+                    }
+                }
+            },
+            "pillar4": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 13,
+                            "y": 3,
+                            "z": 15
+                        }
+                    }
+                ],
+                "children": {
+                    "pillar":{
+                        "type": "cylinder",
+                        "base": 0.5,
+                        "top": 0.5,
+                        "height": 6,
+                        "slices": 64,
+                        "stacks": 64
+                    }
+                }
+            },
+            "pillar5": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 13,
+                            "y": 3,
+                            "z": 35
+                        }
+                    }
+                ],
+                "children": {
+                    "pillar":{
+                        "type": "cylinder",
+                        "base": 0.5,
+                        "top": 0.5,
+                        "height": 6,
+                        "slices": 64,
+                        "stacks": 64
+                    }
+                }
+            },
+            "pillar6": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 3,
+                            "y": 3,
+                            "z": 30
+                        }
+                    }
+                ],
+                "children": {
+                    "pillar":{
+                        "type": "cylinder",
+                        "base": 0.5,
+                        "top": 0.5,
+                        "height": 6,
+                        "slices": 64,
+                        "stacks": 64
+                    }
+                }
+            },
+            "pillar7": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 10,
+                            "y": 2.5,
+                            "z": -15
+                        }
+                    }
+                ],
+                "children": {
+                    "pillar":{
+                        "type": "cylinder",
+                        "base": 0.5,
+                        "top": 0.5,
+                        "height": 5,
+                        "slices": 64,
+                        "stacks": 64
+                    }
+                }
+            },
+            "pillar8": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 20,
+                            "y": 2.5,
+                            "z": -15
+                        }
+                    }
+                ],
+                "children": {
+                    "pillar":{
+                        "type": "cylinder",
+                        "base": 0.5,
+                        "top": 0.5,
+                        "height": 5,
+                        "slices": 64,
+                        "stacks": 64
+                    }
+                }
+            },
+            "pillar9": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 15,
+                            "y": 2,
+                            "z": -30
+                        }
+                    }
+                ],
+                "children": {
+                    "pillar":{
+                        "type": "cylinder",
+                        "base": 0.5,
+                        "top": 0.5,
+                        "height": 4,
+                        "slices": 64,
+                        "stacks": 64
+                    }
+                }
+            },
+            "pillar10": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 5,
+                            "y": 2,
+                            "z": -30
+                        }
+                    }
+                ],
+                "children": {
+                    "pillar":{
+                        "type": "cylinder",
+                        "base": 0.5,
+                        "top": 0.5,
+                        "height": 4,
+                        "slices": 64,
+                        "stacks": 64
+                    }
+                }
+            },
+            "pillar11": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -25,
+                            "y": 2.4,
+                            "z": 42
+                        }
+                    }
+                ],
+                "children": {
+                    "pillar":{
+                        "type": "cylinder",
+                        "base": 0.5,
+                        "top": 0.5,
+                        "height": 4.8,
+                        "slices": 64,
+                        "stacks": 64
+                    }
+                }
+            },
+            "pillar12": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -10,
+                            "y": 2.4,
+                            "z": 47
+                        }
+                    }
+                ],
+                "children": {
+                    "pillar":{
+                        "type": "cylinder",
+                        "base": 0.5,
+                        "top": 0.5,
+                        "height": 4.8,
+                        "slices": 64,
+                        "stacks": 64
+                    }
                 }
             },
             "road1": {
@@ -1577,6 +3645,389 @@
                         "height": 0.3,
                         "slices": 64,
                         "stacks": 64
+                    }
+                }
+            },            
+            "cableCarPoleBuilder": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "startMenuMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 10,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "pillar":{
+                        "type": "cylinder",
+                        "base": 1,
+                        "top": 0.5,
+                        "height": 20,
+                        "slices": 64,
+                        "stacks": 64
+                    },
+                    "nodesList":[
+                        "cableCarBuilderPart2"
+                    ]
+                }
+            },
+            "cableCarBuilderPart2": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 9,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 90,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "pillar":{
+                        "type": "cylinder",
+                        "base": 0.3,
+                        "top": 0.3,
+                        "height": 18,
+                        "slices": 64,
+                        "stacks": 64
+                    }
+                }
+            },
+            "cableCarBuilder": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 2,
+                            "y": 0.3,
+                            "z": 5
+                        }
+                    },
+                    "nodesList":[
+                        "cableCarBack",
+                        "cableCarPiece1",
+                        "cableCarPiece2",
+                        "cableCarPiece3",
+                        "cableCarPiece4",
+                        "cableCarPiece5",
+                        "cableCarPiece6",
+                        "cableCarPiece7",
+                        "cableCarPiece8"
+                    ]
+                }
+            },
+            "cableCarBack": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 20
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.2,
+                            "y": 2.5,
+                            "z": 5
+                        }
+                    }
+                }
+            },
+            "cableCarPiece1": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "startMenuMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 1.6,
+                            "y": 0,
+                            "z": 0.2
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.2,
+                            "y": 1.5,
+                            "z": 0.2
+                        }
+                    }
+                }
+            },
+            "cableCarPiece2": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "startMenuMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 1.6,
+                            "y": 0,
+                            "z": 4.6
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.2,
+                            "y": 1.5,
+                            "z": 0.2
+                        }
+                    }
+                }
+            },
+            "cableCarPiece3": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "startMenuMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -0.3,
+                            "y": 1.3,
+                            "z": 0.2
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": -0.1,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 2.2,
+                            "y": 0.2,
+                            "z": 0.2
+                        }
+                    }
+                }
+            },
+            "cableCarPiece4": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "startMenuMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -0.3,
+                            "y": 1.3,
+                            "z": 4.6
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": -0.1,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 2.2,
+                            "y": 0.2,
+                            "z": 0.2
+                        }
+                    }
+                }
+            },
+            "cableCarPiece5": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "startMenuMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -1,
+                            "y": 0,
+                            "z": 2.4
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.2,
+                            "y": 7.2,
+                            "z": 0.2
+                        }
+                    }
+                }
+            },
+            "cableCarPiece6": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "startMenuMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -1,
+                            "y": 0,
+                            "z": 2.4
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": -1.4
+                        },
+                        "xyz2": {
+                            "x": 2.2,
+                            "y": -0.2,
+                            "z": 1.6
+                        }
+                    }
+                }
+            },
+            "cableCarPiece7": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "startMenuMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -1,
+                            "y": 7,
+                            "z": 2.4
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.2,
+                            "y": 0.2,
+                            "z": 1.2
+                        }
+                    }
+                }
+            },
+            "cableCarPiece8": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "startMenuMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -1,
+                            "y": 7,
+                            "z": 3.4
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.2,
+                            "y": -0.6,
+                            "z": 0.2
+                        }
                     }
                 }
             }
