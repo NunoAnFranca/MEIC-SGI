@@ -42,10 +42,10 @@ class MyContents {
         this.notPickableObjIds = ["A", "B", "track"]
 
         this.GAME_STATE = {
-            "INIT": 0,
-            "PLAY": 1,
-            "PAUSE": 2,
-            "END": 3
+            INIT: 0,
+            PLAY: 1,
+            PAUSE: 2,
+            END: 3
         }
 
         this.gameState = this.GAME_STATE.INIT;
@@ -66,6 +66,8 @@ class MyContents {
                     this.restoreTranslate();
                     this.gameState = this.GAME_STATE.PLAY;
                     this.removeInitialPositions();
+                    this.balloons[this.player1Balloon].setCamera(this.app.cameras['Balloon']);
+                    this.setCamera('Balloon');
                     setInterval(() => {
                         this.player = this.balloons[this.player1Balloon];
                         this.balloons[this.player1Balloon].moveWind();
@@ -94,7 +96,7 @@ class MyContents {
         }
         this.createStartMenu();
 
-        this.reader = new MyParser(this.app);
+        //this.reader = new MyParser(this.app);
 
         // create temp lights so we can see the objects to not render the entire scene
         this.buildLights();
@@ -231,7 +233,6 @@ class MyContents {
                             if (obj.name === "A" && this.initialPositions["A"] === null) {
                                 this.initialPositions["A"] = this.lastPickedObj.name;
                                 this.player1Balloon = this.lastPickedObj.name;
-                                this.balloons[this.player1Balloon].balloonGroup.children[10].add(this.app.cameras['Balloon']);
                                 this.changeObjectPosition(obj)
                             }
                             break;
@@ -378,6 +379,11 @@ class MyContents {
         this.transverseRaycastProperties(intersects)
     }
 
+    setCamera(cameraName) {
+        this.app.activeCameraName = cameraName;
+        this.app.updateCameraIfRequired();
+    }
+
     updateTrack() {
         this.track.updateCurve()
     }
@@ -392,6 +398,19 @@ class MyContents {
      *
      */
     update() {
+        switch (this.gameState) {
+            case this.GAME_STATE.INIT:
+                break;
+            case this.GAME_STATE.PLAY:
+                this.balloons[this.player1Balloon].update();
+                break;
+            case this.GAME_STATE.PAUSE:
+                break;
+            case this.GAME_STATE.END:
+                break;
+            default:
+                break;
+        }
     }
 }
 

@@ -28,6 +28,15 @@ class MyBalloon {
         this.trackPoints = null;
         this.distanceTreshold = 5.0;
 
+        this.DIRECTIONS = {
+            NORTH: 0,
+            EAST: 1,
+            SOUTH: 2,
+            WEST: 3
+        };
+
+        this.direction = this.DIRECTIONS.NORTH;
+
         this.init();
     }
 
@@ -114,6 +123,12 @@ class MyBalloon {
         this.app.scene.add(this.balloonGroup);
     }
 
+    update() {
+        if (this.camera) {
+            this.updateCamera();
+        }
+    }
+
     setPosition(xPos, yPos, zPos) {
         this.xPos = xPos;
         this.yPos = yPos;
@@ -150,6 +165,39 @@ class MyBalloon {
                 }
             }
         }
+    }
+
+    setCamera(camera) {
+        this.camera = camera;
+    }
+
+    updateCamera() {
+        const offsetY = 3;
+        let offsetX;
+        let offsetZ;
+        
+        switch (this.direction) {
+            case this.DIRECTIONS.NORTH:
+                offsetX = 0;
+                offsetZ = 5;
+                break;
+            case this.DIRECTIONS.EAST:
+                offsetX = -5;
+                offsetZ = 0;
+                break;
+            case this.DIRECTIONS.SOUTH:
+                offsetX = 0;
+                offsetZ = -5;
+                break;
+            case this.DIRECTIONS.WEST:
+                offsetX = 5;
+                offsetZ = 0;
+                break;
+        }
+
+        this.camera.position.set(this.xPos + offsetX, this.yPos + offsetY, this.zPos + offsetZ);
+        this.camera.target = new THREE.Vector3(this.xPos, this.yPos, this.zPos);
+        this.app.updateCameraTarget();
     }
 
     nearestPoint() {
@@ -233,6 +281,7 @@ class MyBalloon {
 
     moveLeft() {
         this.xPos -= 0.1;
+        this.direction = this.DIRECTIONS.WEST;
         for (let i = 0; i < this.balloonGroup.children.length; i++) {
             this.balloonGroup.children[i].position.x -= 0.1;
         }
@@ -240,6 +289,7 @@ class MyBalloon {
 
     moveRight() {
         this.xPos += 0.1;
+        this.direction = this.DIRECTIONS.EAST;
         for (let i = 0; i < this.balloonGroup.children.length; i++) {
             this.balloonGroup.children[i].position.x += 0.1;
         }
@@ -247,6 +297,7 @@ class MyBalloon {
 
     moveForward() {
         this.zPos -= 0.1;
+        this.direction = this.DIRECTIONS.NORTH;
         for (let i = 0; i < this.balloonGroup.children.length; i++) {
             this.balloonGroup.children[i].position.z -= 0.1;
         }
@@ -254,6 +305,7 @@ class MyBalloon {
 
     moveBackward() {
         this.zPos += 0.1;
+        this.direction = this.DIRECTIONS.SOUTH;
         for (let i = 0; i < this.balloonGroup.children.length; i++) {
             this.balloonGroup.children[i].position.z += 0.1;
         }

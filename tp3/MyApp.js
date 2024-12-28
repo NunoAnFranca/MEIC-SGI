@@ -36,7 +36,6 @@ class MyApp {
      * initializes the application
      */
     init() {
-
         // Create an empty scene
         this.scene = new THREE.Scene();
         this.scene.background = new THREE.Color(0x101010);
@@ -66,8 +65,6 @@ class MyApp {
 
         // manage window resizes
         window.addEventListener('resize', this.onResize.bind(this), false);
-
-
     }
 
     /**
@@ -82,8 +79,10 @@ class MyApp {
         this.cameras['Perspective'] = perspective1
 
         // create a balloon perspective camera
-        const balloon = new THREE.PerspectiveCamera(60, aspect, 0.1, 1000)
-        balloon.position.set(50, 20, 50)
+        const balloon = new THREE.PerspectiveCamera(100, aspect, 0.1, 1000)
+        balloon.position.set(0, 0, 0)
+        balloon.target = new THREE.Vector3(0, 0, 0)
+        balloon.lookAt(balloon.target)
         this.cameras['Balloon'] = balloon
 
         // defines the frustum size for the orthographic cameras
@@ -153,10 +152,16 @@ class MyApp {
                 this.controls = new OrbitControls(this.activeCamera, this.renderer.domElement);
                 this.controls.enableZoom = true;
                 this.controls.update();
+            } else {
+                this.controls.object = this.activeCamera;
             }
-            else {
-                this.controls.object = this.activeCamera
-            }
+        }
+    }
+
+    updateCameraTarget() {
+        if (this.activeCameraName === 'Balloon') {
+            this.controls.target.copy(this.activeCamera.target);
+            this.controls.update();
         }
     }
 
