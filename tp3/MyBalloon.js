@@ -11,8 +11,8 @@ class MyBalloon {
         this.textureN = textureN;
 
         this.offsetX = 0;
-        this.offsetY = 1;
-        this.offsetZ = 8;
+        this.offsetY = 0;
+        this.offsetZ = 0;
 
         this.maxHeight = 18;
         this.minHeight = 4;
@@ -129,7 +129,16 @@ class MyBalloon {
 
     update() {
         if (this.camera) {
-            this.updateCamera();
+            switch (this.app.activeCameraName) {
+                case 'BalloonFirstPerson':
+                    this.updateFirstPersonCamera();
+                    break;
+                case 'BalloonThirdPerson':
+                    this.updateThirdPersonCamera();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -172,10 +181,59 @@ class MyBalloon {
     }
 
     setCamera(camera) {
+        switch (this.app.activeCameraName) {
+            case 'BalloonFirstPerson':
+                this.offsetY = 5;
+                break;
+            case 'BalloonThirdPerson':
+                this.offsetY = 1;
+                break;
+            default:
+                break;
+        }
+
         this.camera = camera;
     }
 
-    updateCamera() {
+    updateFirstPersonCamera() {
+        this.offsetY = 1;
+        let positionOffsetX = 0;
+        let positionOffsetZ = 0;
+        let offset = 3;
+
+        switch (this.direction) {
+            case this.DIRECTIONS.NORTH:
+                this.offsetX = 0;
+                this.offsetZ = -4;
+                positionOffsetX = 0;
+                positionOffsetZ = - offset;
+                break;
+            case this.DIRECTIONS.EAST:
+                this.offsetX = 4;
+                this.offsetZ = 0;
+                positionOffsetX = offset;
+                positionOffsetZ = 0;
+                break;
+            case this.DIRECTIONS.SOUTH:
+                this.offsetX = 0;
+                this.offsetZ = 4;
+                positionOffsetX = 0;
+                positionOffsetZ = offset;
+                break;
+            case this.DIRECTIONS.WEST:
+                this.offsetX = -4;
+                this.offsetZ = 0;
+                positionOffsetX = - offset;
+                positionOffsetZ = 0;
+                break;
+            }
+            
+        this.camera.position.set(this.xPos + positionOffsetX, this.yPos + this.offsetY, this.zPos + positionOffsetZ);
+        this.camera.target = new THREE.Vector3(this.xPos + this.offsetX, this.yPos, this.zPos + this.offsetZ);
+        this.app.updateCameraTarget();
+    }
+
+    updateThirdPersonCamera() {
         switch (this.direction) {
             case this.DIRECTIONS.NORTH:
                 this.offsetX = 0;

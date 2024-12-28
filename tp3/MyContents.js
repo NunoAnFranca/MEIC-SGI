@@ -66,8 +66,7 @@ class MyContents {
                     this.restoreTranslate();
                     this.gameState = this.GAME_STATE.PLAY;
                     this.removeInitialPositions();
-                    this.balloons[this.player1Balloon].setCamera(this.app.cameras['Balloon']);
-                    this.setCamera('Balloon');
+                    this.setCamera('BalloonFirstPerson');
                     setInterval(() => {
                         this.player = this.balloons[this.player1Balloon];
                         this.balloons[this.player1Balloon].moveWind();
@@ -378,6 +377,7 @@ class MyContents {
     }
 
     setCamera(cameraName) {
+        this.balloons[this.player1Balloon].setCamera(this.app.cameras[cameraName]);
         this.app.activeCameraName = cameraName;
         this.app.updateCameraIfRequired();
     }

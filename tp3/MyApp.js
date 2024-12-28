@@ -79,40 +79,18 @@ class MyApp {
         this.cameras['Perspective'] = perspective1
 
         // create a balloon perspective camera
-        const balloon = new THREE.PerspectiveCamera(100, aspect, 0.1, 1000)
-        balloon.position.set(0, 0, 0)
-        balloon.target = new THREE.Vector3(0, 0, 0)
-        balloon.lookAt(balloon.target)
-        this.cameras['Balloon'] = balloon
+        const balloonFirstPerson = new THREE.PerspectiveCamera(100, aspect, 0.1, 1000)
+        balloonFirstPerson.position.set(0, 0, 0)
+        balloonFirstPerson.target = new THREE.Vector3(0, 0, 0)
+        balloonFirstPerson.lookAt(balloonFirstPerson.target)
+        this.cameras['BalloonFirstPerson'] = balloonFirstPerson
 
-        // defines the frustum size for the orthographic cameras
-        const left = -this.frustumSize / 2 * aspect
-        const right = this.frustumSize / 2 * aspect
-        const top = this.frustumSize / 2
-        const bottom = -this.frustumSize / 2
-        const near = -this.frustumSize / 2
-        const far = this.frustumSize
-
-        // create a left view orthographic camera
-        const orthoLeft = new THREE.OrthographicCamera(left, right, top, bottom, near, far);
-        orthoLeft.up = new THREE.Vector3(0, 1, 0);
-        orthoLeft.position.set(-this.frustumSize / 4, 0, 0)
-        orthoLeft.lookAt(new THREE.Vector3(0, 0, 0));
-        this.cameras['Left'] = orthoLeft
-
-        // create a top view orthographic camera
-        const orthoTop = new THREE.OrthographicCamera(left, right, top, bottom, near, far);
-        orthoTop.up = new THREE.Vector3(0, 0, 1);
-        orthoTop.position.set(0, this.frustumSize / 4, 0)
-        orthoTop.lookAt(new THREE.Vector3(0, 0, 0));
-        this.cameras['Top'] = orthoTop
-
-        // create a front view orthographic camera
-        const orthoFront = new THREE.OrthographicCamera(left, right, top, bottom, near, far);
-        orthoFront.up = new THREE.Vector3(0, 1, 0);
-        orthoFront.position.set(0, 0, this.frustumSize / 4)
-        orthoFront.lookAt(new THREE.Vector3(0, 0, 0));
-        this.cameras['Front'] = orthoFront
+        // create a balloon perspective camera
+        const balloonThirdPerson = new THREE.PerspectiveCamera(100, aspect, 0.1, 1000)
+        balloonThirdPerson.position.set(0, 0, 0)
+        balloonThirdPerson.target = new THREE.Vector3(0, 0, 0)
+        balloonThirdPerson.lookAt(balloonThirdPerson.target)
+        this.cameras['BalloonThirdPerson'] = balloonThirdPerson
     }
 
     /**
@@ -120,6 +98,10 @@ class MyApp {
      * @param {String} cameraName 
      */
     setActiveCamera(cameraName) {
+        if (cameraName === 'BalloonFirstPerson' || cameraName === 'BalloonThirdPerson') {
+            this.contents.setCamera(cameraName);
+        }
+
         this.activeCameraName = cameraName
         this.activeCamera = this.cameras[this.activeCameraName]
     }
@@ -159,7 +141,7 @@ class MyApp {
     }
 
     updateCameraTarget() {
-        if (this.activeCameraName === 'Balloon') {
+        if (this.activeCameraName === 'BalloonFirstPerson' || this.activeCameraName === 'BalloonThirdPerson') {
             this.controls.target.copy(this.activeCamera.target);
             this.controls.update();
         }
