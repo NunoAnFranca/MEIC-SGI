@@ -10,6 +10,10 @@ class MyBalloon {
         this.zPos = zPos;
         this.textureN = textureN;
 
+        this.offsetX = 0;
+        this.offsetY = 1;
+        this.offsetZ = 8;
+
         this.maxHeight = 18;
         this.minHeight = 4;
 
@@ -145,6 +149,7 @@ class MyBalloon {
         };
         
         let typeBalloon = 'B';
+
         for (let i = 0; i < this.balloonGroup.children.length; i++) {
             const child = this.balloonGroup.children[i];
             const offset = positionOffsets[child.name] || positionOffsets.default;
@@ -156,10 +161,9 @@ class MyBalloon {
                 typeBalloon = 'R';
             }
 
-            if(child.name == 'marker'){
+            if (child.name == 'marker') {
                 child.visible = true;         
-                if(typeBalloon == 'B'){
-                    console.log(child.material);
+                if (typeBalloon == 'B') {
                     child.material = new THREE.MeshBasicMaterial({color: "#ff0000"});
                     child.material.needsUpdate = true;
                 }
@@ -172,30 +176,26 @@ class MyBalloon {
     }
 
     updateCamera() {
-        const offsetY = 3;
-        let offsetX;
-        let offsetZ;
-        
         switch (this.direction) {
             case this.DIRECTIONS.NORTH:
-                offsetX = 0;
-                offsetZ = 5;
+                this.offsetX = 0;
+                this.offsetZ = 8;
                 break;
             case this.DIRECTIONS.EAST:
-                offsetX = -5;
-                offsetZ = 0;
+                this.offsetX = -8;
+                this.offsetZ = 0;
                 break;
             case this.DIRECTIONS.SOUTH:
-                offsetX = 0;
-                offsetZ = -5;
+                this.offsetX = 0;
+                this.offsetZ = -8;
                 break;
             case this.DIRECTIONS.WEST:
-                offsetX = 5;
-                offsetZ = 0;
+                this.offsetX = 8;
+                this.offsetZ = 0;
                 break;
         }
 
-        this.camera.position.set(this.xPos + offsetX, this.yPos + offsetY, this.zPos + offsetZ);
+        this.camera.position.set(this.xPos + this.offsetX, this.yPos + this.offsetY, this.zPos + this.offsetZ);
         this.camera.target = new THREE.Vector3(this.xPos, this.yPos, this.zPos);
         this.app.updateCameraTarget();
     }
@@ -262,6 +262,7 @@ class MyBalloon {
     moveUp() {
         if (this.yPos + 0.5 < this.maxHeight) {
             this.yPos += 0.5;
+            this.offsetY += 0.2;
             for (let i = 0; i < this.balloonGroup.children.length; i++) {
                 if(this.balloonGroup.children[i].name !== 'marker')
                     this.balloonGroup.children[i].position.y += 0.5;
@@ -272,6 +273,7 @@ class MyBalloon {
     moveDown() {
         if (this.yPos - 0.5 > this.minHeight) {
             this.yPos -= 0.5;
+            this.offsetY -= 0.2;
             for (let i = 0; i < this.balloonGroup.children.length; i++) {
                 if(this.balloonGroup.children[i].name !== 'marker')
                     this.balloonGroup.children[i].position.y -= 0.5;
