@@ -820,14 +820,15 @@ class MyParser {
         
         // Define vertices for the triangle
         const vertices = new Float32Array([
-            object.coords.xyz1.x, object.coords.xyz1.y, object.coords.xyz1.z,  // Vertex 1
-            object.coords.xyz2.x, object.coords.xyz2.y, object.coords.xyz2.z,  // Vertex 2
-            object.coords.xyz3.x, object.coords.xyz3.y, object.coords.xyz3.z   // Vertex 3
+            object.xyz1.x, object.xyz1.y, object.xyz1.z,  // Vertex 1
+            object.xyz2.x, object.xyz2.y, object.xyz2.z,  // Vertex 2
+            object.xyz3.x, object.xyz3.y, object.xyz3.z   // Vertex 3
         ]);
 
         // Set vertex positions in geometry
         geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
-
+        geometry.computeVertexNormals();
+        
         // Create mesh using geometry and material
         const triangleMesh = new THREE.Mesh(geometry, this.materials[object.material]);
 
@@ -845,9 +846,9 @@ class MyParser {
         
         // Define vertices for the triangle
         const vertices = new Float32Array([
-            object.coords.xyz1.x, object.coords.xyz1.y, object.coords.xyz1.z,  // Vertex 1
-            object.coords.xyz2.x, object.coords.xyz2.y, object.coords.xyz2.z,  // Vertex 2
-            object.coords.xyz3.x, object.coords.xyz3.y, object.coords.xyz3.z   // Vertex 3
+            object.xyz1.x, object.xyz1.y, object.xyz1.z,  // Vertex 1
+            object.xyz2.x, object.xyz2.y, object.xyz2.z,  // Vertex 2
+            object.xyz3.x, object.xyz3.y, object.xyz3.z   // Vertex 3
         ]);
 
         // Set vertex positions in geometry

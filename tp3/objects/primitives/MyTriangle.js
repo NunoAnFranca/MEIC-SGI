@@ -5,11 +5,11 @@ class MyTriangle extends MyPrimitive {
   constructor(node, properties) {
     super(properties);
     // Assign coords point 1
-    this.xy1 = node.xy1;
+    this.xyz1 = node.xyz1;
     // Assign coords point 2
-    this.xy2 = node.xy2;
+    this.xyz2 = node.xyz2;
     // Assign coords point 3
-    this.xy3 = node.xy3;
+    this.xyz3 = node.xyz3;
   }
 }
 

@@ -212,7 +212,7 @@
                 },
                 "shininess": 10,
                 "transparent": true,
-                "opacity": 0.95,
+                "opacity": 0.75,
                 "twosided": true
             },
             "carYellow": {
@@ -385,9 +385,9 @@
             },
             "mountainMainColor": {
                 "color": {
-                    "r": 0.6431,
-                    "g": 0.4627,
-                    "b": 0.2902
+                    "r": 0.462745098,
+                    "g": 0.333333333,
+                    "b": 0.168627451
                 },
                 "emissive": {
                     "r": 0.0,
@@ -442,7 +442,8 @@
                 },
                 "shininess": 100,
                 "transparent": false,
-                "opacity": 1
+                "opacity": 1,
+                "twosided": true
             },
             "riverMaterial": {
                 "color": {
@@ -505,6 +506,90 @@
                 "shininess": 10,
                 "transparent": false,
                 "opacity": 1.0,
+                "twosided": true
+            },
+            "blimpMaterial": {
+                "color": {
+                    "r": 0.983921569,
+                    "g": 0.985686275,
+                    "b": 0.9806514
+                },
+                "emissive": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                },
+                "specular": {
+                    "r": 0.1,
+                    "g": 0.1,
+                    "b": 0.1
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "twosided": true
+            },
+            "blimpWingMaterial": {
+                "color": {
+                    "r": 0.0,
+                    "g": 0.805686275,
+                    "b": 0.8000000
+                },
+                "emissive": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                },
+                "specular": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "twosided": true
+            },
+            "blimpEngineMaterial": {
+                "color": {
+                    "r": 0.2,
+                    "g": 0.2,
+                    "b": 0.2
+                },
+                "emissive": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                },
+                "specular": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "twosided": true
+            },
+            "flagMaterial":{
+                "color": {
+                    "r": 0.5,
+                    "g": 0.1,
+                    "b": 0.1
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.5,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": true,
+                "opacity": 0.95,
                 "twosided": true
             }
         },
@@ -660,7 +745,8 @@
                         "mainCarRoad",
                         "cableCarMainNode",
                         "balloonFenceEnemy",
-                        "balloonFencePlayer"
+                        "balloonFencePlayer",
+                        "blimp"
                     ],
                     "ligh1": {
                         "type": "pointlight",
@@ -678,6 +764,1650 @@
                             "x": 2,
                             "y": -20,
                             "z": 13
+                        }
+                    }
+                }
+            },
+            "blimp":{
+                "type": "node",
+                "materialref":{
+                    "materialId": "blimpMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 50,
+                            "y": 30,
+                            "z": -120
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 30,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.5,
+                            "y": 1.5,
+                            "z": 1.5
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList":[
+                        "blimpCenter1",
+                        "blimpCenter2",
+                        "blimpWing1",
+                        "blimpWing2",
+                        "blimpWing3",
+                        "blimpWing4",
+                        "blimpChassi",
+                        "blimpMenu",
+                        "blimpEngine1",
+                        "blimpEngine2",
+                        "blimpFlag"
+                    ]
+                }
+            },
+            "blimpFlag":{
+                "type": "node",
+                "materialref":{
+                    "materialId": "flagMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 3,
+                            "z": 90
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.8,
+                            "y": 0.8,
+                            "z": 0.8
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "nurbs",
+                        "degree_u": 1,
+                        "degree_v": 4,
+                        "parts_u": 64,
+                        "parts_v": 64,
+                        "controlpoints": [
+                            {
+                                "x": 0,
+                                "y": 0,
+                                "z": 0,
+                                "w": 1
+                            },
+                            {
+                                "x": -3,
+                                "y": 1,
+                                "z": 6,
+                                "w": 1
+                            },
+                            {
+                                "x": 3,
+                                "y": -0.5,
+                                "z": 8,
+                                "w": 1
+                            },
+                            {
+                                "x": -2,
+                                "y": 0.5,
+                                "z": 10,
+                                "w": 1
+                            },
+                            {
+                                "x": -1,
+                                "y": -0.5,
+                                "z": 12,
+                                "w": 1
+                            },
+                            {
+                                "x": 0,
+                                "y": -6,
+                                "z": 0,
+                                "w": 1
+                            },
+                            {
+                                "x": -3,
+                                "y": -5,
+                                "z": 6,
+                                "w": 1
+                            },
+                            {
+                                "x": 3,
+                                "y": -6.5,
+                                "z": 8,
+                                "w": 1
+                            },
+                            {
+                                "x": -2,
+                                "y": -5.5,
+                                "z": 10,
+                                "w": 1
+                            },
+                            {
+                                "x": -1,
+                                "y": -6.5,
+                                "z": 12,
+                                "w": 1
+                            }
+                        ]
+                    },
+                    "nodesList":[
+                        "blimpFlagRope1",
+                        "blimpFlagRope2"
+                    ]
+                }
+            },
+            "blimpFlagRope1":{
+                "type": "node",
+                "materialref":{
+                    "materialId": "woodMaterial"
+                },
+                "transforms":[
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": -1,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "connection":{
+                        "type": "line",
+                        "parts": 32,
+                        "sides": 16,
+                        "width": 0.05,
+                        "closed": false,
+                        "points":[
+                            {
+                                "x": 0,
+                                "y": 0,
+                                "z": -14
+                            },
+                            {
+                                "x": 0.5,
+                                "y": 0.5,
+                                "z": -8
+                            },
+                            {
+                                "x": -0.5,
+                                "y": -0.5,
+                                "z": -2
+                            },
+                            {
+                                "x": 0,
+                                "y": 0,
+                                "z": 0
+                            }
+                        ]
+                        
+                    }
+                }
+            },
+            "blimpFlagRope2":{
+                "type": "node",
+                "materialref":{
+                    "materialId": "woodMaterial"
+                },
+                "transforms":[
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": -5,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "connection":{
+                        "type": "line",
+                        "parts": 32,
+                        "sides": 16,
+                        "width": 0.05,
+                        "closed": false,
+                        "points":[
+                            {
+                                "x": 0,
+                                "y": 0,
+                                "z": -14
+                            },
+                            {
+                                "x": 0.5,
+                                "y": 0.5,
+                                "z": -8
+                            },
+                            {
+                                "x": -0.5,
+                                "y": -0.5,
+                                "z": -2
+                            },
+                            {
+                                "x": 0,
+                                "y": 0,
+                                "z": 0
+                            }
+                        ]
+                        
+                    }
+                }
+            },
+            "blimpEngine1":{
+                "type": "node",
+                "materialref":{
+                    "materialId": "blimpEngineMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 52
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 30
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList":[
+                        "blimpEngineConstructor"
+                    ]
+                }
+            },
+            "blimpEngine2":{
+                "type": "node",
+                "materialref":{
+                    "materialId": "blimpEngineMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 52
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": -30
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList":[
+                        "blimpEngineConstructor"
+                    ]
+                }
+            },
+            "blimpEngineConstructor":{
+                "type": "node",
+                "materialref":{
+                    "materialId": "blimpEngineMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": -12,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 1.2,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.5,
+                            "y": 6,
+                            "z": 0.5
+                        }
+                    },
+                    "nodesList":[
+                        "blimpEngineConstructorPart1",
+                        "blimpEngineConstructorPart2",
+                        "blimpEngineCenter"
+                    ]
+                }
+            },
+            "blimpEngineCenter":{
+                "type": "node",
+                "materialref":{
+                    "materialId": "blimpWingMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": -0.9
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1,
+                            "y": 1,
+                            "z": 0.5
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "sphere",
+                        "radius": 0.4,
+                        "slices": 32,
+                        "stacks": 32
+                    },
+                    "nodesList":[
+                        "blimpEngineConstructorWing1",
+                        "blimpEngineConstructorWing2",
+                        "blimpEngineConstructorWing3",
+                        "blimpEngineConstructorWing4"
+                    ]
+                }
+            },
+            "blimpEngineConstructorWing1":{
+                "type": "node",
+                "materialref":{
+                    "materialId": "startMenuMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "nurbs",
+                        "degree_u": 1,
+                        "degree_v": 3,
+                        "parts_u": 64,
+                        "parts_v": 64,
+                        "controlpoints": [
+                            {
+                                "x": -0.15,
+                                "y": 0,
+                                "z": 0,
+                                "w": 1
+                            },
+                            {
+                                "x": -0.4,
+                                "y": 0.8,
+                                "z": 0,
+                                "w": 1
+                            },
+                            {
+                                "x": -0.12,
+                                "y": 1.35,
+                                "z": 0,
+                                "w": 1
+                            },
+                            {
+                                "x": 0,
+                                "y": 1.4,
+                                "z": 0,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 0.15,
+                                "y": 0,
+                                "z": 0,
+                                "w": 1
+                            },
+                            {
+                                "x": 0.4,
+                                "y": 0.8,
+                                "z": 0,
+                                "w": 1
+                            },
+                            {
+                                "x": 0.12,
+                                "y": 1.35,
+                                "z": 0,
+                                "w": 1
+                            },
+                            {
+                                "x": 0,
+                                "y": 1.4,
+                                "z": 0,
+                                "w": 0.1
+                            }
+                        ]
+                    }
+                }
+            },
+            "blimpEngineConstructorWing2":{
+                "type": "node",
+                "materialref":{
+                    "materialId": "startMenuMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 180
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "nurbs",
+                        "degree_u": 1,
+                        "degree_v": 3,
+                        "parts_u": 64,
+                        "parts_v": 64,
+                        "controlpoints": [
+                            {
+                                "x": -0.15,
+                                "y": 0,
+                                "z": 0,
+                                "w": 1
+                            },
+                            {
+                                "x": -0.4,
+                                "y": 0.8,
+                                "z": 0,
+                                "w": 1
+                            },
+                            {
+                                "x": -0.12,
+                                "y": 1.35,
+                                "z": 0,
+                                "w": 1
+                            },
+                            {
+                                "x": 0,
+                                "y": 1.4,
+                                "z": 0,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 0.15,
+                                "y": 0,
+                                "z": 0,
+                                "w": 1
+                            },
+                            {
+                                "x": 0.4,
+                                "y": 0.8,
+                                "z": 0,
+                                "w": 1
+                            },
+                            {
+                                "x": 0.12,
+                                "y": 1.35,
+                                "z": 0,
+                                "w": 1
+                            },
+                            {
+                                "x": 0,
+                                "y": 1.4,
+                                "z": 0,
+                                "w": 0.1
+                            }
+                        ]
+                    }
+                }
+            },
+            "blimpEngineConstructorWing3":{
+                "type": "node",
+                "materialref":{
+                    "materialId": "startMenuMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 90
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "nurbs",
+                        "degree_u": 1,
+                        "degree_v": 3,
+                        "parts_u": 64,
+                        "parts_v": 64,
+                        "controlpoints": [
+                            {
+                                "x": -0.15,
+                                "y": 0,
+                                "z": 0,
+                                "w": 1
+                            },
+                            {
+                                "x": -0.4,
+                                "y": 0.8,
+                                "z": 0,
+                                "w": 1
+                            },
+                            {
+                                "x": -0.12,
+                                "y": 1.35,
+                                "z": 0,
+                                "w": 1
+                            },
+                            {
+                                "x": 0,
+                                "y": 1.4,
+                                "z": 0,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 0.15,
+                                "y": 0,
+                                "z": 0,
+                                "w": 1
+                            },
+                            {
+                                "x": 0.4,
+                                "y": 0.8,
+                                "z": 0,
+                                "w": 1
+                            },
+                            {
+                                "x": 0.12,
+                                "y": 1.35,
+                                "z": 0,
+                                "w": 1
+                            },
+                            {
+                                "x": 0,
+                                "y": 1.4,
+                                "z": 0,
+                                "w": 0.1
+                            }
+                        ]
+                    }
+                }
+            },
+            "blimpEngineConstructorWing4":{
+                "type": "node",
+                "materialref":{
+                    "materialId": "startMenuMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 270
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "nurbs",
+                        "degree_u": 1,
+                        "degree_v": 3,
+                        "parts_u": 64,
+                        "parts_v": 64,
+                        "controlpoints": [
+                            {
+                                "x": -0.15,
+                                "y": 0,
+                                "z": 0,
+                                "w": 1
+                            },
+                            {
+                                "x": -0.4,
+                                "y": 0.8,
+                                "z": 0,
+                                "w": 1
+                            },
+                            {
+                                "x": -0.12,
+                                "y": 1.35,
+                                "z": 0,
+                                "w": 1
+                            },
+                            {
+                                "x": 0,
+                                "y": 1.4,
+                                "z": 0,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 0.15,
+                                "y": 0,
+                                "z": 0,
+                                "w": 1
+                            },
+                            {
+                                "x": 0.4,
+                                "y": 0.8,
+                                "z": 0,
+                                "w": 1
+                            },
+                            {
+                                "x": 0.12,
+                                "y": 1.35,
+                                "z": 0,
+                                "w": 1
+                            },
+                            {
+                                "x": 0,
+                                "y": 1.4,
+                                "z": 0,
+                                "w": 0.1
+                            }
+                        ]
+                    }
+                }
+            },
+            "blimpEngineConstructorPart1":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": -10
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.6,
+                            "y": 0.4,
+                            "z": 0.3
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "nurbs",
+                        "degree_u": 3,
+                        "degree_v": 3,
+                        "parts_u": 64,
+                        "parts_v": 64,
+                        "controlpoints": [
+                            {
+                                "x": 0,
+                                "y": 4,
+                                "z": 30,
+                                "w": 1
+                            },
+                            {
+                                "x": 4,
+                                "y": 4,
+                                "z": 30,
+                                "w": 1
+                            },
+                            {
+                                "x": 4,
+                                "y": -4,
+                                "z": 30,
+                                "w": 1
+                            },
+                            {
+                                "x": 0,
+                                "y": -4,
+                                "z": 30,
+                                "w": 1
+                            },                            
+                            {
+                                "x": 0,
+                                "y": 4,
+                                "z": 40,
+                                "w": 1
+                            },
+                            {
+                                "x": 4,
+                                "y": 4,
+                                "z": 40,
+                                "w": 1
+                            },
+                            {
+                                "x": 4,
+                                "y": -4,
+                                "z": 40,
+                                "w": 1
+                            },
+                            {
+                                "x": 0,
+                                "y": -4,
+                                "z": 40,
+                                "w": 1
+                            },                            
+                            {
+                                "x": 0,
+                                "y": 1,
+                                "z": 45,
+                                "w": 1
+                            },
+                            {
+                                "x": 1,
+                                "y": 1,
+                                "z": 45,
+                                "w": 1
+                            },
+                            {
+                                "x": 1,
+                                "y": -1,
+                                "z": 45,
+                                "w": 1
+                            },
+                            {
+                                "x": 0,
+                                "y": -1,
+                                "z": 45,
+                                "w": 1
+                            },                            
+                            {
+                                "x": 0,
+                                "y": 0,
+                                "z": 46,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 0,
+                                "y": 0,
+                                "z": 46,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 0,
+                                "y": 0,
+                                "z": 46,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 0.01,
+                                "y": 0,
+                                "z": 46,
+                                "w": 0.1
+                            }
+                        ]
+                    }
+                }
+            },
+            "blimpEngineConstructorPart2":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": -10
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": -0.6,
+                            "y": 0.4,
+                            "z": 0.3
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "nurbs",
+                        "degree_u": 3,
+                        "degree_v": 3,
+                        "parts_u": 64,
+                        "parts_v": 64,
+                        "controlpoints": [
+                            {
+                                "x": 0,
+                                "y": 4,
+                                "z": 30,
+                                "w": 1
+                            },
+                            {
+                                "x": 4,
+                                "y": 4,
+                                "z": 30,
+                                "w": 1
+                            },
+                            {
+                                "x": 4,
+                                "y": -4,
+                                "z": 30,
+                                "w": 1
+                            },
+                            {
+                                "x": 0,
+                                "y": -4,
+                                "z": 30,
+                                "w": 1
+                            },                            
+                            {
+                                "x": 0,
+                                "y": 4,
+                                "z": 40,
+                                "w": 1
+                            },
+                            {
+                                "x": 4,
+                                "y": 4,
+                                "z": 40,
+                                "w": 1
+                            },
+                            {
+                                "x": 4,
+                                "y": -4,
+                                "z": 40,
+                                "w": 1
+                            },
+                            {
+                                "x": 0,
+                                "y": -4,
+                                "z": 40,
+                                "w": 1
+                            },                            
+                            {
+                                "x": 0,
+                                "y": 1,
+                                "z": 45,
+                                "w": 1
+                            },
+                            {
+                                "x": 1,
+                                "y": 1,
+                                "z": 45,
+                                "w": 1
+                            },
+                            {
+                                "x": 1,
+                                "y": -1,
+                                "z": 45,
+                                "w": 1
+                            },
+                            {
+                                "x": 0,
+                                "y": -1,
+                                "z": 45,
+                                "w": 1
+                            },                            
+                            {
+                                "x": 0,
+                                "y": 0,
+                                "z": 46,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 0,
+                                "y": 0,
+                                "z": 46,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 0,
+                                "y": 0,
+                                "z": 46,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 0.01,
+                                "y": 0,
+                                "z": 46,
+                                "w": 0.1
+                            }
+                        ]
+                    }
+                }
+            },
+            "blimpChassi": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "chassiTopMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": -7,
+                            "z": 60
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": -6,
+                            "y": 180,
+                            "z": 180
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 2.5,
+                            "y": 3,
+                            "z": 3.5
+                        }
+                    }
+                ],
+                "children": {
+                    "chassi": {
+                        "type": "nurbs",
+                        "degree_u": 3,
+                        "degree_v": 3,
+                        "parts_u": 64,
+                        "parts_v": 64,
+                        "controlpoints": [
+                            {
+                                "x": 1,
+                                "y": 0,
+                                "z": 0.3501,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 1,
+                                "y": 0,
+                                "z": 2,
+                                "w": 1
+                            },
+                            {
+                                "x": -1,
+                                "y": 0,
+                                "z": 2,
+                                "w": 1
+                            },
+                            {
+                                "x": -1,
+                                "y": 0,
+                                "z": 0.35,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 1,
+                                "y": 0,
+                                "z": 0.35,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 0.9,
+                                "y": 1,
+                                "z": 1.8,
+                                "w": 8
+                            },
+                            {
+                                "x": -0.9,
+                                "y": 1,
+                                "z": 1.8,
+                                "w": 8
+                            },
+                            {
+                                "x": -1,
+                                "y": 0,
+                                "z": 0.3501,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 1,
+                                "y": 0,
+                                "z": 0.35,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 0.9,
+                                "y": 1,
+                                "z": -1,
+                                "w": 20
+                            },
+                            {
+                                "x": -0.9,
+                                "y": 1,
+                                "z": -1,
+                                "w": 20
+                            },
+                            {
+                                "x": -1,
+                                "y": 0,
+                                "z": 0.35,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 1,
+                                "y": 0,
+                                "z": 0.35,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 1,
+                                "y": 0,
+                                "z": -1.1,
+                                "w": 1
+                            },
+                            {
+                                "x": -1,
+                                "y": 0,
+                                "z": -1.1,
+                                "w": 1
+                            },
+                            {
+                                "x": -1,
+                                "y": 0,
+                                "z": 0.35,
+                                "w": 0.1
+                            }
+                        ]
+                    }
+                }
+            },
+            "blimpMenu":{
+                "type": "node",
+                "materialref":{
+                    "materialId":"startMenuMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -7.8,
+                            "y": -4,
+                            "z": 55
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 90,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 16,
+                            "y": 9,
+                            "z": 2.5
+                        }
+                    }
+                }
+            },
+            "blimpWing1":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 3.5,
+                            "z": 70
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList":[
+                        "blimpWingConstructor"
+                    ]
+                }
+            },
+            "blimpWing2":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": -3.5,
+                            "z": 70
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 180
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList":[
+                        "blimpWingConstructor"
+                    ]
+                }
+            },
+            "blimpWing3":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -3,
+                            "y": 0,
+                            "z": 68
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 90
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList":[
+                        "blimpWingConstructor"
+                    ]
+                }
+            },
+            "blimpWing4":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 3,
+                            "y": 0,
+                            "z": 68
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": -90
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList":[
+                        "blimpWingConstructor"
+                    ]
+                }
+            },
+            "blimpCenter1":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 3.2,
+                            "y": 2.6,
+                            "z": 1.6
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "nurbs",
+                        "degree_u": 5,
+                        "degree_v": 3,
+                        "parts_u": 64,
+                        "parts_v": 64,
+                        "controlpoints": [
+                            {
+                                "x": 0,
+                                "y": 0,
+                                "z": 14.52,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 0,
+                                "y": 0,
+                                "z": 14.5,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 0,
+                                "y": 0,
+                                "z": 14.5,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 0,
+                                "y": 0,
+                                "z": 14.5,
+                                "w": 0.1
+                            }, 
+                            {
+                                "x": 0,
+                                "y": 2,
+                                "z": 15,
+                                "w": 1
+                            },
+                            {
+                                "x": 2,
+                                "y": 2,
+                                "z": 15,
+                                "w": 1
+                            },
+                            {
+                                "x": 2,
+                                "y": -2,
+                                "z": 15,
+                                "w": 1
+                            },
+                            {
+                                "x": 0,
+                                "y": -2,
+                                "z": 15,
+                                "w": 1
+                            }, 
+                            {
+                                "x": 0,
+                                "y": 4,
+                                "z": 25,
+                                "w": 1
+                            },
+                            {
+                                "x": 4,
+                                "y": 4,
+                                "z": 25,
+                                "w": 1
+                            },
+                            {
+                                "x": 4,
+                                "y": -4,
+                                "z": 25,
+                                "w": 1
+                            },
+                            {
+                                "x": 0,
+                                "y": -4,
+                                "z": 25,
+                                "w": 1
+                            },                            
+                            {
+                                "x": 0,
+                                "y": 4,
+                                "z": 40,
+                                "w": 1
+                            },
+                            {
+                                "x": 4,
+                                "y": 4,
+                                "z": 40,
+                                "w": 1
+                            },
+                            {
+                                "x": 4,
+                                "y": -4,
+                                "z": 40,
+                                "w": 1
+                            },
+                            {
+                                "x": 0,
+                                "y": -4,
+                                "z": 40,
+                                "w": 1
+                            },                            
+                            {
+                                "x": 0,
+                                "y": 1,
+                                "z": 50,
+                                "w": 1
+                            },
+                            {
+                                "x": 1,
+                                "y": 1,
+                                "z": 50,
+                                "w": 1
+                            },
+                            {
+                                "x": 1,
+                                "y": -1,
+                                "z": 50,
+                                "w": 1
+                            },
+                            {
+                                "x": 0,
+                                "y": -1,
+                                "z": 50,
+                                "w": 1
+                            },                            
+                            {
+                                "x": 0,
+                                "y": 0,
+                                "z": 51,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 0,
+                                "y": 0,
+                                "z": 51,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 0,
+                                "y": 0,
+                                "z": 51,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 0.01,
+                                "y": 0,
+                                "z": 51,
+                                "w": 0.1
+                            }
+                        ]
+                    }
+                }
+            },
+            "blimpCenter2":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": -3.2,
+                            "y": 2.6,
+                            "z": 1.6
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "nurbs",
+                        "degree_u": 5,
+                        "degree_v": 3,
+                        "parts_u": 64,
+                        "parts_v": 64,
+                        "controlpoints": [
+                            {
+                                "x": 0,
+                                "y": 0,
+                                "z": 14.52,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 0,
+                                "y": 0,
+                                "z": 14.5,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 0,
+                                "y": 0,
+                                "z": 14.5,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 0,
+                                "y": 0,
+                                "z": 14.5,
+                                "w": 0.1
+                            }, 
+                            {
+                                "x": 0,
+                                "y": 2,
+                                "z": 15,
+                                "w": 1
+                            },
+                            {
+                                "x": 2,
+                                "y": 2,
+                                "z": 15,
+                                "w": 1
+                            },
+                            {
+                                "x": 2,
+                                "y": -2,
+                                "z": 15,
+                                "w": 1
+                            },
+                            {
+                                "x": 0,
+                                "y": -2,
+                                "z": 15,
+                                "w": 1
+                            }, 
+                            {
+                                "x": 0,
+                                "y": 4,
+                                "z": 25,
+                                "w": 1
+                            },
+                            {
+                                "x": 4,
+                                "y": 4,
+                                "z": 25,
+                                "w": 1
+                            },
+                            {
+                                "x": 4,
+                                "y": -4,
+                                "z": 25,
+                                "w": 1
+                            },
+                            {
+                                "x": 0,
+                                "y": -4,
+                                "z": 25,
+                                "w": 1
+                            },                            
+                            {
+                                "x": 0,
+                                "y": 4,
+                                "z": 40,
+                                "w": 1
+                            },
+                            {
+                                "x": 4,
+                                "y": 4,
+                                "z": 40,
+                                "w": 1
+                            },
+                            {
+                                "x": 4,
+                                "y": -4,
+                                "z": 40,
+                                "w": 1
+                            },
+                            {
+                                "x": 0,
+                                "y": -4,
+                                "z": 40,
+                                "w": 1
+                            },                            
+                            {
+                                "x": 0,
+                                "y": 1,
+                                "z": 50,
+                                "w": 1
+                            },
+                            {
+                                "x": 1,
+                                "y": 1,
+                                "z": 50,
+                                "w": 1
+                            },
+                            {
+                                "x": 1,
+                                "y": -1,
+                                "z": 50,
+                                "w": 1
+                            },
+                            {
+                                "x": 0,
+                                "y": -1,
+                                "z": 50,
+                                "w": 1
+                            },                            
+                            {
+                                "x": 0,
+                                "y": 0,
+                                "z": 51,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 0,
+                                "y": 0,
+                                "z": 51,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 0,
+                                "y": 0,
+                                "z": 51,
+                                "w": 0.1
+                            },
+                            {
+                                "x": 0.01,
+                                "y": 0,
+                                "z": 51,
+                                "w": 0.1
+                            }
+                        ]
+                    }
+                }
+            },
+            "blimpWingConstructor":{
+                "type": "node",
+                "materialref":{
+                    "materialId":"blimpWingMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 180,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.25,
+                            "y": 0.25,
+                            "z": 0.25
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList":[
+                        "blimpWingPart1",
+                        "blimpWingPart2"
+                    ]
+                }
+            },
+            "blimpWingPart1":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "part":{
+                        "type": "triangle",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0,
+                            "y": 20,
+                            "z": -15
+                        },
+                        "xyz3": {
+                            "x": 0,
+                            "y": 0,
+                            "z": -30
+                        }
+                    }
+                }
+            },
+            "blimpWingPart2":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "part":{
+                        "type": "triangle",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 20,
+                            "z": -15
+                        },
+                        "xyz2": {
+                            "x": 0,
+                            "y": 0,
+                            "z": -30
+                        },
+                        "xyz3": {
+                            "x": 0,
+                            "y": 20,
+                            "z": -32
                         }
                     }
                 }
@@ -725,7 +2455,7 @@
                     {
                         "type": "translate",
                         "amount": {
-                            "x": -2,
+                            "x": -2.5,
                             "y": -1,
                             "z": -9
                         }
