@@ -741,11 +741,7 @@
                 ],
                 "children": {
                     "nodesList": [
-                        "mountain",
-                        "mainCarRoad",
-                        "cableCarMainNode",
-                        "balloonFenceEnemy",
-                        "balloonFencePlayer",
+
                         "blimp"
                     ],
                     "ligh1": {
@@ -1989,12 +1985,12 @@
                         "type": "nurbs",
                         "degree_u": 5,
                         "degree_v": 3,
-                        "parts_u": 64,
-                        "parts_v": 64,
+                        "parts_u": 128,
+                        "parts_v": 128,
                         "controlpoints": [
                             {
                                 "x": 0,
-                                "y": 0,
+                                "y": -0.01,
                                 "z": 14.52,
                                 "w": 0.1
                             },
@@ -2162,7 +2158,7 @@
                         "controlpoints": [
                             {
                                 "x": 0,
-                                "y": 0,
+                                "y": -0.01,
                                 "z": 14.52,
                                 "w": 0.1
                             },
@@ -2299,7 +2295,7 @@
                                 "w": 0.1
                             },
                             {
-                                "x": 0.01,
+                                "x": -0.01,
                                 "y": 0,
                                 "z": 51,
                                 "w": 0.1
