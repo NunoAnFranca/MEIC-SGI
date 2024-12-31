@@ -30,8 +30,17 @@ class MyContents {
         this.player1Balloon = null;
         this.player2Balloon = null;
 
+        //Blimp Menu Variables
         this.matchTime = null;
         this.currentMatchTime = 0;
+        this.lastWindVelocity = null;
+        this.currentWindVelocity = "Nan";
+        this.lastGameStatus = null;
+        this.currentGameStatus = "Not Started";
+        this.lastLaps = null;
+        this.currentLaps = 0;
+        this.lastVouchers = null;
+        this.currentVouchers = 0;
 
         // structure of layers: each layer will contain its objects
         // this can be used to select objects that are pickeable     
@@ -50,6 +59,13 @@ class MyContents {
             PAUSE: 2,
             END: 3
         }
+
+        this.DIRECTIONS = {
+            0: "NORTH",
+            1: "EAST",
+            2: "SOUTH",
+            3: "WEST"
+        };
 
         this.gameState = this.GAME_STATE.INIT;
       
@@ -74,8 +90,15 @@ class MyContents {
                     setInterval(() => {
                         this.player = this.balloons[this.player1Balloon];
                         this.balloons[this.player1Balloon].moveWind();
+                        
                         this.currentMatchTime = Math.floor((new Date().getTime() - this.matchTime)/100);
+                        this.currentWindVelocity = this.DIRECTIONS[this.balloons[this.player1Balloon].direction];
+                        this.currentGameStatus = "Running";
+
                         this.updateBlimpMenu();
+
+                        this.lastGameStatus = this.currentGameStatus;
+                        this.lastWindVelocity = this.currentWindVelocity;
                     }, 30);
                 }
             } else if (this.gameState === this.GAME_STATE.PLAY) {
@@ -129,10 +152,10 @@ class MyContents {
 
         const textTime = "Time: ";
         const textNumbers = String(this.currentMatchTime);
-        const textLaps = "Laps: ";
-        const textWind = "Wind: ";
-        const textVouchers = "Vouchers: ";
-        const textGameStatus = "Status: ";
+        const textLaps = "Laps: " + this.currentLaps;
+        const textWind = "Wind: " + this.currentWindVelocity;
+        const textVouchers = "Vouchers: " + this.currentVouchers;
+        const textGameStatus = "Status: " + this.currentGameStatus;
     
         this.textTimeGroup = new THREE.Group();
         this.textNumbersGroup = new THREE.Group();
@@ -174,9 +197,34 @@ class MyContents {
         this.convertTextToSprite(textTime, this.textNumbersGroup);
     }
 
+    updateTextWind() {
+        const textWind = "Wind: " + this.currentWindVelocity;
+    
+        if(this.currentWindVelocity !== this.lastWindVelocity){
+            while (this.textWindGroup.children.length > 0) {
+                this.textWindGroup.remove(this.textWindGroup.children[0]);
+            }
+            this.convertTextToSprite(textWind, this.textWindGroup);
+        }
+    }
+
+    updateGameStatus() {
+        const textGameStatus = "Status: " + this.currentGameStatus;
+    
+        if(this.currentGameStatus !== this.lastGameStatus){
+            while (this.textGameStatusGroup.children.length > 0) {
+                this.textGameStatusGroup.remove(this.textGameStatusGroup.children[0]);
+            }
+            this.convertTextToSprite(textGameStatus, this.textGameStatusGroup);
+        }
+    }
+
     updateBlimpMenu(){
         this.updateTextTime();
-        //TODO OTHERS
+        this.updateTextWind();
+        this.updateGameStatus();
+        
+        //TODO Vouchers & LAPS
     }
 
     convertTextToSprite(text, group){

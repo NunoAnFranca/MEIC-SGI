@@ -741,7 +741,11 @@
                 ],
                 "children": {
                     "nodesList": [
-
+                        "mountain",
+                        "mainCarRoad",
+                        "cableCarMainNode",
+                        "balloonFenceEnemy",
+                        "balloonFencePlayer",
                         "blimp"
                     ],
                     "ligh1": {
@@ -1860,7 +1864,7 @@
                     "center": {
                         "type": "box",
                         "xyz1": {
-                            "x": 0,
+                            "x": -4,
                             "y": 0,
                             "z": 0
                         },
