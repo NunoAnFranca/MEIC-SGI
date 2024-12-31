@@ -75,7 +75,7 @@ class MyContents {
                         this.player = this.balloons[this.player1Balloon];
                         this.balloons[this.player1Balloon].moveWind();
                         this.currentMatchTime = Math.floor((new Date().getTime() - this.matchTime)/100);
-                        console.log(this.currentMatchTime);
+                        this.updateBlimpMenu();
                     }, 30);
                 }
             } else if (this.gameState === this.GAME_STATE.PLAY) {
@@ -127,13 +127,15 @@ class MyContents {
     
     loadBlimpMenu() {
 
-        const textTime = "Time: " + this.currentMatchTime;
+        const textTime = "Time: ";
+        const textNumbers = String(this.currentMatchTime);
         const textLaps = "Laps: ";
         const textWind = "Wind: ";
         const textVouchers = "Vouchers: ";
         const textGameStatus = "Status: ";
     
         this.textTimeGroup = new THREE.Group();
+        this.textNumbersGroup = new THREE.Group();
         this.textLapsGroup = new THREE.Group();
         this.textWindGroup = new THREE.Group();
         this.textVouchersGroup = new THREE.Group();
@@ -142,6 +144,7 @@ class MyContents {
         this.menuGroup = new THREE.Group();
 
         this.convertTextToSprite(textTime, this.textTimeGroup);
+        this.convertTextToSprite(textNumbers, this.textNumbersGroup);
         this.convertTextToSprite(textLaps, this.textLapsGroup);
         this.convertTextToSprite(textWind, this.textWindGroup);
         this.convertTextToSprite(textVouchers, this.textVouchersGroup);
@@ -149,18 +152,33 @@ class MyContents {
 
 
         this.textTimeGroup.position.set(0, 11.5, 0);
+        this.textNumbersGroup.position.set(1.4*textTime.length, 11.5,0);
         this.textLapsGroup.position.set(0, 9, 0);
         this.textWindGroup.position.set(0, 6.5, 0);
         this.textVouchersGroup.position.set(0, 4, 0);
         this.textGameStatusGroup.position.set(0, 1.5, 0);
 
-        this.menuGroup.add(this.textTimeGroup, this.textLapsGroup, this.textWindGroup, this.textVouchersGroup, this.textGameStatusGroup);
+        this.menuGroup.add(this.textTimeGroup, this.textLapsGroup, this.textWindGroup, this.textVouchersGroup, this.textGameStatusGroup, this.textNumbersGroup);
 
         this.menuGroup.position.set(69.5,24,-60.5);
         this.menuGroup.rotation.set(0,-Math.PI/3,0);
         this.app.scene.add(this.menuGroup);    
     }
     
+    updateTextTime() {
+        const textTime = String(this.currentMatchTime);
+    
+        while (this.textNumbersGroup.children.length > 0) {
+            this.textNumbersGroup.remove(this.textNumbersGroup.children[0]);
+        }
+        this.convertTextToSprite(textTime, this.textNumbersGroup);
+    }
+
+    updateBlimpMenu(){
+        this.updateTextTime();
+        //TODO OTHERS
+    }
+
     convertTextToSprite(text, group){
         let sheet = this.loader.load('images/spritesheet.png');
         const charMap = {
