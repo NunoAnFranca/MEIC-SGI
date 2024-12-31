@@ -124,41 +124,45 @@ class MyContents {
         this.notPickableObjIds.push(this.track.mesh.name)
         this.lastPickedObj = null   
     }
-
-    loadSpriteSheet() {
-        // Load the sprite sheet texture
-        let sheet = this.loader.load('images/spritesheet.png');
-    
-        // Create a material using the texture
-        let material = new THREE.SpriteMaterial({ map: sheet });
-    
-        // Create a sprite
-        let sprite = new THREE.Sprite(material);
-    
-        // Set the UV coordinates to show a specific sprite
-        const spriteIndex = 50; // Index of the sprite (0 for the first sprite)
-        const columns = 15; // Number of columns in the sprite sheet
-        const rows = 8; // Number of rows in the sprite sheet
-        const spriteWidth = 1 / columns; // Width of each sprite in UV space
-        const spriteHeight = 1 / rows; // Height of each sprite in UV space
-        const x = spriteIndex % columns; // Column of the sprite
-        const y = Math.floor(spriteIndex / columns); // Row of the sprite
-    
-        // Adjust the UV coordinates
-        sheet.offset.set(x * spriteWidth, 1 - (y + 1) * spriteHeight); // Offset for the sprite
-        sheet.repeat.set(spriteWidth, spriteHeight); // Scale to show only one sprite
-    
-        // Adjust the position of the sprite and add it to the scene
-        sprite.position.set(75, 15, -50); // Set position
-        sprite.scale.set(2,2,2);
-        this.app.scene.add(sprite);
-    }
     
     loadBlimpMenu() {
-        // Load the sprite sheet texture
-        let sheet = this.loader.load('images/spritesheet.png');
+
+        const textTime = "Time: " + this.currentMatchTime;
+        const textLaps = "Laps: ";
+        const textWind = "Wind: ";
+        const textVouchers = "Vouchers: ";
+        const textGameStatus = "Status: ";
     
-        // Define the character-to-sprite index map
+        this.textTimeGroup = new THREE.Group();
+        this.textLapsGroup = new THREE.Group();
+        this.textWindGroup = new THREE.Group();
+        this.textVouchersGroup = new THREE.Group();
+        this.textGameStatusGroup = new THREE.Group();
+        
+        this.menuGroup = new THREE.Group();
+
+        this.convertTextToSprite(textTime, this.textTimeGroup);
+        this.convertTextToSprite(textLaps, this.textLapsGroup);
+        this.convertTextToSprite(textWind, this.textWindGroup);
+        this.convertTextToSprite(textVouchers, this.textVouchersGroup);
+        this.convertTextToSprite(textGameStatus, this.textGameStatusGroup);
+
+
+        this.textTimeGroup.position.set(0, 11.5, 0);
+        this.textLapsGroup.position.set(0, 9, 0);
+        this.textWindGroup.position.set(0, 6.5, 0);
+        this.textVouchersGroup.position.set(0, 4, 0);
+        this.textGameStatusGroup.position.set(0, 1.5, 0);
+
+        this.menuGroup.add(this.textTimeGroup, this.textLapsGroup, this.textWindGroup, this.textVouchersGroup, this.textGameStatusGroup);
+
+        this.menuGroup.position.set(69.5,24,-60.5);
+        this.menuGroup.rotation.set(0,-Math.PI/3,0);
+        this.app.scene.add(this.menuGroup);    
+    }
+    
+    convertTextToSprite(text, group){
+        let sheet = this.loader.load('images/spritesheet.png');
         const charMap = {
             " ": 0, "!": 1, "#": 3, "$": 4, "%": 5, "&": 6,
             "(": 8, ")": 9, "*": 10, "+": 11, ",": 12, "-": 13, ".": 14,
@@ -171,20 +175,14 @@ class MyContents {
             "Y": 57, "Z": 58, "[": 59, "]": 61, "^": 62, "_": 63, 
             "Ç": 96
         };
-    
-        // Define the string you want to display
-        const text = "The characters work as intended!";
-    
-        // Dimensions of the sprite sheet
+
         const columns = 15;
         const rows = 8;
         const spriteWidth = 1 / columns;
         const spriteHeight = 1 / rows;
-    
-        // Create a group to hold the text
-        const textGroup = new THREE.Group();
-    
-        let xOffset = 0; // Initial x-offset for text positioning
+
+        
+        let xOffset = 0; 
     
         for (let char of text) {
             const spriteIndex = charMap[char.toUpperCase()];
@@ -209,19 +207,12 @@ class MyContents {
             sprite.scale.set(2, 2, 2);
     
             // Add the sprite to the group
-            textGroup.add(sprite);
+            group.add(sprite);
     
             // Update xOffset for the next character
             xOffset += 1.4; // Adjust spacing as needed
         }
-    
-        // Position the entire group in the scene
-        textGroup.position.set(75, 2, -50);
-        this.app.scene.add(textGroup);
-    
-        console.log("Text displayed as a group.");
     }
-    
     /*
     *
     * Setup Lights
