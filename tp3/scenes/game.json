@@ -741,11 +741,7 @@
                 ],
                 "children": {
                     "nodesList": [
-                        "mountain",
-                        "mainCarRoad",
-                        "cableCarMainNode",
-                        "balloonFenceEnemy",
-                        "balloonFencePlayer",
+
                         "blimp"
                     ],
                     "ligh1": {
