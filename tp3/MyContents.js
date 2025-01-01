@@ -86,19 +86,23 @@ class MyContents {
                     this.gameState = this.GAME_STATE.PLAY;
                     this.removeInitialPositions();
                     this.setCamera('BalloonFirstPerson');
+
                     this.matchTime = new Date().getTime();
+                    this.pausedTime = 0; 
+
                     setInterval(() => {
-                        this.player = this.balloons[this.player1Balloon];
-                        this.balloons[this.player1Balloon].moveWind();
+                        if (this.gameState === this.GAME_STATE.PLAY){
+                            this.player = this.balloons[this.player1Balloon];
+                            this.balloons[this.player1Balloon].moveWind();
+                            
+                            this.currentMatchTime = Math.floor((new Date().getTime() - this.matchTime  - this.pausedTime)/100);
+                            this.currentWindVelocity = this.DIRECTIONS[this.balloons[this.player1Balloon].direction];
+                            this.currentGameStatus = "Running";
+    
+                            this.updateBlimpMenu();
+                        }
+                        this.updateGameStatus();
                         
-                        this.currentMatchTime = Math.floor((new Date().getTime() - this.matchTime)/100);
-                        this.currentWindVelocity = this.DIRECTIONS[this.balloons[this.player1Balloon].direction];
-                        this.currentGameStatus = "Running";
-
-                        this.updateBlimpMenu();
-
-                        this.lastGameStatus = this.currentGameStatus;
-                        this.lastWindVelocity = this.currentWindVelocity;
                     }, 30);
                 }
             } else if (this.gameState === this.GAME_STATE.PLAY) {
@@ -106,8 +110,18 @@ class MyContents {
                     this.balloons[this.player1Balloon].moveUp();
                 } else if (event.key === 's') {
                     this.balloons[this.player1Balloon].moveDown();
+                } else if (event.key === ' ') {
+                    this.gameState = this.GAME_STATE.PAUSE;
+                    this.pauseStartTime = new Date().getTime();
+                    this.currentGameStatus = "Paused";
                 }
-            } 
+            } else if (this.gameState === this.GAME_STATE.PAUSE){
+                if (event.key === ' '){
+                    this.gameState = this.GAME_STATE.PLAY;
+
+                    this.pausedTime += (new Date().getTime() - this.pauseStartTime);
+                }
+            }
         });
     }
 
@@ -143,7 +157,6 @@ class MyContents {
 
         this.loadBlimpMenu();
 
-        this.testLetter();
         this.notPickableObjIds.push(this.track.mesh.name)
         this.lastPickedObj = null   
     }
@@ -206,6 +219,7 @@ class MyContents {
             }
             this.convertTextToSprite(textWind, this.textWindGroup);
         }
+        this.lastWindVelocity = this.currentWindVelocity;
     }
 
     updateGameStatus() {
@@ -217,13 +231,12 @@ class MyContents {
             }
             this.convertTextToSprite(textGameStatus, this.textGameStatusGroup);
         }
+        this.lastGameStatus = this.currentGameStatus;
     }
 
     updateBlimpMenu(){
         this.updateTextTime();
         this.updateTextWind();
-        this.updateGameStatus();
-        
         //TODO Vouchers & LAPS
     }
 
@@ -491,33 +504,6 @@ class MyContents {
                 - uv : intersection point in the object's UV coordinates (THREE.Vector2)
             */
         }
-    }
-
-    /**
-     * FUNCTION 
-     * TEST 
-     * LETTER 
-     * */
-    testLetter() {
-        const fontLoader = new FontLoader();
-        fontLoader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', (font) => {
-            const textGeometry = new TextGeometry('Hello, Three.js!', {
-                font: font,
-                size: 1,
-                height: 0.5,
-                curveSegments: 12,
-                bevelEnabled: true,
-                bevelThickness: 0.03,
-                bevelSize: 0.02,
-                bevelSegments: 5
-            });
-        
-            const textMaterial = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
-            const textMesh = new THREE.Mesh(textGeometry, textMaterial);
-        
-            this.app.scene.add(textMesh);
-            textMesh.position.set(-5, 0, 0);
-        });
     }
 
     onPointerMove(event) {
