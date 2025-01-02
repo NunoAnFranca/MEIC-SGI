@@ -50,7 +50,9 @@ class MyBalloon {
         this.checkpointsNum = 25;
         this.currentLap = 1;
 
-        // this.boundingBoxHelper = null;
+        this.boundingBoxHelper = null;
+
+        this.marker = null;
 
         this.init();
     }
@@ -123,22 +125,22 @@ class MyBalloon {
         basketMesh.position.y = this.yPos - 4;
         basketMesh.position.z = this.zPos;
         this.balloonGroup.add(basketMesh);
-        // const boundingBox = new THREE.Box3().setFromObject(this.balloonGroup);
-        // this.boundingBoxHelper = new THREE.Box3Helper(boundingBox, 0xffff00);
-        // this.boundingBoxHelper.name = "boundingBoxHelper";
-        // this.balloonGroup.add(this.boundingBoxHelper);
+        const boundingBox = new THREE.Box3().setFromObject(this.balloonGroup);
+        this.boundingBoxHelper = new THREE.Box3Helper(boundingBox, 0xffff00);
+        this.boundingBoxHelper.name = "boundingBoxHelper";
+        this.balloonGroup.add(this.boundingBoxHelper);
 
         const markerGeometry = new THREE.SphereGeometry(0.5,64,64);
         const markerMaterial = new THREE.MeshPhongMaterial({color: "#0000ff"});
-        const markerMesh = new THREE.Mesh(markerGeometry, markerMaterial);
-        markerMesh.scale.set(1,0.25,1);
-        markerMesh.name = "marker";
-        markerMesh.position.x = this.xPos;
-        markerMesh.position.y = -4;
-        markerMesh.position.z = this.zPos;
-        markerMesh.visible = false;
-        this.balloonGroup.add(markerMesh);
-
+        this.marker = new THREE.Mesh(markerGeometry, markerMaterial);
+        this.marker.scale.set(1,0.25,1);
+        this.marker.name = "marker";
+        this.marker.position.x = this.xPos;
+        this.marker.position.y = -4;
+        this.marker.position.z = this.zPos;
+        this.marker.visible = false;
+        
+        this.app.scene.add(this.marker);
         this.app.scene.add(this.balloonGroup);
     }
 
@@ -162,16 +164,26 @@ class MyBalloon {
         for (let i = 0; i < this.balloonGroup.children.length; i++) {
             const child = this.balloonGroup.children[i];
             const offset = positionOffsets[child.name] || positionOffsets.default;
-            child.position.x = this.xPos + offset.x;
-            child.position.y = this.yPos + offset.y;
-            child.position.z = this.zPos + offset.z;
+            child.position.set(this.xPos + offset.x, this.yPos + offset.y, this.zPos + offset.z);
+        }
 
-            if (child.name == 'marker') {
-                child.visible = true;         
-                if (typeBalloon === "HUMAN") {
-                    child.material = new THREE.MeshPhongMaterial({ color: "#ff0000" });
-                    child.material.needsUpdate = true;
-                }
+        const markerOffset = positionOffsets[this.marker.name] || positionOffsets.default;
+        this.marker.visible = true;      
+        this.marker.position.set(this.xPos + markerOffset.x, this.yPos + markerOffset.y, this.zPos + markerOffset.z);
+
+        if (typeBalloon === "HUMAN") {
+            this.marker.material = new THREE.MeshPhongMaterial({ color: "#ff0000" });
+            this.marker.material.needsUpdate = true;
+        }
+
+        for (let i = 0; i < this.balloonGroup.children.length; i++) {
+            const child = this.balloonGroup.children[i];
+            if (child.name === 'boundingBoxHelper') {
+                this.balloonGroup.remove(child);
+                const boundingBox = new THREE.Box3().setFromObject(this.balloonGroup);
+                this.boundingBoxHelper = new THREE.Box3Helper(boundingBox, 0xffff00);
+                this.boundingBoxHelper.name = "boundingBoxHelper";
+                this.balloonGroup.add(this.boundingBoxHelper);
             }
         }
 
@@ -300,7 +312,7 @@ class MyBalloon {
         return false;
     }
 
-    initCheckpoints(){
+    initCheckpoints() {
         this.checkpoints = this.app.contents.track.path.getPoints(this.checkpointsNum).map(point => {
             let vector = new THREE.Vector3(point.x, point.y, point.z);
             this.app.contents.track.curve.localToWorld(vector);
@@ -310,8 +322,7 @@ class MyBalloon {
         this.currentCheckpointIndex = 0;
     }
 
-    checkcurrentCheckpoint(){
-
+    checkcurrentCheckpoint() {
         let nextCheckpoint = this.checkpoints[this.currentCheckpointIndex];
         let distance = Math.sqrt(Math.pow(nextCheckpoint.x - this.xPos, 2) + Math.pow(nextCheckpoint.z - this.zPos, 2));
 
@@ -320,7 +331,7 @@ class MyBalloon {
             return true;
         }
 
-        if(this.currentCheckpointIndex >= this.checkpointsNum){
+        if (this.currentCheckpointIndex >= this.checkpointsNum) {
             this.currentCheckpointIndex = 0;
             this.currentLap++;
         }
@@ -330,8 +341,8 @@ class MyBalloon {
     
     moveWind() {
         this.checkcurrentCheckpoint();
-        let log = this.checkPosition();
-        if (log) {
+
+        if (this.checkPosition()) {
             if (this.yPos <= 8 && this.yPos > 5) {
                 this.moveForward();
             } else if (this.yPos <= 11 && this.yPos > 8) {
@@ -349,8 +360,9 @@ class MyBalloon {
             this.yPos += 0.5;
             this.offsetY += 0.2;
             for (let i = 0; i < this.balloonGroup.children.length; i++) {
-                if(this.balloonGroup.children[i].name !== 'marker')
+                if (this.balloonGroup.children[i].name !== 'marker') {
                     this.balloonGroup.children[i].position.y += 0.5;
+                }
             }
         }
     }
@@ -360,8 +372,9 @@ class MyBalloon {
             this.yPos -= 0.5;
             this.offsetY -= 0.2;
             for (let i = 0; i < this.balloonGroup.children.length; i++) {
-                if(this.balloonGroup.children[i].name !== 'marker')
+                if (this.balloonGroup.children[i].name !== 'marker') {
                     this.balloonGroup.children[i].position.y -= 0.5;
+                }    
             }
         }
     }
@@ -372,6 +385,7 @@ class MyBalloon {
         for (let i = 0; i < this.balloonGroup.children.length; i++) {
             this.balloonGroup.children[i].position.x -= 0.1;
         }
+        this.marker.position.x -= 0.1;
     }
 
     moveRight() {
@@ -380,6 +394,7 @@ class MyBalloon {
         for (let i = 0; i < this.balloonGroup.children.length; i++) {
             this.balloonGroup.children[i].position.x += 0.1;
         }
+        this.marker.position.x += 0.1;
     }
 
     moveForward() {
@@ -388,6 +403,7 @@ class MyBalloon {
         for (let i = 0; i < this.balloonGroup.children.length; i++) {
             this.balloonGroup.children[i].position.z -= 0.1;
         }
+        this.marker.position.z -= 0.1;
     }
 
     moveBackward() {
@@ -396,6 +412,7 @@ class MyBalloon {
         for (let i = 0; i < this.balloonGroup.children.length; i++) {
             this.balloonGroup.children[i].position.z += 0.1;
         }
+        this.marker.position.z += 0.1;
     }
 
     // checkCollision(obstacles) {
