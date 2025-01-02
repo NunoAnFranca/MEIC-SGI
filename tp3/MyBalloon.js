@@ -44,7 +44,14 @@ class MyBalloon {
 
         this.direction = this.DIRECTIONS.NORTH;
 
+        this.checkpoints = null;
+        this.currentCheckpointIndex = null;
+        this.distanceCheckpoint = 6.0;
+        this.checkpointsNum = 25;
+        this.currentLap = 1;
+
         // this.boundingBoxHelper = null;
+
         this.init();
     }
 
@@ -167,6 +174,8 @@ class MyBalloon {
                 }
             }
         }
+
+        this.initCheckpoints();
     }
 
     setCamera(camera) {
@@ -290,8 +299,37 @@ class MyBalloon {
 
         return false;
     }
+
+    initCheckpoints(){
+        this.checkpoints = this.app.contents.track.path.getPoints(this.checkpointsNum).map(point => {
+            let vector = new THREE.Vector3(point.x, point.y, point.z);
+            this.app.contents.track.curve.localToWorld(vector);
+            return vector;
+        });
+
+        this.currentCheckpointIndex = 0;
+    }
+
+    checkcurrentCheckpoint(){
+
+        let nextCheckpoint = this.checkpoints[this.currentCheckpointIndex];
+        let distance = Math.sqrt(Math.pow(nextCheckpoint.x - this.xPos, 2) + Math.pow(nextCheckpoint.z - this.zPos, 2));
+
+        if (distance < this.distanceCheckpoint) {
+            this.currentCheckpointIndex++;
+            return true;
+        }
+
+        if(this.currentCheckpointIndex >= this.checkpointsNum){
+            this.currentCheckpointIndex = 0;
+            this.currentLap++;
+        }
+
+        return false;
+    }
     
     moveWind() {
+        this.checkcurrentCheckpoint();
         let log = this.checkPosition();
         if (log) {
             if (this.yPos <= 8 && this.yPos > 5) {

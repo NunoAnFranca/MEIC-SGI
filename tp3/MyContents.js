@@ -40,6 +40,8 @@ class MyContents {
         this.lastVouchers = null;
         this.currentVouchers = 0;
 
+        this.totalLaps = 4; //Change on Initial Menu
+
         this.GAME_STATE = {
             PREPARATION: "PREPARATION",
             RUNNING: "RUNNING",
@@ -93,7 +95,9 @@ class MyContents {
                             this.currentMatchTime = Math.floor((new Date().getTime() - this.matchTime  - this.pausedTime)/100);
                             this.currentWindVelocity = this.DIRECTIONS[this.players[this.PLAYER_TYPE.HUMAN].direction];
                             this.currentGameState = this.GAME_STATE.RUNNING;
-    
+                            this.currentLaps = this.players[this.PLAYER_TYPE.HUMAN].currentLap;
+                            //TODO Vouchers Logic
+
                             this.updateBlimpMenu();
                         }
                         this.updateGameStatus();
@@ -160,7 +164,7 @@ class MyContents {
     loadBlimpMenu() {
         const textTime = "Time: ";
         const textNumbers = String(this.currentMatchTime);
-        const textLaps = "Laps: " + this.currentLaps;
+        const textLaps = "Laps: " + this.currentLaps + "/" + this.totalLaps;
         const textWind = "Wind: " + this.currentWindVelocity;
         const textVouchers = "Vouchers: " + this.currentVouchers;
         const textGameStatus = "Status: " + this.currentGameState;
@@ -232,10 +236,59 @@ class MyContents {
         this.lastGameState = this.currentGameState;
     }
 
+    updateTextVouchers() {
+        const textVouchers = "Vouchers: " + this.currentVouchers;
+    
+        if(this.currentVouchers !== this.lastVouchers){
+            while (this.textVouchersGroup.children.length > 0) {
+                this.textVouchersGroup.remove(this.textVouchersGroup.children[0]);
+            }
+            this.convertTextToSprite(textVouchers, this.textVouchersGroup);
+        }
+        this.lastVouchers = this.currentVouchers;
+    }
+
+    updateTextLaps() {
+        const textLaps = "Laps: " + this.currentLaps + "/" + this.totalLaps;
+    
+        if(this.currentLaps !== this.lastLaps){
+            while (this.textLapsGroup.children.length > 0) {
+                this.textLapsGroup.remove(this.textLapsGroup.children[0]);
+            }
+            this.convertTextToSprite(textLaps, this.textLapsGroup);
+        }
+        this.lastLaps = this.currentLaps;
+    }
+
+    updateTextVouchers() {
+        const textVouchers = "Vouchers: " + this.currentVouchers;
+    
+        if(this.currentVouchers !== this.lastVouchers){
+            while (this.textVouchersGroup.children.length > 0) {
+                this.textVouchersGroup.remove(this.textVouchersGroup.children[0]);
+            }
+            this.convertTextToSprite(textVouchers, this.textVouchersGroup);
+        }
+        this.lastVouchers = this.currentVouchers;
+    }
+
+    updateTextLaps() {
+        const textLaps = "Laps: " + this.currentLaps + "/" + this.totalLaps;
+    
+        if(this.currentLaps !== this.lastLaps){
+            while (this.textLapsGroup.children.length > 0) {
+                this.textLapsGroup.remove(this.textLapsGroup.children[0]);
+            }
+            this.convertTextToSprite(textLaps, this.textLapsGroup);
+        }
+        this.lastLaps = this.currentLaps;
+    }
+
     updateBlimpMenu() {
         this.updateTextTime();
         this.updateTextWind();
-        //TODO Vouchers & LAPS
+        this.updateTextVouchers();
+        this.updateTextLaps();
     }
 
     convertTextToSprite(text, group) {
