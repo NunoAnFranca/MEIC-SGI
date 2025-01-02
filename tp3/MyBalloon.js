@@ -2,9 +2,10 @@ import * as THREE from "three";
 import { MyNurbsBuilder } from './MyNurbsBuilder.js';
 
 class MyBalloon {
-    constructor(app, name, xPos, yPos, zPos, textureN) {
+    constructor(app, type, index, xPos, yPos, zPos, textureN) {
         this.app = app;
-        this.name = name;
+        this.type = type;
+        this.index = index;
         this.xPos = xPos;
         this.yPos = yPos;
         this.zPos = zPos;
@@ -28,6 +29,8 @@ class MyBalloon {
         this.builder = new MyNurbsBuilder();
 
         this.balloonGroup = new THREE.Group();
+        this.balloonGroup.type = this.type;
+        this.balloonGroup.index = this.index;
         
         this.trackPoints = null;
         this.distanceTreshold = 5.0;
@@ -81,7 +84,7 @@ class MyBalloon {
                 
         for (let i = 0; i < this.nMeshes; i++) {
             const balloonMesh = new THREE.Mesh(surfaceData, balloonMaterial);
-            balloonMesh.name = this.name;
+            balloonMesh.name = "surface";
             balloonMesh.receiveShadow = true;
             balloonMesh.castShadow = true;
             balloonMesh.rotation.x = Math.PI / 2;
@@ -132,9 +135,9 @@ class MyBalloon {
         this.app.scene.add(this.balloonGroup);
     }
 
-    setPosition(xPos, yPos, zPos) {
+    setPosition([xPos, yPos, zPos]) {
         this.xPos = xPos;
-        this.yPos = yPos;
+        this.yPos = yPos + 5;
         this.zPos = zPos;
 
         const positionOffsets = {
@@ -147,7 +150,7 @@ class MyBalloon {
             default: { x: 0, y: 0, z: 0 }
         };
         
-        let typeBalloon = 'B';
+        let typeBalloon = this.balloonGroup.type;
 
         for (let i = 0; i < this.balloonGroup.children.length; i++) {
             const child = this.balloonGroup.children[i];
@@ -156,13 +159,9 @@ class MyBalloon {
             child.position.y = this.yPos + offset.y;
             child.position.z = this.zPos + offset.z;
 
-            if (child.name.substring(0, 5) == 'R_col') {
-                typeBalloon = 'R';
-            }
-
             if (child.name == 'marker') {
                 child.visible = true;         
-                if (typeBalloon == 'B') {
+                if (typeBalloon === "HUMAN") {
                     child.material = new THREE.MeshPhongMaterial({ color: "#ff0000" });
                     child.material.needsUpdate = true;
                 }

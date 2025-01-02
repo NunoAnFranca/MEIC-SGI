@@ -208,8 +208,8 @@ class MyApp {
     }
 
     updateMinimap() {
-        if (this.contents && this.contents.player) {
-            const player = this.contents.player; // The balloon or player object
+        const player = this.contents.players[this.contents.PLAYER_TYPE.HUMAN];
+        if (this.contents && player) {
             this.minimap.minimapMarker.position.set(0, player.yPos - 3, 0);
         }
     } 
