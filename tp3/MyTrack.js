@@ -1,4 +1,5 @@
 import * as THREE from "three";
+//import { MyObstacle } from "./MyObstacle.js";
 
 class CustomSinCurve extends THREE.Curve {
 
@@ -32,29 +33,49 @@ class MyTrack {
         this.width = 1.2;
         this.trackSize = 5;
 
-        this.path =
-            new THREE.CatmullRomCurve3([
-                new THREE.Vector3(-5, 0, -5),
-                new THREE.Vector3(-5, 0, -20),
-                new THREE.Vector3(2, 0, -20),
-                new THREE.Vector3(4, 0, -8),
-                new THREE.Vector3(10, 0, -8),
-                new THREE.Vector3(10, 0, -4),
-                new THREE.Vector3(4, 0, -4),
-                new THREE.Vector3(4, 0, 0),
-                new THREE.Vector3(15, 0, 0),
-                new THREE.Vector3(15, 0, 4),
-                new THREE.Vector3(0, 0, 4),
-                new THREE.Vector3(-4, 0, 10),
-                new THREE.Vector3(-8, 0, 10),
-                new THREE.Vector3(-15, 0, 10),
-                new THREE.Vector3(-15, 0, 0),
-                new THREE.Vector3(-5, 0, 0),
-                new THREE.Vector3(-5, 0, -5),
-            ]);
+        this.path = new THREE.CatmullRomCurve3([
+            new THREE.Vector3(-5, 0, -5),
+            new THREE.Vector3(-5, 0, -20),
+            new THREE.Vector3(2, 0, -20),
+            new THREE.Vector3(4, 0, -8),
+            new THREE.Vector3(10, 0, -8),
+            new THREE.Vector3(10, 0, -4),
+            new THREE.Vector3(4, 0, -4),
+            new THREE.Vector3(4, 0, 0),
+            new THREE.Vector3(15, 0, 0),
+            new THREE.Vector3(15, 0, 4),
+            new THREE.Vector3(0, 0, 4),
+            new THREE.Vector3(-4, 0, 10),
+            new THREE.Vector3(-8, 0, 10),
+            new THREE.Vector3(-15, 0, 10),
+            new THREE.Vector3(-15, 0, 0),
+            new THREE.Vector3(-5, 0, 0),
+            new THREE.Vector3(-5, 0, -5),
+        ]);
+
+        //this.obstacles = [];
         
-        this.buildCurve()
+        this.buildCurve();
+        // this.createObstacles();
     }
+
+//    createObstacles() {
+//        const obstacleCount = 10;
+//        const obstacleSize = { width: 2, height: 2, depth: 2 };
+//        const obstacleColor = 0xff0000;
+//
+//        for (let i = 0; i < obstacleCount; i++) {
+//            const t = i / (obstacleCount - 1);
+//            const position = this.path.getPointAt(t);
+//
+//            position.multiplyScalar(this.trackSize);
+//            position.y -= 2;
+//
+//            position.applyAxisAngle(new THREE.Vector3(0, 0, 1), Math.PI);
+//            
+//            this.obstacles.push(new MyObstacle(this.app, position, obstacleSize, obstacleColor));
+//        }
+//    }
 
     /**
      * Creates the necessary elements for the curve

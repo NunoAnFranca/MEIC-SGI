@@ -19,24 +19,22 @@ class MyContents {
 
         this.raycaster = new THREE.Raycaster()
         this.raycaster.near = 1
-        this.raycaster.far = 20
+        this.raycaster.far = 40
 
         this.pointer = new THREE.Vector2()
         this.intersectedObj = null
         this.pickingColor = "0x00ff00"
 
         this.track = null;
-        this.balloons = {};
-        this.player1Balloon = null;
-        this.player2Balloon = null;
+        this.humanBalloons = {};
+        this.aiBalloons = {};
 
-        //Blimp Menu Variables
+        // Blimp Menu Variables
         this.matchTime = null;
         this.currentMatchTime = 0;
         this.lastWindVelocity = null;
         this.currentWindVelocity = "Nan";
-        this.lastGameStatus = null;
-        this.currentGameStatus = "Not Started";
+        this.lastGameState = null;
         this.lastLaps = null;
         this.currentLaps = 0;
         this.lastVouchers = null;
@@ -44,22 +42,11 @@ class MyContents {
 
         this.totalLaps = 4; //Change on Initial Menu
 
-        // structure of layers: each layer will contain its objects
-        // this can be used to select objects that are pickeable     
-        this.availableLayers = ['none', 1, 2, 3]
-        this.selectedLayer = this.availableLayers[0]    // change this in interface
-
-        // define the objects ids that are not to be pickeable
-        // NOTICE: not a ThreeJS facility
-        // this.notPickableObjIds = []
-        // this.notPickableObjIds = ["col_0_0", "col_2_0", "col_1_1"]
-        this.notPickableObjIds = ["A", "B", "track"]
-
         this.GAME_STATE = {
-            INIT: 0,
-            PLAY: 1,
-            PAUSE: 2,
-            END: 3
+            PREPARATION: "PREPARATION",
+            RUNNING: "RUNNING",
+            PAUSED: "PAUSED",
+            FINISHED: "FINISHED"
         }
 
         this.DIRECTIONS = {
@@ -69,9 +56,19 @@ class MyContents {
             3: "WEST"
         };
 
-        this.gameState = this.GAME_STATE.INIT;
+        this.PLAYER_TYPE = {
+            HUMAN: "HUMAN",
+            AI: "AI"
+        }
+
+        this.players = {
+            [this.PLAYER_TYPE.HUMAN]: null,
+            [this.PLAYER_TYPE.AI]: null
+        };
+
+        this.currentGameState = this.GAME_STATE.PREPARATION;
       
-        //register events
+        // register events
 
         document.addEventListener(
             // "pointermove",
@@ -82,10 +79,9 @@ class MyContents {
         );
 
         document.addEventListener("keydown", (event) => {
-            if (this.gameState === this.GAME_STATE.INIT) {
-                if (event.key === 'p' && this.player1Balloon && this.player2Balloon) {
-                    this.restoreTranslate();
-                    this.gameState = this.GAME_STATE.PLAY;
+            if (this.currentGameState === this.GAME_STATE.PREPARATION) {
+                if ((event.key === 'p' || event.key === 'P') && !this.initialPositions[this.PLAYER_TYPE.HUMAN] && !this.initialPositions[this.PLAYER_TYPE.AI]) {
+                    this.currentGameState = this.GAME_STATE.RUNNING;
                     this.removeInitialPositions();
                     this.setCamera('BalloonFirstPerson');
 
@@ -93,36 +89,32 @@ class MyContents {
                     this.pausedTime = 0; 
 
                     setInterval(() => {
-                        if (this.gameState === this.GAME_STATE.PLAY){
-                            this.player = this.balloons[this.player1Balloon];
-                            this.balloons[this.player1Balloon].moveWind();
+                        if (this.currentGameState === this.GAME_STATE.RUNNING) {
+                            this.players[this.PLAYER_TYPE.HUMAN].moveWind();
                             
                             this.currentMatchTime = Math.floor((new Date().getTime() - this.matchTime  - this.pausedTime)/100);
-                            this.currentWindVelocity = this.DIRECTIONS[this.balloons[this.player1Balloon].direction];
-                            this.currentGameStatus = "Running";
-                            this.currentLaps = this.balloons[this.player1Balloon].currentLap;
+                            this.currentWindVelocity = this.DIRECTIONS[this.players[this.PLAYER_TYPE.HUMAN].direction];
+                            this.currentGameState = this.GAME_STATE.RUNNING;
+                            this.currentLaps = this.players[this.PLAYER_TYPE.HUMAN].currentLap;
                             //TODO Vouchers Logic
 
                             this.updateBlimpMenu();
                         }
                         this.updateGameStatus();
-                        
                     }, 30);
                 }
-            } else if (this.gameState === this.GAME_STATE.PLAY) {
-                if (event.key === 'w') {
-                    this.balloons[this.player1Balloon].moveUp();
-                } else if (event.key === 's') {
-                    this.balloons[this.player1Balloon].moveDown();
+            } else if (this.currentGameState === this.GAME_STATE.RUNNING) {
+                if (event.key === 'w' || event.key === 'W') {
+                    this.players[this.PLAYER_TYPE.HUMAN].moveUp();
+                } else if (event.key === 's' || event.key === 'S') {
+                    this.players[this.PLAYER_TYPE.HUMAN].moveDown();
                 } else if (event.key === ' ') {
-                    this.gameState = this.GAME_STATE.PAUSE;
                     this.pauseStartTime = new Date().getTime();
-                    this.currentGameStatus = "Paused";
+                    this.currentGameState = this.GAME_STATE.PAUSED;
                 }
-            } else if (this.gameState === this.GAME_STATE.PAUSE){
-                if (event.key === ' '){
-                    this.gameState = this.GAME_STATE.PLAY;
-
+            } else if (this.currentGameState === this.GAME_STATE.PAUSED) {
+                if (event.key === ' ') {
+                    this.currentGameState = this.GAME_STATE.RUNNING;
                     this.pausedTime += (new Date().getTime() - this.pauseStartTime);
                 }
             }
@@ -149,9 +141,16 @@ class MyContents {
         // build balloons
         this.buildBalloons();
         
-        this.initialPositions = {"A": null, "B": null};
-        this.buildInitialPosition("A", 27, -15);
-        this.buildInitialPosition("B", 21, -15);
+        this.initialPositions = {
+            [this.PLAYER_TYPE.HUMAN]: true,
+            [this.PLAYER_TYPE.AI]: true
+        };
+        this.initialPositionsCoords = {
+            [this.PLAYER_TYPE.HUMAN]: [27, 0.8, -15],
+            [this.PLAYER_TYPE.AI]: [21, 0.8, -15]
+        };
+        this.buildInitialPosition(this.PLAYER_TYPE.HUMAN, this.initialPositionsCoords[this.PLAYER_TYPE.HUMAN]);
+        this.buildInitialPosition(this.PLAYER_TYPE.AI, this.initialPositionsCoords[this.PLAYER_TYPE.AI]);
 
         // create the track
         this.track = new MyTrack(this.app);
@@ -160,19 +159,15 @@ class MyContents {
 
         this.loadBlimpMenu();
         this.loadStartMenu();
-
-        this.notPickableObjIds.push(this.track.mesh.name)
-        this.lastPickedObj = null   
     }
     
     loadBlimpMenu() {
-
         const textTime = "Time: ";
         const textNumbers = String(this.currentMatchTime);
         const textLaps = "Laps: " + this.currentLaps + "/" + this.totalLaps;
         const textWind = "Wind: " + this.currentWindVelocity;
         const textVouchers = "Vouchers: " + this.currentVouchers;
-        const textGameStatus = "Status: " + this.currentGameStatus;
+        const textGameStatus = "Status: " + this.currentGameState;
     
         this.textTimeGroup = new THREE.Group();
         this.textNumbersGroup = new THREE.Group();
@@ -192,7 +187,7 @@ class MyContents {
 
 
         this.textTimeGroup.position.set(0, 11.5, 0);
-        this.textNumbersGroup.position.set(1.4*textTime.length, 11.5,0);
+        this.textNumbersGroup.position.set(1.4 * textTime.length, 11.5, 0);
         this.textLapsGroup.position.set(0, 9, 0);
         this.textWindGroup.position.set(0, 6.5, 0);
         this.textVouchersGroup.position.set(0, 4, 0);
@@ -200,8 +195,8 @@ class MyContents {
 
         this.menuGroup.add(this.textTimeGroup, this.textLapsGroup, this.textWindGroup, this.textVouchersGroup, this.textGameStatusGroup, this.textNumbersGroup);
 
-        this.menuGroup.position.set(69.5,24,-60.5);
-        this.menuGroup.rotation.set(0,-Math.PI/3,0);
+        this.menuGroup.position.set(69.5, 24, -60.5);
+        this.menuGroup.rotation.set(0, - Math.PI/3, 0);
         this.app.scene.add(this.menuGroup);    
     }
 
@@ -227,35 +222,38 @@ class MyContents {
 
     updateTextTime() {
         const textTime = String(this.currentMatchTime);
-    
+
         while (this.textNumbersGroup.children.length > 0) {
             this.textNumbersGroup.remove(this.textNumbersGroup.children[0]);
         }
+
         this.convertTextToSprite(textTime, this.textNumbersGroup);
     }
 
     updateTextWind() {
         const textWind = "Wind: " + this.currentWindVelocity;
     
-        if(this.currentWindVelocity !== this.lastWindVelocity){
+        if (this.currentWindVelocity !== this.lastWindVelocity) {
             while (this.textWindGroup.children.length > 0) {
                 this.textWindGroup.remove(this.textWindGroup.children[0]);
             }
             this.convertTextToSprite(textWind, this.textWindGroup);
         }
+
         this.lastWindVelocity = this.currentWindVelocity;
     }
 
     updateGameStatus() {
-        const textGameStatus = "Status: " + this.currentGameStatus;
+        const textGameStatus = "Status: " + this.currentGameState;
     
-        if(this.currentGameStatus !== this.lastGameStatus){
+        if (this.currentGameState !== this.lastGameState) {
             while (this.textGameStatusGroup.children.length > 0) {
                 this.textGameStatusGroup.remove(this.textGameStatusGroup.children[0]);
             }
             this.convertTextToSprite(textGameStatus, this.textGameStatusGroup);
         }
-        this.lastGameStatus = this.currentGameStatus;
+
+        this.lastGameState = this.currentGameState;
     }
 
     updateTextVouchers() {
@@ -282,14 +280,38 @@ class MyContents {
         this.lastLaps = this.currentLaps;
     }
 
-    updateBlimpMenu(){
+    updateTextVouchers() {
+        const textVouchers = "Vouchers: " + this.currentVouchers;
+    
+        if(this.currentVouchers !== this.lastVouchers){
+            while (this.textVouchersGroup.children.length > 0) {
+                this.textVouchersGroup.remove(this.textVouchersGroup.children[0]);
+            }
+            this.convertTextToSprite(textVouchers, this.textVouchersGroup);
+        }
+        this.lastVouchers = this.currentVouchers;
+    }
+
+    updateTextLaps() {
+        const textLaps = "Laps: " + this.currentLaps + "/" + this.totalLaps;
+    
+        if(this.currentLaps !== this.lastLaps){
+            while (this.textLapsGroup.children.length > 0) {
+                this.textLapsGroup.remove(this.textLapsGroup.children[0]);
+            }
+            this.convertTextToSprite(textLaps, this.textLapsGroup);
+        }
+        this.lastLaps = this.currentLaps;
+    }
+
+    updateBlimpMenu() {
         this.updateTextTime();
         this.updateTextWind();
         this.updateTextVouchers();
         this.updateTextLaps();
     }
 
-    convertTextToSprite(text, group){
+    convertTextToSprite(text, group) {
         let sheet = this.loader.load('images/spritesheet.png');
         const charMap = {
             " ": 0, "!": 1, "#": 3, "$": 4, "%": 5, "&": 6,
@@ -342,11 +364,6 @@ class MyContents {
         }
     }
 
-    /*
-    *
-    * Setup Lights
-    *
-    */
     buildLights() {
         // add a point light on top of the model
         const pointLight = new THREE.PointLight(0xffffff, 500, 0)
@@ -366,13 +383,14 @@ class MyContents {
     buildBalloons() {
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
-                this.balloons["R_col_" + i + "_" + j] = new MyBalloon(this.app, "R_col_" + i + "_" + j, j * 6 + 35, 4, - 6 * (i + 1) - 5, (i + j) % 5 + 1);
-                this.balloons["B_col_" + i + "_" + j] = new MyBalloon(this.app, "B_col_" + i + "_" + j, j * 6, 4, - 6 * (i + 1) - 5, (i + j) % 5 + 1);
+                const index = `${i}${j}`;
+                this.humanBalloons[index] = new MyBalloon(this.app, this.PLAYER_TYPE.HUMAN, index, j * 6 + 35, 4, - 6 * (i + 1) - 5, (i + j) % 5 + 1);
+                this.aiBalloons[index] = new MyBalloon(this.app, this.PLAYER_TYPE.AI, index, j * 6, 4, - 6 * (i + 1) - 5, (i + j) % 5 + 1);
             }
         }
     }
 
-    buildInitialPosition(name, xPos, zPos) {
+    buildInitialPosition(name, [xPos, yPos, zPos]) {
         let geometry = new THREE.CylinderGeometry(1,1,0.2,64);
 
         let positionsMaterial = new THREE.MeshPhongMaterial({
@@ -383,7 +401,7 @@ class MyContents {
         });
 
         let mesh = new THREE.Mesh(geometry, positionsMaterial);
-        mesh.position.set(xPos, 0.8, zPos);
+        mesh.position.set(xPos, yPos, zPos);
         mesh.name = name;
         this.app.scene.add(mesh);
     }
@@ -394,89 +412,28 @@ class MyContents {
         }
     }
 
-    /*
-    *
-    * Only object from selected layer will be eligible for selection
-    * when 'none' is selected no layer is active, so all objects can be selected
-    */
-    updateSelectedLayer() {
-        this.raycaster.layers.enableAll()
-        if (this.selectedLayer !== 'none') {
-            const selectedIndex = this.availableLayers[parseInt(this.selectedLayer)]
-            this.raycaster.layers.set(selectedIndex)
-        }
-    }
-
-    /*
-    * Change the position of the first intersected object
-    *
-    */
-    changeTranslate(obj) {
-        if (this.lastPickedObj != obj) {
-            if (this.lastPickedObj) {
-                this.lastPickedObj.parent.translateY(-1);
-            }
-
-            this.lastPickedObj = obj;
-            this.lastPickedObj.parent.translateY(1);
-        }
-    }
-
-    /*
-     * Restore the original position of the intersected object
-     *
-     */
-    restoreTranslate() {
-        if (this.lastPickedObj) {
-            this.lastPickedObj.parent.translateY(-1);
-        }
-
-        this.lastPickedObj = null;
-    }
-
     changeObjectPosition(obj) {
-        if (this.lastPickedObj != obj) {
-            if (this.lastPickedObj) {
-                this.balloons[this.lastPickedObj.name].setPosition(obj.position.x, obj.position.y + 5, obj.position.z);
-            }
-
-            this.lastPickedObj.parent.translateY(-1);
-            this.lastPickedObj = null;
+        switch (obj.type) {
+            case this.PLAYER_TYPE.HUMAN:
+                this.humanBalloons[obj.index].setPosition(this.initialPositionsCoords[obj.type]);
+                this.players[obj.type] = this.humanBalloons[obj.index];
+                break;
+            case this.PLAYER_TYPE.AI:
+                this.aiBalloons[obj.index].setPosition(this.initialPositionsCoords[obj.type]);
+                this.players[obj.type] = this.aiBalloons[obj.index];
+                break;
+            default:
+                break;
         }
+
+        this.initialPositions[obj.type] = false;
     }
 
-    /*
-    * Helper to visualize the intersected object
-    *
-    */
     pickingHelper(intersects) {
-        if (intersects.length > 0 && this.gameState === this.GAME_STATE.INIT) {
+        if (intersects.length > 0 && this.currentGameState === this.GAME_STATE.PREPARATION) {
             const obj = intersects[0].object;
-            if (this.notPickableObjIds.includes(obj.name)) {
-                if (this.lastPickedObj) {
-                    switch (this.lastPickedObj.name.charAt(0)) {
-                        case "R":
-                            if (obj.name === "A" && this.initialPositions["A"] === null) {
-                                this.initialPositions["A"] = this.lastPickedObj.name;
-                                this.player1Balloon = this.lastPickedObj.name;
-                                this.changeObjectPosition(obj)
-                            }
-                            break;
-                        case "B":
-                            if (obj.name === "B" && this.initialPositions["B"] === null) {
-                                this.initialPositions["B"] = obj.name;
-                                this.player2Balloon = this.lastPickedObj.name;
-                                this.changeObjectPosition(obj)
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-                } else {
-                    this.restoreTranslate();
-                }
-            } else {
-                this.changeTranslate(obj);
+            if (obj.parent && this.PLAYER_TYPE[obj.parent.type] && this.initialPositions[obj.parent.type]) {
+                this.changeObjectPosition(obj.parent);
             }
         }
     }
@@ -520,7 +477,10 @@ class MyContents {
     }
 
     setCamera(cameraName) {
-        this.balloons[this.player1Balloon].setCamera(this.app.cameras[cameraName]);
+        if (this.currentGameState === this.GAME_STATE.RUNNING && (cameraName === 'BalloonFirstPerson' || cameraName === 'BalloonThirdPerson')) {
+            this.players[this.PLAYER_TYPE.HUMAN].setCamera(this.app.cameras[cameraName]);
+        }
+
         this.app.activeCameraName = cameraName;
         this.app.updateCameraIfRequired();
     }
@@ -539,15 +499,15 @@ class MyContents {
      *
      */
     update() {
-        switch (this.gameState) {
-            case this.GAME_STATE.INIT:
+        switch (this.currentGameState) {
+            case this.GAME_STATE.PREPARATION:
                 break;
-            case this.GAME_STATE.PLAY:
-                this.balloons[this.player1Balloon].update();
+            case this.GAME_STATE.RUNNING:
+                this.players[this.PLAYER_TYPE.HUMAN].update();
                 break;
-            case this.GAME_STATE.PAUSE:
+            case this.GAME_STATE.PAUSED:
                 break;
-            case this.GAME_STATE.END:
+            case this.GAME_STATE.FINISHED:
                 break;
             default:
                 break;

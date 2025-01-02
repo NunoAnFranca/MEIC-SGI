@@ -98,6 +98,13 @@ class MyApp {
         initMenu.target =  new THREE.Vector3(-71.5,18.53264621864038,-91.50558);
         initMenu.lookAt(initMenu.target);
         this.cameras['InitialMenu'] = initMenu;
+
+        // Create a basic perspective camera
+        const balloonChoice = new THREE.PerspectiveCamera(100, aspect, 0.1, 1000)
+        balloonChoice.position.set(25, 30, -20)
+        balloonChoice.target = new THREE.Vector3(25, 0, -20)
+        balloonChoice.lookAt(balloonChoice.target)
+        this.cameras['BalloonChoice'] = balloonChoice
     }
 
     /**
@@ -111,6 +118,7 @@ class MyApp {
 
         this.activeCameraName = cameraName
         this.activeCamera = this.cameras[this.activeCameraName]
+        this.updateCameraTarget();
     }
 
     getActiveCamera() {
@@ -150,7 +158,7 @@ class MyApp {
     }
 
     updateCameraTarget() {
-        if (this.activeCameraName === 'BalloonFirstPerson' || this.activeCameraName === 'BalloonThirdPerson') {
+        if (this.activeCameraName === 'BalloonFirstPerson' || this.activeCameraName === 'BalloonThirdPerson' || this.activeCameraName === 'BalloonChoice') {
             this.controls.target.copy(this.activeCamera.target);
             this.controls.update();
         }
@@ -224,8 +232,8 @@ class MyApp {
     }
 
     updateMinimap() {
-        if (this.contents && this.contents.player) {
-            const player = this.contents.player; // The balloon or player object
+        const player = this.contents.players[this.contents.PLAYER_TYPE.HUMAN];
+        if (this.contents && player) {
             this.minimap.minimapMarker.position.set(0, player.yPos - 3, 0);
         }
     } 

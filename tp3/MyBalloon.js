@@ -2,9 +2,10 @@ import * as THREE from "three";
 import { MyNurbsBuilder } from './MyNurbsBuilder.js';
 
 class MyBalloon {
-    constructor(app, name, xPos, yPos, zPos, textureN) {
+    constructor(app, type, index, xPos, yPos, zPos, textureN) {
         this.app = app;
-        this.name = name;
+        this.type = type;
+        this.index = index;
         this.xPos = xPos;
         this.yPos = yPos;
         this.zPos = zPos;
@@ -28,6 +29,8 @@ class MyBalloon {
         this.builder = new MyNurbsBuilder();
 
         this.balloonGroup = new THREE.Group();
+        this.balloonGroup.type = this.type;
+        this.balloonGroup.index = this.index;
         
         this.trackPoints = null;
         this.distanceTreshold = 5.0;
@@ -46,6 +49,8 @@ class MyBalloon {
         this.distanceCheckpoint = 6.0;
         this.checkpointsNum = 25;
         this.currentLap = 1;
+
+        // this.boundingBoxHelper = null;
 
         this.init();
     }
@@ -86,7 +91,7 @@ class MyBalloon {
                 
         for (let i = 0; i < this.nMeshes; i++) {
             const balloonMesh = new THREE.Mesh(surfaceData, balloonMaterial);
-            balloonMesh.name = this.name;
+            balloonMesh.name = "surface";
             balloonMesh.receiveShadow = true;
             balloonMesh.castShadow = true;
             balloonMesh.rotation.x = Math.PI / 2;
@@ -118,6 +123,10 @@ class MyBalloon {
         basketMesh.position.y = this.yPos - 4;
         basketMesh.position.z = this.zPos;
         this.balloonGroup.add(basketMesh);
+        // const boundingBox = new THREE.Box3().setFromObject(this.balloonGroup);
+        // this.boundingBoxHelper = new THREE.Box3Helper(boundingBox, 0xffff00);
+        // this.boundingBoxHelper.name = "boundingBoxHelper";
+        // this.balloonGroup.add(this.boundingBoxHelper);
 
         const markerGeometry = new THREE.SphereGeometry(0.5,64,64);
         const markerMaterial = new THREE.MeshPhongMaterial({color: "#0000ff"});
@@ -133,24 +142,9 @@ class MyBalloon {
         this.app.scene.add(this.balloonGroup);
     }
 
-    update() {
-        if (this.camera) {
-            switch (this.app.activeCameraName) {
-                case 'BalloonFirstPerson':
-                    this.updateFirstPersonCamera();
-                    break;
-                case 'BalloonThirdPerson':
-                    this.updateThirdPersonCamera();
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-
-    setPosition(xPos, yPos, zPos) {
+    setPosition([xPos, yPos, zPos]) {
         this.xPos = xPos;
-        this.yPos = yPos;
+        this.yPos = yPos + 5;
         this.zPos = zPos;
 
         const positionOffsets = {
@@ -163,7 +157,7 @@ class MyBalloon {
             default: { x: 0, y: 0, z: 0 }
         };
         
-        let typeBalloon = 'B';
+        let typeBalloon = this.balloonGroup.type;
 
         for (let i = 0; i < this.balloonGroup.children.length; i++) {
             const child = this.balloonGroup.children[i];
@@ -172,13 +166,9 @@ class MyBalloon {
             child.position.y = this.yPos + offset.y;
             child.position.z = this.zPos + offset.z;
 
-            if (child.name.substring(0, 5) == 'R_col') {
-                typeBalloon = 'R';
-            }
-
             if (child.name == 'marker') {
                 child.visible = true;         
-                if (typeBalloon == 'B') {
+                if (typeBalloon === "HUMAN") {
                     child.material = new THREE.MeshPhongMaterial({ color: "#ff0000" });
                     child.material.needsUpdate = true;
                 }
@@ -406,6 +396,34 @@ class MyBalloon {
         for (let i = 0; i < this.balloonGroup.children.length; i++) {
             this.balloonGroup.children[i].position.z += 0.1;
         }
+    }
+
+    // checkCollision(obstacles) {
+    //     for (let i = 0; i < obstacles.length; i++) {
+    //         let obstacle = obstacles[i];
+    //         
+    //     }
+    // }
+
+    update() {
+        if (this.camera) {
+            switch (this.app.activeCameraName) {
+                case 'BalloonFirstPerson':
+                    this.updateFirstPersonCamera();
+                    break;
+                case 'BalloonThirdPerson':
+                    this.updateThirdPersonCamera();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        //this.checkCollision(obstacles);
+        // const boundingBox = new THREE.Box3().setFromObject(this.balloonGroup);
+        // this.boundingBoxHelper = new THREE.Box3Helper(boundingBox, 0xffff00);
+        // this.boundingBoxHelper.name = "boundingBoxHelper";
+        // this.balloonGroup.add(this.boundingBoxHelper);
     }
 }
 
