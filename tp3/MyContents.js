@@ -132,7 +132,6 @@ class MyContents {
             this.axis.visible = false;
             this.app.scene.add(this.axis);
         }
-        //this.createStartMenu();
 
         this.reader = new MyParser(this.app);
 
@@ -159,6 +158,7 @@ class MyContents {
         this.loader = new THREE.TextureLoader();
 
         this.loadBlimpMenu();
+        this.loadStartMenu();
     }
     
     loadBlimpMenu() {
@@ -199,7 +199,27 @@ class MyContents {
         this.menuGroup.rotation.set(0, - Math.PI/3, 0);
         this.app.scene.add(this.menuGroup);    
     }
-    
+
+    loadStartMenu() {
+
+        const textAuthors = "Created by Nuno França & Luis Alves          @FEUP";
+
+        this.textAuthorsGroup = new THREE.Group();
+        
+        this.startMenuGroup = new THREE.Group();
+
+        this.convertTextToSprite(textAuthors, this.textAuthorsGroup);
+
+        this.textAuthorsGroup.position.set(0,0, 0);
+        this.textAuthorsGroup.scale.set(0.3,0.3, 0.3);
+
+        this.startMenuGroup.add(this.textAuthorsGroup);
+
+        this.startMenuGroup.position.set(-70,11,-78.5);
+        this.startMenuGroup.rotation.set(0,Math.PI/3,0); // 60
+        this.app.scene.add(this.startMenuGroup);    
+    }
+
     updateTextTime() {
         const textTime = String(this.currentMatchTime);
 
@@ -416,63 +436,6 @@ class MyContents {
                 this.changeObjectPosition(obj.parent);
             }
         }
-    }
-
-    createStartMenu() {
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-              
-        canvas.width = 1920;
-        canvas.height = 1080;
-
-        const backgroundImage = new Image();
-        backgroundImage.src = 'images/menu.jpg';
-      
-        backgroundImage.onload = () => {
-        ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
-
-        ctx.fillStyle = '#000000';
-        ctx.font = 'bold 90px Arial';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText('PLAY', canvas.width / 2, canvas.height / 2);
-
-        texture.needsUpdate = true;
-        };
-      
-        const texture = new THREE.CanvasTexture(canvas);
-        const material = new THREE.MeshBasicMaterial({ map: texture });
-        const plane = new THREE.Mesh(new THREE.PlaneGeometry(128, 72), material);
-        plane.rotation.x= -Math.PI/2;
-        
-        const box = new THREE.BoxGeometry(15,5,5);
-        const boxMaterial = new THREE.MeshPhongMaterial({color:0x0000ff});
-        const boxMesh = new THREE.Mesh(box, boxMaterial);
-        boxMesh.position.set(0,20,0);
-        boxMesh.visible = false;
-        this.app.scene.add(boxMesh);
-
-        plane.position.set(0, 20, 0);
-        this.app.scene.add(plane);
-     
-            
-        const raycaster = new THREE.Raycaster();
-        const mouse = new THREE.Vector2();
-
-        const onMouseClick = (event) => {
-            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-            raycaster.setFromCamera(mouse, this.app.getActiveCamera());
-            const intersects = raycaster.intersectObject(boxMesh);
-
-            if (intersects.length > 0) {
-                this.app.scene.remove(boxMesh);
-                this.app.scene.remove(plane);
-            }
-        };
-
-        window.addEventListener('click', onMouseClick);
     }
 
     /**

@@ -1103,7 +1103,7 @@ class MyParser {
         this.createGlobals();  // Set up global elements
         this.createFog();  // Add fog to the scene
         this.createMaterialsAndTexture();  // Load and set up materials and textures
-        this.createCameras();  // Set up cameras
+        //this.createCameras();  // Set up cameras
         this.createSkybox();  // Add a skybox to the scene
         this.createGraph(this.graph.rootNode, this.graphGroup);  // Create the scene graph
 
