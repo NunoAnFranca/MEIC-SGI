@@ -60,12 +60,12 @@ class MyTrack {
     }
 
     createObstacles() {
-        const obstacleCount = 10;
+        const obstacleCount = 6;
         const obstacleSize = { width: 2, height: 2, depth: 2 };
         const obstacleColor = 0xff0000;
 
         for (let i = 0; i < obstacleCount; i++) {
-            const t = i / (obstacleCount - 1);
+            const t = ((i / obstacleCount) + 0.2) % 1;
             const position = this.path.getPointAt(t);
 
             position.multiplyScalar(this.trackSize);
@@ -73,7 +73,7 @@ class MyTrack {
 
             position.applyAxisAngle(new THREE.Vector3(0, 0, 1), Math.PI);
             
-            this.obstacles.push(new MyObstacle(this.app, position, obstacleSize, obstacleColor));
+            this.obstacles.push(new MyObstacle(this.app, `${i}`, position, obstacleSize, obstacleColor));
         }
     }
 

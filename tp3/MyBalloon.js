@@ -258,27 +258,35 @@ class MyBalloon {
         this.app.updateCameraTarget();
     }
 
-    nearestPoint() {
-        let x = this.trackPoints[0].x;
-        let z = this.trackPoints[0].z;
+    nearestPoint(check) {
+        let finalPoint = this.trackPoints[0];
         let distance = Number.MAX_SAFE_INTEGER;
+        let index = 0;
 
-        for (let point of this.transformedPoints) {
+        for (let i = 0; i < this.transformedPoints.length; i++) {
+            const point = this.transformedPoints[i];
             let distancePoints = Math.sqrt(Math.pow(point.x - this.xPos, 2) + Math.pow(point.z - this.zPos, 2));
             if (distancePoints < distance) {
                 distance = distancePoints;
-                x = point.x;
-                z = point.z;
+                finalPoint = point;
+                index = i;
             }
         }
+
+        if (check) {
+            finalPoint = this.transformedPoints[index - 10];
+        }
         
-        this.xPos = x;
-        this.zPos = z;
+        this.xPos = finalPoint.x;
+        this.zPos = finalPoint.z;
 
         for (let i = 0; i < this.balloonGroup.children.length; i++) {
-            this.balloonGroup.children[i].position.x = x;
-            this.balloonGroup.children[i].position.z = z;
+            this.balloonGroup.children[i].position.x = this.xPos;
+            this.balloonGroup.children[i].position.z = this.zPos;
         }
+
+        this.marker.position.x = this.xPos;
+        this.marker.position.z = this.zPos;
     }
     
     checkPosition() {
@@ -297,7 +305,7 @@ class MyBalloon {
             } 
         }
 
-        this.nearestPoint();
+        this.nearestPoint(false);
 
         return false;
     }
@@ -424,14 +432,19 @@ class MyBalloon {
         this.moveBoundingBox();
     }
 
-    // checkCollision(obstacles) {
-    //     for (let i = 0; i < obstacles.length; i++) {
-    //         let obstacle = obstacles[i];
-    //         
-    //     }
-    // }
+    checkCollision(obstacles) {
+        for (let i = 0; i < obstacles.length; i++) {
+            let obstacle = obstacles[i];
+            let boundingBox = new THREE.Box3().setFromObject(obstacle.mesh);
+            let collision = boundingBox.intersectsBox(this.boundingBoxHelper.box);
 
-    update() {
+            if (collision) {
+                this.nearestPoint(true);
+            }
+        }
+    }
+
+    update(obstacles) {
         if (this.camera) {
             switch (this.app.activeCameraName) {
                 case 'BalloonFirstPerson':
@@ -445,11 +458,7 @@ class MyBalloon {
             }
         }
 
-        //this.checkCollision(obstacles);
-        // const boundingBox = new THREE.Box3().setFromObject(this.balloonGroup);
-        // this.boundingBoxHelper = new THREE.Box3Helper(boundingBox, 0xffff00);
-        // this.boundingBoxHelper.name = "boundingBoxHelper";
-        // this.balloonGroup.add(this.boundingBoxHelper);
+        this.checkCollision(obstacles);
     }
 }
 
