@@ -508,7 +508,7 @@ class MyContents {
             case this.GAME_STATE.PREPARATION:
                 break;
             case this.GAME_STATE.RUNNING:
-                this.players[this.PLAYER_TYPE.HUMAN].update();
+                this.players[this.PLAYER_TYPE.HUMAN].update(this.track.obstacles);
                 break;
             case this.GAME_STATE.PAUSED:
                 break;
