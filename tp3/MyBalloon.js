@@ -176,17 +176,7 @@ class MyBalloon {
             this.marker.material.needsUpdate = true;
         }
 
-        for (let i = 0; i < this.balloonGroup.children.length; i++) {
-            const child = this.balloonGroup.children[i];
-            if (child.name === 'boundingBoxHelper') {
-                this.balloonGroup.remove(child);
-                const boundingBox = new THREE.Box3().setFromObject(this.balloonGroup);
-                this.boundingBoxHelper = new THREE.Box3Helper(boundingBox, 0xffff00);
-                this.boundingBoxHelper.name = "boundingBoxHelper";
-                this.balloonGroup.add(this.boundingBoxHelper);
-            }
-        }
-
+        this.moveBoundingBox();
         this.initCheckpoints();
     }
 
@@ -338,6 +328,19 @@ class MyBalloon {
 
         return false;
     }
+
+    moveBoundingBox() {
+        for (let i = 0; i < this.balloonGroup.children.length; i++) {
+            const child = this.balloonGroup.children[i];
+            if (child.name === 'boundingBoxHelper') {
+                this.balloonGroup.remove(child);
+                const boundingBox = new THREE.Box3().setFromObject(this.balloonGroup);
+                this.boundingBoxHelper = new THREE.Box3Helper(boundingBox, 0xffff00);
+                this.boundingBoxHelper.name = "boundingBoxHelper";
+                this.balloonGroup.add(this.boundingBoxHelper);
+            }
+        }
+    }
     
     moveWind() {
         this.checkcurrentCheckpoint();
@@ -364,6 +367,7 @@ class MyBalloon {
                     this.balloonGroup.children[i].position.y += 0.5;
                 }
             }
+            this.moveBoundingBox();
         }
     }
 
@@ -376,6 +380,7 @@ class MyBalloon {
                     this.balloonGroup.children[i].position.y -= 0.5;
                 }    
             }
+            this.moveBoundingBox();
         }
     }
 
@@ -386,6 +391,7 @@ class MyBalloon {
             this.balloonGroup.children[i].position.x -= 0.1;
         }
         this.marker.position.x -= 0.1;
+        this.moveBoundingBox();
     }
 
     moveRight() {
@@ -395,6 +401,7 @@ class MyBalloon {
             this.balloonGroup.children[i].position.x += 0.1;
         }
         this.marker.position.x += 0.1;
+        this.moveBoundingBox();
     }
 
     moveForward() {
@@ -404,6 +411,7 @@ class MyBalloon {
             this.balloonGroup.children[i].position.z -= 0.1;
         }
         this.marker.position.z -= 0.1;
+        this.moveBoundingBox();
     }
 
     moveBackward() {
@@ -413,6 +421,7 @@ class MyBalloon {
             this.balloonGroup.children[i].position.z += 0.1;
         }
         this.marker.position.z += 0.1;
+        this.moveBoundingBox();
     }
 
     // checkCollision(obstacles) {
