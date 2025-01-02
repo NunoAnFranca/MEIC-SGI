@@ -48,7 +48,7 @@ class MyApp {
         this.initCameras();
         this.minimap.initMinimapCamera();
         this.minimap.initMinimapRenderer();
-        this.setActiveCamera('Perspective');
+        this.setActiveCamera('InitialMenu');
 
         this.minimap.createMinimap();
 
@@ -91,6 +91,13 @@ class MyApp {
         balloonThirdPerson.target = new THREE.Vector3(0, 0, 0)
         balloonThirdPerson.lookAt(balloonThirdPerson.target)
         this.cameras['BalloonThirdPerson'] = balloonThirdPerson
+        
+        //create a initial menu perspective camera
+        const initMenu = new THREE.PerspectiveCamera(90, aspect, 0.1, 1000);
+        initMenu.position.set(-56.911910092428265,18.53264621864038,-83.07926277580806);
+        initMenu.target =  new THREE.Vector3(-71.5,18.53264621864038,-91.50558);
+        initMenu.lookAt(initMenu.target);
+        this.cameras['InitialMenu'] = initMenu;
     }
 
     /**
@@ -134,14 +141,23 @@ class MyApp {
                 this.controls = new OrbitControls(this.activeCamera, this.renderer.domElement);
                 this.controls.enableZoom = true;
                 this.controls.update();
+                this.updateCameraMenu();
             } else {
                 this.controls.object = this.activeCamera;
+                this.updateCameraMenu();
             }
         }
     }
 
     updateCameraTarget() {
         if (this.activeCameraName === 'BalloonFirstPerson' || this.activeCameraName === 'BalloonThirdPerson') {
+            this.controls.target.copy(this.activeCamera.target);
+            this.controls.update();
+        }
+    }
+
+    updateCameraMenu() {
+        if (this.activeCameraName === 'InitialMenu') {
             this.controls.target.copy(this.activeCamera.target);
             this.controls.update();
         }
