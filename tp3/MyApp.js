@@ -91,6 +91,13 @@ class MyApp {
         balloonThirdPerson.target = new THREE.Vector3(0, 0, 0)
         balloonThirdPerson.lookAt(balloonThirdPerson.target)
         this.cameras['BalloonThirdPerson'] = balloonThirdPerson
+
+        // Create a basic perspective camera
+        const balloonChoice = new THREE.PerspectiveCamera(100, aspect, 0.1, 1000)
+        balloonChoice.position.set(25, 30, -20)
+        balloonChoice.target = new THREE.Vector3(25, 0, -20)
+        balloonChoice.lookAt(balloonChoice.target)
+        this.cameras['BalloonChoice'] = balloonChoice
     }
 
     /**
@@ -104,6 +111,7 @@ class MyApp {
 
         this.activeCameraName = cameraName
         this.activeCamera = this.cameras[this.activeCameraName]
+        this.updateCameraTarget();
     }
 
     getActiveCamera() {
@@ -141,7 +149,7 @@ class MyApp {
     }
 
     updateCameraTarget() {
-        if (this.activeCameraName === 'BalloonFirstPerson' || this.activeCameraName === 'BalloonThirdPerson') {
+        if (this.activeCameraName === 'BalloonFirstPerson' || this.activeCameraName === 'BalloonThirdPerson' || this.activeCameraName === 'BalloonChoice') {
             this.controls.target.copy(this.activeCamera.target);
             this.controls.update();
         }

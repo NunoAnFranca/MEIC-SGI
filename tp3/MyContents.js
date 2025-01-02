@@ -19,7 +19,7 @@ class MyContents {
 
         this.raycaster = new THREE.Raycaster()
         this.raycaster.near = 1
-        this.raycaster.far = 20
+        this.raycaster.far = 40
 
         this.pointer = new THREE.Vector2()
         this.intersectedObj = null
@@ -461,7 +461,10 @@ class MyContents {
     }
 
     setCamera(cameraName) {
-        this.players[this.PLAYER_TYPE.HUMAN].setCamera(this.app.cameras[cameraName]);
+        if (this.currentGameState === this.GAME_STATE.RUNNING && (cameraName === 'BalloonFirstPerson' || cameraName === 'BalloonThirdPerson')) {
+            this.players[this.PLAYER_TYPE.HUMAN].setCamera(this.app.cameras[cameraName]);
+        }
+
         this.app.activeCameraName = cameraName;
         this.app.updateCameraIfRequired();
     }
