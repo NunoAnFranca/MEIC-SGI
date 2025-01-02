@@ -203,20 +203,25 @@ class MyContents {
     loadStartMenu() {
 
         const textAuthors = "Created by Nuno França & Luis Alves          @FEUP";
-
+        const textUsername = "Username: " + "Type here..."; 
+            
         this.textAuthorsGroup = new THREE.Group();
-        
+        this.textUsernameGroup = new THREE.Group();
+
         this.startMenuGroup = new THREE.Group();
 
         this.convertTextToSprite(textAuthors, this.textAuthorsGroup);
-
+        this.convertTextToSprite(textUsername, this.textUsernameGroup);
+        
         this.textAuthorsGroup.position.set(0,0, 0);
-        this.textAuthorsGroup.scale.set(0.3,0.3, 0.3);
+        this.textAuthorsGroup.scale.set(0.6,0.6, 0.6);
+        this.textUsernameGroup.position.set(0,15,0);
 
-        this.startMenuGroup.add(this.textAuthorsGroup);
+        this.startMenuGroup.add(this.textAuthorsGroup, this.textUsernameGroup);
 
         this.startMenuGroup.position.set(-70,11,-78.5);
         this.startMenuGroup.rotation.set(0,Math.PI/3,0); // 60
+        this.startMenuGroup.scale.set(0.5,0.5,0.5); // 60
         this.app.scene.add(this.startMenuGroup);    
     }
 
