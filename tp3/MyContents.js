@@ -40,7 +40,12 @@ class MyContents {
         this.lastVouchers = null;
         this.currentVouchers = 0;
 
-        this.totalLaps = 4; //Change on Initial Menu
+        //Initial Menu Variables
+        this.totalLaps = 1;
+        this.penaltySeconds = 1;
+        this.playerUsername = "Nan";
+        this.namePlayerBalloon = null;
+        this.nameOponentBalloon = null;
 
         this.GAME_STATE = {
             PREPARATION: "PREPARATION",
@@ -203,25 +208,41 @@ class MyContents {
     loadStartMenu() {
 
         const textAuthors = "Created by Nuno França & Luis Alves          @FEUP";
-        const textUsername = "Username: " + "Type here..."; 
-            
+        const textUsername = "Username: " + this.playerUsername; 
+        const textPlayerBalloon = "Player Balloon: " + this.namePlayerBalloon;
+        const textOponentBalloon = "Oponent Balloon: " + this.nameOponentBalloon;
+        const textNumberOfLaps = "Number of Laps: " + this.totalLaps;
+        const textPenalty = "Penalty (seconds): " + this.penaltySeconds;
+        
         this.textAuthorsGroup = new THREE.Group();
         this.textUsernameGroup = new THREE.Group();
+        this.textPlayerBalloonGroup = new THREE.Group();    
+        this.textOponentBalloonGroup = new THREE.Group();
+        this.textNumberOfLapsGroup = new THREE.Group();
+        this.textPenaltyGroup = new THREE.Group();
 
         this.startMenuGroup = new THREE.Group();
 
         this.convertTextToSprite(textAuthors, this.textAuthorsGroup);
         this.convertTextToSprite(textUsername, this.textUsernameGroup);
+        this.convertTextToSprite(textPlayerBalloon, this.textPlayerBalloonGroup);
+        this.convertTextToSprite(textOponentBalloon, this.textOponentBalloonGroup);
+        this.convertTextToSprite(textNumberOfLaps, this.textNumberOfLapsGroup);
+        this.convertTextToSprite(textPenalty, this.textPenaltyGroup);
         
         this.textAuthorsGroup.position.set(0,0, 0);
         this.textAuthorsGroup.scale.set(0.6,0.6, 0.6);
-        this.textUsernameGroup.position.set(0,15,0);
+        this.textUsernameGroup.position.set(-4,30,0);
+        this.textPlayerBalloonGroup.position.set(-4,25,0);
+        this.textOponentBalloonGroup.position.set(-4,20,0);
+        this.textNumberOfLapsGroup.position.set(-4,15,0);
+        this.textPenaltyGroup.position.set(-4,10,0);
 
-        this.startMenuGroup.add(this.textAuthorsGroup, this.textUsernameGroup);
+        this.startMenuGroup.add(this.textAuthorsGroup, this.textUsernameGroup, this.textPlayerBalloonGroup, this.textOponentBalloonGroup, this.textNumberOfLapsGroup, this.textPenaltyGroup);
 
         this.startMenuGroup.position.set(-70,11,-78.5);
-        this.startMenuGroup.rotation.set(0,Math.PI/3,0); // 60
-        this.startMenuGroup.scale.set(0.5,0.5,0.5); // 60
+        this.startMenuGroup.rotation.set(0,Math.PI/3,0);
+        this.startMenuGroup.scale.set(0.5,0.5,0.5);
         this.app.scene.add(this.startMenuGroup);    
     }
 
