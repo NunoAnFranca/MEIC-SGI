@@ -2,10 +2,9 @@ import * as THREE from "three";
 import { MyAxis } from "./MyAxis.js";
 import { MyTrack } from "./MyTrack.js";
 import { MyParser } from "./MyParser.js";
-import { MyBalloon } from "./MyBalloon.js";
 import { MyMenu } from "./MyMenu.js";
-import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
-import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+import { MyBalloon } from "./MyBalloon.js";
+
 /**
  *  This class contains the contents of out application
  */
@@ -56,6 +55,13 @@ class MyContents {
 
         this.currentGameState = this.GAME_STATE.PREPARATION;
       
+        // initial menu variables
+        this.totalLaps = 1;
+        this.penaltySeconds = 1;
+        this.playerUsername = "Nan";
+        this.namePlayerBalloon = null;
+        this.nameOponentBalloon = null;
+        
         // register events
 
         document.addEventListener(
@@ -80,10 +86,10 @@ class MyContents {
                         if (this.currentGameState === this.GAME_STATE.RUNNING) {
                             this.players[this.PLAYER_TYPE.HUMAN].moveWind();
                             
-                            this.currentMatchTime = Math.floor((new Date().getTime() - this.matchTime  - this.pausedTime)/100);
-                            this.currentWindVelocity = this.DIRECTIONS[this.players[this.PLAYER_TYPE.HUMAN].direction];
-                            this.currentGameState = this.GAME_STATE.RUNNING;
-                            this.currentLaps = this.players[this.PLAYER_TYPE.HUMAN].currentLap;
+                            this.menu.currentMatchTime = Math.floor((new Date().getTime() - this.matchTime  - this.pausedTime)/100);
+                            this.menu.currentWindVelocity = this.DIRECTIONS[this.players[this.PLAYER_TYPE.HUMAN].direction];
+                            this.menu.currentGameState = this.GAME_STATE.RUNNING;
+                            this.menu.currentLaps = this.players[this.PLAYER_TYPE.HUMAN].currentLap;
                             //TODO Vouchers Logic
 
                             this.menu.updateBlimpMenu();
@@ -99,10 +105,12 @@ class MyContents {
                 } else if (event.key === ' ') {
                     this.pauseStartTime = new Date().getTime();
                     this.currentGameState = this.GAME_STATE.PAUSED;
+                    this.menu.currentGameState = this.GAME_STATE.PAUSED;
                 }
             } else if (this.currentGameState === this.GAME_STATE.PAUSED) {
                 if (event.key === ' ') {
                     this.currentGameState = this.GAME_STATE.RUNNING;
+                    this.menu.currentGameState = this.currentGameState;
                     this.pausedTime += (new Date().getTime() - this.pauseStartTime);
                 }
             }
