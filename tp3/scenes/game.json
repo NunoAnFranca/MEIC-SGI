@@ -741,7 +741,12 @@
                 ],
                 "children": {
                     "nodesList": [
-                        "mountain"
+                        "mountain",
+                        "mainCarRoad",
+                        "cableCarMainNode",
+                        "balloonFenceEnemy",
+                        "balloonFencePlayer",
+                        "blimp"
                     ],
                     "ligh1": {
                         "type": "pointlight",

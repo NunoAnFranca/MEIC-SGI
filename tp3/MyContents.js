@@ -214,6 +214,8 @@ class MyContents {
         const textNumberOfLaps = "Number of Laps: " + this.totalLaps;
         const textPenalty = "Penalty (seconds): " + this.penaltySeconds;
         
+        this.createButtonsPenalty();
+
         this.textAuthorsGroup = new THREE.Group();
         this.textUsernameGroup = new THREE.Group();
         this.textPlayerBalloonGroup = new THREE.Group();    
@@ -244,6 +246,49 @@ class MyContents {
         this.startMenuGroup.rotation.set(0,Math.PI/3,0);
         this.startMenuGroup.scale.set(0.5,0.5,0.5);
         this.app.scene.add(this.startMenuGroup);    
+    }
+
+    createButtonsPenalty(){
+        this.buttonPenalty1 = new THREE.Group();
+        this.buttonPenalty2 = new THREE.Group();
+
+        let buttonMaterial = new THREE.MeshPhongMaterial({color:0xEEEEEE});
+        let buttonGeometry = new THREE.CylinderGeometry(0.5,0.5,0.5,32);
+        let buttonGeometry2 = new THREE.CylinderGeometry(0.5,0.5,0.5,32);
+
+        let buttonMesh1 = new THREE.Mesh(buttonGeometry, buttonMaterial);
+        let buttonMesh2 = new THREE.Mesh(buttonGeometry, buttonMaterial);
+        let buttonMesh3 = new THREE.Mesh(buttonGeometry2, buttonMaterial);
+        let buttonMesh4 = new THREE.Mesh(buttonGeometry2, buttonMaterial);
+        
+        this.buttonPenaltyPlus = new THREE.Group();
+        this.buttonPenaltyMinus = new THREE.Group();
+        this.convertTextToSprite("-", this.buttonPenaltyMinus);
+        this.convertTextToSprite("+", this.buttonPenaltyPlus);
+
+        this.buttonPenaltyPlus.position.set(0,0.5,0);
+        this.buttonPenaltyPlus.scale.set(0.4,0.4,0.4);
+        this.buttonPenaltyMinus.position.set(0,0.5,0);
+        this.buttonPenaltyMinus.scale.set(0.4,0.4,0.4);
+
+        buttonMesh3.visible = false
+        buttonMesh4.visible = false;
+        buttonMesh3.position.set(0,0.5,0);
+        buttonMesh4.position.set(0,0.5,0);
+
+        this.buttonPenalty1.add(buttonMesh1, buttonMesh3, this.buttonPenaltyMinus);
+        this.buttonPenalty1.position.set(-62.4,0,-93);
+        this.buttonPenalty1.rotation.set(Math.PI/2,0,-Math.PI/3);
+
+        this.buttonPenalty2.add(buttonMesh2, buttonMesh4, this.buttonPenaltyPlus);
+        this.buttonPenalty2.position.set(-60.7,0,-96);
+        this.buttonPenalty2.rotation.set(Math.PI/2,0,-Math.PI/3);
+
+        this.buttonsPenaltyGroup = new THREE.Group();
+        this.buttonsPenaltyGroup.add(this.buttonPenalty1, this.buttonPenalty2);
+        this.buttonsPenaltyGroup.position.set(0,16,0);
+
+        this.app.scene.add(this.buttonsPenaltyGroup);
     }
 
     updateTextTime() {

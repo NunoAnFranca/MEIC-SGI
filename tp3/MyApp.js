@@ -93,7 +93,7 @@ class MyApp {
         this.cameras['BalloonThirdPerson'] = balloonThirdPerson
         
         //create a initial menu perspective camera
-        const initMenu = new THREE.PerspectiveCamera(90, aspect, 0.1, 1000);
+        const initMenu = new THREE.PerspectiveCamera(100, aspect, 0.1, 1000);
         initMenu.position.set(-56.911910092428265,18.53264621864038,-83.07926277580806);
         initMenu.target =  new THREE.Vector3(-71.5,18.53264621864038,-91.50558);
         initMenu.lookAt(initMenu.target);
