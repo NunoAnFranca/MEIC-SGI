@@ -390,6 +390,19 @@ class MyContents {
         }
     }
 
+    updateBoundingBox(id, type) {
+        switch (type) {
+            case this.PLAYER_TYPE.HUMAN:
+                this.humanBalloons[id].updateBoundingBoxHelpersVisibility();
+                break;
+            case this.PLAYER_TYPE.AI:
+                this.aiBalloons[id].updateBoundingBoxHelpersVisibility();
+                break;
+            default:
+                break;
+        }
+    }
+
     buildLights() {
         // add a point light on top of the model
         const pointLight = new THREE.PointLight(0xffffff, 500, 0)

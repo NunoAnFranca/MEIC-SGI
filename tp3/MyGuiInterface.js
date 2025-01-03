@@ -47,6 +47,19 @@ class MyGuiInterface {
         trackFolder.add(this.contents.track, 'textureRepeatY', 1, 10, 1).onChange(() => { this.contents.track.updateTextureRepeat() });
         trackFolder.add(this.contents.track, 'closedCurve').onChange(() => { this.contents.updateTrack() });
         trackFolder.close();
+
+        const boundingBoxFolder = this.datgui.addFolder('Bounding Box');
+        const humanBalloonsFolder = boundingBoxFolder.addFolder('Human Balloons');
+        Object.entries(this.contents.humanBalloons).forEach(([id, humanBalloon], index) => {
+            humanBalloonsFolder.add(humanBalloon, 'showBoundingBox').onChange(() => { this.contents.updateBoundingBox(id, "HUMAN") }).name(`Human Balloon ${index + 1}`);
+        });
+        humanBalloonsFolder.close();
+        const aiBalloonsFolder = boundingBoxFolder.addFolder('AI Balloons');
+        Object.entries(this.contents.aiBalloons).forEach(([id, aiBalloon], index) => {
+            aiBalloonsFolder.add(aiBalloon, 'showBoundingBox').onChange(() => { this.contents.updateBoundingBox(id, "AI") }).name(`AI Balloon ${index + 1}`);
+        });
+        aiBalloonsFolder.close();
+        boundingBoxFolder.close();
     }
 }
 
