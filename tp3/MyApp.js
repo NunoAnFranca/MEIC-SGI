@@ -101,7 +101,7 @@ class MyApp {
 
         // Create a basic perspective camera
         const balloonChoice = new THREE.PerspectiveCamera(100, aspect, 0.1, 1000)
-        balloonChoice.position.set(25, 30, -20)
+        balloonChoice.position.set(25, 30, -19)
         balloonChoice.target = new THREE.Vector3(25, 0, -20)
         balloonChoice.lookAt(balloonChoice.target)
         this.cameras['BalloonChoice'] = balloonChoice
@@ -118,7 +118,6 @@ class MyApp {
 
         this.activeCameraName = cameraName
         this.activeCamera = this.cameras[this.activeCameraName]
-        this.updateCameraTarget();
     }
 
     getActiveCamera() {
@@ -149,23 +148,16 @@ class MyApp {
                 this.controls = new OrbitControls(this.activeCamera, this.renderer.domElement);
                 this.controls.enableZoom = true;
                 this.controls.update();
-                this.updateCameraMenu();
+                this.updateCameraTarget();
             } else {
                 this.controls.object = this.activeCamera;
-                this.updateCameraMenu();
+                this.updateCameraTarget();
             }
         }
     }
 
     updateCameraTarget() {
-        if (this.activeCameraName === 'BalloonFirstPerson' || this.activeCameraName === 'BalloonThirdPerson' || this.activeCameraName === 'BalloonChoice') {
-            this.controls.target.copy(this.activeCamera.target);
-            this.controls.update();
-        }
-    }
-
-    updateCameraMenu() {
-        if (this.activeCameraName === 'InitialMenu') {
+        if (this.activeCamera.target) {
             this.controls.target.copy(this.activeCamera.target);
             this.controls.update();
         }
