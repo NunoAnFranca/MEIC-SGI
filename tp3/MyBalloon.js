@@ -49,6 +49,7 @@ class MyBalloon {
         this.distanceCheckpoint = 6.0;
         this.checkpointsNum = 25;
         this.currentLap = 1;
+        this.penaltySeconds = null;
 
         this.boundingBoxHelper = null;
 
@@ -287,6 +288,9 @@ class MyBalloon {
 
         this.marker.position.x = this.xPos;
         this.marker.position.z = this.zPos;
+
+        this.penaltySeconds = this.app.contents.penaltySeconds*1000;
+        this.moveBoundingBox();
     }
     
     checkPosition() {
@@ -353,15 +357,19 @@ class MyBalloon {
     moveWind() {
         this.checkcurrentCheckpoint();
 
-        if (this.checkPosition()) {
-            if (this.yPos <= 8 && this.yPos > 5) {
-                this.moveForward();
-            } else if (this.yPos <= 11 && this.yPos > 8) {
-                this.moveBackward();
-            } else if (this.yPos <= 14 && this.yPos > 11) {
-                this.moveRight();
-            } else if (this.yPos <= 17 && this.yPos > 14) {
-                this.moveLeft();
+        if(this.penaltySeconds > 0){
+            this.penaltySeconds -= 30;
+        } else{
+            if (this.checkPosition()) {
+                if (this.yPos <= 8 && this.yPos > 5) {
+                    this.moveForward();
+                } else if (this.yPos <= 11 && this.yPos > 8) {
+                    this.moveBackward();
+                } else if (this.yPos <= 14 && this.yPos > 11) {
+                    this.moveRight();
+                } else if (this.yPos <= 17 && this.yPos > 14) {
+                    this.moveLeft();
+                }
             }
         }
     }
