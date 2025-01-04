@@ -199,8 +199,8 @@ class MyContents {
         this.pointLight.shadow.mapSize.height = this.mapSize;
         this.pointLight.shadow.camera.near = 0.5;
         this.pointLight.shadow.camera.far = 600;
-        this.pointLight.shadow.bias = -0.005; // Adjust the bias to a negative value
-        this.pointLight.shadow.normalBias = 0.02
+        this.pointLight.shadow.bias = -0.001; // Adjust the bias to a negative value
+        this.pointLight.shadow.normalBias = 0.01
         this.sceneLights.push(this.pointLight);
         this.app.scene.add(this.pointLight);
 
