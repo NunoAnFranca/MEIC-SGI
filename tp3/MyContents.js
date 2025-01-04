@@ -120,6 +120,9 @@ class MyContents {
             if ((this.currentGameState === this.GAME_STATE.PAUSED) || (this.currentGameState === this.GAME_STATE.RUNNING)) {
                 if(event.key === 'v' || event.key === "V"){
                     this.changeThreeMainCameras();
+                } else if (event.key === 'Escape'){
+                    this.returnToInitialState();
+                    //TODO
                 }
             }
         });
@@ -179,14 +182,14 @@ class MyContents {
 
     buildLights() {
         // add a point light on top of the model
-        const pointLight = new THREE.PointLight(0xffffff, 500, 0)
-        pointLight.position.set(0, 20, 0)
+        const pointLight = new THREE.PointLight(0xece787, 10, 700,0.2)
+        pointLight.position.set(90, 40, 100)
         this.app.scene.add(pointLight)
 
         // add a point light helper for the previous point light
-        const sphereSize = 0.5
-        const pointLightHelper = new THREE.PointLightHelper(pointLight, sphereSize)
-        this.app.scene.add(pointLightHelper)
+        //const sphereSize = 0.5
+        //const pointLightHelper = new THREE.PointLightHelper(pointLight, sphereSize)
+        //this.app.scene.add(pointLightHelper)
 
         // add an ambient light
         const ambientLight = new THREE.AmbientLight(0x555555)
@@ -250,6 +253,12 @@ class MyContents {
             this.threeMainCameraIndex = 0;
         }
         this.app.setActiveCamera(this.threeMainCameraNames[this.threeMainCameraIndex]);
+    }
+
+    returnToInitialState(){
+        this.currentGameState == this.GAME_STATE.PREPARATION;
+        this.app.setActiveCamera('InitialMenu');
+        //TODO
     }
 
     pickingHelper(intersects) {

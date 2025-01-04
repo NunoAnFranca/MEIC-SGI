@@ -10,7 +10,7 @@
                 "r": 1.0,
                 "g": 1.0,
                 "b": 1.0,
-                "intensity": 1.0
+                "intensity": 0.1
             },
             "fog": {
                 "color": {
@@ -747,25 +747,7 @@
                         "balloonFenceEnemy",
                         "balloonFencePlayer",
                         "blimp"
-                    ],
-                    "ligh1": {
-                        "type": "pointlight",
-                        "enabled": true,
-                        "color": {
-                            "r": 1.0,
-                            "g": 1.0,
-                            "b": 0.0
-                        },
-                        "intensity": 60,
-                        "distance": 100,
-                        "decay": 2.0,
-                        "castshadow": true,
-                        "position": {
-                            "x": 2,
-                            "y": -20,
-                            "z": 13
-                        }
-                    }
+                    ]
                 }
             },
             "blimp":{
