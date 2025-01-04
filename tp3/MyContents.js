@@ -93,7 +93,7 @@ class MyContents {
                             this.menu.currentWindVelocity = this.DIRECTIONS[this.players[this.PLAYER_TYPE.HUMAN].direction];
                             this.menu.currentGameState = this.GAME_STATE.RUNNING;
                             this.menu.currentLaps = this.players[this.PLAYER_TYPE.HUMAN].currentLap;
-                            //TODO Vouchers Logic
+                            this.menu.currentVouchers = this.players[this.PLAYER_TYPE.HUMAN].extraLives;
 
                             this.menu.updateBlimpMenu();
                         }
@@ -326,7 +326,7 @@ class MyContents {
             case this.GAME_STATE.PREPARATION:
                 break;
             case this.GAME_STATE.RUNNING:
-                this.players[this.PLAYER_TYPE.HUMAN].update(this.track.obstacles);
+                this.players[this.PLAYER_TYPE.HUMAN].update(this.track.obstacles, this.track.powerUps);
                 break;
             case this.GAME_STATE.PAUSED:
                 break;

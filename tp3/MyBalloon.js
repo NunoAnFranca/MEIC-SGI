@@ -54,6 +54,8 @@ class MyBalloon {
         this.distanceCheckpoint = 6.0;
         this.checkpointsNum = 25;
         this.currentLap = 1;
+        this.extraLives = 0;
+        this.lastPowerUpObject = null;
         this.penaltySeconds = null;
 
         this.marker = null;
@@ -343,7 +345,13 @@ class MyBalloon {
         this.marker.position.x = this.xPos;
         this.marker.position.z = this.zPos;
 
-        this.penaltySeconds = this.app.contents.penaltySeconds*1000;
+        if(this.extraLives > 0){
+            this.extraLives--;
+        }
+        else if(this.extraLives <= 0){
+            this.penaltySeconds = this.app.contents.penaltySeconds*1000;
+        }
+
         this.moveBoundingBox();
     }
     
@@ -390,6 +398,7 @@ class MyBalloon {
         if (this.currentCheckpointIndex >= this.checkpointsNum) {
             this.currentCheckpointIndex = 0;
             this.currentLap++;
+            this.lastPowerUpObject = null;
         }
 
         return false;
@@ -530,7 +539,41 @@ class MyBalloon {
         }
     }
 
-    update(obstacles) {
+    checkCollision(obstacles) {
+        for (let i = 0; i < obstacles.length; i++) {
+            let obstacle = obstacles[i];
+            let boundingBox = new THREE.Box3().setFromObject(obstacle.mesh);
+            let collision = boundingBox.intersectsBox(new THREE.Box3().setFromObject(this.balloonGroup));
+
+            if (collision) {
+                let upCollision = boundingBox.intersectsBox(new THREE.Box3().setFromObject(this.upPartGroup));
+                let downCollision = boundingBox.intersectsBox(new THREE.Box3().setFromObject(this.downPartGroup));
+                if (upCollision || downCollision) {
+                    this.nearestPoint(true);
+                }
+            }
+        }
+    }
+
+    checkCollisionPowerUps(powerUps) {
+        for (let i = 0; i < powerUps.length; i++) {
+            let powerUp = powerUps[i];
+            let boundingBox = new THREE.Box3().setFromObject(powerUp.mesh);
+            let collision = boundingBox.intersectsBox(new THREE.Box3().setFromObject(this.balloonGroup));
+
+            if (collision) {
+                let upCollision = boundingBox.intersectsBox(new THREE.Box3().setFromObject(this.upPartGroup));
+                let downCollision = boundingBox.intersectsBox(new THREE.Box3().setFromObject(this.downPartGroup));
+                if (upCollision || downCollision) {
+                    if(powerUp !== this.lastPowerUpObject)
+                        this.extraLives++;
+                    this.lastPowerUpObject = powerUp;
+                }
+            }
+        }
+    }
+
+    update(obstacles, powerUps) {
         if (this.camera) {
             switch (this.app.activeCameraName) {
                 case 'BalloonFirstPerson':
@@ -545,6 +588,7 @@ class MyBalloon {
         }
 
         this.checkCollision(obstacles);
+        this.checkCollisionPowerUps(powerUps);
     }
 }
 
