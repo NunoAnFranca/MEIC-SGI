@@ -1013,6 +1013,10 @@ class MyParser {
         const tube = new THREE.TubeGeometry(curvePath,object.parts,object.width,object.sides,object.closed);
         const mesh = new THREE.Mesh(tube, this.materials[object.material]);
 
+        // Set shadow properties
+        mesh.castShadow = object.castShadow;
+        mesh.receiveShadow = object.receiveShadow;
+
         return mesh;
     }
     

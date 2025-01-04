@@ -16,6 +16,7 @@ class MyContents {
     constructor(app) {
         this.app = app;
         this.axis = null;
+        this.mapSize = 4096;
 
         this.raycaster = new THREE.Raycaster()
         this.raycaster.near = 1
@@ -64,7 +65,9 @@ class MyContents {
 
         this.threeMainCameraNames = ["BalloonFirstPerson", "BalloonThirdPerson", "Perspective"];
         this.threeMainCameraIndex = 0;
-        
+        this.sceneLights = [];
+        this.sceneLightsOn = true;
+        this.sceneCastingShadows = true;
         // register events
 
         document.addEventListener(
@@ -123,7 +126,14 @@ class MyContents {
                 } else if (event.key === 'Escape'){
                     this.returnToInitialState();
                     //TODO
-                }
+                } 
+            }              
+            if(!this.menu.writingUsername){
+                if (event.key === 'l' || event.key === "L"){
+                    this.changeLightsPower();
+                } else if (event.key === "o" || event.key === "O"){
+                    this.changeShadowProjection();
+                }        
             }
         });
     }
@@ -182,9 +192,17 @@ class MyContents {
 
     buildLights() {
         // add a point light on top of the model
-        const pointLight = new THREE.PointLight(0xece787, 10, 700,0.2)
-        pointLight.position.set(90, 40, 100)
-        this.app.scene.add(pointLight)
+        this.pointLight = new THREE.PointLight(0xece787, 10, 700,0.2);
+        this.pointLight.position.set(90, 40, 100);
+        this.pointLight.castShadow = true;
+        this.pointLight.shadow.mapSize.width = this.mapSize;
+        this.pointLight.shadow.mapSize.height = this.mapSize;
+        this.pointLight.shadow.camera.near = 0.5;
+        this.pointLight.shadow.camera.far = 600;
+        this.pointLight.shadow.bias = -0.005; // Adjust the bias to a negative value
+        this.pointLight.shadow.normalBias = 0.02
+        this.sceneLights.push(this.pointLight);
+        this.app.scene.add(this.pointLight);
 
         // add a point light helper for the previous point light
         //const sphereSize = 0.5
@@ -259,6 +277,34 @@ class MyContents {
         this.currentGameState == this.GAME_STATE.PREPARATION;
         this.app.setActiveCamera('InitialMenu');
         //TODO
+    }
+
+    changeLightsPower(){
+        if(this.sceneLightsOn){
+            for(let light of this.sceneLights){
+                light.visible = false;
+            }
+            this.sceneLightsOn = false;
+        } else {
+            for(let light of this.sceneLights){
+                light.visible = true;
+            }
+            this.sceneLightsOn = true;
+        }
+    }
+
+    changeShadowProjection(){
+        if(this.sceneCastingShadows){
+            for(let light of this.sceneLights){
+                light.castShadow = false;
+            }
+            this.sceneCastingShadows = false;
+        } else {
+            for(let light of this.sceneLights){
+                light.castShadow = true;
+            }
+            this.sceneCastingShadows = true;
+        }
     }
 
     pickingHelper(intersects) {

@@ -120,6 +120,8 @@ class MyBalloon {
                 boxMesh.position.x = this.xPos + (i === 0 ? -0.5 : 0.5);
                 boxMesh.position.y = this.yPos - 3;
                 boxMesh.position.z = this.zPos + (j === 0 ? -0.5 : 0.5);
+                boxMesh.receiveShadow = true;
+                boxMesh.castShadow = true;
                 this.downPartGroup.add(boxMesh);
                 this.balloonGroup.add(boxMesh.clone());
             }
@@ -132,6 +134,8 @@ class MyBalloon {
         basketMesh.position.x = this.xPos;
         basketMesh.position.y = this.yPos - 4;
         basketMesh.position.z = this.zPos;
+        basketMesh.receiveShadow = true;
+        basketMesh.castShadow = true;
         this.downPartGroup.add(basketMesh);
         this.balloonGroup.add(basketMesh.clone());
 

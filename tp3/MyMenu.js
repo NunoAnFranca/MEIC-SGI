@@ -26,6 +26,7 @@ class MyMenu {
         this.playerUsername = "Type here...";
         this.namePlayerBalloon = null;
         this.nameOponentBalloon = null;
+        this.writingUsername = false;
 
         this.loadBlimpMenu();
         this.loadStartMenu();
@@ -404,6 +405,7 @@ class MyMenu {
         this.typingUsername = true;
         this.currentTypedUsername = "";
         document.addEventListener("keydown", this.onKeyDown);
+        this.writingUsername = true;
     }
     
     
@@ -413,6 +415,7 @@ class MyMenu {
         this.typingUsername = false;
         document.removeEventListener("keydown", this.onKeyDown);
         this.updateUsernameText();
+        this.writingUsername = false;
     }
 
     onKeyDown(event) {

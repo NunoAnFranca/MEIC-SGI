@@ -2139,8 +2139,8 @@
                         "type": "nurbs",
                         "degree_u": 5,
                         "degree_v": 3,
-                        "parts_u": 64,
-                        "parts_v": 64,
+                        "parts_u": 128,
+                        "parts_v": 128,
                         "controlpoints": [
                             {
                                 "x": 0,
