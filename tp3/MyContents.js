@@ -61,6 +61,9 @@ class MyContents {
         this.playerUsername = "Nan";
         this.namePlayerBalloon = null;
         this.nameOponentBalloon = null;
+
+        this.threeMainCameraNames = ["BalloonFirstPerson", "BalloonThirdPerson", "Perspective"];
+        this.threeMainCameraIndex = 0;
         
         // register events
 
@@ -112,6 +115,11 @@ class MyContents {
                     this.currentGameState = this.GAME_STATE.RUNNING;
                     this.menu.currentGameState = this.currentGameState;
                     this.pausedTime += (new Date().getTime() - this.pauseStartTime);
+                }
+            }
+            if ((this.currentGameState === this.GAME_STATE.PAUSED) || (this.currentGameState === this.GAME_STATE.RUNNING)) {
+                if(event.key === 'v' || event.key === "V"){
+                    this.changeThreeMainCameras();
                 }
             }
         });
@@ -232,6 +240,16 @@ class MyContents {
         }
 
         this.initialPositions[obj.type] = false;
+    }
+
+    changeThreeMainCameras(){
+        if(this.threeMainCameraIndex < 2){
+            this.threeMainCameraIndex++;
+        }
+        else{
+            this.threeMainCameraIndex = 0;
+        }
+        this.app.setActiveCamera(this.threeMainCameraNames[this.threeMainCameraIndex]);
     }
 
     pickingHelper(intersects) {
