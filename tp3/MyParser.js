@@ -17,6 +17,7 @@ import { MySphere } from './objects/primitives/MySphere.js';
 import { MyPolygon } from './objects/primitives/MyPolygon.js';
 import { MyTriangle } from './objects/primitives/MyTriangle.js';
 import { MyLine } from './objects/primitives/MyLine.js';
+import { MyTreeBillboard } from './objects/primitives/MyTreeBillboard.js';
 
 
 class MyParser {
@@ -790,6 +791,32 @@ class MyParser {
         return sphereMesh;
     }
 
+    createBillboardTree(object){
+        let number = object.number;
+        let sheet = this.loader.load('images/spriteTrees.png');
+
+        const columns = 4;
+        const rows = 4;
+        const spriteWidth = 1 / columns;
+        const spriteHeight = 1 / rows;
+    
+        const x = number % columns; // Column of the sprite
+        const y = Math.floor(number / columns); // Row of the sprite
+
+        // Clone the texture for independent UV mapping
+        const charTexture = sheet.clone();
+        charTexture.offset.set(x * spriteWidth, 1 - (y + 1) * spriteHeight);
+        charTexture.repeat.set(spriteWidth, spriteHeight);
+
+        // Create a new material with the cloned texture
+        const charMaterial = new THREE.SpriteMaterial({ map: charTexture });
+    
+        // Create a sprite with the new material
+        const sprite = new THREE.Sprite(charMaterial);
+    
+        return sprite;
+    }
+
     // Create a wireframe sphere
     createWireframeSphere(object) {
         // Convert angles from degrees to radians
@@ -1039,6 +1066,8 @@ class MyParser {
                 addWireframe = this.createWireframeBox(object);  // Create a wireframe for the box
             } else if (object instanceof MyLine) {
                 addObject = this.createLine(object);  // Create a Line geometry
+            } else if (object instanceof MyTreeBillboard) {
+                addObject = this.createBillboardTree(object);  // Create a Line geometry
             } else if (object instanceof MyCylinder) {
                 addObject = this.createCylinder(object);  // Create a cylinder geometry
                 addWireframe = this.createWireframeCylinder(object);  // Create a wireframe for the cylinder

@@ -124,7 +124,7 @@ class MyContents {
                 if(event.key === 'v' || event.key === "V"){
                     this.changeThreeMainCameras();
                 } else if (event.key === 'Escape'){
-                    this.returnToInitialState();
+                    //this.returnToInitialState();
                     //TODO
                 } 
             }              
@@ -274,7 +274,22 @@ class MyContents {
     }
 
     returnToInitialState(){
-        this.currentGameState == this.GAME_STATE.PREPARATION;
+        // initial menu variables
+        this.totalLaps = 1;
+        this.penaltySeconds = 1;
+        this.playerUsername = "Nan";
+        this.namePlayerBalloon = null;
+        this.nameOponentBalloon = null;
+        this.currentGameState = this.GAME_STATE.PREPARATION;
+
+        this.menu.currentMatchTime = 0;
+        this.menu.currentWindVelocity = "None";
+        this.menu.currentGameState = this.GAME_STATE.PREPARATION;
+        this.menu.currentLaps = 0;
+        this.menu.currentVouchers = 0;
+
+
+        this.menu.updateBlimpMenu();
         this.app.setActiveCamera('InitialMenu');
         //TODO
     }

@@ -12,7 +12,7 @@ class MyMenu {
         this.matchTime = null;
         this.currentMatchTime = 0;
         this.lastWindVelocity = null;
-        this.currentWindVelocity = "Nan";
+        this.currentWindVelocity = "None";
         this.currentGameState = "PREPARATION";
         this.lastGameState = null;
         this.lastLaps = null;
