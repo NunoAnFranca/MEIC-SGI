@@ -102,37 +102,19 @@ class MyApp {
         balloonThirdPerson.lookAt(balloonThirdPerson.target)
         this.cameras['BalloonThirdPerson'] = balloonThirdPerson
 
-        //create a initial menu perspective camera
+        // create a initial menu perspective camera
         const initMenu = new THREE.PerspectiveCamera(100, aspect, 0.1, 1000);
         initMenu.position.set(-56.911910092428265, 18.53264621864038, -83.07926277580806);
         initMenu.target = new THREE.Vector3(-71.5, 18.53264621864038, -91.50558);
         initMenu.lookAt(initMenu.target);
         this.cameras['InitialMenu'] = initMenu;
 
-        // Create a human balloon choice ortographic camera
-        const humanBalloonChoice = new THREE.OrthographicCamera(left, right, top, bottom, 0.1, 1000);
-        humanBalloonChoice.up = new THREE.Vector3(0, 0, 1);
-        humanBalloonChoice.position.set(0, 10, 0)
-        humanBalloonChoice.lookAt(new THREE.Vector3(0, 0, 0));
-        humanBalloonChoice.setViewOffset(window.innerWidth, window.innerHeight, -1500, 600, window.innerWidth, window.innerHeight);
-        this.cameras['HumanBalloonChoice'] = humanBalloonChoice
-
-        // Create a ai balloon choice ortographic camera
-        const aiBalloonChoice = new THREE.OrthographicCamera(left, right, top, bottom, 0.1, 1000);
-        aiBalloonChoice.up = new THREE.Vector3(0, 0, 1);
-        aiBalloonChoice.position.set(0, 10, 0)
-        aiBalloonChoice.lookAt(new THREE.Vector3(0, 0, 0));
-        aiBalloonChoice.setViewOffset(window.innerWidth, window.innerHeight, -200, 600, window.innerWidth, window.innerHeight);
-        this.cameras['AiBalloonChoice'] = aiBalloonChoice
-
-        // Create a initial position choice ortographic camera
-        const initialPositionChoice = new THREE.OrthographicCamera(left, right, top, bottom, 0.1, 1000);
-        initialPositionChoice.up = new THREE.Vector3(0, 0, 1);
-        initialPositionChoice.position.set(0, 10, 0)
-        initialPositionChoice.lookAt(new THREE.Vector3(0, 0, 0));
-        initialPositionChoice.setViewOffset(window.innerWidth, window.innerHeight, -1300, 800, window.innerWidth, window.innerHeight);
-        initialPositionChoice.zoom = 1.5;
-        this.cameras['InitialPositionChoice'] = initialPositionChoice
+        // create a balloon and initial position choice perspective camera
+        const balloonAndInitialPositionChoice = new THREE.PerspectiveCamera(100, aspect, 0.1, 1000);
+        balloonAndInitialPositionChoice.position.set(23, 20, -10);
+        balloonAndInitialPositionChoice.target = new THREE.Vector3(23, 0, -15);
+        balloonAndInitialPositionChoice.lookAt(balloonAndInitialPositionChoice.target);
+        this.cameras['BalloonAndInitialPositionChoice'] = balloonAndInitialPositionChoice
 
         // Create a basic perspective camera
         const perspective1 = new THREE.PerspectiveCamera(60, aspect, 0.1, 1000)
