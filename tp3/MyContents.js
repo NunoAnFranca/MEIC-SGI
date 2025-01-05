@@ -59,7 +59,7 @@ class MyContents {
             [this.PLAYER_TYPE.AI]: null
         };
 
-        this.currentGameState = this.GAME_STATE.CHOOSE_HUMAN_BALLOON;
+        this.currentGameState = this.GAME_STATE.PREPARATION;
         this.fireworks = [];
 
         // initial menu variables
@@ -87,7 +87,7 @@ class MyContents {
         );
 
         document.addEventListener("keydown", (event) => {
-            if (this.currentGameState === this.GAME_STATE.PREPARATION) {
+            if (this.currentGameState === this.GAME_STATE.READY) {
                 if ((event.key === 'p' || event.key === 'P') && !this.initialPositions[this.PLAYER_TYPE.HUMAN] && !this.initialPositions[this.PLAYER_TYPE.AI]) {
                     this.currentGameState = this.GAME_STATE.RUNNING;
                     this.removeInitialPositions();
@@ -158,7 +158,7 @@ class MyContents {
             this.app.scene.add(this.axis);
         }
 
-        //this.reader = new MyParser(this.app);
+        this.reader = new MyParser(this.app);
         this.createFireworkSpots();
         // create temp lights so we can see the objects to not render the entire scene
         this.buildLights();

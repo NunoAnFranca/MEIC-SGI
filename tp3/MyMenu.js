@@ -80,12 +80,14 @@ class MyMenu {
         const textOponentBalloon = "Oponent Balloon: " + this.nameOponentBalloon;
         const textNumberOfLaps = "Number of Laps: " + this.totalLaps;
         const textPenalty = "Penalty (seconds): " + this.penaltySeconds;
+        const textStartGame = "Start Game!";
         
         this.createButtonsPenalty();
         this.createButtonsLaps();
         this.createButtonUsername();
         this.createButtonChoosePlayer();
         this.createButtonChooseOponent();
+        this.createButtonStartGame();
 
         this.textAuthorsGroup = new THREE.Group();
         this.textUsernameGroup = new THREE.Group();
@@ -93,6 +95,7 @@ class MyMenu {
         this.textOponentBalloonGroup = new THREE.Group();
         this.textNumberOfLapsGroup = new THREE.Group();
         this.textPenaltyGroup = new THREE.Group();
+        this.textStartGameGroup = new THREE.Group();
 
         this.startMenuGroup = new THREE.Group();
 
@@ -102,6 +105,7 @@ class MyMenu {
         this.convertTextToSprite(textOponentBalloon, this.textOponentBalloonGroup);
         this.convertTextToSprite(textNumberOfLaps, this.textNumberOfLapsGroup);
         this.convertTextToSprite(textPenalty, this.textPenaltyGroup);
+        this.convertTextToSprite(textStartGame, this.textStartGameGroup);
         
         this.textAuthorsGroup.position.set(0,0, 0);
         this.textAuthorsGroup.scale.set(0.6,0.6, 0.6);
@@ -110,8 +114,9 @@ class MyMenu {
         this.textOponentBalloonGroup.position.set(-4,20,0);
         this.textNumberOfLapsGroup.position.set(-4,15,0);
         this.textPenaltyGroup.position.set(-4,10,0);
+        this.textStartGameGroup.position.set(-4,5,0);
 
-        this.startMenuGroup.add(this.textAuthorsGroup, this.textUsernameGroup, this.textPlayerBalloonGroup, this.textOponentBalloonGroup, this.textNumberOfLapsGroup, this.textPenaltyGroup);
+        this.startMenuGroup.add(this.textAuthorsGroup, this.textUsernameGroup, this.textPlayerBalloonGroup, this.textOponentBalloonGroup, this.textNumberOfLapsGroup, this.textPenaltyGroup, this.textStartGameGroup);
 
         this.startMenuGroup.position.set(-70,11,-78.5);
         this.startMenuGroup.rotation.set(0,Math.PI/3,0);
@@ -279,6 +284,30 @@ class MyMenu {
 
     }
 
+    createButtonStartGame() {
+        this.buttonStartGame = new THREE.Group();
+        let buttonMaterial = new THREE.MeshPhongMaterial({color:0xEEEEEE});
+        let buttonGeometry = new THREE.BoxGeometry(1,1,2.5);
+
+        let buttonMesh1 = new THREE.Mesh(buttonGeometry, buttonMaterial);
+        let buttonMesh2 = new THREE.Mesh(buttonGeometry, new THREE.MeshPhongMaterial({color:0x0000EE}));
+
+        this.buttonStartGameGroup = new THREE.Group();
+        this.convertTextToSprite("<--", this.buttonStartGameGroup);
+
+        buttonMesh2.visible = false;
+        buttonMesh2.position.set(1,0,0);
+        this.buttonStartGameGroup.rotation.set(0, Math.PI/2,0);
+        this.buttonStartGameGroup.scale.set(0.4,0.4,0.4);
+        this.buttonStartGameGroup.position.set(0.8,0,0.6);
+
+        this.buttonStartGame.add(buttonMesh1, buttonMesh2, this.buttonStartGameGroup);
+        this.buttonStartGame.position.set(-60.7,13.2,-96);
+        this.buttonStartGame.rotation.set(0,-Math.PI/6,0);
+
+        this.app.scene.add(this.buttonStartGame);
+    }
+
     updateTextTime() {
         const textTime = String(this.currentMatchTime);
 
@@ -360,7 +389,8 @@ class MyMenu {
             this.buttonLaps2,
             this.buttonUsername,
             this.buttonPlayer,
-            this.buttonOponent
+            this.buttonOponent,
+            this.buttonStartGame
         ], true);
     
         if (intersects.length > 0) {
@@ -380,6 +410,8 @@ class MyMenu {
                     this.choosePlayerBallon();
                 } else if (this.buttonOponent.children.includes(object)) {
                     this.chooseOponentBallon();
+                } else if (this.buttonStartGame.children.includes(object)) {
+                    this.startGame();
                 }
             }
         }
@@ -430,6 +462,14 @@ class MyMenu {
     chooseOponentBallon() {
         this.app.contents.currentGameState = this.app.contents.GAME_STATE.CHOOSE_AI_BALLOON;
         console.log("helo2");
+    }
+
+    startGame() {
+        if( (this.playerUsername !== "Type here...") && (this.app.contents.players[this.app.contents.PLAYER_TYPE.HUMAN] !== null) &&  (this.app.contents.players[this.app.contents.PLAYER_TYPE.AI] !== null))
+        {
+            this.app.contents.currentGameState = this.app.contents.GAME_STATE.READY;
+            this.app.contents.setCamera('Start');
+        }
     }
     
     
