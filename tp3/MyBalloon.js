@@ -402,7 +402,6 @@ class MyBalloon {
     }
 
     update(powerUps) {
-        this.moveWind();
 
         if (this.camera) {
             switch (this.app.activeCameraName) {

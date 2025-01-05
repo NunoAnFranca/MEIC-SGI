@@ -33,6 +33,7 @@ class MyContents {
 
         this.GAME_STATE = {
             PREPARATION: "PREPARATION",
+            READY: "READY",
             CHOOSE_HUMAN_BALLOON: "CHOOSE_HUMAN_BALLOON",
             CHOOSE_AI_BALLOON: "CHOOSE_AI_BALLOON",
             CHOOSE_INITIAL_POSITION: "CHOOSE_INITIAL_POSITION",
@@ -58,7 +59,7 @@ class MyContents {
             [this.PLAYER_TYPE.AI]: null
         };
 
-        this.currentGameState = this.GAME_STATE.PREPARATION;
+        this.currentGameState = this.GAME_STATE.CHOOSE_HUMAN_BALLOON;
         this.fireworks = [];
 
         // initial menu variables
@@ -97,6 +98,8 @@ class MyContents {
 
                     setInterval(() => {
                         if (this.currentGameState === this.GAME_STATE.RUNNING) {
+                            this.players[this.PLAYER_TYPE.HUMAN].moveWind();
+                            
                             this.menu.currentMatchTime = Math.floor((new Date().getTime() - this.matchTime - this.pausedTime) / 100);
                             this.menu.currentWindVelocity = this.DIRECTIONS[this.players[this.PLAYER_TYPE.HUMAN].direction];
                             this.menu.currentGameState = this.GAME_STATE.RUNNING;
@@ -519,13 +522,13 @@ class MyContents {
     update() {
         switch (this.currentGameState) {
             case this.GAME_STATE.PREPARATION:
-                this.updateFireworks();
                 break;
             case this.GAME_STATE.RUNNING:
                 this.players[this.PLAYER_TYPE.HUMAN].update(this.track.powerUps);
                 this.checkCollision();
                 break;
             case this.GAME_STATE.PAUSED:
+                this.updateFireworks();
                 break;
             case this.GAME_STATE.FINISHED:
                 break;
