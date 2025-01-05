@@ -34,7 +34,7 @@ class MyGuiInterface {
         axisFolder.close();
 
         const cameraFolder = this.datgui.addFolder('Camera');
-        cameraFolder.add(this.app, 'activeCameraName', ['HumanBalloonChoice', 'AiBalloonChoice', 'InitialPositionChoice', 'Start', 'BalloonFirstPerson', 'BalloonThirdPerson', "InitialMenu"]).onChange((value) => { this.app.setActiveCamera(value) }).name("active camera");
+        cameraFolder.add(this.app, 'activeCameraName', ['HumanBalloonChoice', 'AiBalloonChoice', 'InitialPositionChoice', 'Start', 'BalloonFirstPerson', 'BalloonThirdPerson', "InitialMenu", 'Perspective']).onChange((value) => { this.app.setActiveCamera(value) }).name("active camera");
         cameraFolder.close();
 
         const trackFolder = this.datgui.addFolder('Track');

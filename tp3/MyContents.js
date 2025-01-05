@@ -4,6 +4,7 @@ import { MyTrack } from "./MyTrack.js";
 import { MyParser } from "./MyParser.js";
 import { MyMenu } from "./MyMenu.js";
 import { MyBalloon } from "./MyBalloon.js";
+import { MyFirework } from "./MyFirework.js";
 
 /**
  *  This class contains the contents of out application
@@ -58,6 +59,7 @@ class MyContents {
         };
 
         this.currentGameState = this.GAME_STATE.PREPARATION;
+        this.fireworks = [];
 
         // initial menu variables
         this.totalLaps = 1;
@@ -153,8 +155,8 @@ class MyContents {
             this.app.scene.add(this.axis);
         }
 
-        this.reader = new MyParser(this.app);
-
+        //this.reader = new MyParser(this.app);
+        this.createFireworkSpots();
         // create temp lights so we can see the objects to not render the entire scene
         this.buildLights();
 
@@ -286,25 +288,16 @@ class MyContents {
         this.app.setActiveCamera(this.threeMainCameraNames[this.threeMainCameraIndex]);
     }
 
-    returnToInitialState() {
-        // initial menu variables
-        this.totalLaps = 1;
-        this.penaltySeconds = 1;
-        this.playerUsername = "Nan";
-        this.namePlayerBalloon = null;
-        this.nameOponentBalloon = null;
-        this.currentGameState = this.GAME_STATE.PREPARATION;
+    createFireworkSpots() {
+        let material = new THREE.MeshPhongMaterial({color:0x000000});
+        let geometry = new THREE.BoxGeometry(1,2.5,1);
+        let mesh1 = new THREE.Mesh(geometry,  material);
+        let mesh2 = new THREE.Mesh(geometry,  material);
 
-        this.menu.currentMatchTime = 0;
-        this.menu.currentWindVelocity = "None";
-        this.menu.currentGameState = this.GAME_STATE.PREPARATION;
-        this.menu.currentLaps = 0;
-        this.menu.currentVouchers = 0;
+        mesh1.position.set(28, 0.8, -5);
+        mesh2.position.set(18, 0.8, -5);
 
-
-        this.menu.updateBlimpMenu();
-        this.app.setActiveCamera('InitialMenu');
-        //TODO
+        this.app.scene.add(mesh1, mesh2);
     }
 
     changeLightsPower() {
@@ -335,16 +328,6 @@ class MyContents {
         }
     }
 
-    changeThreeMainCameras() {
-        if (this.threeMainCameraIndex < 2) {
-            this.threeMainCameraIndex++;
-        }
-        else {
-            this.threeMainCameraIndex = 0;
-        }
-        this.app.setActiveCamera(this.threeMainCameraNames[this.threeMainCameraIndex]);
-    }
-
     returnToInitialState() {
         // initial menu variables
         this.totalLaps = 1;
@@ -364,34 +347,6 @@ class MyContents {
         this.menu.updateBlimpMenu();
         this.app.setActiveCamera('InitialMenu');
         //TODO
-    }
-
-    changeLightsPower() {
-        if (this.sceneLightsOn) {
-            for (let light of this.sceneLights) {
-                light.visible = false;
-            }
-            this.sceneLightsOn = false;
-        } else {
-            for (let light of this.sceneLights) {
-                light.visible = true;
-            }
-            this.sceneLightsOn = true;
-        }
-    }
-
-    changeShadowProjection() {
-        if (this.sceneCastingShadows) {
-            for (let light of this.sceneLights) {
-                light.castShadow = false;
-            }
-            this.sceneCastingShadows = false;
-        } else {
-            for (let light of this.sceneLights) {
-                light.castShadow = true;
-            }
-            this.sceneCastingShadows = true;
-        }
     }
 
     unscaleObjects() {
@@ -529,6 +484,25 @@ class MyContents {
         }
     }
 
+    updateFireworks() {
+        if(Math.random()  < 0.02) {
+            let chooseSpot = Math.random();
+            if (chooseSpot < 0.5){
+                this.fireworks.push(new MyFirework(this.app, this, 28, 0.8, -5))
+            } else {
+                this.fireworks.push(new MyFirework(this.app, this, 18, 0.8, -5))
+            }
+        }
+
+        for( let i = 0; i < this.fireworks.length; i++ ) {
+            if (this.fireworks[i].done) {
+                this.fireworks.splice(i,1) 
+                continue 
+            }
+            this.fireworks[i].update()
+        }
+    }
+
     updateTrack() {
         this.track.updateCurve()
     }
@@ -545,6 +519,7 @@ class MyContents {
     update() {
         switch (this.currentGameState) {
             case this.GAME_STATE.PREPARATION:
+                this.updateFireworks();
                 break;
             case this.GAME_STATE.RUNNING:
                 this.players[this.PLAYER_TYPE.HUMAN].update(this.track.powerUps);

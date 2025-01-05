@@ -84,6 +84,8 @@ class MyMenu {
         this.createButtonsPenalty();
         this.createButtonsLaps();
         this.createButtonUsername();
+        this.createButtonChoosePlayer();
+        this.createButtonChooseOponent();
 
         this.textAuthorsGroup = new THREE.Group();
         this.textUsernameGroup = new THREE.Group();
@@ -166,50 +168,6 @@ class MyMenu {
 
         let buttonMaterial = new THREE.MeshPhongMaterial({color:0xEEEEEE});
         let buttonGeometry = new THREE.CylinderGeometry(0.5,0.5,0.5,32);
-        let buttonGeometry2 = new THREE.CylinderGeometry(0.5,0.5,0.5,32);
-
-        let buttonMesh1 = new THREE.Mesh(buttonGeometry, buttonMaterial);
-        let buttonMesh2 = new THREE.Mesh(buttonGeometry, buttonMaterial);
-        let buttonMesh3 = new THREE.Mesh(buttonGeometry2, buttonMaterial);
-        let buttonMesh4 = new THREE.Mesh(buttonGeometry2, buttonMaterial);
-        
-        this.buttonLapsPlus = new THREE.Group();
-        this.buttonLapsMinus = new THREE.Group();
-        this.convertTextToSprite("-", this.buttonLapsMinus);
-        this.convertTextToSprite("+", this.buttonLapsPlus);
-
-        this.buttonLapsPlus.position.set(0,0.5,0);
-        this.buttonLapsPlus.scale.set(0.4,0.4,0.4);
-        this.buttonLapsMinus.position.set(0,0.5,0);
-        this.buttonLapsMinus.scale.set(0.4,0.4,0.4);
-
-        buttonMesh3.visible = false
-        buttonMesh4.visible = false;
-        buttonMesh3.position.set(0,0.5,0);
-        buttonMesh4.position.set(0,0.5,0);
-
-        this.buttonLaps1.add(buttonMesh1, buttonMesh3, this.buttonLapsMinus);
-        this.buttonLaps1.position.set(-62.4,0,-93);
-        this.buttonLaps1.rotation.set(Math.PI/2,0,-Math.PI/3);
-
-        this.buttonLaps2.add(buttonMesh2, buttonMesh4, this.buttonLapsPlus);
-        this.buttonLaps2.position.set(-60.7,0,-96);
-        this.buttonLaps2.rotation.set(Math.PI/2,0,-Math.PI/3);
-
-        this.buttonsLapsGroup = new THREE.Group();
-        this.buttonsLapsGroup.add(this.buttonLaps1, this.buttonLaps2);
-        this.buttonsLapsGroup.position.set(0,18.5,0);
-
-        this.app.scene.add(this.buttonsLapsGroup);
-    }
-
-
-    createButtonsLaps() {
-        this.buttonLaps1 = new THREE.Group();
-        this.buttonLaps2 = new THREE.Group();
-
-        let buttonMaterial = new THREE.MeshPhongMaterial({color:0xEEEEEE});
-        let buttonGeometry = new THREE.CylinderGeometry(0.5,0.5,0.5,32);
 
         let buttonMesh1 = new THREE.Mesh(buttonGeometry, buttonMaterial);
         let buttonMesh2 = new THREE.Mesh(buttonGeometry, buttonMaterial);
@@ -268,6 +226,56 @@ class MyMenu {
         this.buttonUsername.rotation.set(0,-Math.PI/6,0);
 
         this.app.scene.add(this.buttonUsername);
+
+    }
+
+    createButtonChoosePlayer() {
+        this.buttonPlayer = new THREE.Group();
+        let buttonMaterial = new THREE.MeshPhongMaterial({color:0xEEEEEE});
+        let buttonGeometry = new THREE.BoxGeometry(1,1,2.5);
+
+        let buttonMesh1 = new THREE.Mesh(buttonGeometry, buttonMaterial);
+        let buttonMesh2 = new THREE.Mesh(buttonGeometry, new THREE.MeshPhongMaterial({color:0x0000EE}));
+
+        this.buttonPlayerGroup = new THREE.Group();
+        this.convertTextToSprite("<--", this.buttonPlayerGroup);
+
+        buttonMesh2.visible = false;
+        buttonMesh2.position.set(1,0,0);
+        this.buttonPlayerGroup.rotation.set(0, Math.PI/2,0);
+        this.buttonPlayerGroup.scale.set(0.4,0.4,0.4);
+        this.buttonPlayerGroup.position.set(0.8,0,0.6);
+
+        this.buttonPlayer.add(buttonMesh1, buttonMesh2, this.buttonPlayerGroup);
+        this.buttonPlayer.position.set(-60.7,23.8,-96);
+        this.buttonPlayer.rotation.set(0,-Math.PI/6,0);
+
+        this.app.scene.add(this.buttonPlayer);
+
+    }
+
+    createButtonChooseOponent() {
+        this.buttonOponent = new THREE.Group();
+        let buttonMaterial = new THREE.MeshPhongMaterial({color:0xEEEEEE});
+        let buttonGeometry = new THREE.BoxGeometry(1,1,2.5);
+
+        let buttonMesh1 = new THREE.Mesh(buttonGeometry, buttonMaterial);
+        let buttonMesh2 = new THREE.Mesh(buttonGeometry, new THREE.MeshPhongMaterial({color:0x0000EE}));
+
+        this.buttonOponentGroup = new THREE.Group();
+        this.convertTextToSprite("<--", this.buttonOponentGroup);
+
+        buttonMesh2.visible = false;
+        buttonMesh2.position.set(1,0,0);
+        this.buttonOponentGroup.rotation.set(0, Math.PI/2,0);
+        this.buttonOponentGroup.scale.set(0.4,0.4,0.4);
+        this.buttonOponentGroup.position.set(0.8,0,0.6);
+
+        this.buttonOponent.add(buttonMesh1, buttonMesh2, this.buttonOponentGroup);
+        this.buttonOponent.position.set(-60.7,21.2,-96);
+        this.buttonOponent.rotation.set(0,-Math.PI/6,0);
+
+        this.app.scene.add(this.buttonOponent);
 
     }
 
@@ -350,7 +358,9 @@ class MyMenu {
             this.buttonPenalty2,
             this.buttonLaps1,
             this.buttonLaps2,
-            this.buttonUsername
+            this.buttonUsername,
+            this.buttonPlayer,
+            this.buttonOponent
         ], true);
     
         if (intersects.length > 0) {
@@ -366,6 +376,10 @@ class MyMenu {
                     this.increaseLaps();
                 } else if (this.buttonUsername.children.includes(object)) {
                     this.startTypingUsername();
+                } else if (this.buttonPlayer.children.includes(object)) {
+                    this.choosePlayerBallon();
+                } else if (this.buttonOponent.children.includes(object)) {
+                    this.chooseOponentBallon();
                 }
             }
         }
@@ -406,6 +420,16 @@ class MyMenu {
         this.currentTypedUsername = "";
         document.addEventListener("keydown", this.onKeyDown);
         this.writingUsername = true;
+    }
+
+    choosePlayerBallon() {
+        this.app.contents.currentGameState = this.app.contents.GAME_STATE.CHOOSE_HUMAN_BALLOON;
+        console.log("helo");
+    }
+
+    chooseOponentBallon() {
+        this.app.contents.currentGameState = this.app.contents.GAME_STATE.CHOOSE_AI_BALLOON;
+        console.log("helo2");
     }
     
     

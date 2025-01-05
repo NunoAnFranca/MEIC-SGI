@@ -208,6 +208,10 @@ class MyTrack {
     updateTextureRepeat() {
         this.material.map.repeat.set(this.textureRepeatX, this.textureRepeatY);
     }
+
+    update() {
+        this.animatePowerUps();
+    }
 }
 
 export { MyTrack };

@@ -133,6 +133,11 @@ class MyApp {
         initialPositionChoice.setViewOffset(window.innerWidth, window.innerHeight, -1300, 800, window.innerWidth, window.innerHeight);
         initialPositionChoice.zoom = 1.5;
         this.cameras['InitialPositionChoice'] = initialPositionChoice
+
+        // Create a basic perspective camera
+        const perspective1 = new THREE.PerspectiveCamera(60, aspect, 0.1, 1000)
+        perspective1.position.set(0, 75, 0)
+        this.cameras['Perspective'] = perspective1
     }
 
     /**
