@@ -55,6 +55,11 @@ class MyBalloon {
         this.extraLives = 0;
         this.lastPowerUpObject = null;
         this.penaltySeconds = null;
+        this.sizeModifiedUp = false;
+        this.sizeModifiedDown = false;
+        this.currentScale = 1;
+        this.targetScale = 1;
+        this.restoreTimer = null;
 
         this.marker = null;
 
@@ -341,19 +346,63 @@ class MyBalloon {
 
     moveUp() {
         if (this.yPos + 0.5 < this.maxHeight) {
+            clearTimeout(this.restoreTimer);
+            this.sizeModifiedUp = true;
+            this.sizeModifiedDown = false;
+            this.targetScale = 1.15;
             this.yPos += 0.5;
             this.offsetY += 0.2;
             this.balloonGroup.position.y += 0.5;
+            this.updateScale();
         }
     }
-
+    
     moveDown() {
         if (this.yPos - 0.5 > this.minHeight) {
+            clearTimeout(this.restoreTimer);
+            this.sizeModifiedDown = true;
+            this.sizeModifiedUp = false;
+            this.targetScale = 1/1.15;
             this.yPos -= 0.5;
             this.offsetY -= 0.2;
             this.balloonGroup.position.y -= 0.5;
+            this.updateScale();
         }
     }
+    
+    restoreSize() {
+        if (this.sizeModifiedUp || this.sizeModifiedDown) {
+            this.targetScale = 1;
+            this.updateScale(0.001);
+
+            if (Math.abs(this.currentScale - 1) < 0.0002) {
+                this.currentScale = 1;
+                this.sizeModifiedUp = false;
+                this.sizeModifiedDown = false;
+            }
+        }
+    }
+    
+    updateScale(stepSize = 0.1) {
+        if (this.currentScale !== this.targetScale) {
+            if (this.currentScale < this.targetScale) {
+                this.currentScale = Math.min(
+                    this.currentScale + stepSize,
+                    this.targetScale
+                );
+            } else {
+                this.currentScale = Math.max(
+                    this.currentScale - stepSize,
+                    this.targetScale
+                );
+            }
+            this.upPartGroup.scale.set(
+                this.currentScale,
+                1,
+                this.currentScale
+            );
+        }
+    } 
 
     moveLeft() {
         this.xPos -= 0.1;

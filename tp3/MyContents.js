@@ -59,7 +59,8 @@ class MyContents {
             [this.PLAYER_TYPE.AI]: null
         };
 
-        this.currentGameState = this.GAME_STATE.PREPARATION;
+        //Change back to PREPARATION
+        this.currentGameState = this.GAME_STATE.CHOOSE_HUMAN_BALLOON;
         this.fireworks = [];
 
         // initial menu variables
@@ -377,7 +378,7 @@ class MyContents {
             if (obj) {
                 if ((obj.name === "RED" || obj.name === "BLUE") && this.players[this.PLAYER_TYPE.HUMAN] && this.currentGameState === this.GAME_STATE.CHOOSE_INITIAL_POSITION) {
                     this.changeObjectPosition(this.players[this.PLAYER_TYPE.HUMAN], obj.name);
-                    this.app.setActiveCamera("AiBalloonChoice");
+                    //this.app.setActiveCamera("AiBalloonChoice");
                     this.currentGameState = this.GAME_STATE.CHOOSE_AI_BALLOON;
                 } else if (obj.name === "surface" && (this.currentGameState === this.GAME_STATE.CHOOSE_HUMAN_BALLOON || this.currentGameState === this.GAME_STATE.CHOOSE_AI_BALLOON)) {
                     const balloonGroup = obj.parent.parent;
@@ -386,13 +387,13 @@ class MyContents {
                             this.players[balloonGroup.type] = this.humanBalloons[balloonGroup.index];
                             this.buildInitialPosition("RED", this.initialPositionsCoords["RED"]);
                             this.buildInitialPosition("BLUE", this.initialPositionsCoords["BLUE"]);
-                            this.app.setActiveCamera("InitialPositionChoice");
+                            //this.app.setActiveCamera("InitialPositionChoice");
                             this.currentGameState = this.GAME_STATE.CHOOSE_INITIAL_POSITION;
                             break;
                         case this.PLAYER_TYPE.AI:
                             this.changeObjectPosition(balloonGroup);
-                            this.app.setActiveCamera("Start");
-                            this.currentGameState = this.GAME_STATE.PREPARATION;
+                            //this.app.setActiveCamera("Start");
+                            this.currentGameState = this.GAME_STATE.READY;
                             break;
                         default:
                             break;
@@ -539,6 +540,7 @@ class MyContents {
                 break;
             case this.GAME_STATE.RUNNING:
                 this.players[this.PLAYER_TYPE.HUMAN].update(this.track.powerUps);
+                this.players[this.PLAYER_TYPE.HUMAN].restoreSize();
                 this.checkCollision();
                 break;
             case this.GAME_STATE.PAUSED:
