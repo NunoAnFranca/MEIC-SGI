@@ -5,6 +5,7 @@ import { MyParser } from "./MyParser.js";
 import { MyMenu } from "./MyMenu.js";
 import { MyBalloon } from "./MyBalloon.js";
 import { MyFirework } from "./MyFirework.js";
+import { MyRoute } from "./MyRoute.js";
 
 /**
  *  This class contains the contents of out application
@@ -100,6 +101,7 @@ class MyContents {
                     setInterval(() => {
                         if (this.currentGameState === this.GAME_STATE.RUNNING) {
                             this.players[this.PLAYER_TYPE.HUMAN].moveWind();
+                            this.moveAiBalloon();
 
                             this.menu.currentMatchTime = Math.floor((new Date().getTime() - this.matchTime - this.pausedTime) / 100);
                             this.menu.currentWindVelocity = this.DIRECTIONS[this.players[this.PLAYER_TYPE.HUMAN].direction];
@@ -159,7 +161,7 @@ class MyContents {
             this.app.scene.add(this.axis);
         }
 
-        this.reader = new MyParser(this.app);
+        //this.reader = new MyParser(this.app);
         this.createFireworkSpots();
         // create temp lights so we can see the objects to not render the entire scene
         this.buildLights();
@@ -179,6 +181,8 @@ class MyContents {
 
         // create the track
         this.track = new MyTrack(this.app);
+
+        this.route = new MyRoute(this.app);
 
         this.loader = new THREE.TextureLoader();
 
@@ -351,6 +355,23 @@ class MyContents {
         this.menu.updateBlimpMenu();
         this.app.setActiveCamera('InitialMenu');
         //TODO
+    }
+
+    moveAiBalloon(){
+        const time = (Date.now() % 6000) / 6000;
+        const point = this.route.spline.getPointAt(time);
+        
+        this.players[this.PLAYER_TYPE.AI].xPos = point.x ;
+        this.players[this.PLAYER_TYPE.AI].marker.position.x = point.x;
+        this.players[this.PLAYER_TYPE.AI].balloonGroup.position.x = point.x;
+
+        this.players[this.PLAYER_TYPE.AI].yPos = point.y ;
+        this.players[this.PLAYER_TYPE.AI].marker.position.y = point.y;
+        this.players[this.PLAYER_TYPE.AI].balloonGroup.position.y = point.y;
+        
+        this.players[this.PLAYER_TYPE.AI].zPos = point.z ;
+        this.players[this.PLAYER_TYPE.AI].marker.position.z = point.z;
+        this.players[this.PLAYER_TYPE.AI].balloonGroup.position.z = point.z;
     }
 
     unscaleObjects() {
