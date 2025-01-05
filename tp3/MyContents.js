@@ -490,15 +490,31 @@ class MyContents {
     }
 
     checkCollision() {
-        const balloon = this.players[this.PLAYER_TYPE.HUMAN]
+        const balloon = this.players[this.PLAYER_TYPE.HUMAN];
         const balloonBoundingBox = new THREE.Box3().setFromObject(balloon.balloonGroup);
+        const upPartBoundingBox = new THREE.Box3().setFromObject(balloon.balloonGroup.children[0]);
+        const downPartBoundingBox = new THREE.Box3().setFromObject(balloon.balloonGroup.children[1]);
+
         for (let obstacle of this.track.obstacles) {
             const obstacleBoundingBox = new THREE.Box3().setFromObject(obstacle.mesh);
             if (obstacleBoundingBox.intersectsBox(balloonBoundingBox)) {
-                let upCollision = obstacleBoundingBox.intersectsBox(new THREE.Box3().setFromObject(balloon.balloonGroup.children[0]));
-                let downCollision = obstacleBoundingBox.intersectsBox(new THREE.Box3().setFromObject(balloon.balloonGroup.children[1]));
+                let upCollision = obstacleBoundingBox.intersectsBox(upPartBoundingBox);
+                let downCollision = obstacleBoundingBox.intersectsBox(downPartBoundingBox);
                 if (upCollision || downCollision) {
                     balloon.nearestPoint();
+                }
+            }
+        }
+
+        for (let powerUp of this.track.powerUps) {
+            const powerUpBoundingBox = new THREE.Box3().setFromObject(powerUp.mesh);
+            if (powerUpBoundingBox.intersectsBox(balloonBoundingBox)) {
+                let upCollision = powerUpBoundingBox.intersectsBox(upPartBoundingBox);
+                let downCollision = powerUpBoundingBox.intersectsBox(downPartBoundingBox);
+                if (upCollision || downCollision) {
+                    if(powerUp !== balloon.lastPowerUpObject)
+                        balloon.extraLives++;
+                    balloon.lastPowerUpObject = powerUp;
                 }
             }
         }
@@ -555,7 +571,7 @@ class MyContents {
                 this.finishFireworks();
                 break;
             case this.GAME_STATE.RUNNING:
-                this.players[this.PLAYER_TYPE.HUMAN].update(this.track.powerUps);
+                this.players[this.PLAYER_TYPE.HUMAN].update();
                 this.checkCollision();
                 break;
             case this.GAME_STATE.PAUSED:
