@@ -26,6 +26,7 @@ class MyObstacle {
 
         const boundingBox = new THREE.Box3().setFromObject(this.mesh);
         this.helper = new THREE.Box3Helper(boundingBox, 0xffff00);
+        this.helper.name = "obstacle" + this.name;
         
         //const boundingSphere = boundingBox.getBoundingSphere(new THREE.Sphere());
         //const sphereGeometry = new THREE.SphereGeometry(boundingSphere.radius, 32, 32);

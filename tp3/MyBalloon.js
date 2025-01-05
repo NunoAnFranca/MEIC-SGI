@@ -35,8 +35,6 @@ class MyBalloon {
         this.upPartGroup = new THREE.Group();
         this.downPartGroup = new THREE.Group();
 
-        this.showBoundingBox = false;
-        
         this.trackPoints = null;
         this.distanceTreshold = 5.0;
 
@@ -74,7 +72,7 @@ class MyBalloon {
             map: texture,
             side: THREE.DoubleSide
         });
-        
+
         const controlPoints = [
             [
                 [0, 0, -2, 1],
@@ -94,7 +92,7 @@ class MyBalloon {
         ];
 
         const surfaceData = this.builder.build(controlPoints, orderU, orderV, this.samplesU, this.samplesV, balloonMaterial);
-                
+
         for (let i = 0; i < this.nMeshes; i++) {
             const balloonMesh = new THREE.Mesh(surfaceData, balloonMaterial);
             balloonMesh.name = "surface";
@@ -102,11 +100,7 @@ class MyBalloon {
             balloonMesh.castShadow = true;
             balloonMesh.rotation.x = Math.PI / 2;
             balloonMesh.rotation.z = i / 6 * 2 * Math.PI;
-            balloonMesh.position.x = this.xPos;
-            balloonMesh.position.y = this.yPos;
-            balloonMesh.position.z = this.zPos;
             this.upPartGroup.add(balloonMesh);
-            this.balloonGroup.add(balloonMesh.clone());
         }
 
         for (let i = 0; i < 2; i++) {
@@ -115,11 +109,10 @@ class MyBalloon {
                 const boxMaterial = new THREE.MeshPhongMaterial({ color: "#540e09" });
                 const boxMesh = new THREE.Mesh(boxGeometry, boxMaterial);
                 boxMesh.name = "cable" + i + j;
-                boxMesh.position.x = this.xPos + (i === 0 ? -0.5 : 0.5);
-                boxMesh.position.y = this.yPos - 3;
-                boxMesh.position.z = this.zPos + (j === 0 ? -0.5 : 0.5);
+                boxMesh.position.x = i === 0 ? - 0.5 : 0.5;
+                boxMesh.position.y = - 3;
+                boxMesh.position.z = j === 0 ? - 0.5 : 0.5;
                 this.downPartGroup.add(boxMesh);
-                this.balloonGroup.add(boxMesh.clone());
             }
         }
 
@@ -127,22 +120,35 @@ class MyBalloon {
         const basketMaterial = new THREE.MeshPhongMaterial({ color: "#540e09" });
         const basketMesh = new THREE.Mesh(basketGeometry, basketMaterial);
         basketMesh.name = "basket";
-        basketMesh.position.x = this.xPos;
-        basketMesh.position.y = this.yPos - 4;
-        basketMesh.position.z = this.zPos;
+        basketMesh.position.y = - 4;
         this.downPartGroup.add(basketMesh);
-        this.balloonGroup.add(basketMesh.clone());
 
-        const markerGeometry = new THREE.SphereGeometry(0.5,64,64);
-        const markerMaterial = new THREE.MeshPhongMaterial({color: "#0000ff"});
+        const markerGeometry = new THREE.SphereGeometry(0.5, 64, 64);
+        let markerMaterial = null;
+        
+        switch (this.type) {
+            case "HUMAN":
+                markerMaterial = new THREE.MeshPhongMaterial({ color: "#ff0000" });
+                break;
+            case "AI":
+                markerMaterial = new THREE.MeshPhongMaterial({ color: "#0000ff" });
+                break;
+            default:
+                break;
+        };
+        
         this.marker = new THREE.Mesh(markerGeometry, markerMaterial);
-        this.marker.scale.set(1,0.25,1);
+        this.marker.scale.set(1, 0.25, 1);
         this.marker.name = "marker";
         this.marker.position.x = this.xPos;
         this.marker.position.y = -4;
         this.marker.position.z = this.zPos;
         this.marker.visible = false;
-        
+
+        this.balloonGroup.add(this.upPartGroup);
+        this.balloonGroup.add(this.downPartGroup);
+        this.balloonGroup.position.set(this.xPos, this.yPos, this.zPos);
+
         this.app.scene.add(this.marker);
         this.app.scene.add(this.balloonGroup);
     }
@@ -151,42 +157,10 @@ class MyBalloon {
         this.xPos = xPos;
         this.yPos = yPos + 5;
         this.zPos = zPos;
+        this.balloonGroup.position.set(this.xPos, this.yPos, this.zPos);
+        this.marker.visible = true;
+        this.marker.position.set(this.xPos, this.yPos - 6, this.zPos);
 
-        const positionOffsets = {
-            basket: { x: 0, y: -4, z: 0 },
-            cable00: { x: -0.5, y: -3, z: -0.5 },
-            cable01: { x: 0.5, y: -3, z: 0.5 },
-            cable10: { x: 0.5, y: -3, z: -0.5 },
-            cable11: { x: -0.5, y: -3, z: 0.5 },
-            marker: { x: 0, y: -6, z: 0},
-            default: { x: 0, y: 0, z: 0 }
-        };
-        
-        let typeBalloon = this.balloonGroup.type;
-
-        this.upPartGroup = new THREE.Group();
-        this.downPartGroup = new THREE.Group();
-
-        this.removeHelpers();
-
-        for (let i = 0; i < this.balloonGroup.children.length; i++) {
-            const child = this.balloonGroup.children[i];
-            const offset = positionOffsets[child.name] || positionOffsets.default;
-            child.position.set(this.xPos + offset.x, this.yPos + offset.y, this.zPos + offset.z);
-        }
-
-        const markerOffset = positionOffsets[this.marker.name] || positionOffsets.default;
-        this.marker.visible = true;      
-        this.marker.position.set(this.xPos + markerOffset.x, this.yPos + markerOffset.y, this.zPos + markerOffset.z);
-
-        if (typeBalloon === "HUMAN") {
-            this.marker.material = new THREE.MeshPhongMaterial({ color: "#ff0000" });
-            this.marker.material.needsUpdate = true;
-        }
-
-        this.assignGroups();
-        this.removeHelpers();
-        this.createBoundingBoxHelpers();
         this.initCheckpoints();
     }
 
@@ -236,8 +210,8 @@ class MyBalloon {
                 positionOffsetX = - offset;
                 positionOffsetZ = 0;
                 break;
-            }
-            
+        }
+
         this.camera.position.set(this.xPos + positionOffsetX, this.yPos + this.offsetY, this.zPos + positionOffsetZ);
         this.camera.target = new THREE.Vector3(this.xPos + this.offsetX, this.yPos, this.zPos + this.offsetZ);
         this.app.updateCameraTarget();
@@ -267,36 +241,8 @@ class MyBalloon {
         this.camera.target = new THREE.Vector3(this.xPos, this.yPos, this.zPos);
         this.app.updateCameraTarget();
     }
-    
-    updateBoundingBoxHelpersVisibility() {
-        if (this.showBoundingBox) {
-            this.createBoundingBoxHelpers();
-        } else {
-            this.removeHelpers();
-        }
-    }
 
-    createBoundingBoxHelpers() {
-        const boundingBox = new THREE.Box3().setFromObject(this.balloonGroup);
-        const boundingBoxHelper = new THREE.Box3Helper(boundingBox, 0xffff00);
-        boundingBoxHelper.name = "boundingBoxHelper";
-        boundingBoxHelper.visible = this.showBoundingBox;
-        this.balloonGroup.add(boundingBoxHelper);
-
-        const upBoundingBox = new THREE.Box3().setFromObject(this.upPartGroup);
-        const upBoundingBoxHelper = new THREE.Box3Helper(upBoundingBox, 0xffff00);
-        upBoundingBoxHelper.name = "upBoundingBoxHelper";
-        upBoundingBoxHelper.visible = this.showBoundingBox;
-        this.balloonGroup.add(upBoundingBoxHelper);
-
-        const downBoundingBox = new THREE.Box3().setFromObject(this.downPartGroup);
-        const downBoundingBoxHelper = new THREE.Box3Helper(downBoundingBox, 0xffff00);
-        downBoundingBoxHelper.name = "downBoundingBoxHelper";
-        downBoundingBoxHelper.visible = this.showBoundingBox;
-        this.balloonGroup.add(downBoundingBoxHelper);
-    }
-
-    nearestPoint(check) {
+    nearestPoint() {
         let finalPoint = this.trackPoints[0];
         let distance = Number.MAX_SAFE_INTEGER;
         let index = 0;
@@ -311,45 +257,22 @@ class MyBalloon {
             }
         }
 
-        if (check) {
-            finalPoint = this.transformedPoints[index - 10];
-        }
+        finalPoint = this.transformedPoints[(index - 30 + 10000) % 10000];
 
-        const positionOffsets = {
-            basket: { x: 0, y: -4, z: 0 },
-            cable00: { x: -0.5, y: -3, z: -0.5 },
-            cable01: { x: 0.5, y: -3, z: 0.5 },
-            cable10: { x: 0.5, y: -3, z: -0.5 },
-            cable11: { x: -0.5, y: -3, z: 0.5 },
-            marker: { x: 0, y: -6, z: 0},
-            default: { x: 0, y: 0, z: 0 }
-        };
-        
         this.xPos = finalPoint.x;
         this.zPos = finalPoint.z;
 
-        this.upPartGroup = new THREE.Group();
-        this.downPartGroup = new THREE.Group();
-
-        this.removeHelpers();
-
-        for (let i = 0; i < this.balloonGroup.children.length; i++) {
-            const child = this.balloonGroup.children[i];
-            const offset = positionOffsets[child.name] || positionOffsets.default;
-            child.position.set(this.xPos + offset.x, this.yPos + offset.y, this.zPos + offset.z);
-            this.assignGroups();
-        }
+        this.balloonGroup.position.set(this.xPos, this.yPos, this.zPos);
 
         this.marker.position.x = this.xPos;
         this.marker.position.z = this.zPos;
 
-        this.penaltySeconds = this.app.contents.penaltySeconds*1000;
-        this.moveBoundingBox();
+        this.penaltySeconds = this.app.contents.penaltySeconds * 1000;
     }
-    
+
     checkPosition() {
         this.trackPoints = this.app.contents.track.path.getPoints(10000);
-        
+
         this.transformedPoints = this.trackPoints.map(point => {
             let vector = new THREE.Vector3(point.x, point.y, point.z);
             this.app.contents.track.curve.localToWorld(vector);
@@ -360,10 +283,10 @@ class MyBalloon {
             let distance = Math.sqrt(Math.pow(point.x - this.xPos, 2) + Math.pow(point.z - this.zPos, 2));
             if (distance < this.distanceTreshold) {
                 return true;
-            } 
+            }
         }
 
-        this.nearestPoint(false);
+        this.nearestPoint();
 
         return false;
     }
@@ -395,142 +318,71 @@ class MyBalloon {
         return false;
     }
 
-    assignGroups() {
-        this.upPartGroup = new THREE.Group();
-        this.downPartGroup = new THREE.Group();
-
-        for (let i = 0; i < this.balloonGroup.children.length; i++) {
-            const child = this.balloonGroup.children[i];
-            if (child.name === "surface") {
-                this.upPartGroup.add(child.clone());
-            } else {
-                this.downPartGroup.add(child.clone());
-            }
-        }
-    }
-
-    removeHelpers() {
-        for (let i = this.balloonGroup.children.length - 1; i >= 0; i--) {
-            const child = this.balloonGroup.children[i];
-            if (child.name === 'boundingBoxHelper' || child.name === 'upBoundingBoxHelper' || child.name === 'downBoundingBoxHelper') {
-                this.balloonGroup.remove(child);
-            }
-        }
-    }
-
-    moveBoundingBox() {
-        this.removeHelpers();
-        if (this.showBoundingBox) {
-            this.createBoundingBoxHelpers();
-        }
-    }
-    
     moveWind() {
         this.checkcurrentCheckpoint();
 
         if (this.penaltySeconds > 0) {
             this.penaltySeconds -= 30;
-        } else {
-            if (this.checkPosition()) {
-                this.removeHelpers();
-                if (this.yPos <= 8 && this.yPos > 5) {
-                    this.moveForward();
-                } else if (this.yPos <= 11 && this.yPos > 8) {
-                    this.moveBackward();
-                } else if (this.yPos <= 14 && this.yPos > 11) {
-                    this.moveRight();
-                } else if (this.yPos <= 17 && this.yPos > 14) {
-                    this.moveLeft();
-                }
-                this.assignGroups();
-                this.moveBoundingBox();
+        } else if (this.checkPosition()) {
+            if (this.yPos <= 8 && this.yPos > 5) {
+                this.moveForward();
+            } else if (this.yPos <= 11 && this.yPos > 8) {
+                this.moveBackward();
+            } else if (this.yPos <= 14 && this.yPos > 11) {
+                this.moveRight();
+            } else if (this.yPos <= 17 && this.yPos > 14) {
+                this.moveLeft();
             }
         }
     }
 
     moveUp() {
-        this.removeHelpers();
         if (this.yPos + 0.5 < this.maxHeight) {
             this.yPos += 0.5;
             this.offsetY += 0.2;
-            for (let i = 0; i < this.balloonGroup.children.length; i++) {
-                if (this.balloonGroup.children[i].name !== 'marker') {
-                    this.balloonGroup.children[i].position.y += 0.5;
-                }
-            }
-            this.assignGroups();
-            this.moveBoundingBox();
+            this.balloonGroup.position.y += 0.5;
         }
     }
 
     moveDown() {
-        this.removeHelpers();
         if (this.yPos - 0.5 > this.minHeight) {
             this.yPos -= 0.5;
             this.offsetY -= 0.2;
-            for (let i = 0; i < this.balloonGroup.children.length; i++) {
-                if (this.balloonGroup.children[i].name !== 'marker') {
-                    this.balloonGroup.children[i].position.y -= 0.5;
-                }    
-            }
-            this.assignGroups();
-            this.moveBoundingBox();
+            this.balloonGroup.position.y -= 0.5;
         }
     }
 
     moveLeft() {
         this.xPos -= 0.1;
         this.direction = this.DIRECTIONS.WEST;
-        for (let i = 0; i < this.balloonGroup.children.length; i++) {
-            this.balloonGroup.children[i].position.x -= 0.1;
-        }
         this.marker.position.x -= 0.1;
+        this.balloonGroup.position.x -= 0.1;
     }
 
     moveRight() {
         this.xPos += 0.1;
         this.direction = this.DIRECTIONS.EAST;
-        for (let i = 0; i < this.balloonGroup.children.length; i++) {
-            this.balloonGroup.children[i].position.x += 0.1;
-        }
         this.marker.position.x += 0.1;
+        this.balloonGroup.position.x += 0.1;
     }
 
     moveForward() {
         this.zPos -= 0.1;
         this.direction = this.DIRECTIONS.NORTH;
-        for (let i = 0; i < this.balloonGroup.children.length; i++) {
-            this.balloonGroup.children[i].position.z -= 0.1;
-        }
         this.marker.position.z -= 0.1;
+        this.balloonGroup.position.z -= 0.1;
     }
 
     moveBackward() {
         this.zPos += 0.1;
         this.direction = this.DIRECTIONS.SOUTH;
-        for (let i = 0; i < this.balloonGroup.children.length; i++) {
-            this.balloonGroup.children[i].position.z += 0.1;
-        }
         this.marker.position.z += 0.1;
+        this.balloonGroup.position.z += 0.1;
     }
 
-    checkCollision(obstacles) {
-        for (let i = 0; i < obstacles.length; i++) {
-            let obstacle = obstacles[i];
-            let boundingBox = new THREE.Box3().setFromObject(obstacle.mesh);
-            let collision = boundingBox.intersectsBox(new THREE.Box3().setFromObject(this.balloonGroup));
+    update() {
+        this.moveWind();
 
-            if (collision) {
-                let upCollision = boundingBox.intersectsBox(new THREE.Box3().setFromObject(this.upPartGroup));
-                let downCollision = boundingBox.intersectsBox(new THREE.Box3().setFromObject(this.downPartGroup));
-                if (upCollision || downCollision) {
-                    this.nearestPoint(true);
-                }
-            }
-        }
-    }
-
-    update(obstacles) {
         if (this.camera) {
             switch (this.app.activeCameraName) {
                 case 'BalloonFirstPerson':
@@ -543,8 +395,6 @@ class MyBalloon {
                     break;
             }
         }
-
-        this.checkCollision(obstacles);
     }
 }
 

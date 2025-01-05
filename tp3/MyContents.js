@@ -55,16 +55,24 @@ class MyContents {
         };
 
         this.currentGameState = this.GAME_STATE.PREPARATION;
-      
+
         // register events
 
         document.addEventListener(
-            // "pointermove",
-            // "mousemove",
             "pointerdown",
             // list of events: https://developer.mozilla.org/en-US/docs/Web/API/Element
             this.onPointerMove.bind(this)
         );
+        /* //TODO
+                document.addEventListener(
+                    "pointermove",
+                    this.onPointerMove.bind(this)
+                );*/
+
+        /*
+                document.addEventListener("mouseover", (event) => {
+                    this.onPointerMove.bind(this);
+                });*/
 
         document.addEventListener("keydown", (event) => {
             if (this.currentGameState === this.GAME_STATE.PREPARATION) {
@@ -74,13 +82,11 @@ class MyContents {
                     this.setCamera('BalloonFirstPerson');
 
                     this.matchTime = new Date().getTime();
-                    this.pausedTime = 0; 
+                    this.pausedTime = 0;
 
                     setInterval(() => {
                         if (this.currentGameState === this.GAME_STATE.RUNNING) {
-                            this.players[this.PLAYER_TYPE.HUMAN].moveWind();
-                            
-                            this.currentMatchTime = Math.floor((new Date().getTime() - this.matchTime  - this.pausedTime)/100);
+                            this.currentMatchTime = Math.floor((new Date().getTime() - this.matchTime - this.pausedTime) / 100);
                             this.currentWindVelocity = this.DIRECTIONS[this.players[this.PLAYER_TYPE.HUMAN].direction];
                             this.currentGameState = this.GAME_STATE.RUNNING;
                             this.currentLaps = this.players[this.PLAYER_TYPE.HUMAN].currentLap;
@@ -128,7 +134,7 @@ class MyContents {
 
         // build balloons
         this.buildBalloons();
-        
+
         this.initialPositions = {
             [this.PLAYER_TYPE.HUMAN]: true,
             [this.PLAYER_TYPE.AI]: true
@@ -142,7 +148,7 @@ class MyContents {
 
         // create the track
         this.track = new MyTrack(this.app);
-        
+
         this.loader = new THREE.TextureLoader();
 
         this.menu = new MyMenu(this.app, this.loader);
@@ -188,7 +194,7 @@ class MyContents {
     }
 
     buildInitialPosition(name, [xPos, yPos, zPos]) {
-        let geometry = new THREE.CylinderGeometry(1,1,0.2,64);
+        let geometry = new THREE.CylinderGeometry(1, 1, 0.2, 64);
 
         let positionsMaterial = new THREE.MeshPhongMaterial({
             color: "#888888",
@@ -226,13 +232,42 @@ class MyContents {
         this.initialPositions[obj.type] = false;
     }
 
-    pickingHelper(intersects) {
-        if (intersects.length > 0 && this.currentGameState === this.GAME_STATE.PREPARATION) {
-            const obj = intersects[0].object;
-            if (obj.parent && this.PLAYER_TYPE[obj.parent.type] && this.initialPositions[obj.parent.type]) {
-                this.changeObjectPosition(obj.parent);
+    unscaleBalloons() {
+        for (let i = 0; i < this.humanBalloons.length; i++) {
+            this.humanBalloons[i].balloonGroup.scale.set(1, 1, 1);
+            this.aiBalloons[i].balloonGroup.scale.set(1, 1, 1);
+        }
+    }
+
+    increaseSize(obj) {
+        this.unscaleBalloons();
+        switch (obj.type) {
+            case this.PLAYER_TYPE.HUMAN:
+                //this.humanBalloons[obj.index].balloonGroup.scale(2, 2, 2);
+                obj.scale.set(1.3, 1.3, 1.3);
+                break;
+            case this.PLAYER_TYPE.AI:
+                break;
+            default:
+                break;
+        }
+    }
+
+    selectObject(obj) {
+        if (obj && this.currentGameState === this.GAME_STATE.PREPARATION) {
+            const balloonGroup = obj.parent.parent;
+            if (balloonGroup && this.PLAYER_TYPE[balloonGroup.type] && this.initialPositions[balloonGroup.type]) {
+                this.changeObjectPosition(balloonGroup);
             }
         }
+    }
+
+    pointObject(obj) {/*
+        if (obj && this.currentGameState === this.GAME_STATE.PREPARATION) {
+            if (obj.parent && this.PLAYER_TYPE[obj.parent.type] && this.initialPositions[obj.parent.type]) {
+                this.increaseSize(obj.parent);
+            }
+        }*/
     }
 
     /**
@@ -268,7 +303,9 @@ class MyContents {
         //3. compute intersections
         var intersects = this.raycaster.intersectObjects(this.app.scene.children);
 
-        this.pickingHelper(intersects)
+        if (intersects[0]) {
+            event.type === "pointerdown" ? this.selectObject(intersects[0].object) : this.pointObject(intersects[0].object);
+        }
 
         this.transverseRaycastProperties(intersects)
     }
@@ -280,6 +317,21 @@ class MyContents {
 
         this.app.activeCameraName = cameraName;
         this.app.updateCameraIfRequired();
+    }
+
+    checkCollision() {
+        const balloon = this.players[this.PLAYER_TYPE.HUMAN]
+        const balloonBoundingBox = new THREE.Box3().setFromObject(balloon.balloonGroup);
+        for (let obstacle of this.track.obstacles) {
+            const obstacleBoundingBox = new THREE.Box3().setFromObject(obstacle.mesh);
+            if (obstacleBoundingBox.intersectsBox(balloonBoundingBox)) {
+                let upCollision = obstacleBoundingBox.intersectsBox(new THREE.Box3().setFromObject(balloon.balloonGroup.children[0]));
+                let downCollision = obstacleBoundingBox.intersectsBox(new THREE.Box3().setFromObject(balloon.balloonGroup.children[1]));
+                if (upCollision || downCollision) {
+                    balloon.nearestPoint();
+                }
+            }
+        }
     }
 
     updateTrack() {
@@ -300,7 +352,8 @@ class MyContents {
             case this.GAME_STATE.PREPARATION:
                 break;
             case this.GAME_STATE.RUNNING:
-                this.players[this.PLAYER_TYPE.HUMAN].update(this.track.obstacles);
+                this.players[this.PLAYER_TYPE.HUMAN].update();
+                this.checkCollision();
                 break;
             case this.GAME_STATE.PAUSED:
                 break;
