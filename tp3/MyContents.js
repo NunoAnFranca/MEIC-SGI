@@ -187,8 +187,8 @@ class MyContents {
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
                 const index = `${i}${j}`;
-                this.humanBalloons[index] = new MyBalloon(this.app, this.PLAYER_TYPE.HUMAN, index, j * 6 + 35, 4, - 6 * (i + 1) - 5, (i + j) % 5 + 1);
-                this.aiBalloons[index] = new MyBalloon(this.app, this.PLAYER_TYPE.AI, index, j * 6, 4, - 6 * (i + 1) - 5, (i + j) % 5 + 1);
+                this.humanBalloons[index] = new MyBalloon(this.app, this.PLAYER_TYPE.HUMAN, index, j * 6 + 35, 4, - 6 * (i + 1) - 5, i * 3 + j + 1);
+                this.aiBalloons[index] = new MyBalloon(this.app, this.PLAYER_TYPE.AI, index, j * 6, 4, - 6 * (i + 1) - 5, i * 3 + j + 1);
             }
         }
     }
