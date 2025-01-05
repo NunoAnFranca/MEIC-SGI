@@ -506,6 +506,16 @@ class MyContents {
         }
     }
 
+    finishFireworks(){
+        for( let i = 0; i < this.fireworks.length; i++ ) {
+            if (this.fireworks[i].done) {
+                this.fireworks.splice(i,1) 
+                continue 
+            }
+            this.fireworks[i].update()
+        }
+    }
+
     updateTrack() {
         this.track.updateCurve()
     }
@@ -522,15 +532,19 @@ class MyContents {
     update() {
         switch (this.currentGameState) {
             case this.GAME_STATE.PREPARATION:
+                this.finishFireworks();
+                break;
+            case this.GAME_STATE.READY:
+                this.finishFireworks();
                 break;
             case this.GAME_STATE.RUNNING:
                 this.players[this.PLAYER_TYPE.HUMAN].update(this.track.powerUps);
                 this.checkCollision();
                 break;
             case this.GAME_STATE.PAUSED:
-                this.updateFireworks();
                 break;
             case this.GAME_STATE.FINISHED:
+                this.updateFireworks();
                 break;
             default:
                 break;
