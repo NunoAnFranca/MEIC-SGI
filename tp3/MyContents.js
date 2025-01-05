@@ -196,8 +196,11 @@ class MyContents {
     buildInitialPosition(name, [xPos, yPos, zPos]) {
         let geometry = new THREE.CylinderGeometry(1, 1, 0.2, 64);
 
+        const texture = new THREE.TextureLoader().load('./images/textures/initial_position_'+ name.toLowerCase() +'.jpg');
+
         let positionsMaterial = new THREE.MeshPhongMaterial({
-            color: "#888888",
+            map: texture,
+            color: "#ffffff",
             specular: "#000000",
             emissive: "#000000",
             shininess: 90,
