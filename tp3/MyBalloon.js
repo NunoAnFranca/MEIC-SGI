@@ -52,6 +52,8 @@ class MyBalloon {
         this.distanceCheckpoint = 6.0;
         this.checkpointsNum = 25;
         this.currentLap = 1;
+        this.extraLives = 0;
+        this.lastPowerUpObject = null;
         this.penaltySeconds = null;
 
         this.marker = null;
@@ -112,6 +114,8 @@ class MyBalloon {
                 boxMesh.position.x = i === 0 ? - 0.5 : 0.5;
                 boxMesh.position.y = - 3;
                 boxMesh.position.z = j === 0 ? - 0.5 : 0.5;
+                boxMesh.receiveShadow = true;
+                boxMesh.castShadow = true;
                 this.downPartGroup.add(boxMesh);
             }
         }
@@ -121,6 +125,8 @@ class MyBalloon {
         const basketMesh = new THREE.Mesh(basketGeometry, basketMaterial);
         basketMesh.name = "basket";
         basketMesh.position.y = - 4;
+        basketMesh.receiveShadow = true;
+        basketMesh.castShadow = true;
         this.downPartGroup.add(basketMesh);
 
         this.balloonGroup.add(this.upPartGroup);
@@ -257,7 +263,13 @@ class MyBalloon {
         this.marker.position.x = this.xPos;
         this.marker.position.z = this.zPos;
 
-        this.penaltySeconds = this.app.contents.penaltySeconds * 1000;
+        if(this.extraLives > 0){
+            this.extraLives--;
+        }
+        else if(this.extraLives <= 0){
+            this.penaltySeconds = this.app.contents.penaltySeconds * 1000;
+        }
+
     }
 
     checkPosition() {
@@ -303,6 +315,7 @@ class MyBalloon {
         if (this.currentCheckpointIndex >= this.checkpointsNum) {
             this.currentCheckpointIndex = 0;
             this.currentLap++;
+            this.lastPowerUpObject = null;
         }
 
         return false;
@@ -370,7 +383,25 @@ class MyBalloon {
         this.balloonGroup.position.z += 0.1;
     }
 
-    update() {
+    checkCollisionPowerUps(powerUps) {
+        for (let i = 0; i < powerUps.length; i++) {
+            let powerUp = powerUps[i];
+            let boundingBox = new THREE.Box3().setFromObject(powerUp.mesh);
+            let collision = boundingBox.intersectsBox(new THREE.Box3().setFromObject(this.balloonGroup));
+
+            if (collision) {
+                let upCollision = boundingBox.intersectsBox(new THREE.Box3().setFromObject(this.upPartGroup));
+                let downCollision = boundingBox.intersectsBox(new THREE.Box3().setFromObject(this.downPartGroup));
+                if (upCollision || downCollision) {
+                    if(powerUp !== this.lastPowerUpObject)
+                        this.extraLives++;
+                    this.lastPowerUpObject = powerUp;
+                }
+            }
+        }
+    }
+
+    update(powerUps) {
         this.moveWind();
 
         if (this.camera) {
@@ -385,6 +416,7 @@ class MyBalloon {
                     break;
             }
         }
+        this.checkCollisionPowerUps(powerUps);
     }
 }
 

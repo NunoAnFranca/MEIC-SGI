@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { MyObstacle } from "./MyObstacle.js";
+import { MyPowerUp } from "./MyPowerUp.js"
 
 class CustomSinCurve extends THREE.Curve {
 
@@ -54,9 +55,11 @@ class MyTrack {
         ]);
 
         this.obstacles = [];
-        
+        this.powerUps = [];
+
         this.buildCurve();
         this.createObstacles();
+        this.createPowerUps();
     }
 
     createObstacles() {
@@ -74,6 +77,24 @@ class MyTrack {
             position.applyAxisAngle(new THREE.Vector3(0, 0, 1), Math.PI);
             
             this.obstacles.push(new MyObstacle(this.app, `${i}`, position, obstacleSize, obstacleColor));
+        }
+    }
+
+    createPowerUps() {
+        const powerUpCount = 9;
+        const powerUpSize = {widthS: 32, heightS: 32, radius: 1};
+        const powerUpColor = 0x0000FF;
+
+        for (let i = 0; i < powerUpCount; i++) {
+            const t = ((i / powerUpCount) + 0.2) % 1;
+            const position = this.path.getPointAt(t);
+
+            position.multiplyScalar(this.trackSize);
+            position.y -= 2;
+
+            position.applyAxisAngle(new THREE.Vector3(0, 0, 1), Math.PI);
+            
+            this.powerUps.push(new MyPowerUp(this.app, `${i}`, position, powerUpSize, powerUpColor));
         }
     }
 

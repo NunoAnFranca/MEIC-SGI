@@ -5,11 +5,15 @@ class MyMenu {
         this.app = app;
         this.loader = loader;
 
+        this.raycaster = new THREE.Raycaster();
+        this.mouse = new THREE.Vector2();
+            
         // blimp menu variables
         this.matchTime = null;
         this.currentMatchTime = 0;
         this.lastWindVelocity = null;
-        this.currentWindVelocity = "Nan";
+        this.currentWindVelocity = "None";
+        this.currentGameState = "PREPARATION";
         this.lastGameState = null;
         this.lastLaps = null;
         this.currentLaps = 0;
@@ -19,12 +23,15 @@ class MyMenu {
         // initial menu variables
         this.totalLaps = 1;
         this.penaltySeconds = 1;
-        this.playerUsername = "Nan";
+        this.playerUsername = "Type here...";
         this.namePlayerBalloon = null;
         this.nameOponentBalloon = null;
+        this.writingUsername = false;
 
         this.loadBlimpMenu();
         this.loadStartMenu();
+        this.onKeyDown = this.onKeyDown.bind(this);
+        window.addEventListener('click', (event) => this.onMouseClick(event));
     }
 
     loadBlimpMenu() {
@@ -75,6 +82,8 @@ class MyMenu {
         const textPenalty = "Penalty (seconds): " + this.penaltySeconds;
         
         this.createButtonsPenalty();
+        this.createButtonsLaps();
+        this.createButtonUsername();
 
         this.textAuthorsGroup = new THREE.Group();
         this.textUsernameGroup = new THREE.Group();
@@ -151,6 +160,117 @@ class MyMenu {
         this.app.scene.add(this.buttonsPenaltyGroup);
     }
 
+    createButtonsLaps() {
+        this.buttonLaps1 = new THREE.Group();
+        this.buttonLaps2 = new THREE.Group();
+
+        let buttonMaterial = new THREE.MeshPhongMaterial({color:0xEEEEEE});
+        let buttonGeometry = new THREE.CylinderGeometry(0.5,0.5,0.5,32);
+        let buttonGeometry2 = new THREE.CylinderGeometry(0.5,0.5,0.5,32);
+
+        let buttonMesh1 = new THREE.Mesh(buttonGeometry, buttonMaterial);
+        let buttonMesh2 = new THREE.Mesh(buttonGeometry, buttonMaterial);
+        let buttonMesh3 = new THREE.Mesh(buttonGeometry2, buttonMaterial);
+        let buttonMesh4 = new THREE.Mesh(buttonGeometry2, buttonMaterial);
+        
+        this.buttonLapsPlus = new THREE.Group();
+        this.buttonLapsMinus = new THREE.Group();
+        this.convertTextToSprite("-", this.buttonLapsMinus);
+        this.convertTextToSprite("+", this.buttonLapsPlus);
+
+        this.buttonLapsPlus.position.set(0,0.5,0);
+        this.buttonLapsPlus.scale.set(0.4,0.4,0.4);
+        this.buttonLapsMinus.position.set(0,0.5,0);
+        this.buttonLapsMinus.scale.set(0.4,0.4,0.4);
+
+        buttonMesh3.visible = false
+        buttonMesh4.visible = false;
+        buttonMesh3.position.set(0,0.5,0);
+        buttonMesh4.position.set(0,0.5,0);
+
+        this.buttonLaps1.add(buttonMesh1, buttonMesh3, this.buttonLapsMinus);
+        this.buttonLaps1.position.set(-62.4,0,-93);
+        this.buttonLaps1.rotation.set(Math.PI/2,0,-Math.PI/3);
+
+        this.buttonLaps2.add(buttonMesh2, buttonMesh4, this.buttonLapsPlus);
+        this.buttonLaps2.position.set(-60.7,0,-96);
+        this.buttonLaps2.rotation.set(Math.PI/2,0,-Math.PI/3);
+
+        this.buttonsLapsGroup = new THREE.Group();
+        this.buttonsLapsGroup.add(this.buttonLaps1, this.buttonLaps2);
+        this.buttonsLapsGroup.position.set(0,18.5,0);
+
+        this.app.scene.add(this.buttonsLapsGroup);
+    }
+
+
+    createButtonsLaps() {
+        this.buttonLaps1 = new THREE.Group();
+        this.buttonLaps2 = new THREE.Group();
+
+        let buttonMaterial = new THREE.MeshPhongMaterial({color:0xEEEEEE});
+        let buttonGeometry = new THREE.CylinderGeometry(0.5,0.5,0.5,32);
+
+        let buttonMesh1 = new THREE.Mesh(buttonGeometry, buttonMaterial);
+        let buttonMesh2 = new THREE.Mesh(buttonGeometry, buttonMaterial);
+        let buttonMesh3 = new THREE.Mesh(buttonGeometry, buttonMaterial);
+        let buttonMesh4 = new THREE.Mesh(buttonGeometry, buttonMaterial);
+        
+        this.buttonLapsPlus = new THREE.Group();
+        this.buttonLapsMinus = new THREE.Group();
+        this.convertTextToSprite("-", this.buttonLapsMinus);
+        this.convertTextToSprite("+", this.buttonLapsPlus);
+
+        this.buttonLapsPlus.position.set(0,0.5,0);
+        this.buttonLapsPlus.scale.set(0.4,0.4,0.4);
+        this.buttonLapsMinus.position.set(0,0.5,0);
+        this.buttonLapsMinus.scale.set(0.4,0.4,0.4);
+
+        buttonMesh3.visible = false
+        buttonMesh4.visible = false;
+        buttonMesh3.position.set(0,0.5,0);
+        buttonMesh4.position.set(0,0.5,0);
+
+        this.buttonLaps1.add(buttonMesh1, buttonMesh3, this.buttonLapsMinus);
+        this.buttonLaps1.position.set(-62.4,0,-93);
+        this.buttonLaps1.rotation.set(Math.PI/2,0,-Math.PI/3);
+
+        this.buttonLaps2.add(buttonMesh2, buttonMesh4, this.buttonLapsPlus);
+        this.buttonLaps2.position.set(-60.7,0,-96);
+        this.buttonLaps2.rotation.set(Math.PI/2,0,-Math.PI/3);
+
+        this.buttonsLapsGroup = new THREE.Group();
+        this.buttonsLapsGroup.add(this.buttonLaps1, this.buttonLaps2);
+        this.buttonsLapsGroup.position.set(0,18.5,0);
+
+        this.app.scene.add(this.buttonsLapsGroup);
+    }
+
+    createButtonUsername() {
+        this.buttonUsername = new THREE.Group();
+        let buttonMaterial = new THREE.MeshPhongMaterial({color:0xEEEEEE});
+        let buttonGeometry = new THREE.BoxGeometry(1,1,2.5);
+
+        let buttonMesh1 = new THREE.Mesh(buttonGeometry, buttonMaterial);
+        let buttonMesh2 = new THREE.Mesh(buttonGeometry, new THREE.MeshPhongMaterial({color:0x0000EE}));
+
+        this.buttonUsernameGroup = new THREE.Group();
+        this.convertTextToSprite("<--", this.buttonUsernameGroup);
+
+        buttonMesh2.visible = false;
+        buttonMesh2.position.set(1,0,0);
+        this.buttonUsernameGroup.rotation.set(0, Math.PI/2,0);
+        this.buttonUsernameGroup.scale.set(0.4,0.4,0.4);
+        this.buttonUsernameGroup.position.set(0.8,0,0.6);
+
+        this.buttonUsername.add(buttonMesh1, buttonMesh2, this.buttonUsernameGroup);
+        this.buttonUsername.position.set(-60.7,26.3,-96);
+        this.buttonUsername.rotation.set(0,-Math.PI/6,0);
+
+        this.app.scene.add(this.buttonUsername);
+
+    }
+
     updateTextTime() {
         const textTime = String(this.currentMatchTime);
 
@@ -216,6 +336,149 @@ class MyMenu {
         this.updateTextWind();
         this.updateTextVouchers();
         this.updateTextLaps();
+    }
+
+    onMouseClick(event) {
+        const rect = this.app.renderer.domElement.getBoundingClientRect();
+        this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+        this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+    
+        this.raycaster.setFromCamera(this.mouse, this.app.activeCamera);
+    
+        const intersects = this.raycaster.intersectObjects([
+            this.buttonPenalty1,
+            this.buttonPenalty2,
+            this.buttonLaps1,
+            this.buttonLaps2,
+            this.buttonUsername
+        ], true);
+    
+        if (intersects.length > 0) {
+            const object = intersects[0].object;
+            if(this.app.contents.currentGameState === this.app.contents.GAME_STATE.PREPARATION){
+                if (this.buttonPenalty1.children.includes(object)) {
+                    this.decreasePenalty();
+                } else if (this.buttonPenalty2.children.includes(object)) {
+                    this.increasePenalty();
+                } else if (this.buttonLaps1.children.includes(object)) {
+                    this.decreaseLaps();
+                } else if (this.buttonLaps2.children.includes(object)) {
+                    this.increaseLaps();
+                } else if (this.buttonUsername.children.includes(object)) {
+                    this.startTypingUsername();
+                }
+            }
+        }
+    }
+
+    increasePenalty() {
+        if (this.penaltySeconds < 10){
+            this.penaltySeconds += 1;
+            this.updatePenaltyText();
+        }
+    }
+    
+    decreasePenalty() {
+        if (this.penaltySeconds > 0) {
+            this.penaltySeconds -= 1;
+            this.updatePenaltyText();
+        }
+    }
+    
+    increaseLaps() {
+        if (this.totalLaps < 10){
+            this.totalLaps += 1;
+            this.updateLapsTextInitalMenu();
+        }
+    }
+    
+    decreaseLaps() {
+        if (this.totalLaps > 1) {
+            this.totalLaps -= 1;
+            this.updateLapsTextInitalMenu();
+        }
+    }
+
+    startTypingUsername() {
+        if (this.typingUsername) return;
+    
+        this.typingUsername = true;
+        this.currentTypedUsername = "";
+        document.addEventListener("keydown", this.onKeyDown);
+        this.writingUsername = true;
+    }
+    
+    
+    stopTypingUsername() {
+        if (!this.typingUsername) return;
+    
+        this.typingUsername = false;
+        document.removeEventListener("keydown", this.onKeyDown);
+        this.updateUsernameText();
+        this.writingUsername = false;
+    }
+
+    onKeyDown(event) {
+        if (!this.typingUsername) return;
+    
+        if (event.key === "Enter") {
+
+            this.playerUsername = this.currentTypedUsername;
+            this.stopTypingUsername();
+        } else if (event.key === "Escape") {
+
+            this.currentTypedUsername = "Type here...";
+            this.stopTypingUsername();
+        } else if (event.key === "Backspace") {
+
+            this.currentTypedUsername = this.currentTypedUsername.slice(0, -1);
+        } else if (event.key.length === 1) {
+            if(this.currentTypedUsername.length < 15)
+                this.currentTypedUsername += event.key;
+        }
+    
+        this.updateUsernameText();
+    }
+    
+    updatePenaltyText() {
+        const textPenalty = "Penalty (seconds): " + this.penaltySeconds;
+    
+        while (this.textPenaltyGroup.children.length > 0) {
+            this.textPenaltyGroup.remove(this.textPenaltyGroup.children[0]);
+        }
+
+        this.app.contents.penaltySeconds = this.penaltySeconds;
+        this.convertTextToSprite(textPenalty, this.textPenaltyGroup);
+    }
+
+    updateUsernameText() {
+        const textUsername = "Username: " + this.currentTypedUsername;
+    
+        while (this.textUsernameGroup.children.length > 0) {
+            this.textUsernameGroup.remove(this.textUsernameGroup.children[0]);
+        }
+    
+        this.convertTextToSprite(textUsername, this.textUsernameGroup);
+        
+        this.playerUsername = this.currentTypedUsername;
+    }
+
+    updateLapsTextInitalMenu() {
+        const textNumberOfLaps = "Number of Laps: " + this.totalLaps;
+        const textLaps = "Laps: " + this.currentLaps + "/" + this.totalLaps;
+
+        while (this.textNumberOfLapsGroup.children.length > 0) {
+            this.textNumberOfLapsGroup.remove(this.textNumberOfLapsGroup.children[0]);
+        }
+
+        while (this.textLapsGroup.children.length > 0) {
+            this.textLapsGroup.remove(this.textLapsGroup.children[0]);
+        }
+
+        this.app.contents.totalLaps = this.totalLaps;
+
+        this.convertTextToSprite(textLaps, this.textLapsGroup);
+        this.convertTextToSprite(textNumberOfLaps, this.textNumberOfLapsGroup);
     }
 
     convertTextToSprite(text, group) {

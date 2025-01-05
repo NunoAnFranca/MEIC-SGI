@@ -10,7 +10,7 @@
                 "r": 1.0,
                 "g": 1.0,
                 "b": 1.0,
-                "intensity": 1.0
+                "intensity": 0.1
             },
             "fog": {
                 "color": {
@@ -747,25 +747,7 @@
                         "balloonFenceEnemy",
                         "balloonFencePlayer",
                         "blimp"
-                    ],
-                    "ligh1": {
-                        "type": "pointlight",
-                        "enabled": true,
-                        "color": {
-                            "r": 1.0,
-                            "g": 1.0,
-                            "b": 0.0
-                        },
-                        "intensity": 60,
-                        "distance": 100,
-                        "decay": 2.0,
-                        "castshadow": true,
-                        "position": {
-                            "x": 2,
-                            "y": -20,
-                            "z": 13
-                        }
-                    }
+                    ]
                 }
             },
             "blimp":{
@@ -2157,8 +2139,8 @@
                         "type": "nurbs",
                         "degree_u": 5,
                         "degree_v": 3,
-                        "parts_u": 64,
-                        "parts_v": 64,
+                        "parts_u": 128,
+                        "parts_v": 128,
                         "controlpoints": [
                             {
                                 "x": 0,
@@ -3179,8 +3161,849 @@
                     },
                     "nodesList":[
                         "startMenu",
-                        "river"
+                        "river",
+                        "tree1",
+                        "tree2",
+                        "tree3",
+                        "tree4",
+                        "tree5",
+                        "tree6",
+                        "tree7",
+                        "tree8",
+                        "tree9",
+                        "tree10",
+                        "tree11",
+                        "tree12",
+                        "tree13",
+                        "tree14",
+                        "tree15",
+                        "tree16",
+                        "tree17",
+                        "tree18",
+                        "tree19",
+                        "tree20",
+                        "tree21",
+                        "tree22",
+                        "tree23",
+                        "tree24",
+                        "tree25",
+                        "tree26",
+                        "tree27",
+                        "tree28",
+                        "tree29",
+                        "tree30"
+
                     ]
+                }
+            },
+            "tree1":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -55,
+                            "y": 56.5,
+                            "z": -115
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 20,
+                            "y": 20,
+                            "z": 20
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "treebillboard",
+                        "number": 3
+                    }
+                }
+            },
+            "tree2":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -55,
+                            "y": 56.5,
+                            "z": -115
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 20,
+                            "y": 20,
+                            "z": 20
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "treebillboard",
+                        "number": 1
+                    }
+                }
+            },
+            "tree3":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -55,
+                            "y": 56.5,
+                            "z": -115
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 20,
+                            "y": 20,
+                            "z": 20
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "treebillboard",
+                        "number": 2
+                    }
+                }
+            },
+            "tree4":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -100,
+                            "y": 44,
+                            "z": -55
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 20,
+                            "y": 20,
+                            "z": 20
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "treebillboard",
+                        "number": 3
+                    }
+                }
+            },
+            "tree5":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -100,
+                            "y": 44,
+                            "z": -55
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 20,
+                            "y": 20,
+                            "z": 20
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "treebillboard",
+                        "number": 2
+                    }
+                }
+            },
+            "tree6":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -100,
+                            "y": 44,
+                            "z": -55
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 20,
+                            "y": 20,
+                            "z": 20
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "treebillboard",
+                        "number": 6
+                    }
+                }
+            },
+            "tree7":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -90,
+                            "y": 56.5,
+                            "z": -110
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 20,
+                            "y": 20,
+                            "z": 20
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "treebillboard",
+                        "number": 3
+                    }
+                }
+            },
+            "tree8":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -90,
+                            "y": 56.5,
+                            "z": -110
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 20,
+                            "y": 20,
+                            "z": 20
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "treebillboard",
+                        "number": 2
+                    }
+                }
+            },
+            "tree9":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -90,
+                            "y": 56.5,
+                            "z": -110
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 20,
+                            "y": 20,
+                            "z": 20
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "treebillboard",
+                        "number": 1
+                    }
+                }
+            },
+            "tree10":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -70,
+                            "y": 37,
+                            "z": -50
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 20,
+                            "y": 20,
+                            "z": 20
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "treebillboard",
+                        "number": 3
+                    }
+                }
+            },
+            "tree11":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -70,
+                            "y": 37,
+                            "z": -50
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 20,
+                            "y": 20,
+                            "z": 20
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "treebillboard",
+                        "number": 2
+                    }
+                }
+            },
+            "tree12":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -70,
+                            "y": 37,
+                            "z": -50
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 20,
+                            "y": 20,
+                            "z": 20
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "treebillboard",
+                        "number": 1
+                    }
+                }
+            },
+            "tree13":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -90,
+                            "y": 53.3,
+                            "z": -90
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 20,
+                            "y": 20,
+                            "z": 20
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "treebillboard",
+                        "number": 1
+                    }
+                }
+            },
+            "tree14":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -90,
+                            "y": 53.3,
+                            "z": -90
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 20,
+                            "y": 20,
+                            "z": 20
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "treebillboard",
+                        "number": 2
+                    }
+                }
+            },
+            "tree15":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -90,
+                            "y": 53.3,
+                            "z": -90
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 20,
+                            "y": 20,
+                            "z": 20
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "treebillboard",
+                        "number": 3
+                    }
+                }
+            },
+            "tree16":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -80,
+                            "y": 22,
+                            "z": -20
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 20,
+                            "y": 20,
+                            "z": 20
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "treebillboard",
+                        "number": 4
+                    }
+                }
+            },
+            "tree17":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -80,
+                            "y": 22,
+                            "z": -20
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 20,
+                            "y": 20,
+                            "z": 20
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "treebillboard",
+                        "number": 5
+                    }
+                }
+            },
+            "tree18":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -80,
+                            "y": 22,
+                            "z": -20
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 20,
+                            "y": 20,
+                            "z": 20
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "treebillboard",
+                        "number": 6
+                    }
+                }
+            },
+            "tree19":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -60,
+                            "y": 8,
+                            "z": -5
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 20,
+                            "y": 20,
+                            "z": 20
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "treebillboard",
+                        "number": 7
+                    }
+                }
+            },            
+            "tree20":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -60,
+                            "y": 8,
+                            "z": -5
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 20,
+                            "y": 20,
+                            "z": 20
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "treebillboard",
+                        "number": 8
+                    }
+                }
+            },
+            "tree21":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -60,
+                            "y": 8,
+                            "z": -5
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 20,
+                            "y": 20,
+                            "z": 20
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "treebillboard",
+                        "number": 9
+                    }
+                }
+            },
+            "tree22":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -110,
+                            "y": 19.5,
+                            "z": 10
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 20,
+                            "y": 20,
+                            "z": 20
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "treebillboard",
+                        "number": 8
+                    }
+                }
+            },
+            "tree23":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -110,
+                            "y": 19.5,
+                            "z": 10
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 20,
+                            "y": 20,
+                            "z": 20
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "treebillboard",
+                        "number": 1
+                    }
+                }
+            },
+            "tree24":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -110,
+                            "y": 19.5,
+                            "z": 10
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 20,
+                            "y": 20,
+                            "z": 20
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "treebillboard",
+                        "number": 9
+                    }
+                }
+            },
+            "tree25":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -50,
+                            "y": -19,
+                            "z": 100
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 20,
+                            "y": 20,
+                            "z": 20
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "treebillboard",
+                        "number": 10
+                    }
+                }
+            },
+            "tree26":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -50,
+                            "y": -19,
+                            "z": 100
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 20,
+                            "y": 20,
+                            "z": 20
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "treebillboard",
+                        "number": 11
+                    }
+                }
+            },
+            "tree27":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -50,
+                            "y": -19,
+                            "z": 100
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 20,
+                            "y": 20,
+                            "z": 20
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "treebillboard",
+                        "number": 12
+                    }
+                }
+            },
+            "tree28":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -110,
+                            "y": 14,
+                            "z": 100
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 20,
+                            "y": 20,
+                            "z": 20
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "treebillboard",
+                        "number": 13
+                    }
+                }
+            },
+            "tree29":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -110,
+                            "y": 14,
+                            "z": 100
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 20,
+                            "y": 20,
+                            "z": 20
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "treebillboard",
+                        "number": 14
+                    }
+                }
+            },
+            "tree30":{
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -110,
+                            "y": 14,
+                            "z": 100
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 20,
+                            "y": 20,
+                            "z": 20
+                        }
+                    }
+                ],
+                "children": {
+                    "center":{
+                        "type": "treebillboard",
+                        "number": 15
+                    }
                 }
             },
             "cableCarMainNode": {

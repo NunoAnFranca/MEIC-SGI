@@ -2,10 +2,9 @@ import * as THREE from "three";
 import { MyAxis } from "./MyAxis.js";
 import { MyTrack } from "./MyTrack.js";
 import { MyParser } from "./MyParser.js";
-import { MyBalloon } from "./MyBalloon.js";
 import { MyMenu } from "./MyMenu.js";
-import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
-import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+import { MyBalloon } from "./MyBalloon.js";
+
 /**
  *  This class contains the contents of out application
  */
@@ -17,6 +16,7 @@ class MyContents {
     constructor(app) {
         this.app = app;
         this.axis = null;
+        this.mapSize = 4096;
 
         this.raycaster = new THREE.Raycaster()
         this.raycaster.near = 1
@@ -59,6 +59,18 @@ class MyContents {
 
         this.currentGameState = this.GAME_STATE.PREPARATION;
 
+        // initial menu variables
+        this.totalLaps = 1;
+        this.penaltySeconds = 1;
+        this.playerUsername = "Nan";
+        this.namePlayerBalloon = null;
+        this.nameOponentBalloon = null;
+
+        this.threeMainCameraNames = ["BalloonFirstPerson", "BalloonThirdPerson", "Perspective"];
+        this.threeMainCameraIndex = 0;
+        this.sceneLights = [];
+        this.sceneLightsOn = true;
+        this.sceneCastingShadows = true;
         // register events
 
         document.addEventListener(
@@ -83,11 +95,11 @@ class MyContents {
 
                     setInterval(() => {
                         if (this.currentGameState === this.GAME_STATE.RUNNING) {
-                            this.currentMatchTime = Math.floor((new Date().getTime() - this.matchTime - this.pausedTime) / 100);
-                            this.currentWindVelocity = this.DIRECTIONS[this.players[this.PLAYER_TYPE.HUMAN].direction];
-                            this.currentGameState = this.GAME_STATE.RUNNING;
-                            this.currentLaps = this.players[this.PLAYER_TYPE.HUMAN].currentLap;
-                            //TODO Vouchers Logic
+                            this.menu.currentMatchTime = Math.floor((new Date().getTime() - this.matchTime - this.pausedTime) / 100);
+                            this.menu.currentWindVelocity = this.DIRECTIONS[this.players[this.PLAYER_TYPE.HUMAN].direction];
+                            this.menu.currentGameState = this.GAME_STATE.RUNNING;
+                            this.menu.currentLaps = this.players[this.PLAYER_TYPE.HUMAN].currentLap;
+                            this.menu.currentVouchers = this.players[this.PLAYER_TYPE.HUMAN].extraLives;
 
                             this.menu.updateBlimpMenu();
                         }
@@ -102,11 +114,28 @@ class MyContents {
                 } else if (event.key === ' ') {
                     this.pauseStartTime = new Date().getTime();
                     this.currentGameState = this.GAME_STATE.PAUSED;
+                    this.menu.currentGameState = this.GAME_STATE.PAUSED;
                 }
             } else if (this.currentGameState === this.GAME_STATE.PAUSED) {
                 if (event.key === ' ') {
                     this.currentGameState = this.GAME_STATE.RUNNING;
+                    this.menu.currentGameState = this.currentGameState;
                     this.pausedTime += (new Date().getTime() - this.pauseStartTime);
+                }
+            }
+            if ((this.currentGameState === this.GAME_STATE.PAUSED) || (this.currentGameState === this.GAME_STATE.RUNNING)) {
+                if (event.key === 'v' || event.key === "V") {
+                    this.changeThreeMainCameras();
+                } else if (event.key === 'Escape') {
+                    //this.returnToInitialState();
+                    //TODO
+                }
+            }
+            if (!this.menu.writingUsername) {
+                if (event.key === 'l' || event.key === "L") {
+                    this.changeLightsPower();
+                } else if (event.key === "o" || event.key === "O") {
+                    this.changeShadowProjection();
                 }
             }
         });
@@ -124,7 +153,7 @@ class MyContents {
             this.app.scene.add(this.axis);
         }
 
-        // this.reader = new MyParser(this.app);
+        this.reader = new MyParser(this.app);
 
         // create temp lights so we can see the objects to not render the entire scene
         this.buildLights();
@@ -165,14 +194,22 @@ class MyContents {
 
     buildLights() {
         // add a point light on top of the model
-        const pointLight = new THREE.PointLight(0xffffff, 500, 0)
-        pointLight.position.set(0, 20, 0)
-        this.app.scene.add(pointLight)
+        this.pointLight = new THREE.PointLight(0xece787, 10, 700, 0.2);
+        this.pointLight.position.set(90, 40, 100);
+        this.pointLight.castShadow = true;
+        this.pointLight.shadow.mapSize.width = this.mapSize;
+        this.pointLight.shadow.mapSize.height = this.mapSize;
+        this.pointLight.shadow.camera.near = 0.5;
+        this.pointLight.shadow.camera.far = 600;
+        this.pointLight.shadow.bias = -0.001; // Adjust the bias to a negative value
+        this.pointLight.shadow.normalBias = 0.01
+        this.sceneLights.push(this.pointLight);
+        this.app.scene.add(this.pointLight);
 
         // add a point light helper for the previous point light
-        const sphereSize = 0.5
-        const pointLightHelper = new THREE.PointLightHelper(pointLight, sphereSize)
-        this.app.scene.add(pointLightHelper)
+        //const sphereSize = 0.5
+        //const pointLightHelper = new THREE.PointLightHelper(pointLight, sphereSize)
+        //this.app.scene.add(pointLightHelper)
 
         // add an ambient light
         const ambientLight = new THREE.AmbientLight(0x555555)
@@ -237,6 +274,124 @@ class MyContents {
         }
 
         this.initialPositions[obj.type] = false;
+    }
+
+    changeThreeMainCameras() {
+        if (this.threeMainCameraIndex < 2) {
+            this.threeMainCameraIndex++;
+        }
+        else {
+            this.threeMainCameraIndex = 0;
+        }
+        this.app.setActiveCamera(this.threeMainCameraNames[this.threeMainCameraIndex]);
+    }
+
+    returnToInitialState() {
+        // initial menu variables
+        this.totalLaps = 1;
+        this.penaltySeconds = 1;
+        this.playerUsername = "Nan";
+        this.namePlayerBalloon = null;
+        this.nameOponentBalloon = null;
+        this.currentGameState = this.GAME_STATE.PREPARATION;
+
+        this.menu.currentMatchTime = 0;
+        this.menu.currentWindVelocity = "None";
+        this.menu.currentGameState = this.GAME_STATE.PREPARATION;
+        this.menu.currentLaps = 0;
+        this.menu.currentVouchers = 0;
+
+
+        this.menu.updateBlimpMenu();
+        this.app.setActiveCamera('InitialMenu');
+        //TODO
+    }
+
+    changeLightsPower() {
+        if (this.sceneLightsOn) {
+            for (let light of this.sceneLights) {
+                light.visible = false;
+            }
+            this.sceneLightsOn = false;
+        } else {
+            for (let light of this.sceneLights) {
+                light.visible = true;
+            }
+            this.sceneLightsOn = true;
+        }
+    }
+
+    changeShadowProjection() {
+        if (this.sceneCastingShadows) {
+            for (let light of this.sceneLights) {
+                light.castShadow = false;
+            }
+            this.sceneCastingShadows = false;
+        } else {
+            for (let light of this.sceneLights) {
+                light.castShadow = true;
+            }
+            this.sceneCastingShadows = true;
+        }
+    }
+
+    changeThreeMainCameras() {
+        if (this.threeMainCameraIndex < 2) {
+            this.threeMainCameraIndex++;
+        }
+        else {
+            this.threeMainCameraIndex = 0;
+        }
+        this.app.setActiveCamera(this.threeMainCameraNames[this.threeMainCameraIndex]);
+    }
+
+    returnToInitialState() {
+        // initial menu variables
+        this.totalLaps = 1;
+        this.penaltySeconds = 1;
+        this.playerUsername = "Nan";
+        this.namePlayerBalloon = null;
+        this.nameOponentBalloon = null;
+        this.currentGameState = this.GAME_STATE.PREPARATION;
+
+        this.menu.currentMatchTime = 0;
+        this.menu.currentWindVelocity = "None";
+        this.menu.currentGameState = this.GAME_STATE.PREPARATION;
+        this.menu.currentLaps = 0;
+        this.menu.currentVouchers = 0;
+
+
+        this.menu.updateBlimpMenu();
+        this.app.setActiveCamera('InitialMenu');
+        //TODO
+    }
+
+    changeLightsPower() {
+        if (this.sceneLightsOn) {
+            for (let light of this.sceneLights) {
+                light.visible = false;
+            }
+            this.sceneLightsOn = false;
+        } else {
+            for (let light of this.sceneLights) {
+                light.visible = true;
+            }
+            this.sceneLightsOn = true;
+        }
+    }
+
+    changeShadowProjection() {
+        if (this.sceneCastingShadows) {
+            for (let light of this.sceneLights) {
+                light.castShadow = false;
+            }
+            this.sceneCastingShadows = false;
+        } else {
+            for (let light of this.sceneLights) {
+                light.castShadow = true;
+            }
+            this.sceneCastingShadows = true;
+        }
     }
 
     unscaleObjects() {
@@ -392,7 +547,7 @@ class MyContents {
             case this.GAME_STATE.PREPARATION:
                 break;
             case this.GAME_STATE.RUNNING:
-                this.players[this.PLAYER_TYPE.HUMAN].update();
+                this.players[this.PLAYER_TYPE.HUMAN].update(this.track.powerUps);
                 this.checkCollision();
                 break;
             case this.GAME_STATE.PAUSED:
