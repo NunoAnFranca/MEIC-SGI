@@ -73,10 +73,18 @@ class MyApp {
     initCameras() {
         const aspect = window.innerWidth / window.innerHeight;
 
-        // Create a basic perspective camera
-        const perspective1 = new THREE.PerspectiveCamera(60, aspect, 0.1, 1000)
-        perspective1.position.set(0, 75, 0)
-        this.cameras['Perspective'] = perspective1
+        // defines the frustum size for the orthographic cameras
+        const left = -this.frustumSize / 2 * aspect
+        const right = this.frustumSize / 2 * aspect
+        const top = this.frustumSize / 2
+        const bottom = -this.frustumSize / 2
+
+        // Create a start perspective camera
+        const start = new THREE.PerspectiveCamera(60, aspect, 0.1, 1000)
+        start.position.set(22, 20, 0)
+        start.target = new THREE.Vector3(22, 0, -20)
+        start.lookAt(start.target)
+        this.cameras['Start'] = start
 
         // create a balloon perspective camera
         const balloonFirstPerson = new THREE.PerspectiveCamera(100, aspect, 0.1, 1000)
@@ -91,20 +99,38 @@ class MyApp {
         balloonThirdPerson.target = new THREE.Vector3(0, 0, 0)
         balloonThirdPerson.lookAt(balloonThirdPerson.target)
         this.cameras['BalloonThirdPerson'] = balloonThirdPerson
-        
+
         //create a initial menu perspective camera
         const initMenu = new THREE.PerspectiveCamera(100, aspect, 0.1, 1000);
-        initMenu.position.set(-56.911910092428265,18.53264621864038,-83.07926277580806);
-        initMenu.target =  new THREE.Vector3(-71.5,18.53264621864038,-91.50558);
+        initMenu.position.set(-56.911910092428265, 18.53264621864038, -83.07926277580806);
+        initMenu.target = new THREE.Vector3(-71.5, 18.53264621864038, -91.50558);
         initMenu.lookAt(initMenu.target);
         this.cameras['InitialMenu'] = initMenu;
 
-        // Create a basic perspective camera
-        const balloonChoice = new THREE.PerspectiveCamera(100, aspect, 0.1, 1000)
-        balloonChoice.position.set(25, 30, -19)
-        balloonChoice.target = new THREE.Vector3(25, 0, -20)
-        balloonChoice.lookAt(balloonChoice.target)
-        this.cameras['BalloonChoice'] = balloonChoice
+        // Create a human balloon choice ortographic camera
+        const humanBalloonChoice = new THREE.OrthographicCamera(left, right, top, bottom, 0.1, 1000);
+        humanBalloonChoice.up = new THREE.Vector3(0, 0, 1);
+        humanBalloonChoice.position.set(0, 10, 0)
+        humanBalloonChoice.lookAt(new THREE.Vector3(0, 0, 0));
+        humanBalloonChoice.setViewOffset(window.innerWidth, window.innerHeight, -1500, 600, window.innerWidth, window.innerHeight);
+        this.cameras['HumanBalloonChoice'] = humanBalloonChoice
+
+        // Create a ai balloon choice ortographic camera
+        const aiBalloonChoice = new THREE.OrthographicCamera(left, right, top, bottom, 0.1, 1000);
+        aiBalloonChoice.up = new THREE.Vector3(0, 0, 1);
+        aiBalloonChoice.position.set(0, 10, 0)
+        aiBalloonChoice.lookAt(new THREE.Vector3(0, 0, 0));
+        aiBalloonChoice.setViewOffset(window.innerWidth, window.innerHeight, -200, 600, window.innerWidth, window.innerHeight);
+        this.cameras['AiBalloonChoice'] = aiBalloonChoice
+
+        // Create a initial position choice ortographic camera
+        const initialPositionChoice = new THREE.OrthographicCamera(left, right, top, bottom, 0.1, 1000);
+        initialPositionChoice.up = new THREE.Vector3(0, 0, 1);
+        initialPositionChoice.position.set(0, 10, 0)
+        initialPositionChoice.lookAt(new THREE.Vector3(0, 0, 0));
+        initialPositionChoice.setViewOffset(window.innerWidth, window.innerHeight, -1300, 800, window.innerWidth, window.innerHeight);
+        initialPositionChoice.zoom = 1.5;
+        this.cameras['InitialPositionChoice'] = initialPositionChoice
     }
 
     /**
@@ -174,8 +200,6 @@ class MyApp {
         }
     }
 
-
-
     /**
      * 
      * @param {MyContents} contents the contents object 
@@ -200,26 +224,26 @@ class MyApp {
     render() {
         this.stats.begin();
         this.updateCameraIfRequired();
-    
+
         // Update the animation if contents were provided
         if (this.activeCamera !== undefined && this.activeCamera !== null) {
             this.contents.update();
         }
-    
+
         // Update player position for minimap (assuming player is in this.contents)
         this.updateMinimap();
         // Update the controls for the main camera
         this.controls.update();
-    
+
         // Render the main scene
         this.renderer.render(this.scene, this.activeCamera);
-    
+
         // Render the minimap scene
         this.minimap.minimapRenderer.render(this.minimap.miniScene, this.minimap.minimapCamera);
-    
+
         // Call the next frame
         requestAnimationFrame(this.render.bind(this));
-    
+
         this.stats.end();
     }
 
@@ -228,8 +252,7 @@ class MyApp {
         if (this.contents && player) {
             this.minimap.minimapMarker.position.set(0, player.yPos - 3, 0);
         }
-    } 
+    }
 }
-
 
 export { MyApp };

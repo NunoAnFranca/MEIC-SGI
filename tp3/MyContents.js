@@ -32,6 +32,9 @@ class MyContents {
 
         this.GAME_STATE = {
             PREPARATION: "PREPARATION",
+            CHOOSE_HUMAN_BALLOON: "CHOOSE_HUMAN_BALLOON",
+            CHOOSE_AI_BALLOON: "CHOOSE_AI_BALLOON",
+            CHOOSE_INITIAL_POSITION: "CHOOSE_INITIAL_POSITION",
             RUNNING: "RUNNING",
             PAUSED: "PAUSED",
             FINISHED: "FINISHED"
@@ -139,9 +142,6 @@ class MyContents {
             BLUE: [21, 0.8, -15]
         };
 
-        this.buildInitialPosition("RED", this.initialPositionsCoords["RED"]);
-        this.buildInitialPosition("BLUE", this.initialPositionsCoords["BLUE"]);
-
         // create the track
         this.track = new MyTrack(this.app);
 
@@ -244,6 +244,12 @@ class MyContents {
             this.humanBalloons[balloon].balloonGroup.scale.set(1, 1, 1);
             this.aiBalloons[balloon].balloonGroup.scale.set(1, 1, 1);
         });
+
+        this.app.scene.children.forEach((child) => {
+            if (child.name === "RED" || child.name === "BLUE") {
+                child.scale.set(1, 1, 1);
+            }
+        });
     }
 
     increaseSize(obj) {
@@ -252,21 +258,32 @@ class MyContents {
         obj.scale.set(factor, factor, factor);
     }
 
-    selectObject(obj) {
-        if (obj && this.currentGameState === this.GAME_STATE.PREPARATION) {
-            if ((obj.name === "RED" || obj.name === "BLUE") && this.players[this.PLAYER_TYPE.HUMAN]) {
-                this.changeObjectPosition(this.players[this.PLAYER_TYPE.HUMAN], obj.name);
-            } else if (obj.name === "surface") {
-                const balloonGroup = obj.parent.parent;
-                switch (balloonGroup.type) {
-                    case this.PLAYER_TYPE.HUMAN:
-                        this.players[balloonGroup.type] = this.humanBalloons[balloonGroup.index];
-                        break;
-                    case this.PLAYER_TYPE.AI:
-                        this.changeObjectPosition(balloonGroup);
-                        break;
-                    default:
-                        break;
+    selectObject(intersects) {
+        if (intersects[0]) {
+            const obj = intersects[0].object;
+            if (obj) {
+                if ((obj.name === "RED" || obj.name === "BLUE") && this.players[this.PLAYER_TYPE.HUMAN] && this.currentGameState === this.GAME_STATE.CHOOSE_INITIAL_POSITION) {
+                    this.changeObjectPosition(this.players[this.PLAYER_TYPE.HUMAN], obj.name);
+                    this.app.setActiveCamera("AiBalloonChoice");
+                    this.currentGameState = this.GAME_STATE.CHOOSE_AI_BALLOON;
+                } else if (obj.name === "surface" && (this.currentGameState === this.GAME_STATE.CHOOSE_HUMAN_BALLOON || this.currentGameState === this.GAME_STATE.CHOOSE_AI_BALLOON)) {
+                    const balloonGroup = obj.parent.parent;
+                    switch (balloonGroup.type) {
+                        case this.PLAYER_TYPE.HUMAN:
+                            this.players[balloonGroup.type] = this.humanBalloons[balloonGroup.index];
+                            this.buildInitialPosition("RED", this.initialPositionsCoords["RED"]);
+                            this.buildInitialPosition("BLUE", this.initialPositionsCoords["BLUE"]);
+                            this.app.setActiveCamera("InitialPositionChoice");
+                            this.currentGameState = this.GAME_STATE.CHOOSE_INITIAL_POSITION;
+                            break;
+                        case this.PLAYER_TYPE.AI:
+                            this.changeObjectPosition(balloonGroup);
+                            this.app.setActiveCamera("Start");
+                            this.currentGameState = this.GAME_STATE.PREPARATION;
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         }
@@ -275,10 +292,18 @@ class MyContents {
     pointObject(intersects) {
         if (intersects[0]) {
             const obj = intersects[0].object;
-            if (obj && this.currentGameState === this.GAME_STATE.PREPARATION) {
-                const balloonGroup = obj.parent.parent;
-                if (balloonGroup && this.players[balloonGroup.type] !== this.humanBalloons[balloonGroup.index] && this.players[balloonGroup.type] !== this.aiBalloons[balloonGroup.index]) {
-                    this.increaseSize(balloonGroup);
+            if (obj) {
+                if (obj.name === "surface" && (this.currentGameState === this.GAME_STATE.CHOOSE_HUMAN_BALLOON || this.currentGameState === this.GAME_STATE.CHOOSE_AI_BALLOON)) {
+                    const balloonGroup = obj.parent.parent;
+                    if (balloonGroup && this.players[balloonGroup.type] !== this.humanBalloons[balloonGroup.index] && this.players[balloonGroup.type] !== this.aiBalloons[balloonGroup.index]) {
+                        this.increaseSize(balloonGroup);
+                    }
+                } else if ((obj.name === "RED" || obj.name === "BLUE") && this.currentGameState === this.GAME_STATE.CHOOSE_INITIAL_POSITION) {
+                    if (this.players[this.PLAYER_TYPE.HUMAN]) {
+                        this.increaseSize(obj);
+                    }
+                } else {
+                    this.unscaleObjects();
                 }
             }
         } else {
@@ -320,7 +345,7 @@ class MyContents {
         //3. compute intersections
         var intersects = this.raycaster.intersectObjects(this.app.scene.children);
 
-        event.type === "pointerdown" ? this.selectObject(intersects[0].object) : this.pointObject(intersects);
+        event.type === "pointerdown" ? this.selectObject(intersects) : this.pointObject(intersects);
 
         this.transverseRaycastProperties(intersects)
     }
