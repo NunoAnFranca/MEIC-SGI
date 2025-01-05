@@ -123,20 +123,17 @@ class MyBalloon {
         basketMesh.position.y = - 4;
         this.downPartGroup.add(basketMesh);
 
+        this.balloonGroup.add(this.upPartGroup);
+        this.balloonGroup.add(this.downPartGroup);
+        this.balloonGroup.position.set(this.xPos, this.yPos, this.zPos);
+
+        this.app.scene.add(this.balloonGroup);
+    }
+
+    setPosition([xPos, yPos, zPos], position) {
+        const color = position === "RED" ? "#ff0000" : "#0000ff";
         const markerGeometry = new THREE.SphereGeometry(0.5, 64, 64);
-        let markerMaterial = null;
-        
-        switch (this.type) {
-            case "HUMAN":
-                markerMaterial = new THREE.MeshPhongMaterial({ color: "#ff0000" });
-                break;
-            case "AI":
-                markerMaterial = new THREE.MeshPhongMaterial({ color: "#0000ff" });
-                break;
-            default:
-                break;
-        };
-        
+        const markerMaterial = new THREE.MeshPhongMaterial({ color: color });
         this.marker = new THREE.Mesh(markerGeometry, markerMaterial);
         this.marker.scale.set(1, 0.25, 1);
         this.marker.name = "marker";
@@ -144,22 +141,15 @@ class MyBalloon {
         this.marker.position.y = -4;
         this.marker.position.z = this.zPos;
         this.marker.visible = false;
+        this.marker.visible = true;
 
-        this.balloonGroup.add(this.upPartGroup);
-        this.balloonGroup.add(this.downPartGroup);
-        this.balloonGroup.position.set(this.xPos, this.yPos, this.zPos);
-
-        this.app.scene.add(this.marker);
-        this.app.scene.add(this.balloonGroup);
-    }
-
-    setPosition([xPos, yPos, zPos]) {
         this.xPos = xPos;
         this.yPos = yPos + 5;
         this.zPos = zPos;
+        this.balloonGroup.scale.set(1, 1, 1);
         this.balloonGroup.position.set(this.xPos, this.yPos, this.zPos);
-        this.marker.visible = true;
         this.marker.position.set(this.xPos, this.yPos - 6, this.zPos);
+        this.app.scene.add(this.marker);
 
         this.initCheckpoints();
     }

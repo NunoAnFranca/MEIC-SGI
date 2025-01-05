@@ -63,16 +63,10 @@ class MyContents {
             // list of events: https://developer.mozilla.org/en-US/docs/Web/API/Element
             this.onPointerMove.bind(this)
         );
-        /* //TODO
-                document.addEventListener(
-                    "pointermove",
-                    this.onPointerMove.bind(this)
-                );*/
-
-        /*
-                document.addEventListener("mouseover", (event) => {
-                    this.onPointerMove.bind(this);
-                });*/
+        document.addEventListener(
+            "pointermove",
+            this.onPointerMove.bind(this)
+        );
 
         document.addEventListener("keydown", (event) => {
             if (this.currentGameState === this.GAME_STATE.PREPARATION) {
@@ -127,7 +121,7 @@ class MyContents {
             this.app.scene.add(this.axis);
         }
 
-        this.reader = new MyParser(this.app);
+        // this.reader = new MyParser(this.app);
 
         // create temp lights so we can see the objects to not render the entire scene
         this.buildLights();
@@ -136,15 +130,17 @@ class MyContents {
         this.buildBalloons();
 
         this.initialPositions = {
-            [this.PLAYER_TYPE.HUMAN]: true,
-            [this.PLAYER_TYPE.AI]: true
+            RED: true,
+            BLUE: true
         };
+
         this.initialPositionsCoords = {
-            [this.PLAYER_TYPE.HUMAN]: [27, 0.8, -15],
-            [this.PLAYER_TYPE.AI]: [21, 0.8, -15]
+            RED: [27, 0.8, -15],
+            BLUE: [21, 0.8, -15]
         };
-        this.buildInitialPosition(this.PLAYER_TYPE.HUMAN, this.initialPositionsCoords[this.PLAYER_TYPE.HUMAN]);
-        this.buildInitialPosition(this.PLAYER_TYPE.AI, this.initialPositionsCoords[this.PLAYER_TYPE.AI]);
+
+        this.buildInitialPosition("RED", this.initialPositionsCoords["RED"]);
+        this.buildInitialPosition("BLUE", this.initialPositionsCoords["BLUE"]);
 
         // create the track
         this.track = new MyTrack(this.app);
@@ -196,7 +192,7 @@ class MyContents {
     buildInitialPosition(name, [xPos, yPos, zPos]) {
         let geometry = new THREE.CylinderGeometry(1, 1, 0.2, 64);
 
-        const texture = new THREE.TextureLoader().load('./images/textures/initial_position_'+ name.toLowerCase() +'.jpg');
+        const texture = new THREE.TextureLoader().load('./images/textures/initial_position_' + name.toLowerCase() + '.jpg');
 
         let positionsMaterial = new THREE.MeshPhongMaterial({
             map: texture,
@@ -218,15 +214,23 @@ class MyContents {
         }
     }
 
-    changeObjectPosition(obj) {
+    changeObjectPosition(obj, position = null) {
         switch (obj.type) {
             case this.PLAYER_TYPE.HUMAN:
-                this.humanBalloons[obj.index].setPosition(this.initialPositionsCoords[obj.type]);
+                this.humanBalloons[obj.index].setPosition(this.initialPositionsCoords[position], position);
                 this.players[obj.type] = this.humanBalloons[obj.index];
+                this.initialPositions[position] = false;
                 break;
             case this.PLAYER_TYPE.AI:
-                this.aiBalloons[obj.index].setPosition(this.initialPositionsCoords[obj.type]);
+                if (this.initialPositions["RED"]) {
+                    position = "RED";
+                } else {
+                    position = "BLUE";
+                }
+
+                this.aiBalloons[obj.index].setPosition(this.initialPositionsCoords[position], position);
                 this.players[obj.type] = this.aiBalloons[obj.index];
+                this.initialPositions[position] = false;
                 break;
             default:
                 break;
@@ -235,42 +239,52 @@ class MyContents {
         this.initialPositions[obj.type] = false;
     }
 
-    unscaleBalloons() {
-        for (let i = 0; i < this.humanBalloons.length; i++) {
-            this.humanBalloons[i].balloonGroup.scale.set(1, 1, 1);
-            this.aiBalloons[i].balloonGroup.scale.set(1, 1, 1);
-        }
+    unscaleObjects() {
+        Object.keys(this.humanBalloons).forEach((balloon) => {
+            this.humanBalloons[balloon].balloonGroup.scale.set(1, 1, 1);
+            this.aiBalloons[balloon].balloonGroup.scale.set(1, 1, 1);
+        });
     }
 
     increaseSize(obj) {
-        this.unscaleBalloons();
-        switch (obj.type) {
-            case this.PLAYER_TYPE.HUMAN:
-                //this.humanBalloons[obj.index].balloonGroup.scale(2, 2, 2);
-                obj.scale.set(1.3, 1.3, 1.3);
-                break;
-            case this.PLAYER_TYPE.AI:
-                break;
-            default:
-                break;
-        }
+        const factor = 1.3;
+        this.unscaleObjects();
+        obj.scale.set(factor, factor, factor);
     }
 
     selectObject(obj) {
         if (obj && this.currentGameState === this.GAME_STATE.PREPARATION) {
-            const balloonGroup = obj.parent.parent;
-            if (balloonGroup && this.PLAYER_TYPE[balloonGroup.type] && this.initialPositions[balloonGroup.type]) {
-                this.changeObjectPosition(balloonGroup);
+            if ((obj.name === "RED" || obj.name === "BLUE") && this.players[this.PLAYER_TYPE.HUMAN]) {
+                this.changeObjectPosition(this.players[this.PLAYER_TYPE.HUMAN], obj.name);
+            } else if (obj.name === "surface") {
+                const balloonGroup = obj.parent.parent;
+                switch (balloonGroup.type) {
+                    case this.PLAYER_TYPE.HUMAN:
+                        this.players[balloonGroup.type] = this.humanBalloons[balloonGroup.index];
+                        break;
+                    case this.PLAYER_TYPE.AI:
+                        this.changeObjectPosition(balloonGroup);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }
 
-    pointObject(obj) {/*
-        if (obj && this.currentGameState === this.GAME_STATE.PREPARATION) {
-            if (obj.parent && this.PLAYER_TYPE[obj.parent.type] && this.initialPositions[obj.parent.type]) {
-                this.increaseSize(obj.parent);
+    pointObject(intersects) {
+        if (intersects[0]) {
+            const obj = intersects[0].object;
+            if (obj && this.currentGameState === this.GAME_STATE.PREPARATION) {
+                const balloonGroup = obj.parent.parent;
+                if (balloonGroup && this.players[balloonGroup.type] !== this.humanBalloons[balloonGroup.index] && this.players[balloonGroup.type] !== this.aiBalloons[balloonGroup.index]) {
+                    this.increaseSize(balloonGroup);
+                }
             }
-        }*/
+        } else {
+            this.unscaleObjects();
+        }
+
     }
 
     /**
@@ -306,9 +320,7 @@ class MyContents {
         //3. compute intersections
         var intersects = this.raycaster.intersectObjects(this.app.scene.children);
 
-        if (intersects[0]) {
-            event.type === "pointerdown" ? this.selectObject(intersects[0].object) : this.pointObject(intersects[0].object);
-        }
+        event.type === "pointerdown" ? this.selectObject(intersects[0].object) : this.pointObject(intersects);
 
         this.transverseRaycastProperties(intersects)
     }
