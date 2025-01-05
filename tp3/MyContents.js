@@ -100,7 +100,7 @@ class MyContents {
                     setInterval(() => {
                         if (this.currentGameState === this.GAME_STATE.RUNNING) {
                             this.players[this.PLAYER_TYPE.HUMAN].moveWind();
-                            
+
                             this.menu.currentMatchTime = Math.floor((new Date().getTime() - this.matchTime - this.pausedTime) / 100);
                             this.menu.currentWindVelocity = this.DIRECTIONS[this.players[this.PLAYER_TYPE.HUMAN].direction];
                             this.menu.currentGameState = this.GAME_STATE.RUNNING;
@@ -293,10 +293,10 @@ class MyContents {
     }
 
     createFireworkSpots() {
-        let material = new THREE.MeshPhongMaterial({color:0x000000});
-        let geometry = new THREE.BoxGeometry(1,2.5,1);
-        let mesh1 = new THREE.Mesh(geometry,  material);
-        let mesh2 = new THREE.Mesh(geometry,  material);
+        let material = new THREE.MeshPhongMaterial({ color: 0x000000 });
+        let geometry = new THREE.BoxGeometry(1, 2.5, 1);
+        let mesh1 = new THREE.Mesh(geometry, material);
+        let mesh2 = new THREE.Mesh(geometry, material);
 
         mesh1.position.set(28, 0.8, -5);
         mesh2.position.set(18, 0.8, -5);
@@ -376,28 +376,34 @@ class MyContents {
         if (intersects[0]) {
             const obj = intersects[0].object;
             if (obj) {
-                if ((obj.name === "RED" || obj.name === "BLUE") && this.players[this.PLAYER_TYPE.HUMAN] && this.currentGameState === this.GAME_STATE.CHOOSE_INITIAL_POSITION) {
-                    this.changeObjectPosition(this.players[this.PLAYER_TYPE.HUMAN], obj.name);
-                    //this.app.setActiveCamera("AiBalloonChoice");
-                    this.currentGameState = this.GAME_STATE.CHOOSE_AI_BALLOON;
-                } else if (obj.name === "surface" && (this.currentGameState === this.GAME_STATE.CHOOSE_HUMAN_BALLOON || this.currentGameState === this.GAME_STATE.CHOOSE_AI_BALLOON)) {
+                const humanPlayer = this.players[this.PLAYER_TYPE.HUMAN];
+                if ((obj.name === "RED" || obj.name === "BLUE") && humanPlayer && this.currentGameState === this.GAME_STATE.CHOOSE_INITIAL_POSITION) {
+                    this.changeObjectPosition(humanPlayer, obj.name);
+                    this.menu.updatePlayerBalloon(`${humanPlayer.type}${humanPlayer.index}`);
+                    this.currentGameState = this.GAME_STATE.PREPARATION;
+                    this.setCamera("InitialMenu");
+                } else if (obj.name === "surface") {
                     const balloonGroup = obj.parent.parent;
-                    switch (balloonGroup.type) {
-                        case this.PLAYER_TYPE.HUMAN:
-                            this.players[balloonGroup.type] = this.humanBalloons[balloonGroup.index];
-                            this.buildInitialPosition("RED", this.initialPositionsCoords["RED"]);
-                            this.buildInitialPosition("BLUE", this.initialPositionsCoords["BLUE"]);
-                            //this.app.setActiveCamera("InitialPositionChoice");
-                            this.currentGameState = this.GAME_STATE.CHOOSE_INITIAL_POSITION;
+                    switch (this.currentGameState) {
+                        case this.GAME_STATE.CHOOSE_HUMAN_BALLOON:
+                            if (balloonGroup.type === this.PLAYER_TYPE.HUMAN) {
+                                this.players[balloonGroup.type] = this.humanBalloons[balloonGroup.index];
+                                this.buildInitialPosition("RED", this.initialPositionsCoords["RED"]);
+                                this.buildInitialPosition("BLUE", this.initialPositionsCoords["BLUE"]);
+                                this.currentGameState = this.GAME_STATE.CHOOSE_INITIAL_POSITION;
+                            }
                             break;
-                        case this.PLAYER_TYPE.AI:
-                            this.changeObjectPosition(balloonGroup);
-                            //this.app.setActiveCamera("Start");
-                            this.currentGameState = this.GAME_STATE.READY;
+                        case this.GAME_STATE.CHOOSE_AI_BALLOON:
+                            if (balloonGroup.type === this.PLAYER_TYPE.AI) {
+                                this.changeObjectPosition(balloonGroup);
+                                this.menu.updateOponentBalloon(`${balloonGroup.type}${balloonGroup.index}`);
+                                this.currentGameState = this.GAME_STATE.PREPARATION;
+                                this.setCamera("InitialMenu");
+                            }
                             break;
                         default:
                             break;
-                    }
+                    };
                 }
             }
         }
@@ -407,11 +413,22 @@ class MyContents {
         if (intersects[0]) {
             const obj = intersects[0].object;
             if (obj) {
-                if (obj.name === "surface" && (this.currentGameState === this.GAME_STATE.CHOOSE_HUMAN_BALLOON || this.currentGameState === this.GAME_STATE.CHOOSE_AI_BALLOON)) {
+                if (obj.name === "surface") {
                     const balloonGroup = obj.parent.parent;
-                    if (balloonGroup && this.players[balloonGroup.type] !== this.humanBalloons[balloonGroup.index] && this.players[balloonGroup.type] !== this.aiBalloons[balloonGroup.index]) {
-                        this.increaseSize(balloonGroup);
-                    }
+                    switch (this.currentGameState) {
+                        case this.GAME_STATE.CHOOSE_HUMAN_BALLOON:
+                            if (balloonGroup.type === this.PLAYER_TYPE.HUMAN) {
+                                this.increaseSize(balloonGroup);
+                            }
+                            break;
+                        case this.GAME_STATE.CHOOSE_AI_BALLOON:
+                            if (balloonGroup.type === this.PLAYER_TYPE.AI) {
+                                this.increaseSize(balloonGroup);
+                            }
+                            break;
+                        default:
+                            break;
+                    };
                 } else if ((obj.name === "RED" || obj.name === "BLUE") && this.currentGameState === this.GAME_STATE.CHOOSE_INITIAL_POSITION) {
                     if (this.players[this.PLAYER_TYPE.HUMAN]) {
                         this.increaseSize(obj);
@@ -489,29 +506,29 @@ class MyContents {
     }
 
     updateFireworks() {
-        if(Math.random()  < 0.02) {
+        if (Math.random() < 0.02) {
             let chooseSpot = Math.random();
-            if (chooseSpot < 0.5){
+            if (chooseSpot < 0.5) {
                 this.fireworks.push(new MyFirework(this.app, this, 28, 0.8, -5))
             } else {
                 this.fireworks.push(new MyFirework(this.app, this, 18, 0.8, -5))
             }
         }
 
-        for( let i = 0; i < this.fireworks.length; i++ ) {
+        for (let i = 0; i < this.fireworks.length; i++) {
             if (this.fireworks[i].done) {
-                this.fireworks.splice(i,1) 
-                continue 
+                this.fireworks.splice(i, 1)
+                continue
             }
             this.fireworks[i].update()
         }
     }
 
-    finishFireworks(){
-        for( let i = 0; i < this.fireworks.length; i++ ) {
+    finishFireworks() {
+        for (let i = 0; i < this.fireworks.length; i++) {
             if (this.fireworks[i].done) {
-                this.fireworks.splice(i,1) 
-                continue 
+                this.fireworks.splice(i, 1)
+                continue
             }
             this.fireworks[i].update()
         }
