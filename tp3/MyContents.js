@@ -60,7 +60,7 @@ class MyContents {
         };
 
         //Change back to PREPARATION
-        this.currentGameState = this.GAME_STATE.CHOOSE_HUMAN_BALLOON;
+        this.currentGameState = this.GAME_STATE.PREPARATION;
         this.fireworks = [];
 
         // initial menu variables
