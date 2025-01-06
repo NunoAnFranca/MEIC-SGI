@@ -161,6 +161,8 @@ class MyContents {
             if ((this.currentGameState === this.GAME_STATE.PAUSED) || (this.currentGameState === this.GAME_STATE.RUNNING)) {
                 if (event.key === 'v' || event.key === "V") {
                     this.changeThreeMainCameras();
+                } else if (event.key === 'Escape') {
+                    this.returnToInitialState();
                 }
             }
             if (!this.menu.writingUsername) {
