@@ -811,13 +811,16 @@ class MyContents {
             case this.GAME_STATE.RUNNING:
                 this.players[this.PLAYER_TYPE.HUMAN].update();
                 this.players[this.PLAYER_TYPE.HUMAN].restoreSize();
+                this.players[this.PLAYER_TYPE.AI].updateLOD(this.app.getActiveCamera());
                 this.checkCollision();
                 this.finishFireworks();
                 break;
             case this.GAME_STATE.PAUSED:
+                this.players[this.PLAYER_TYPE.AI].updateLOD(this.app.getActiveCamera());
                 this.finishFireworks();
                 break;
             case this.GAME_STATE.FINISHED:
+                this.players[this.PLAYER_TYPE.AI].updateLOD(this.app.getActiveCamera());
                 this.updateFireworks();
                 break;
             default:

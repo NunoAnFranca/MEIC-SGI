@@ -138,8 +138,15 @@ class MyBalloon {
         basketMesh.castShadow = true;
         this.downPartGroup.add(basketMesh);
 
+        const spriteTexture = new THREE.TextureLoader().load("images/balloonLOD.png");
+        const spriteMaterial = new THREE.SpriteMaterial({ map: spriteTexture });
+        this.lowDetailSprite = new THREE.Sprite(spriteMaterial);
+        this.lowDetailSprite.scale.set(4, 5, 4);
+        this.lowDetailSprite.visible = false;
+
         this.balloonGroup.add(this.upPartGroup);
         this.balloonGroup.add(this.downPartGroup);
+        this.balloonGroup.add(this.lowDetailSprite);
         this.balloonGroup.position.set(this.xPos, this.yPos, this.zPos);
 
         this.app.scene.add(this.balloonGroup);
@@ -490,6 +497,26 @@ class MyBalloon {
                 default:
                     break;
             }
+        }
+    }
+
+    updateLOD(camera) {
+        const distanceThreshold = 50;
+    
+        const balloonPosition = new THREE.Vector3();
+        this.balloonGroup.getWorldPosition(balloonPosition); // Get world position of the balloon group
+    
+        const distance = balloonPosition.distanceTo(camera.position);
+    
+        if (distance > distanceThreshold) {
+            this.upPartGroup.visible = false;
+            this.downPartGroup.visible = false;
+            this.lowDetailSprite.visible = true;
+        } else {
+            // If the camera is close, show the detailed parts
+            this.upPartGroup.visible = true;
+            this.downPartGroup.visible = true;
+            this.lowDetailSprite.visible = false;
         }
     }
 }
