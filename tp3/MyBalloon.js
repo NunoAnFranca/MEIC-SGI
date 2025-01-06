@@ -357,9 +357,9 @@ class MyBalloon {
         
         let value  = Math.floor((this.index) %10);
         if(value == 2) {
-            this.multiplierFactor = 1.5;
+            this.multiplierFactor = 1.4;
         } else if(value == 0) {
-            this.multiplierFactor = 0.5;
+            this.multiplierFactor = 0.6;
         }
     }
 
