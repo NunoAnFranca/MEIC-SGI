@@ -185,31 +185,45 @@ class MyContents {
 
         this.menu = new MyMenu(this.app, this.loader);
 
-        this.createObstacleShaders();
+        this.createShaders();
     }
 
-    createObstacleShaders() {
-        this.shader = new MyShader(this.app, "Flat Shading", "Uses a constant  color to shade the object",
+    createShaders() {
+        this.obstacleShader = new MyShader(this.app, "Flat Shading", "Uses a constant color to shade the object",
             "shaders/flat.vert", "shaders/flat.frag", {
             timeFactor: { type: 'f', value: 0.0 },
-            uTexture: { type: 'sample2D', value: this.loader.load('images/textures/dynamite.jpg') }
+            uTexture: { type: 'sample2D', value: this.loader.load('images/textures/obstacle.jpg') }
+        });
+
+        this.powerUpShader = new MyShader(this.app, "Flat Shading", "Uses a constant color to shade the object",
+            "shaders/flat.vert", "shaders/flat.frag", {
+            timeFactor: { type: 'f', value: 0.0 },
+            uTexture: { type: 'sample2D', value: this.loader.load('images/textures/powerup.jpg') }
         });
 
         this.waitForShaders();
     }
 
     waitForShaders() {
-        if (this.shader.ready === false) {
+        if (this.obstacleShader.ready === false || this.powerUpShader.ready === false) {
             setTimeout(this.waitForShaders.bind(this), 100)
             return;
         }
 
-        if (this.shader === null || this.shader === undefined) {
+        if (this.obstacleShader === null || this.obstacleShader === undefined) {
+            return
+        }
+
+        if (this.powerUpShader === null || this.powerUpShader === undefined) {
             return
         }
 
         for (let obstacle of this.track.obstacles) {
-            obstacle.mesh.material = this.shader.material
+            obstacle.mesh.material = this.obstacleShader.material
+        }
+
+        for (let powerUp of this.track.powerUps) {
+            powerUp.mesh.material = this.powerUpShader.material
         }
     }
 
@@ -614,9 +628,15 @@ class MyContents {
         }
 
         let t = this.app.clock.getElapsedTime()
-        if (this.shader !== undefined && this.shader !== null) {
-            if (this.shader.hasUniform("timeFactor")) {
-                this.shader.updateUniformsValue("timeFactor", t / 10);
+        if (this.obstacleShader !== undefined && this.obstacleShader !== null) {
+            if (this.obstacleShader.hasUniform("timeFactor")) {
+                this.obstacleShader.updateUniformsValue("timeFactor", t / 10);
+            }
+        }
+
+        if (this.powerUpShader !== undefined && this.powerUpShader !== null) {
+            if (this.powerUpShader.hasUniform("timeFactor")) {
+                this.powerUpShader.updateUniformsValue("timeFactor", t / 10);
             }
         }
     }

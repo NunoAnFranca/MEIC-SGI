@@ -63,8 +63,7 @@ class MyTrack {
 
     createObstacles() {
         const obstacleCount = 6;
-        const obstacleSize = { radius: 1, slices: 512, stacks: 512 };
-        const obstacleColor = 0xff0000;
+        const obstacleSize = { radius: 1, slices: 32, stacks: 32 };
 
         for (let i = 0; i < obstacleCount; i++) {
             const t = ((i / obstacleCount) + 0.2) % 1;
@@ -75,17 +74,16 @@ class MyTrack {
 
             position.applyAxisAngle(new THREE.Vector3(0, 0, 1), Math.PI);
 
-            this.obstacles.push(new MyObstacle(this.app, `${i}`, position, obstacleSize, obstacleColor));
+            this.obstacles.push(new MyObstacle(this.app, `${i}`, position, obstacleSize));
         }
     }
 
     createPowerUps() {
         const powerUpCount = 9;
-        const powerUpSize = { widthS: 32, heightS: 32, radius: 1 };
-        const powerUpColor = 0x0000FF;
+        const powerUpSize = { radius: 1, slices: 512, stacks: 512 };
 
         for (let i = 0; i < powerUpCount; i++) {
-            const t = ((i / powerUpCount) + 0.2) % 1;
+            const t = (i / powerUpCount) % 1;
             const position = this.path.getPointAt(t);
 
             position.multiplyScalar(this.trackSize);
@@ -93,7 +91,7 @@ class MyTrack {
 
             position.applyAxisAngle(new THREE.Vector3(0, 0, 1), Math.PI);
 
-            this.powerUps.push(new MyPowerUp(this.app, `${i}`, position, powerUpSize, powerUpColor));
+            this.powerUps.push(new MyPowerUp(this.app, `${i}`, position, powerUpSize));
         }
     }
 

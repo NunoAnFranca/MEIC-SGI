@@ -1,7 +1,7 @@
 import * as THREE from "three";
 
 class MyObstacle {
-    constructor(app, name, pos, {radius, slices, stacks}, color) {
+    constructor(app, name, pos, {radius, slices, stacks}) {
         this.app = app;
         this.name = name;
         this.x = pos.x;
@@ -10,9 +10,7 @@ class MyObstacle {
         this.radius = radius;
         this.slices = slices;
         this.stacks = stacks;
-        this.color = color;
 
-        this.helper = null;
         this.mesh = null;
 
         this.init();
