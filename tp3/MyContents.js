@@ -76,6 +76,8 @@ class MyContents {
         this.sceneLights = [];
         this.sceneLightsOn = true;
         this.sceneCastingShadows = true;
+        this.startTimeAi = null;
+
 
         // register events
         document.addEventListener(
@@ -96,11 +98,14 @@ class MyContents {
                     this.setCamera('BalloonFirstPerson');
 
                     this.matchTime = new Date().getTime();
+                    this.players[this.PLAYER_TYPE.AI].createRoute();
+                    this.players[this.PLAYER_TYPE.AI].startTimeAi = Date.now();
                     this.pausedTime = 0;
 
                     setInterval(() => {
                         if (this.currentGameState === this.GAME_STATE.RUNNING) {
                             this.players[this.PLAYER_TYPE.HUMAN].moveWind();
+                            this.players[this.PLAYER_TYPE.AI].moveAiBalloon();
 
                             this.menu.currentMatchTime = Math.floor((new Date().getTime() - this.matchTime - this.pausedTime) / 100);
                             this.menu.currentWindVelocity = this.DIRECTIONS[this.players[this.PLAYER_TYPE.HUMAN].direction];
@@ -160,7 +165,7 @@ class MyContents {
             this.app.scene.add(this.axis);
         }
 
-        this.reader = new MyParser(this.app);
+        //this.reader = new MyParser(this.app);
         this.createFireworkSpots();
         // create temp lights so we can see the objects to not render the entire scene
         this.buildLights();
@@ -180,7 +185,7 @@ class MyContents {
 
         // create the track
         this.track = new MyTrack(this.app);
-
+   
         this.loader = new THREE.TextureLoader();
 
         this.menu = new MyMenu(this.app, this.loader);
@@ -314,6 +319,7 @@ class MyContents {
                 this.humanBalloons[obj.index].setPosition(this.initialPositionsCoords[position], position);
                 this.players[obj.type] = this.humanBalloons[obj.index];
                 this.initialPositions[position] = false;
+                this.players[this.PLAYER_TYPE.HUMAN].initialPosition = position;
                 break;
             case this.PLAYER_TYPE.AI:
                 if (this.initialPositions["RED"]) {
@@ -325,6 +331,7 @@ class MyContents {
                 this.aiBalloons[obj.index].setPosition(this.initialPositionsCoords[position], position);
                 this.players[obj.type] = this.aiBalloons[obj.index];
                 this.initialPositions[position] = false;
+                this.players[this.PLAYER_TYPE.AI].initialPosition = position;
                 break;
             default:
                 break;

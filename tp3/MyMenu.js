@@ -495,7 +495,7 @@ class MyMenu {
     }
 
     startGame() {
-        if ((this.playerUsername !== "Type here...") && (this.app.contents.players[this.app.contents.PLAYER_TYPE.HUMAN] !== null) && (this.app.contents.players[this.app.contents.PLAYER_TYPE.AI] !== null)) {
+        if ((this.writingUsername !== true) &&(this.playerUsername !== "Type here...") && (this.app.contents.players[this.app.contents.PLAYER_TYPE.HUMAN] !== null) && (this.app.contents.players[this.app.contents.PLAYER_TYPE.AI] !== null)) {
             this.app.contents.currentGameState = this.app.contents.GAME_STATE.READY;
             this.currentGameState = this.app.contents.currentGameState;
             this.app.contents.setCamera('Start');
