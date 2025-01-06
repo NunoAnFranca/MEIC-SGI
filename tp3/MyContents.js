@@ -201,6 +201,13 @@ class MyContents {
             uTexture: { type: 'sample2D', value: this.loader.load('images/textures/powerup.jpg') }
         });
 
+        this.basReliefShader = new MyShader(this.app, "Bas Relief", "Creates a bas relief effect on the object",
+            "shaders/bas.vert", "shaders/bas.frag", {
+            uNormalTexture: { type: 'sample2D', value: this.loader.load('images/textures/mona_lisa.jpg') },
+            uGrayScaleTexture: { type: 'sample2D', value: this.loader.load('images/textures/mona_lisa_grayscale.jpg') },
+            displacementScale: { type: 'float', value: 0.8 }
+        });
+
         this.waitForShaders();
     }
 
@@ -211,20 +218,22 @@ class MyContents {
         }
 
         if (this.obstacleShader === null || this.obstacleShader === undefined) {
-            return
+            return;
         }
 
         if (this.powerUpShader === null || this.powerUpShader === undefined) {
-            return
+            return;
         }
 
         for (let obstacle of this.track.obstacles) {
-            obstacle.mesh.material = this.obstacleShader.material
+            obstacle.mesh.material = this.obstacleShader.material;
         }
 
         for (let powerUp of this.track.powerUps) {
-            powerUp.mesh.material = this.powerUpShader.material
+            powerUp.mesh.material = this.powerUpShader.material;
         }
+
+        this.track.basReliefGroup.children[0].material = this.basReliefShader.material;
     }
 
     updateBoundingBox(id, type) {

@@ -55,10 +55,12 @@ class MyTrack {
 
         this.obstacles = [];
         this.powerUps = [];
+        this.basReliefGroup = new THREE.Group();
 
         this.buildCurve();
         this.createObstacles();
         this.createPowerUps();
+        this.createBasRelief();
     }
 
     createObstacles() {
@@ -93,6 +95,41 @@ class MyTrack {
 
             this.powerUps.push(new MyPowerUp(this.app, `${i}`, position, powerUpSize));
         }
+    }
+
+    createBasRelief() {
+        const size = { x: 24, y: 36 };
+        const offset = { x: 24, y: 30, z: -125 };
+
+        this.basReliefGeometry = new THREE.PlaneGeometry(size.x, size.y, 1000, 1000);
+        this.basReliefMaterial = new THREE.MeshBasicMaterial();
+        this.basRelief = new THREE.Mesh(this.basReliefGeometry, this.basReliefMaterial);
+        this.basReliefGroup.add(this.basRelief);
+
+        const woodTexture = new THREE.TextureLoader().load("./images/textures/wood.jpg");
+        this.basReliefFrameMaterial = new THREE.MeshPhongMaterial({ color: 0x996d4e, map: woodTexture});
+        this.basReliefFrameGeometry1 = new THREE.BoxGeometry(size.x + 2, 2, 1);
+        this.basReliefFrame1 = new THREE.Mesh(this.basReliefFrameGeometry1, this.basReliefFrameMaterial);
+        this.basReliefFrame1.position.set(0, size.y * 0.5, 0.5);
+        this.basReliefGroup.add(this.basReliefFrame1);
+
+        this.basReliefFrameGeometry2 = new THREE.BoxGeometry(size.x + 2, 2, 1);
+        this.basReliefFrame2 = new THREE.Mesh(this.basReliefFrameGeometry2, this.basReliefFrameMaterial);
+        this.basReliefFrame2.position.set(0, - size.y * 0.5, 0.5);
+        this.basReliefGroup.add(this.basReliefFrame2);
+
+        this.basReliefFrameGeometry3 = new THREE.BoxGeometry(2, size.y, 1);
+        this.basReliefFrame3 = new THREE.Mesh(this.basReliefFrameGeometry3, this.basReliefFrameMaterial);
+        this.basReliefFrame3.position.set(size.x * 0.5, 0, 0.5);
+        this.basReliefGroup.add(this.basReliefFrame3);
+
+        this.basReliefFrameGeometry4 = new THREE.BoxGeometry(2, size.y, 1);
+        this.basReliefFrame4 = new THREE.Mesh(this.basReliefFrameGeometry4, this.basReliefFrameMaterial);
+        this.basReliefFrame4.position.set(- size.x * 0.5, 0, 0.5);
+        this.basReliefGroup.add(this.basReliefFrame4);
+
+        this.basReliefGroup.position.set(offset.x, offset.y, offset.z);
+        this.app.scene.add(this.basReliefGroup);
     }
 
     /**
