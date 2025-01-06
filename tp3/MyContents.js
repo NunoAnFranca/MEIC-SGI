@@ -114,6 +114,8 @@ class MyContents {
                             this.players[this.PLAYER_TYPE.HUMAN].moveWind();
                             this.players[this.PLAYER_TYPE.AI].moveAiBalloon();
 
+                            this.animateObstaclesAndPowerUps();
+
                             this.menu.currentMatchTime = Math.floor((new Date().getTime() - this.matchTime - this.pausedTime) / 100);
                             this.menu.currentWindVelocity = this.DIRECTIONS[this.players[this.PLAYER_TYPE.HUMAN].direction];
                             this.menu.currentGameState = this.GAME_STATE.RUNNING;
@@ -183,7 +185,8 @@ class MyContents {
             this.app.scene.add(this.axis);
         }
 
-        //this.reader = new MyParser(this.app);
+        this.reader = new MyParser(this.app);
+        
         this.createFireworkSpots();
         // create temp lights so we can see the objects to not render the entire scene
         this.buildLights();
@@ -738,6 +741,17 @@ class MyContents {
                 balloon.nearestPoint();
             }
         }
+    }
+
+    animateObstaclesAndPowerUps(){
+
+        this.track.powerUps.forEach(powerUp => {
+            powerUp.animate();
+        });
+
+        this.track.obstacles.forEach(obstacle => {
+            obstacle.animate();
+        });
     }
 
     updateFireworks() {

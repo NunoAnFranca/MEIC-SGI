@@ -25,7 +25,7 @@ class MyTrack {
         // curve related attributes
         this.closedCurve = false;
         this.segments = 250;
-        this.showLine = true;
+        this.showLine = false;
         this.showMesh = true;
         this.showWireframe = false;
         this.textureRepeatX = 10;
@@ -89,11 +89,11 @@ class MyTrack {
             const position = this.path.getPointAt(t);
 
             position.multiplyScalar(this.trackSize);
-            position.y -= 2;
+            position.y -= 7;
 
             position.applyAxisAngle(new THREE.Vector3(0, 0, 1), Math.PI);
 
-            this.powerUps.push(new MyPowerUp(this.app, `${i}`, position, powerUpSize));
+            this.powerUps.push(new MyPowerUp(this.app, `${i}`, position, powerUpSize, i%2));
         }
     }
 
@@ -149,7 +149,7 @@ class MyTrack {
         const texture = new THREE.TextureLoader().load("./images/textures/track.jpg");
         texture.wrapS = THREE.RepeatWrapping;
 
-        this.material = new THREE.MeshBasicMaterial({ map: texture });
+        this.material = new THREE.MeshBasicMaterial({ map: texture , transparent:true, opacity: 0.7});
         this.material.name = "track";
         this.material.map.repeat.set(this.textureRepeatX, this.textureRepeatY);
         this.material.map.wrapS = THREE.RepeatWrapping;
