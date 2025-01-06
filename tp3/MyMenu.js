@@ -139,6 +139,8 @@ class MyMenu {
         const textRestart = "Restart!";
         const textHomeMenu = "Home Menu! ";
 
+        this.createButtonHomeMenu();
+        this.createButtonRestart();
 
         this.textWinnerGroup = new THREE.Group();
         this.textlapsCompletedGroup = new THREE.Group();
@@ -170,6 +172,52 @@ class MyMenu {
         this.gameOverMenuGroup.rotation.set(0, Math.PI/2, 0);
         this.gameOverMenuGroup.scale.set(0.6, 0.6, 0.6);
         this.app.scene.add(this.gameOverMenuGroup);
+    }
+
+    createButtonHomeMenu() {
+        this.buttonHomeMenu = new THREE.Group();
+        let buttonMaterial = new THREE.MeshPhongMaterial({ color: 0xEEEEEE });
+        let buttonGeometry = new THREE.BoxGeometry(1, 1, 2.5);
+
+        let buttonMesh1 = new THREE.Mesh(buttonGeometry, buttonMaterial);
+        let buttonMesh2 = new THREE.Mesh(buttonGeometry, new THREE.MeshPhongMaterial({ color: 0x0000EE }));
+
+        this.buttonHomeMenuGroup = new THREE.Group();
+        this.convertTextToSprite("<--", this.buttonHomeMenuGroup);
+
+        buttonMesh2.visible = false;
+        buttonMesh2.position.set(1, 0, 0);
+        this.buttonHomeMenuGroup.rotation.set(0, Math.PI / 2, 0);
+        this.buttonHomeMenuGroup.scale.set(0.4, 0.4, 0.4);
+        this.buttonHomeMenuGroup.position.set(0.8, 0, 0.6);
+
+        this.buttonHomeMenu.add(buttonMesh1, buttonMesh2, this.buttonHomeMenuGroup);
+        this.buttonHomeMenu.position.set(72,-63.5,-66);
+
+        this.app.scene.add(this.buttonHomeMenu);
+    }
+
+    createButtonRestart() {
+        this.buttonRestart = new THREE.Group();
+        let buttonMaterial = new THREE.MeshPhongMaterial({ color: 0xEEEEEE });
+        let buttonGeometry = new THREE.BoxGeometry(1, 1, 2.5);
+
+        let buttonMesh1 = new THREE.Mesh(buttonGeometry, buttonMaterial);
+        let buttonMesh2 = new THREE.Mesh(buttonGeometry, new THREE.MeshPhongMaterial({ color: 0x0000EE }));
+
+        this.buttonRestartGroup = new THREE.Group();
+        this.convertTextToSprite("<--", this.buttonRestartGroup);
+
+        buttonMesh2.visible = false;
+        buttonMesh2.position.set(1, 0, 0);
+        this.buttonRestartGroup.rotation.set(0, Math.PI / 2, 0);
+        this.buttonRestartGroup.scale.set(0.4, 0.4, 0.4);
+        this.buttonRestartGroup.position.set(0.8, 0, 0.6);
+
+        this.buttonRestart.add(buttonMesh1, buttonMesh2, this.buttonRestartGroup);
+        this.buttonRestart.position.set(72,-61,-66);
+
+        this.app.scene.add(this.buttonRestart);
     }
 
     updateGameOverMenu(){
@@ -495,7 +543,9 @@ class MyMenu {
             this.buttonUsername,
             this.buttonPlayer,
             this.buttonOponent,
-            this.buttonStartGame
+            this.buttonStartGame,
+            this.buttonHomeMenu,
+            this.buttonRestart
         ], true);
 
         if (intersects.length > 0) {
@@ -518,7 +568,14 @@ class MyMenu {
                 } else if (this.buttonStartGame.children.includes(object)) {
                     this.startGame();
                 }
+            } else if (this.app.contents.currentGameState === this.app.contents.GAME_STATE.FINISHED) {
+                if (this.buttonHomeMenu.children.includes(object)) {
+                    this.app.contents.returnToInitialState();
+                } else if (this.buttonRestart.children.includes(object)) {
+                    this.app.contents.returnToReadyState();
+                } 
             }
+            
         }
     }
 

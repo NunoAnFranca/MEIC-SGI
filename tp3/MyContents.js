@@ -150,15 +150,15 @@ class MyContents {
                     this.pausedTime += (new Date().getTime() - this.pauseStartTime);
                 }
             } else if (this.currentGameState === this.GAME_STATE.FINISHED) {
-
+                if (event.key === 'Escape') {
+                    this.returnToInitialState();
+                } else if(event.key === 'r' || event.key === 'R') {
+                    this.returnToReadyState();
+                }
             }
-            
-
-            if ((this.currentGameState === this.GAME_STATE.PAUSED) || (this.currentGameState === this.GAME_STATE.RUNNING) || (this.currentGameState === this.GAME_STATE.READY)) {
+            if ((this.currentGameState === this.GAME_STATE.PAUSED) || (this.currentGameState === this.GAME_STATE.RUNNING)) {
                 if (event.key === 'v' || event.key === "V") {
                     this.changeThreeMainCameras();
-                } else if (event.key === 'Escape') {
-                    this.returnToInitialState();
                 }
             }
             if (!this.menu.writingUsername) {
@@ -514,8 +514,49 @@ class MyContents {
         };
 
         this.removeInitialPositions();
+    }
 
+    returnToReadyState() {
+        this.currentGameState = this.GAME_STATE.READY;
 
+        this.menu.currentMatchTime = 0;
+        this.menu.currentWindVelocity = "None";
+        this.menu.currentGameState = this.GAME_STATE.READY;
+        this.menu.currentLaps = 0;
+        this.menu.currentVouchers = 0;
+
+        this.winner = null;
+        this.loser = null;
+
+        this.menu.updateBlimpMenu();
+        const startCameraState = { position: new THREE.Vector3(22, 20, 0), target: new THREE.Vector3(22, 0, -20), fov: 60, near: 0.1, far: 1000};
+
+        const start = new THREE.PerspectiveCamera(
+            startCameraState.fov,
+            this.aspect,
+            startCameraState.near,
+            startCameraState.far
+        );
+        start.position.copy(startCameraState.position);
+        start.target = startCameraState.target.clone();
+        start.lookAt(start.target);
+        this.app.cameras['Start'] = start;
+
+        this.app.setActiveCamera('Start');
+        this.menu.updateBlimpMenu();
+        this.menu.updateGameStatus();
+
+        this.removeBalloons();
+
+        this.buildBalloons();
+
+        this.initialPositions = {
+            RED: true,
+            BLUE: true
+        };
+
+        this.changeObjectPosition(this.players[this.PLAYER_TYPE.HUMAN], this.players[this.PLAYER_TYPE.HUMAN].initialPosition);
+        this.changeObjectPosition(this.players[this.PLAYER_TYPE.AI], this.players[this.PLAYER_TYPE.AI].initialPosition);
     }
 
     unscaleObjects() {
