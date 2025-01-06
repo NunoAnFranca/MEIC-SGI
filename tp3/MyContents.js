@@ -138,7 +138,7 @@ class MyContents {
                 // TODO
             }
             
-            
+
             if ((this.currentGameState === this.GAME_STATE.PAUSED) || (this.currentGameState === this.GAME_STATE.RUNNING)) {
                 if (event.key === 'v' || event.key === "V") {
                     this.changeThreeMainCameras();
@@ -169,7 +169,7 @@ class MyContents {
             this.app.scene.add(this.axis);
         }
 
-        this.reader = new MyParser(this.app);
+        //this.reader = new MyParser(this.app);
         this.createFireworkSpots();
         // create temp lights so we can see the objects to not render the entire scene
         this.buildLights();

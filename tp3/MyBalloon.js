@@ -303,7 +303,7 @@ class MyBalloon {
     }
 
     initCheckpoints() {
-        this.checkpoints = this.app.contents.track.path.getPoints(16).map(point => {
+        this.checkpoints = this.app.contents.track.path.getPoints(this.checkpointsNum).map(point => {
             let vector = new THREE.Vector3(point.x, point.y, point.z);
             this.app.contents.track.curve.localToWorld(vector);
             return vector;
@@ -320,7 +320,7 @@ class MyBalloon {
             return true;
         }
 
-        if (this.currentCheckpointIndex >= this.checkpointsNum) {
+        if (this.currentCheckpointIndex > this.checkpointsNum) {
             this.currentCheckpointIndex = 0;
             this.currentLap++;
             this.lastPowerUpObject = null;
