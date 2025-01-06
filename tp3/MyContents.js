@@ -104,16 +104,12 @@ class MyContents {
                     this.players[this.PLAYER_TYPE.AI].startTimeAi = Date.now();
                     this.pausedTime = 0;
 
-                    setInterval(() => {
-                        if (this.currentGameState === this.GAME_STATE.RUNNING) {
+                    if (this.gameInterval) {
+                        clearInterval(this.gameInterval);
+                    }
 
-                            if(this.checkGameOver()){
-                                this.currentGameState = this.GAME_STATE.FINISHED;
-                                this.menu.currentGameState = this.GAME_STATE.FINISHED;
-                                this.menu.updateGameStatus();
-                                this.menu.updateGameOverMenu();
-                                this.app.setActiveCamera("gameOverMenu");
-                            }
+                    this.gameInterval = setInterval(() => {
+                        if (this.currentGameState === this.GAME_STATE.RUNNING) {
 
                             this.players[this.PLAYER_TYPE.HUMAN].moveWind();
                             this.players[this.PLAYER_TYPE.AI].moveAiBalloon();
@@ -123,6 +119,14 @@ class MyContents {
                             this.menu.currentGameState = this.GAME_STATE.RUNNING;
                             this.menu.currentLaps = this.players[this.PLAYER_TYPE.HUMAN].currentLap;
                             this.menu.currentVouchers = this.players[this.PLAYER_TYPE.HUMAN].extraLives;
+
+                            if(this.checkGameOver()){
+                                this.currentGameState = this.GAME_STATE.FINISHED;
+                                this.menu.currentGameState = this.GAME_STATE.FINISHED;
+                                this.menu.updateGameStatus();
+                                this.menu.updateGameOverMenu();
+                                this.app.setActiveCamera("gameOverMenu");
+                            }
 
                             this.menu.updateBlimpMenu();
                         }
@@ -150,12 +154,11 @@ class MyContents {
             }
             
 
-            if ((this.currentGameState === this.GAME_STATE.PAUSED) || (this.currentGameState === this.GAME_STATE.RUNNING)) {
+            if ((this.currentGameState === this.GAME_STATE.PAUSED) || (this.currentGameState === this.GAME_STATE.RUNNING) || (this.currentGameState === this.GAME_STATE.READY)) {
                 if (event.key === 'v' || event.key === "V") {
                     this.changeThreeMainCameras();
                 } else if (event.key === 'Escape') {
-                    //this.returnToInitialState();
-                    //TODO
+                    this.returnToInitialState();
                 }
             }
             if (!this.menu.writingUsername) {
@@ -303,6 +306,34 @@ class MyContents {
         }
     }
 
+    removeBalloons() {
+        for (const index in this.humanBalloons) {
+            const balloon = this.humanBalloons[index];
+            this.app.scene.remove(balloon.balloonGroup);
+            balloon.removeMarker();
+            balloon.balloonGroup.traverse((child) => {
+                if (child.isMesh) {
+                    child.geometry.dispose();
+                    child.material.dispose();
+                }
+            });
+            delete this.humanBalloons[index];
+        }
+    
+        for (const index in this.aiBalloons) {
+            const balloon = this.aiBalloons[index];
+            this.app.scene.remove(balloon.balloonGroup);
+            balloon.removeMarker();
+            balloon.balloonGroup.traverse((child) => {
+                if (child.isMesh) {
+                    child.geometry.dispose();
+                    child.material.dispose();
+                }
+            });
+            delete this.aiBalloons[index];
+        }
+    }
+
     buildInitialPosition(name, [xPos, yPos, zPos]) {
         let geometry = new THREE.CylinderGeometry(1, 1, 0.2, 64);
 
@@ -429,10 +460,10 @@ class MyContents {
     }
 
     returnToInitialState() {
-        // initial menu variables
-        this.totalLaps = 1;
-        this.penaltySeconds = 1;
-        this.playerUsername = "Nan";
+
+        this.menu.totalLaps = 1;
+        this.menu.penaltySeconds = 1;
+        this.menu.currentTypedUsername = "Type here...";
         this.namePlayerBalloon = null;
         this.nameOponentBalloon = null;
         this.currentGameState = this.GAME_STATE.PREPARATION;
@@ -443,10 +474,48 @@ class MyContents {
         this.menu.currentLaps = 0;
         this.menu.currentVouchers = 0;
 
+        this.winner = null;
+        this.loser = null;
 
         this.menu.updateBlimpMenu();
+        const initialCameraState = { position: new THREE.Vector3(-56.911910092428265, 18.53264621864038, -83.07926277580806), target: new THREE.Vector3(-71.5, 18.53264621864038, -91.50558), fov: 100, near: 0.1, far: 1000};
+
+        const initMenu = new THREE.PerspectiveCamera(
+            initialCameraState.fov,
+            this.aspect,
+            initialCameraState.near,
+            initialCameraState.far
+        );
+        initMenu.position.copy(initialCameraState.position);
+        initMenu.target = initialCameraState.target.clone();
+        initMenu.lookAt(initMenu.target);
+        this.app.cameras['InitialMenu'] = initMenu;
+
         this.app.setActiveCamera('InitialMenu');
-        //TODO
+        this.menu.updateBlimpMenu();
+        this.menu.updateGameStatus();
+
+        this.removeBalloons();
+
+        this.players[this.PLAYER_TYPE.HUMAN] = null;
+        this.players[this.PLAYER_TYPE.AI] = null;
+        
+        this.menu.updateUsernameText();
+        this.menu.updatePenaltyText();
+        this.menu.updateLapsTextInitalMenu();
+        this.menu.updatePlayerBalloon(this.namePlayerBalloon);
+        this.menu.updateOponentBalloon(this.nameOponentBalloon);
+
+        this.buildBalloons();
+
+        this.initialPositions = {
+            RED: true,
+            BLUE: true
+        };
+
+        this.removeInitialPositions();
+
+
     }
 
     unscaleObjects() {

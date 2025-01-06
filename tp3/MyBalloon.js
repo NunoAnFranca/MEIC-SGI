@@ -169,6 +169,22 @@ class MyBalloon {
         this.initCheckpoints();
     }
 
+    removeMarker() {
+        if (this.marker) {
+            this.app.scene.remove(this.marker);
+    
+            if (this.marker.geometry) {
+                this.marker.geometry.dispose();
+            }
+            if (this.marker.material) {
+                this.marker.material.dispose();
+            }
+    
+            this.marker = null;
+        }
+    }
+    
+
     setCamera(camera) {
         switch (this.app.activeCameraName) {
             case 'BalloonFirstPerson':

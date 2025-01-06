@@ -76,52 +76,52 @@ class MyApp {
      * initializes all the cameras
      */
     initCameras() {
-        const aspect = window.innerWidth / window.innerHeight;
+        this.aspect = window.innerWidth / window.innerHeight;
 
         // Create a start perspective camera
-        const start = new THREE.PerspectiveCamera(60, aspect, 0.1, 1000)
+        const start = new THREE.PerspectiveCamera(60, this.aspect, 0.1, 1000)
         start.position.set(22, 20, 0)
         start.target = new THREE.Vector3(22, 0, -20)
         start.lookAt(start.target)
         this.cameras['Start'] = start
 
         // create a balloon perspective camera
-        const balloonFirstPerson = new THREE.PerspectiveCamera(100, aspect, 0.1, 1000)
+        const balloonFirstPerson = new THREE.PerspectiveCamera(100, this.aspect, 0.1, 1000)
         balloonFirstPerson.position.set(0, 0, 0)
         balloonFirstPerson.target = new THREE.Vector3(0, 0, 0)
         balloonFirstPerson.lookAt(balloonFirstPerson.target)
         this.cameras['BalloonFirstPerson'] = balloonFirstPerson
 
         // create a balloon perspective camera
-        const balloonThirdPerson = new THREE.PerspectiveCamera(100, aspect, 0.1, 1000)
+        const balloonThirdPerson = new THREE.PerspectiveCamera(100, this.aspect, 0.1, 1000)
         balloonThirdPerson.position.set(0, 0, 0)
         balloonThirdPerson.target = new THREE.Vector3(0, 0, 0)
         balloonThirdPerson.lookAt(balloonThirdPerson.target)
         this.cameras['BalloonThirdPerson'] = balloonThirdPerson
 
         // create a initial menu perspective camera
-        const initMenu = new THREE.PerspectiveCamera(100, aspect, 0.1, 1000);
+        const initMenu = new THREE.PerspectiveCamera(100, this.aspect, 0.1, 1000);
         initMenu.position.set(-56.911910092428265, 18.53264621864038, -83.07926277580806);
         initMenu.target = new THREE.Vector3(-71.5, 18.53264621864038, -91.50558);
         initMenu.lookAt(initMenu.target);
         this.cameras['InitialMenu'] = initMenu;
 
         // create a initial menu perspective camera
-        const gameOverMenu = new THREE.PerspectiveCamera(80, aspect, 0.1, 1000);
+        const gameOverMenu = new THREE.PerspectiveCamera(80, this.aspect, 0.1, 1000);
         gameOverMenu.position.set(100, -55, -60);
         gameOverMenu.target = new THREE.Vector3(0, -55, -60);
         gameOverMenu.lookAt(initMenu.target);
         this.cameras['gameOverMenu'] = gameOverMenu;
 
         // create a balloon and initial position choice perspective camera
-        const balloonAndInitialPositionChoice = new THREE.PerspectiveCamera(100, aspect, 0.1, 1000);
+        const balloonAndInitialPositionChoice = new THREE.PerspectiveCamera(100, this.aspect, 0.1, 1000);
         balloonAndInitialPositionChoice.position.set(23, 20, -10);
         balloonAndInitialPositionChoice.target = new THREE.Vector3(23, 0, -15);
         balloonAndInitialPositionChoice.lookAt(balloonAndInitialPositionChoice.target);
         this.cameras['BalloonAndInitialPositionChoice'] = balloonAndInitialPositionChoice
 
         // Create a basic perspective camera
-        const perspective1 = new THREE.PerspectiveCamera(60, aspect, 0.1, 1000)
+        const perspective1 = new THREE.PerspectiveCamera(60, this.aspect, 0.1, 1000)
         perspective1.position.set(0, 75, 0)
         this.cameras['Perspective'] = perspective1
     }
