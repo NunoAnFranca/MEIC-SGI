@@ -78,6 +78,8 @@ class MyContents {
         this.sceneCastingShadows = true;
         this.startTimeAi = null;
 
+        this.winner = null;
+        this.loser = null;
 
         // register events
         document.addEventListener(
@@ -104,6 +106,15 @@ class MyContents {
 
                     setInterval(() => {
                         if (this.currentGameState === this.GAME_STATE.RUNNING) {
+
+                            if(this.checkGameOver()){
+                                this.currentGameState = this.GAME_STATE.FINISHED;
+                                this.menu.currentGameState = this.GAME_STATE.FINISHED;
+                                this.menu.updateGameStatus();
+                                this.menu.updateGameOverMenu();
+                                this.app.setActiveCamera("gameOverMenu");
+                            }
+
                             this.players[this.PLAYER_TYPE.HUMAN].moveWind();
                             this.players[this.PLAYER_TYPE.AI].moveAiBalloon();
 
@@ -135,7 +146,7 @@ class MyContents {
                     this.pausedTime += (new Date().getTime() - this.pauseStartTime);
                 }
             } else if (this.currentGameState === this.GAME_STATE.FINISHED) {
-                // TODO
+
             }
             
 
@@ -169,7 +180,7 @@ class MyContents {
             this.app.scene.add(this.axis);
         }
 
-        //this.reader = new MyParser(this.app);
+        this.reader = new MyParser(this.app);
         this.createFireworkSpots();
         // create temp lights so we can see the objects to not render the entire scene
         this.buildLights();
@@ -317,6 +328,20 @@ class MyContents {
         }
     }
 
+    checkGameOver(){
+        if(this.players[this.PLAYER_TYPE.HUMAN].currentLap > this.totalLaps){
+            this.winner = this.menu.currentTypedUsername;
+            this.loser = this.menu.nameOponentBalloon;
+            return true;
+        } 
+        else if(this.players[this.PLAYER_TYPE.AI].currentLap > this.totalLaps){
+            this.winner = this.menu.nameOponentBalloon;
+            this.loser = this.menu.currentTypedUsername;
+            return true;
+        }
+        return false; 
+    }
+
     changeObjectPosition(obj, position = null) {
         switch (obj.type) {
             case this.PLAYER_TYPE.HUMAN:
@@ -359,11 +384,20 @@ class MyContents {
         let geometry = new THREE.BoxGeometry(1, 2.5, 1);
         let mesh1 = new THREE.Mesh(geometry, material);
         let mesh2 = new THREE.Mesh(geometry, material);
+        let mesh3 = new THREE.Mesh(geometry, material);
+        let mesh4 = new THREE.Mesh(geometry, material);
+
+        mesh1.castShadow = true;
+        mesh2.castShadow = true;
+        mesh3.castShadow = true;
+        mesh4.castShadow = true;
 
         mesh1.position.set(28, 0.8, -5);
         mesh2.position.set(18, 0.8, -5);
+        mesh3.position.set(70, -73.75, -45);
+        mesh4.position.set(70, -73.75, -90);
 
-        this.app.scene.add(mesh1, mesh2);
+        this.app.scene.add(mesh1, mesh2, mesh3, mesh4);
     }
 
     changeLightsPower() {
@@ -584,12 +618,16 @@ class MyContents {
     }
 
     updateFireworks() {
-        if (Math.random() < 0.02) {
+        if (Math.random() < 0.04) {
             let chooseSpot = Math.random();
-            if (chooseSpot < 0.5) {
+            if (chooseSpot < 0.25) {
                 this.fireworks.push(new MyFirework(this.app, this, 28, 0.8, -5))
-            } else {
+            } else if (chooseSpot < 0.5) {
                 this.fireworks.push(new MyFirework(this.app, this, 18, 0.8, -5))
+            } else if (chooseSpot < 0.75) {
+                this.fireworks.push(new MyFirework(this.app, this, 70, -74.5, -45))
+            } else {
+                this.fireworks.push(new MyFirework(this.app, this, 70, -74.5, -90))
             }
         }
 
@@ -637,8 +675,10 @@ class MyContents {
                 this.players[this.PLAYER_TYPE.HUMAN].update();
                 this.players[this.PLAYER_TYPE.HUMAN].restoreSize();
                 this.checkCollision();
+                this.finishFireworks();
                 break;
             case this.GAME_STATE.PAUSED:
+                this.finishFireworks();
                 break;
             case this.GAME_STATE.FINISHED:
                 this.updateFireworks();

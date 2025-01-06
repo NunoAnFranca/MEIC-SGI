@@ -41,9 +41,9 @@ class MyRoute {
             new THREE.Vector3(0, 15, 20),
             new THREE.Vector3(20, 16, 50),
             new THREE.Vector3(40, 18, 50),
-            new THREE.Vector3(72, 12, 45),
-            new THREE.Vector3(72, 7, -5),
-            new THREE.Vector3(25, 6, -5),
+            new THREE.Vector3(72, 12, 48),
+            new THREE.Vector3(72, 7, -2),
+            new THREE.Vector3(25, 6, -2),
             new THREE.Vector3(27, 5, -15)
         ];
 

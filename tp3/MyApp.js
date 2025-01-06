@@ -78,12 +78,6 @@ class MyApp {
     initCameras() {
         const aspect = window.innerWidth / window.innerHeight;
 
-        // defines the frustum size for the orthographic cameras
-        const left = -this.frustumSize / 2 * aspect
-        const right = this.frustumSize / 2 * aspect
-        const top = this.frustumSize / 2
-        const bottom = -this.frustumSize / 2
-
         // Create a start perspective camera
         const start = new THREE.PerspectiveCamera(60, aspect, 0.1, 1000)
         start.position.set(22, 20, 0)
@@ -111,6 +105,13 @@ class MyApp {
         initMenu.target = new THREE.Vector3(-71.5, 18.53264621864038, -91.50558);
         initMenu.lookAt(initMenu.target);
         this.cameras['InitialMenu'] = initMenu;
+
+        // create a initial menu perspective camera
+        const gameOverMenu = new THREE.PerspectiveCamera(80, aspect, 0.1, 1000);
+        gameOverMenu.position.set(100, -55, -60);
+        gameOverMenu.target = new THREE.Vector3(0, -55, -60);
+        gameOverMenu.lookAt(initMenu.target);
+        this.cameras['gameOverMenu'] = gameOverMenu;
 
         // create a balloon and initial position choice perspective camera
         const balloonAndInitialPositionChoice = new THREE.PerspectiveCamera(100, aspect, 0.1, 1000);

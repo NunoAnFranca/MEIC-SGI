@@ -49,8 +49,8 @@ class MyBalloon {
         this.direction = this.DIRECTIONS.NORTH;
 
         this.checkpoints = null;
-        this.currentCheckpointIndex = null;
-        this.distanceCheckpoint = 6.0;
+        this.currentCheckpointIndex = 0;
+        this.distanceCheckpoint = 8.0;
         this.checkpointsNum = 25;
         this.currentLap = 1;
         this.extraLives = 0;
@@ -320,7 +320,7 @@ class MyBalloon {
             return true;
         }
 
-        if (this.currentCheckpointIndex > this.checkpointsNum) {
+        if (this.currentCheckpointIndex >= this.checkpointsNum) {
             this.currentCheckpointIndex = 0;
             this.currentLap++;
             this.lastPowerUpObject = null;
@@ -341,6 +341,8 @@ class MyBalloon {
     }
 
     moveAiBalloon() {
+        this.checkcurrentCheckpoint();
+
         const elapsedTime = Date.now() - this.startTimeAi - this.app.contents.pausedTime;
         const time = (elapsedTime % (400000*this.multiplierFactor)) / (400000*this.multiplierFactor);
         const point = this.route.spline.getPointAt(time);

@@ -28,8 +28,15 @@ class MyMenu {
         this.nameOponentBalloon = null;
         this.writingUsername = false;
 
+        // Game over menu variables
+        this.winner = null;
+        this.loser = null;
+        this.lapsCompleted = null;
+        this.winnerTime = null;
+
         this.loadBlimpMenu();
         this.loadStartMenu();
+        this.loadGameOverMenu();
         this.onKeyDown = this.onKeyDown.bind(this);
         window.addEventListener('click', (event) => this.onMouseClick(event));
     }
@@ -122,6 +129,78 @@ class MyMenu {
         this.startMenuGroup.rotation.set(0, Math.PI / 3, 0);
         this.startMenuGroup.scale.set(0.5, 0.5, 0.5);
         this.app.scene.add(this.startMenuGroup);
+    }
+
+    loadGameOverMenu() {
+        const textWinner = "Winner: " + this.winner;
+        const lapsCompleted = "Laps completed: " + this.lapsCompleted;
+        const winnerTime = "Winner Time: " + this.winnerTime;
+        const textLoser = "Loser: " + this.loser;
+        const textRestart = "Restart!";
+        const textHomeMenu = "Home Menu! ";
+
+
+        this.textWinnerGroup = new THREE.Group();
+        this.textlapsCompletedGroup = new THREE.Group();
+        this.textWinnerTimeGroup = new THREE.Group();
+        this.textLoserGroup = new THREE.Group();
+        this.textRestartGroup = new THREE.Group();
+        this.textHomeMenuGroup = new THREE.Group();
+
+        this.gameOverMenuGroup = new THREE.Group();
+
+        this.convertTextToSprite(textWinner, this.textWinnerGroup);
+        this.convertTextToSprite(lapsCompleted, this.textlapsCompletedGroup);
+        this.convertTextToSprite(winnerTime, this.textWinnerTimeGroup);
+        this.convertTextToSprite(textLoser, this.textLoserGroup);
+        this.convertTextToSprite(textRestart, this.textRestartGroup);
+        this.convertTextToSprite(textHomeMenu, this.textHomeMenuGroup);
+
+
+        this.textWinnerGroup.position.set(-12, 0, 0);
+        this.textlapsCompletedGroup.position.set(-12, -4, 0);
+        this.textWinnerTimeGroup.position.set(-12, -8, 0);
+        this.textLoserGroup.position.set(-12, -12, 0);
+        this.textRestartGroup.position.set(-12, -20, 0);
+        this.textHomeMenuGroup.position.set(-12, -24, 0);
+
+        this.gameOverMenuGroup.add(this.textWinnerGroup, this.textlapsCompletedGroup, this.textWinnerTimeGroup, this.textLoserGroup, this.textRestartGroup, this.textHomeMenuGroup);
+
+        this.gameOverMenuGroup.position.set(72.5,-49,-60);
+        this.gameOverMenuGroup.rotation.set(0, Math.PI/2, 0);
+        this.gameOverMenuGroup.scale.set(0.6, 0.6, 0.6);
+        this.app.scene.add(this.gameOverMenuGroup);
+    }
+
+    updateGameOverMenu(){
+        this.winner = this.app.contents.winner;
+        this.loser = this.app.contents.loser;
+        this.lapsCompleted = this.app.contents.totalLaps;
+        this.winnerTime = this.currentMatchTime;
+
+        const textWinner = "Winner: " + this.winner;
+        const lapsCompleted = "Laps completed: " + this.lapsCompleted;
+        const winnerTime = "Winner Time: " + this.winnerTime;
+        const textLoser = "Loser: " + this.loser;
+
+        while (this.textWinnerGroup.children.length > 0) {
+            this.textWinnerGroup.remove(this.textWinnerGroup.children[0]);
+        }
+        while (this.textlapsCompletedGroup.children.length > 0) {
+            this.textlapsCompletedGroup.remove(this.textlapsCompletedGroup.children[0]);
+        }
+        while (this.textWinnerTimeGroup.children.length > 0) {
+            this.textWinnerTimeGroup.remove(this.textWinnerTimeGroup.children[0]);
+        }
+        while (this.textLoserGroup.children.length > 0) {
+            this.textLoserGroup.remove(this.textLoserGroup.children[0]);
+        }
+        this.convertTextToSprite(textWinner, this.textWinnerGroup);
+        this.convertTextToSprite(lapsCompleted, this.textlapsCompletedGroup);
+        this.convertTextToSprite(winnerTime, this.textWinnerTimeGroup);
+        this.convertTextToSprite(textLoser, this.textLoserGroup);
+
+
     }
 
     createButtonsPenalty() {

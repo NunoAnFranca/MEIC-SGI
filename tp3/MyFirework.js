@@ -145,7 +145,7 @@ class MyFirework {
             verticesAtribute.needsUpdate = true;
     
             if (count === 1) {
-                if (Math.ceil(vertices[1]) > this.dest[1] * 0.95) {
+                if (Math.abs(vertices[1] - this.dest[1]) < this.height * 0.05) {
                     this.explode(vertices, 250, this.height * 0.05, this.height * 0.8);
                     return;
                 }
