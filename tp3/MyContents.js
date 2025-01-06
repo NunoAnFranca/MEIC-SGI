@@ -5,7 +5,6 @@ import { MyParser } from "./MyParser.js";
 import { MyMenu } from "./MyMenu.js";
 import { MyBalloon } from "./MyBalloon.js";
 import { MyFirework } from "./MyFirework.js";
-import { MyRoute } from "./MyRoute.js";
 
 /**
  *  This class contains the contents of out application
@@ -76,6 +75,7 @@ class MyContents {
         this.sceneLights = [];
         this.sceneLightsOn = true;
         this.sceneCastingShadows = true;
+        this.startTimeAi = null;
         // register events
 
         document.addEventListener(
@@ -96,12 +96,14 @@ class MyContents {
                     this.setCamera('BalloonFirstPerson');
 
                     this.matchTime = new Date().getTime();
+                    this.players[this.PLAYER_TYPE.AI].createRoute();
+                    this.players[this.PLAYER_TYPE.AI].startTimeAi = Date.now();
                     this.pausedTime = 0;
 
                     setInterval(() => {
                         if (this.currentGameState === this.GAME_STATE.RUNNING) {
                             this.players[this.PLAYER_TYPE.HUMAN].moveWind();
-                            this.moveAiBalloon();
+                            this.players[this.PLAYER_TYPE.AI].moveAiBalloon();
 
                             this.menu.currentMatchTime = Math.floor((new Date().getTime() - this.matchTime - this.pausedTime) / 100);
                             this.menu.currentWindVelocity = this.DIRECTIONS[this.players[this.PLAYER_TYPE.HUMAN].direction];
@@ -181,9 +183,7 @@ class MyContents {
 
         // create the track
         this.track = new MyTrack(this.app);
-
-        this.route = new MyRoute(this.app);
-
+   
         this.loader = new THREE.TextureLoader();
 
         this.menu = new MyMenu(this.app, this.loader);
@@ -267,6 +267,7 @@ class MyContents {
                 this.humanBalloons[obj.index].setPosition(this.initialPositionsCoords[position], position);
                 this.players[obj.type] = this.humanBalloons[obj.index];
                 this.initialPositions[position] = false;
+                this.players[this.PLAYER_TYPE.HUMAN].initialPosition = position;
                 break;
             case this.PLAYER_TYPE.AI:
                 if (this.initialPositions["RED"]) {
@@ -278,6 +279,7 @@ class MyContents {
                 this.aiBalloons[obj.index].setPosition(this.initialPositionsCoords[position], position);
                 this.players[obj.type] = this.aiBalloons[obj.index];
                 this.initialPositions[position] = false;
+                this.players[this.PLAYER_TYPE.AI].initialPosition = position;
                 break;
             default:
                 break;
@@ -355,23 +357,6 @@ class MyContents {
         this.menu.updateBlimpMenu();
         this.app.setActiveCamera('InitialMenu');
         //TODO
-    }
-
-    moveAiBalloon(){
-        const time = (Date.now() % 6000) / 6000;
-        const point = this.route.spline.getPointAt(time);
-        
-        this.players[this.PLAYER_TYPE.AI].xPos = point.x ;
-        this.players[this.PLAYER_TYPE.AI].marker.position.x = point.x;
-        this.players[this.PLAYER_TYPE.AI].balloonGroup.position.x = point.x;
-
-        this.players[this.PLAYER_TYPE.AI].yPos = point.y ;
-        this.players[this.PLAYER_TYPE.AI].marker.position.y = point.y;
-        this.players[this.PLAYER_TYPE.AI].balloonGroup.position.y = point.y;
-        
-        this.players[this.PLAYER_TYPE.AI].zPos = point.z ;
-        this.players[this.PLAYER_TYPE.AI].marker.position.z = point.z;
-        this.players[this.PLAYER_TYPE.AI].balloonGroup.position.z = point.z;
     }
 
     unscaleObjects() {

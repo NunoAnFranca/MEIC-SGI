@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { MyNurbsBuilder } from './MyNurbsBuilder.js';
+import { MyRoute } from "./MyRoute.js";
 
 class MyBalloon {
     constructor(app, type, index, xPos, yPos, zPos, textureN) {
@@ -61,6 +62,9 @@ class MyBalloon {
         this.targetScale = 1;
         this.restoreTimer = null;
 
+        this.startTimeAi = null;
+        this.initialPosition = null;
+        this.multiplierFactor = 1;
         this.marker = null;
 
         this.init();
@@ -304,7 +308,6 @@ class MyBalloon {
             this.app.contents.track.curve.localToWorld(vector);
             return vector;
         });
-        console.log(this.checkpoints);
         this.currentCheckpointIndex = 0;
     }
 
@@ -324,6 +327,30 @@ class MyBalloon {
         }
 
         return false;
+    }
+
+    createRoute() {
+        this.route = new MyRoute(this.app, this.initialPosition);
+        
+        let value  = Math.floor((this.index) %10);
+        if(value == 2) {
+            this.multiplierFactor = 1.5;
+        } else if(value == 0) {
+            this.multiplierFactor = 0.5;
+        }
+    }
+
+    moveAiBalloon() {
+        const elapsedTime = Date.now() - this.startTimeAi - this.app.contents.pausedTime;
+        const time = (elapsedTime % (400000*this.multiplierFactor)) / (400000*this.multiplierFactor);
+        const point = this.route.spline.getPointAt(time);
+
+        this.xPos = point.x;
+        this.yPos = point.y;
+        this.zPos = point.z;
+        
+        this.marker.position.set(point.x, 0, point.z);
+        this.balloonGroup.position.set(point.x, point.y, point.z);
     }
 
     moveWind() {
