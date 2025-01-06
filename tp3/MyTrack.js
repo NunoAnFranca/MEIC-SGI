@@ -99,7 +99,7 @@ class MyTrack {
 
     createBasRelief() {
         const size = { x: 24, y: 36 };
-        const offset = { x: 24, y: 30, z: -124 };
+        const offset = { x: 70, y: -56, z: -65};
 
         this.basReliefGeometry = new THREE.PlaneGeometry(size.x, size.y, 1000, 1000);
         this.basReliefMaterial = new THREE.MeshBasicMaterial();
@@ -129,6 +129,8 @@ class MyTrack {
         this.basReliefGroup.add(this.basReliefFrame4);
 
         this.basReliefGroup.position.set(offset.x, offset.y, offset.z);
+        this.basReliefGroup.scale.set(0.45, 0.45, 0.45);
+        this.basReliefGroup.rotation.set(0, -Math.PI/2,0);
         this.app.scene.add(this.basReliefGroup);
     }
 

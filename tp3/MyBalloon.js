@@ -360,7 +360,7 @@ class MyBalloon {
         this.checkcurrentCheckpoint();
 
         const elapsedTime = Date.now() - this.startTimeAi - this.app.contents.pausedTime;
-        const time = (elapsedTime % (40000*this.multiplierFactor)) / (40000*this.multiplierFactor);
+        const time = (elapsedTime % (400000*this.multiplierFactor)) / (400000*this.multiplierFactor);
         const point = this.route.spline.getPointAt(time);
 
         this.xPos = point.x;
