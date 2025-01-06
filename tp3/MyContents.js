@@ -5,6 +5,7 @@ import { MyParser } from "./MyParser.js";
 import { MyMenu } from "./MyMenu.js";
 import { MyBalloon } from "./MyBalloon.js";
 import { MyFirework } from "./MyFirework.js";
+import { MyShader } from "./MyShader.js";
 
 /**
  *  This class contains the contents of out application
@@ -76,8 +77,9 @@ class MyContents {
         this.sceneLightsOn = true;
         this.sceneCastingShadows = true;
         this.startTimeAi = null;
-        // register events
 
+
+        // register events
         document.addEventListener(
             "pointerdown",
             // list of events: https://developer.mozilla.org/en-US/docs/Web/API/Element
@@ -187,6 +189,56 @@ class MyContents {
         this.loader = new THREE.TextureLoader();
 
         this.menu = new MyMenu(this.app, this.loader);
+
+        this.createShaders();
+    }
+
+    createShaders() {
+        this.obstacleShader = new MyShader(this.app, "Flat Shading", "Uses a constant color to shade the object",
+            "shaders/flat.vert", "shaders/flat.frag", {
+            timeFactor: { type: 'f', value: 0.0 },
+            uTexture: { type: 'sample2D', value: this.loader.load('images/textures/obstacle.jpg') }
+        });
+
+        this.powerUpShader = new MyShader(this.app, "Flat Shading", "Uses a constant color to shade the object",
+            "shaders/flat.vert", "shaders/flat.frag", {
+            timeFactor: { type: 'f', value: 0.0 },
+            uTexture: { type: 'sample2D', value: this.loader.load('images/textures/powerup.jpg') }
+        });
+
+        this.basReliefShader = new MyShader(this.app, "Bas Relief", "Creates a bas relief effect on the object",
+            "shaders/bas.vert", "shaders/bas.frag", {
+            uNormalTexture: { type: 'sample2D', value: this.loader.load('images/textures/mona_lisa.jpg') },
+            uGrayScaleTexture: { type: 'sample2D', value: this.loader.load('images/textures/mona_lisa_grayscale.jpg') },
+            displacementScale: { type: 'float', value: 0.8 }
+        });
+
+        this.waitForShaders();
+    }
+
+    waitForShaders() {
+        if (this.obstacleShader.ready === false || this.powerUpShader.ready === false) {
+            setTimeout(this.waitForShaders.bind(this), 100)
+            return;
+        }
+
+        if (this.obstacleShader === null || this.obstacleShader === undefined) {
+            return;
+        }
+
+        if (this.powerUpShader === null || this.powerUpShader === undefined) {
+            return;
+        }
+
+        for (let obstacle of this.track.obstacles) {
+            obstacle.mesh.material = this.obstacleShader.material;
+        }
+
+        for (let powerUp of this.track.powerUps) {
+            powerUp.mesh.material = this.powerUpShader.material;
+        }
+
+        this.track.basReliefGroup.children[0].material = this.basReliefShader.material;
     }
 
     updateBoundingBox(id, type) {
@@ -497,15 +549,31 @@ class MyContents {
     }
 
     checkCollision() {
-        const balloon = this.players[this.PLAYER_TYPE.HUMAN]
+        const balloon = this.players[this.PLAYER_TYPE.HUMAN];
         const balloonBoundingBox = new THREE.Box3().setFromObject(balloon.balloonGroup);
+        const upPartBoundingBox = new THREE.Box3().setFromObject(balloon.balloonGroup.children[0]);
+        const downPartBoundingBox = new THREE.Box3().setFromObject(balloon.balloonGroup.children[1]);
+
         for (let obstacle of this.track.obstacles) {
             const obstacleBoundingBox = new THREE.Box3().setFromObject(obstacle.mesh);
             if (obstacleBoundingBox.intersectsBox(balloonBoundingBox)) {
-                let upCollision = obstacleBoundingBox.intersectsBox(new THREE.Box3().setFromObject(balloon.balloonGroup.children[0]));
-                let downCollision = obstacleBoundingBox.intersectsBox(new THREE.Box3().setFromObject(balloon.balloonGroup.children[1]));
+                let upCollision = obstacleBoundingBox.intersectsBox(upPartBoundingBox);
+                let downCollision = obstacleBoundingBox.intersectsBox(downPartBoundingBox);
                 if (upCollision || downCollision) {
                     balloon.nearestPoint();
+                }
+            }
+        }
+
+        for (let powerUp of this.track.powerUps) {
+            const powerUpBoundingBox = new THREE.Box3().setFromObject(powerUp.mesh);
+            if (powerUpBoundingBox.intersectsBox(balloonBoundingBox)) {
+                let upCollision = powerUpBoundingBox.intersectsBox(upPartBoundingBox);
+                let downCollision = powerUpBoundingBox.intersectsBox(downPartBoundingBox);
+                if (upCollision || downCollision) {
+                    if (powerUp !== balloon.lastPowerUpObject)
+                        balloon.extraLives++;
+                    balloon.lastPowerUpObject = powerUp;
                 }
             }
         }
@@ -562,7 +630,7 @@ class MyContents {
                 this.finishFireworks();
                 break;
             case this.GAME_STATE.RUNNING:
-                this.players[this.PLAYER_TYPE.HUMAN].update(this.track.powerUps);
+                this.players[this.PLAYER_TYPE.HUMAN].update();
                 this.players[this.PLAYER_TYPE.HUMAN].restoreSize();
                 this.checkCollision();
                 break;
@@ -573,6 +641,19 @@ class MyContents {
                 break;
             default:
                 break;
+        }
+
+        let t = this.app.clock.getElapsedTime()
+        if (this.obstacleShader !== undefined && this.obstacleShader !== null) {
+            if (this.obstacleShader.hasUniform("timeFactor")) {
+                this.obstacleShader.updateUniformsValue("timeFactor", t / 10);
+            }
+        }
+
+        if (this.powerUpShader !== undefined && this.powerUpShader !== null) {
+            if (this.powerUpShader.hasUniform("timeFactor")) {
+                this.powerUpShader.updateUniformsValue("timeFactor", t / 10);
+            }
         }
     }
 }

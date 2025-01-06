@@ -4,19 +4,18 @@ import { MyPowerUp } from "./MyPowerUp.js"
 
 class CustomSinCurve extends THREE.Curve {
 
-	constructor( scale = 1 ) {
-		super();
-		this.scale = scale;
-	}
+    constructor(scale = 1) {
+        super();
+        this.scale = scale;
+    }
 
-	getPoint( t, optionalTarget = new THREE.Vector3() ) {
+    getPoint(t, optionalTarget = new THREE.Vector3()) {
+        const tx = t;
+        const ty = 1;
+        const tz = 0;
 
-		const tx = t;
-		const ty = 1;
-		const tz = 0;
-
-		return optionalTarget.set( tx, ty, tz ).multiplyScalar( this.scale );
-	}
+        return optionalTarget.set(tx, ty, tz).multiplyScalar(this.scale);
+    }
 }
 
 class MyTrack {
@@ -56,16 +55,17 @@ class MyTrack {
 
         this.obstacles = [];
         this.powerUps = [];
+        this.basReliefGroup = new THREE.Group();
 
         this.buildCurve();
         this.createObstacles();
         this.createPowerUps();
+        this.createBasRelief();
     }
 
     createObstacles() {
         const obstacleCount = 6;
-        const obstacleSize = { width: 2, height: 2, depth: 2 };
-        const obstacleColor = 0xff0000;
+        const obstacleSize = { radius: 1, slices: 32, stacks: 32 };
 
         for (let i = 0; i < obstacleCount; i++) {
             const t = ((i / obstacleCount) + 0.2) % 1;
@@ -75,27 +75,61 @@ class MyTrack {
             position.y -= 2;
 
             position.applyAxisAngle(new THREE.Vector3(0, 0, 1), Math.PI);
-            
-            this.obstacles.push(new MyObstacle(this.app, `${i}`, position, obstacleSize, obstacleColor));
+
+            this.obstacles.push(new MyObstacle(this.app, `${i}`, position, obstacleSize));
         }
     }
 
     createPowerUps() {
         const powerUpCount = 9;
-        const powerUpSize = {widthS: 32, heightS: 32, radius: 1};
-        const powerUpColor = 0x0000FF;
+        const powerUpSize = { radius: 1, slices: 512, stacks: 512 };
 
         for (let i = 0; i < powerUpCount; i++) {
-            const t = ((i / powerUpCount) + 0.2) % 1;
+            const t = (i / powerUpCount) % 1;
             const position = this.path.getPointAt(t);
 
             position.multiplyScalar(this.trackSize);
             position.y -= 2;
 
             position.applyAxisAngle(new THREE.Vector3(0, 0, 1), Math.PI);
-            
-            this.powerUps.push(new MyPowerUp(this.app, `${i}`, position, powerUpSize, powerUpColor));
+
+            this.powerUps.push(new MyPowerUp(this.app, `${i}`, position, powerUpSize));
         }
+    }
+
+    createBasRelief() {
+        const size = { x: 24, y: 36 };
+        const offset = { x: 24, y: 30, z: -124 };
+
+        this.basReliefGeometry = new THREE.PlaneGeometry(size.x, size.y, 1000, 1000);
+        this.basReliefMaterial = new THREE.MeshBasicMaterial();
+        this.basRelief = new THREE.Mesh(this.basReliefGeometry, this.basReliefMaterial);
+        this.basReliefGroup.add(this.basRelief);
+
+        const woodTexture = new THREE.TextureLoader().load("./images/textures/wood.jpg");
+        this.basReliefFrameMaterial = new THREE.MeshPhongMaterial({ color: 0x996d4e, map: woodTexture});
+        this.basReliefFrameGeometry1 = new THREE.BoxGeometry(size.x + 2, 2, 1);
+        this.basReliefFrame1 = new THREE.Mesh(this.basReliefFrameGeometry1, this.basReliefFrameMaterial);
+        this.basReliefFrame1.position.set(0, size.y * 0.5, 0.5);
+        this.basReliefGroup.add(this.basReliefFrame1);
+
+        this.basReliefFrameGeometry2 = new THREE.BoxGeometry(size.x + 2, 2, 1);
+        this.basReliefFrame2 = new THREE.Mesh(this.basReliefFrameGeometry2, this.basReliefFrameMaterial);
+        this.basReliefFrame2.position.set(0, - size.y * 0.5, 0.5);
+        this.basReliefGroup.add(this.basReliefFrame2);
+
+        this.basReliefFrameGeometry3 = new THREE.BoxGeometry(2, size.y, 1);
+        this.basReliefFrame3 = new THREE.Mesh(this.basReliefFrameGeometry3, this.basReliefFrameMaterial);
+        this.basReliefFrame3.position.set(size.x * 0.5, 0, 0.5);
+        this.basReliefGroup.add(this.basReliefFrame3);
+
+        this.basReliefFrameGeometry4 = new THREE.BoxGeometry(2, size.y, 1);
+        this.basReliefFrame4 = new THREE.Mesh(this.basReliefFrameGeometry4, this.basReliefFrameMaterial);
+        this.basReliefFrame4.position.set(- size.x * 0.5, 0, 0.5);
+        this.basReliefGroup.add(this.basReliefFrame4);
+
+        this.basReliefGroup.position.set(offset.x, offset.y, offset.z);
+        this.app.scene.add(this.basReliefGroup);
     }
 
     /**
@@ -106,9 +140,9 @@ class MyTrack {
         this.createCurveObjects();
     }
 
-      /**
-     * Create materials for the curve elements: the mesh, the line and the wireframe
-     */
+    /**
+   * Create materials for the curve elements: the mesh, the line and the wireframe
+   */
     createCurveMaterialsTextures() {
         const texture = new THREE.TextureLoader().load("./images/textures/track.jpg");
         texture.wrapS = THREE.RepeatWrapping;
@@ -163,7 +197,7 @@ class MyTrack {
      * Called when user changes mesh visibility. Shows/hides mesh object.
      */
     updateMeshVisibility() {
-        this.mesh.visible = this.showMesh;  
+        this.mesh.visible = this.showMesh;
     }
 
     /**

@@ -477,8 +477,7 @@ class MyBalloon {
         }
     }
 
-    update(powerUps) {
-
+    update() {
         if (this.camera) {
             switch (this.app.activeCameraName) {
                 case 'BalloonFirstPerson':
@@ -491,7 +490,6 @@ class MyBalloon {
                     break;
             }
         }
-        this.checkCollisionPowerUps(powerUps);
     }
 }
 
