@@ -60,6 +60,7 @@ class MyContents {
             [this.PLAYER_TYPE.AI]: null
         };
 
+        //Change back to PREPARATION
         this.currentGameState = this.GAME_STATE.PREPARATION;
         this.fireworks = [];
 
@@ -600,6 +601,7 @@ class MyContents {
                 break;
             case this.GAME_STATE.RUNNING:
                 this.players[this.PLAYER_TYPE.HUMAN].update();
+                this.players[this.PLAYER_TYPE.HUMAN].restoreSize();
                 this.checkCollision();
                 break;
             case this.GAME_STATE.PAUSED:
