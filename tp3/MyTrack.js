@@ -99,7 +99,7 @@ class MyTrack {
 
     createBasRelief() {
         const size = { x: 24, y: 36 };
-        const offset = { x: 24, y: 30, z: -125 };
+        const offset = { x: 24, y: 30, z: -124 };
 
         this.basReliefGeometry = new THREE.PlaneGeometry(size.x, size.y, 1000, 1000);
         this.basReliefMaterial = new THREE.MeshBasicMaterial();
