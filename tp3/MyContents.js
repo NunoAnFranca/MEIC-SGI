@@ -183,7 +183,7 @@ class MyContents {
             this.app.scene.add(this.axis);
         }
 
-        this.reader = new MyParser(this.app);
+        //this.reader = new MyParser(this.app);
         this.createFireworkSpots();
         // create temp lights so we can see the objects to not render the entire scene
         this.buildLights();
@@ -702,6 +702,11 @@ class MyContents {
         const upPartBoundingBox = new THREE.Box3().setFromObject(balloon.balloonGroup.children[0]);
         const downPartBoundingBox = new THREE.Box3().setFromObject(balloon.balloonGroup.children[1]);
 
+        const balloonAI = this.players[this.PLAYER_TYPE.AI];
+        const balloonBoundingBoxAI = new THREE.Box3().setFromObject(balloonAI.balloonGroup);
+        const upPartBoundingBoxAI = new THREE.Box3().setFromObject(balloonAI.balloonGroup.children[0]);
+        const downPartBoundingBoxAI = new THREE.Box3().setFromObject(balloonAI.balloonGroup.children[1]);
+
         for (let obstacle of this.track.obstacles) {
             const obstacleBoundingBox = new THREE.Box3().setFromObject(obstacle.mesh);
             if (obstacleBoundingBox.intersectsBox(balloonBoundingBox)) {
@@ -723,6 +728,14 @@ class MyContents {
                         balloon.extraLives++;
                     balloon.lastPowerUpObject = powerUp;
                 }
+            }
+        }
+
+        if (balloonBoundingBox.intersectsBox(balloonBoundingBoxAI)) {
+            let upCollision = upPartBoundingBox.intersectsBox(upPartBoundingBoxAI);
+            let downCollision = downPartBoundingBox.intersectsBox(downPartBoundingBoxAI);
+            if (upCollision || downCollision) {
+                balloon.nearestPoint();
             }
         }
     }

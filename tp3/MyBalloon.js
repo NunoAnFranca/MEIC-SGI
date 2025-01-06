@@ -477,23 +477,6 @@ class MyBalloon {
         this.balloonGroup.position.z += 0.1;
     }
 
-    checkCollisionPowerUps(powerUps) {
-        for (let i = 0; i < powerUps.length; i++) {
-            let powerUp = powerUps[i];
-            let boundingBox = new THREE.Box3().setFromObject(powerUp.mesh);
-            let collision = boundingBox.intersectsBox(new THREE.Box3().setFromObject(this.balloonGroup));
-
-            if (collision) {
-                let upCollision = boundingBox.intersectsBox(new THREE.Box3().setFromObject(this.upPartGroup));
-                let downCollision = boundingBox.intersectsBox(new THREE.Box3().setFromObject(this.downPartGroup));
-                if (upCollision || downCollision) {
-                    if(powerUp !== this.lastPowerUpObject)
-                        this.extraLives++;
-                    this.lastPowerUpObject = powerUp;
-                }
-            }
-        }
-    }
 
     update() {
         if (this.camera) {
