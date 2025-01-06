@@ -746,7 +746,8 @@
                         "cableCarMainNode",
                         "balloonFenceEnemy",
                         "balloonFencePlayer",
-                        "blimp"
+                        "blimp",
+                        "EndMenu"
                     ]
                 }
             },
@@ -4636,6 +4637,49 @@
                             }
                         ]
                     }
+                }
+            },
+            "EndMenu": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "startMenuMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 70,
+                            "y": -65,
+                            "z": -50
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 90,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "center": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 32,
+                            "y": 18,
+                            "z": 2
+                        }
+                    },
+                    "nodesList":[
+                        "startMenuBar1",
+                        "startMenuBar2"
+                    ]
                 }
             },
             "startMenu": {

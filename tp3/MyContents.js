@@ -134,7 +134,11 @@ class MyContents {
                     this.menu.currentGameState = this.currentGameState;
                     this.pausedTime += (new Date().getTime() - this.pauseStartTime);
                 }
+            } else if (this.currentGameState === this.GAME_STATE.FINISHED) {
+                // TODO
             }
+            
+            
             if ((this.currentGameState === this.GAME_STATE.PAUSED) || (this.currentGameState === this.GAME_STATE.RUNNING)) {
                 if (event.key === 'v' || event.key === "V") {
                     this.changeThreeMainCameras();
