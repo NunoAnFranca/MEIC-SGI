@@ -5,6 +5,7 @@ import { MyParser } from "./MyParser.js";
 import { MyMenu } from "./MyMenu.js";
 import { MyBalloon } from "./MyBalloon.js";
 import { MyFirework } from "./MyFirework.js";
+import { MyShader } from "./MyShader.js";
 
 /**
  *  This class contains the contents of out application
@@ -74,8 +75,8 @@ class MyContents {
         this.sceneLights = [];
         this.sceneLightsOn = true;
         this.sceneCastingShadows = true;
-        // register events
 
+        // register events
         document.addEventListener(
             "pointerdown",
             // list of events: https://developer.mozilla.org/en-US/docs/Web/API/Element
@@ -182,6 +183,33 @@ class MyContents {
         this.loader = new THREE.TextureLoader();
 
         this.menu = new MyMenu(this.app, this.loader);
+
+        this.createObstacleShaders();
+    }
+
+    createObstacleShaders() {
+        this.shader = new MyShader(this.app, "Flat Shading", "Uses a constant  color to shade the object",
+            "shaders/flat.vert", "shaders/flat.frag", {
+            timeFactor: { type: 'f', value: 0.0 },
+            uTexture: { type: 'sample2D', value: this.loader.load('images/textures/dynamite.jpg') }
+        });
+
+        this.waitForShaders();
+    }
+
+    waitForShaders() {
+        if (this.shader.ready === false) {
+            setTimeout(this.waitForShaders.bind(this), 100)
+            return;
+        }
+
+        if (this.shader === null || this.shader === undefined) {
+            return
+        }
+
+        for (let obstacle of this.track.obstacles) {
+            obstacle.mesh.material = this.shader.material
+        }
     }
 
     updateBoundingBox(id, type) {
@@ -512,7 +540,7 @@ class MyContents {
                 let upCollision = powerUpBoundingBox.intersectsBox(upPartBoundingBox);
                 let downCollision = powerUpBoundingBox.intersectsBox(downPartBoundingBox);
                 if (upCollision || downCollision) {
-                    if(powerUp !== balloon.lastPowerUpObject)
+                    if (powerUp !== balloon.lastPowerUpObject)
                         balloon.extraLives++;
                     balloon.lastPowerUpObject = powerUp;
                 }
@@ -581,6 +609,13 @@ class MyContents {
                 break;
             default:
                 break;
+        }
+
+        let t = this.app.clock.getElapsedTime()
+        if (this.shader !== undefined && this.shader !== null) {
+            if (this.shader.hasUniform("timeFactor")) {
+                this.shader.updateUniformsValue("timeFactor", t / 10);
+            }
         }
     }
 }

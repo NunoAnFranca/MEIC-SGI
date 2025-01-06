@@ -23,11 +23,7 @@ class MyPowerUp {
         const material = new THREE.MeshBasicMaterial({ color: this.color });
         this.mesh = new THREE.Mesh(geometry, material);
         this.mesh.position.set(this.x, this.y, this.z);
-
-        const boundingBox = new THREE.Box3().setFromObject(this.mesh);
-        this.helper = new THREE.Box3Helper(boundingBox, 0xffff00);
         
-        this.app.scene.add(this.helper);
         this.app.scene.add(this.mesh);
     }
 }

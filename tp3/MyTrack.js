@@ -4,19 +4,18 @@ import { MyPowerUp } from "./MyPowerUp.js"
 
 class CustomSinCurve extends THREE.Curve {
 
-	constructor( scale = 1 ) {
-		super();
-		this.scale = scale;
-	}
+    constructor(scale = 1) {
+        super();
+        this.scale = scale;
+    }
 
-	getPoint( t, optionalTarget = new THREE.Vector3() ) {
+    getPoint(t, optionalTarget = new THREE.Vector3()) {
+        const tx = t;
+        const ty = 1;
+        const tz = 0;
 
-		const tx = t;
-		const ty = 1;
-		const tz = 0;
-
-		return optionalTarget.set( tx, ty, tz ).multiplyScalar( this.scale );
-	}
+        return optionalTarget.set(tx, ty, tz).multiplyScalar(this.scale);
+    }
 }
 
 class MyTrack {
@@ -64,7 +63,7 @@ class MyTrack {
 
     createObstacles() {
         const obstacleCount = 6;
-        const obstacleSize = { width: 2, height: 2, depth: 2 };
+        const obstacleSize = { radius: 1, slices: 512, stacks: 512 };
         const obstacleColor = 0xff0000;
 
         for (let i = 0; i < obstacleCount; i++) {
@@ -75,14 +74,14 @@ class MyTrack {
             position.y -= 2;
 
             position.applyAxisAngle(new THREE.Vector3(0, 0, 1), Math.PI);
-            
+
             this.obstacles.push(new MyObstacle(this.app, `${i}`, position, obstacleSize, obstacleColor));
         }
     }
 
     createPowerUps() {
         const powerUpCount = 9;
-        const powerUpSize = {widthS: 32, heightS: 32, radius: 1};
+        const powerUpSize = { widthS: 32, heightS: 32, radius: 1 };
         const powerUpColor = 0x0000FF;
 
         for (let i = 0; i < powerUpCount; i++) {
@@ -93,7 +92,7 @@ class MyTrack {
             position.y -= 2;
 
             position.applyAxisAngle(new THREE.Vector3(0, 0, 1), Math.PI);
-            
+
             this.powerUps.push(new MyPowerUp(this.app, `${i}`, position, powerUpSize, powerUpColor));
         }
     }
@@ -106,9 +105,9 @@ class MyTrack {
         this.createCurveObjects();
     }
 
-      /**
-     * Create materials for the curve elements: the mesh, the line and the wireframe
-     */
+    /**
+   * Create materials for the curve elements: the mesh, the line and the wireframe
+   */
     createCurveMaterialsTextures() {
         const texture = new THREE.TextureLoader().load("./images/textures/track.jpg");
         texture.wrapS = THREE.RepeatWrapping;
@@ -163,7 +162,7 @@ class MyTrack {
      * Called when user changes mesh visibility. Shows/hides mesh object.
      */
     updateMeshVisibility() {
-        this.mesh.visible = this.showMesh;  
+        this.mesh.visible = this.showMesh;
     }
 
     /**
