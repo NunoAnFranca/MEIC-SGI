@@ -68,14 +68,6 @@ class MyRoute {
         }
 
         this.spline = new THREE.CatmullRomCurve3(this.keyframes.map(kf => kf.value));
-
-        const tubeGeometry = new THREE.TubeGeometry(this.spline, 100, 0.1, 10, false);
-        const tubeMaterial = new THREE.MeshBasicMaterial({ color: 0xffff });
-        this.tubeMesh = new THREE.Mesh(tubeGeometry, tubeMaterial);
-        this.tubeMesh.position.set(0,0,0);
-
-        this.app.scene.add(this.tubeMesh);
-
     }
 
 }

@@ -165,7 +165,7 @@ class MyContents {
             this.app.scene.add(this.axis);
         }
 
-        //this.reader = new MyParser(this.app);
+        this.reader = new MyParser(this.app);
         this.createFireworkSpots();
         // create temp lights so we can see the objects to not render the entire scene
         this.buildLights();
