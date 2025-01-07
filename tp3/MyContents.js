@@ -20,18 +20,22 @@ class MyContents {
         this.axis = null;
         this.mapSize = 4096;
 
+        // INitializes the ray caster
         this.raycaster = new THREE.Raycaster()
         this.raycaster.near = 1
         this.raycaster.far = 40
 
+        // initializes the pointer
         this.pointer = new THREE.Vector2()
         this.intersectedObj = null
         this.pickingColor = "0x00ff00"
 
+        // Creates track variable
         this.track = null;
         this.humanBalloons = {};
         this.aiBalloons = {};
 
+        // State machine for the game
         this.GAME_STATE = {
             PREPARATION: "PREPARATION",
             READY: "READY",
@@ -43,6 +47,7 @@ class MyContents {
             FINISHED: "FINISHED"
         }
 
+        // Directions for the Player balloon
         this.DIRECTIONS = {
             0: "NORTH",
             1: "EAST",
@@ -50,11 +55,13 @@ class MyContents {
             3: "WEST"
         };
 
+        // different tyypes
         this.PLAYER_TYPE = {
             HUMAN: "HUMAN",
             AI: "AI"
         }
 
+        // creates variables for the human and AI
         this.players = {
             [this.PLAYER_TYPE.HUMAN]: null,
             [this.PLAYER_TYPE.AI]: null
@@ -71,10 +78,15 @@ class MyContents {
         this.namePlayerBalloon = null;
         this.nameOponentBalloon = null;
 
+        // Defines the names of the three main cameras
         this.threeMainCameraNames = ["BalloonFirstPerson", "BalloonThirdPerson", "Perspective"];
+        // Sets Balloon first person as the first camera
         this.threeMainCameraIndex = 0;
+        // array with all lights in the scene
         this.sceneLights = [];
+        // lights on in the scene
         this.sceneLightsOn = true;
+        // lights casting shadows
         this.sceneCastingShadows = true;
         this.startTimeAi = null;
 
@@ -94,82 +106,121 @@ class MyContents {
             this.onPointerMove.bind(this)
         );
 
+        // State machine in the game
         document.addEventListener("keydown", (event) => {
+            // if the game is ready state and P is pressed game start running
             if (this.currentGameState === this.GAME_STATE.READY) {
                 if ((event.key === 'p' || event.key === 'P') && !this.initialPositions[this.PLAYER_TYPE.HUMAN] && !this.initialPositions[this.PLAYER_TYPE.AI]) {
+                    // game running
                     this.currentGameState = this.GAME_STATE.RUNNING;
+                    // remobe positions from the track
                     this.removeInitialPositions();
+                    // set first person as the first camera
                     this.setCamera('BalloonFirstPerson');
 
+                    // timer for the match
                     this.matchTime = new Date().getTime();
+                    // creates route for the ai
                     this.players[this.PLAYER_TYPE.AI].createRoute();
+                    // timer for AI
                     this.players[this.PLAYER_TYPE.AI].startTimeAi = Date.now();
+
+                    //Initializes paused time as 0
                     this.pausedTime = 0;
 
+                    //  If an interval already exists removes it
                     if (this.gameInterval) {
                         clearInterval(this.gameInterval);
                     }
 
+                    // creates a new game interval
                     this.gameInterval = setInterval(() => {
+                        // if game is running
                         if (this.currentGameState === this.GAME_STATE.RUNNING) {
 
+                            // move player with wind
                             this.players[this.PLAYER_TYPE.HUMAN].moveWind();
+                            // move ai with key frame animation
                             this.players[this.PLAYER_TYPE.AI].moveAiBalloon();
 
+                            // animates the obstacles and powerups
                             this.animateObstaclesAndPowerUps();
 
+                            // updates the currenthMatchTime with the new time
                             this.menu.currentMatchTime = Math.floor((new Date().getTime() - this.matchTime - this.pausedTime) / 100);
+                            // updates the currentWindVelocity with the new direction
                             this.menu.currentWindVelocity = this.DIRECTIONS[this.players[this.PLAYER_TYPE.HUMAN].direction];
+                            // updates the currentGameState with the new state
                             this.menu.currentGameState = this.GAME_STATE.RUNNING;
+                            // updates the currentGameState with the new current player laps
                             this.menu.currentLaps = this.players[this.PLAYER_TYPE.HUMAN].currentLap;
+                            // updates the currentGameState with the new current extraLives
                             this.menu.currentVouchers = this.players[this.PLAYER_TYPE.HUMAN].extraLives;
 
+                            // function to check game over
                             if (this.checkGameOver()) {
+                                // change state to finished
                                 this.currentGameState = this.GAME_STATE.FINISHED;
                                 this.menu.currentGameState = this.GAME_STATE.FINISHED;
+                                // updateGameStatus
                                 this.menu.updateGameStatus();
+                                // update game over menu
                                 this.menu.updateGameOverMenu();
+                                // change camera to game over
                                 this.app.setActiveCamera("gameOverMenu");
                             }
-
+                            
+                            // update blimp menu
                             this.menu.updateBlimpMenu();
                         }
+                        // update game status
                         this.menu.updateGameStatus();
                     }, 30);
                 }
+                // check if game is running
             } else if (this.currentGameState === this.GAME_STATE.RUNNING) {
                 if (event.key === 'w' || event.key === 'W') {
+                    // if w is pressed move up
                     this.players[this.PLAYER_TYPE.HUMAN].moveUp();
                 } else if (event.key === 's' || event.key === 'S') {
+                    // if s is pressed move up
                     this.players[this.PLAYER_TYPE.HUMAN].moveDown();
                 } else if (event.key === ' ') {
+                    // if space is pressed pause time
                     this.pauseStartTime = new Date().getTime();
                     this.currentGameState = this.GAME_STATE.PAUSED;
                     this.menu.currentGameState = this.GAME_STATE.PAUSED;
                 }
             } else if (this.currentGameState === this.GAME_STATE.PAUSED) {
+                // if space is pressed unpause time
                 if (event.key === ' ') {
                     this.currentGameState = this.GAME_STATE.RUNNING;
                     this.menu.currentGameState = this.currentGameState;
                     this.pausedTime += (new Date().getTime() - this.pauseStartTime);
                 }
             } else if (this.currentGameState === this.GAME_STATE.FINISHED) {
+                // if game is finished and escape is pressed return to initialstate
                 if (event.key === 'Escape') {
                     this.returnToInitialState();
+                // if game is finished and R is pressed return to readystate
                 } else if (event.key === 'r' || event.key === 'R') {
                     this.returnToReadyState();
                 }
             }
             if ((this.currentGameState === this.GAME_STATE.PAUSED) || (this.currentGameState === this.GAME_STATE.RUNNING)) {
+                // if game is running and v is pressed return to cycle between camera
                 if (event.key === 'v' || event.key === "V") {
                     this.changeThreeMainCameras();
+                // if game is running and escape is pressed return to initialstate
                 } else if (event.key === 'Escape') {
                     this.returnToInitialState();
                 }
             }
             if (!this.menu.writingUsername) {
+                // if player is not writing the name and presses L, change turns on/off the lights
                 if (event.key === 'l' || event.key === "L") {
                     this.changeLightsPower();
+                // if player is not writing the name and presses L, change turns on/off the shadows
                 } else if (event.key === "o" || event.key === "O") {
                     this.changeShadowProjection();
                 }
