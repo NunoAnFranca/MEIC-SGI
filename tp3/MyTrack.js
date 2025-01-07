@@ -56,11 +56,13 @@ class MyTrack {
         this.obstacles = [];
         this.powerUps = [];
         this.basReliefGroup = new THREE.Group();
+        this.cameraBillboard = new THREE.Group();
 
         this.buildCurve();
         this.createObstacles();
         this.createPowerUps();
         this.createBasRelief();
+        this.createCameraBillboard();
     }
 
     createObstacles() {
@@ -93,13 +95,13 @@ class MyTrack {
 
             position.applyAxisAngle(new THREE.Vector3(0, 0, 1), Math.PI);
 
-            this.powerUps.push(new MyPowerUp(this.app, `${i}`, position, powerUpSize, i%2));
+            this.powerUps.push(new MyPowerUp(this.app, `${i}`, position, powerUpSize, i % 2));
         }
     }
 
     createBasRelief() {
         const size = { x: 24, y: 36 };
-        const offset = { x: 70, y: -56, z: -65};
+        const offset = { x: 70, y: -56, z: -65 };
 
         this.basReliefGeometry = new THREE.PlaneGeometry(size.x, size.y, 1000, 1000);
         this.basReliefMaterial = new THREE.MeshBasicMaterial();
@@ -107,7 +109,7 @@ class MyTrack {
         this.basReliefGroup.add(this.basRelief);
 
         const woodTexture = new THREE.TextureLoader().load("./images/textures/wood.jpg");
-        this.basReliefFrameMaterial = new THREE.MeshPhongMaterial({ color: 0x996d4e, map: woodTexture});
+        this.basReliefFrameMaterial = new THREE.MeshPhongMaterial({ color: 0x996d4e, map: woodTexture });
         this.basReliefFrameGeometry1 = new THREE.BoxGeometry(size.x + 2, 2, 1);
         this.basReliefFrame1 = new THREE.Mesh(this.basReliefFrameGeometry1, this.basReliefFrameMaterial);
         this.basReliefFrame1.position.set(0, size.y * 0.5, 0.5);
@@ -130,8 +132,21 @@ class MyTrack {
 
         this.basReliefGroup.position.set(offset.x, offset.y, offset.z);
         this.basReliefGroup.scale.set(0.45, 0.45, 0.45);
-        this.basReliefGroup.rotation.set(0, -Math.PI/2,0);
+        this.basReliefGroup.rotation.set(0, -Math.PI / 2, 0);
         this.app.scene.add(this.basReliefGroup);
+    }
+
+    createCameraBillboard() {
+        const size = { x: 64, y: 36 };
+        const offset = { x: 16, y: -54, z: 115 };
+
+        this.cameraBillboardGeometry = new THREE.PlaneGeometry(size.x, size.y, 100, 100);
+        this.cameraBillboardMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000, side: THREE.DoubleSide });
+        this.cameraBillboard = new THREE.Mesh(this.cameraBillboardGeometry, this.cameraBillboardMaterial);
+        this.cameraBillboard.position.set(offset.x, offset.y, offset.z);
+        this.cameraBillboard.scale.set(0.45, 0.45, 0.45);
+        this.cameraBillboard.rotation.set(0, Math.PI, 0);
+        this.app.scene.add(this.cameraBillboard);
     }
 
     /**
@@ -149,7 +164,7 @@ class MyTrack {
         const texture = new THREE.TextureLoader().load("./images/textures/track.jpg");
         texture.wrapS = THREE.RepeatWrapping;
 
-        this.material = new THREE.MeshBasicMaterial({ map: texture , transparent:true, opacity: 0.7});
+        this.material = new THREE.MeshBasicMaterial({ map: texture, transparent: true, opacity: 0.7 });
         this.material.name = "track";
         this.material.map.repeat.set(this.textureRepeatX, this.textureRepeatY);
         this.material.map.wrapS = THREE.RepeatWrapping;

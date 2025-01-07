@@ -81,6 +81,8 @@ class MyContents {
         this.winner = null;
         this.loser = null;
 
+        this.shaders = {};
+
         // register events
         document.addEventListener(
             "pointerdown",
@@ -122,7 +124,7 @@ class MyContents {
                             this.menu.currentLaps = this.players[this.PLAYER_TYPE.HUMAN].currentLap;
                             this.menu.currentVouchers = this.players[this.PLAYER_TYPE.HUMAN].extraLives;
 
-                            if(this.checkGameOver()){
+                            if (this.checkGameOver()) {
                                 this.currentGameState = this.GAME_STATE.FINISHED;
                                 this.menu.currentGameState = this.GAME_STATE.FINISHED;
                                 this.menu.updateGameStatus();
@@ -154,7 +156,7 @@ class MyContents {
             } else if (this.currentGameState === this.GAME_STATE.FINISHED) {
                 if (event.key === 'Escape') {
                     this.returnToInitialState();
-                } else if(event.key === 'r' || event.key === 'R') {
+                } else if (event.key === 'r' || event.key === 'R') {
                     this.returnToReadyState();
                 }
             }
@@ -188,7 +190,7 @@ class MyContents {
         }
 
         this.reader = new MyParser(this.app);
-        
+
         this.createFireworkSpots();
         // create temp lights so we can see the objects to not render the entire scene
         this.buildLights();
@@ -208,7 +210,7 @@ class MyContents {
 
         // create the track
         this.track = new MyTrack(this.app);
-   
+
         this.loader = new THREE.TextureLoader();
 
         this.menu = new MyMenu(this.app, this.loader);
@@ -216,20 +218,47 @@ class MyContents {
         this.createShaders();
     }
 
+    captureImages(callback) {
+        const canvas = this.app.renderer.domElement;
+        const rgbImageBase64 = canvas.toDataURL('image/jpg');
+        const rgbImage = new Image();
+        rgbImage.src = rgbImageBase64;
+
+        rgbImage.onload = () => {
+            const texture = new THREE.Texture(rgbImage);
+            texture.needsUpdate = true;
+            callback(texture);
+        };
+    }
+
     createShaders() {
-        this.obstacleShader = new MyShader(this.app, "Flat Shading", "Uses a constant color to shade the object",
+        this.shaders["cameraShader"] = new MyShader(this.app, "Camera Shader", "Uses the camera image as texture",
+            "shaders/bas.vert", "shaders/bas.frag", {
+            uNormalTexture: { type: 't', value: this.loader.load('images/textures/scene.jpg') },
+            uGrayScaleTexture: { type: 't', value: this.loader.load('images/textures/scene_grayscale.jpg') },
+            displacementScale: { type: 'f', value: 1.0 }
+        });
+
+        setInterval(async () => {
+            this.captureImages((texture) => {
+                this.shaders["cameraShader"].uniformValues.uNormalTexture.value = texture;
+                this.shaders["cameraShader"].uniformValues.uGrayScaleTexture.value = texture;
+            });
+        }, 10000);
+
+        this.shaders["obstacleShader"] = new MyShader(this.app, "Flat Shading", "Uses a constant color to shade the object",
             "shaders/flat.vert", "shaders/flat.frag", {
             timeFactor: { type: 'f', value: 0.0 },
             uTexture: { type: 'sample2D', value: this.loader.load('images/textures/obstacle.jpg') }
         });
 
-        this.powerUpShader = new MyShader(this.app, "Flat Shading", "Uses a constant color to shade the object",
+        this.shaders["powerUpShader"] = new MyShader(this.app, "Flat Shading", "Uses a constant color to shade the object",
             "shaders/flat.vert", "shaders/flat.frag", {
             timeFactor: { type: 'f', value: 0.0 },
             uTexture: { type: 'sample2D', value: this.loader.load('images/textures/powerup.jpg') }
         });
 
-        this.basReliefShader = new MyShader(this.app, "Bas Relief", "Creates a bas relief effect on the object",
+        this.shaders["basReliefShader"] = new MyShader(this.app, "Bas Relief", "Creates a bas relief effect on the object",
             "shaders/bas.vert", "shaders/bas.frag", {
             uNormalTexture: { type: 'sample2D', value: this.loader.load('images/textures/mona_lisa.jpg') },
             uGrayScaleTexture: { type: 'sample2D', value: this.loader.load('images/textures/mona_lisa_grayscale.jpg') },
@@ -240,28 +269,37 @@ class MyContents {
     }
 
     waitForShaders() {
-        if (this.obstacleShader.ready === false || this.powerUpShader.ready === false) {
-            setTimeout(this.waitForShaders.bind(this), 100)
-            return;
-        }
+        Object.keys(this.shaders).forEach((shader) => {
+            if (this.shaders[shader].ready === false) {
+                setTimeout(this.waitForShaders.bind(this), 100);
+                return;
+            }
 
-        if (this.obstacleShader === null || this.obstacleShader === undefined) {
-            return;
-        }
+            if (this.shaders[shader] === null || this.shaders[shader] === undefined) {
+                return;
+            }
 
-        if (this.powerUpShader === null || this.powerUpShader === undefined) {
-            return;
-        }
-
-        for (let obstacle of this.track.obstacles) {
-            obstacle.mesh.material = this.obstacleShader.material;
-        }
-
-        for (let powerUp of this.track.powerUps) {
-            powerUp.mesh.material = this.powerUpShader.material;
-        }
-
-        this.track.basReliefGroup.children[0].material = this.basReliefShader.material;
+            switch (shader) {
+                case "cameraShader":
+                    this.track.cameraBillboard.material = this.shaders[shader].material;
+                    break;
+                case "obstacleShader":
+                    for (let obstacle of this.track.obstacles) {
+                        obstacle.mesh.material = this.shaders[shader].material;
+                    }
+                    break;
+                case "powerUpShader":
+                    for (let powerUp of this.track.powerUps) {
+                        powerUp.mesh.material = this.shaders[shader].material;
+                    }
+                    break;
+                case "basReliefShader":
+                    this.track.basReliefGroup.children[0].material = this.shaders[shader].material;
+                    break;
+                default:
+                    break;
+            }
+        });
     }
 
     updateBoundingBox(id, type) {
@@ -324,7 +362,7 @@ class MyContents {
             });
             delete this.humanBalloons[index];
         }
-    
+
         for (const index in this.aiBalloons) {
             const balloon = this.aiBalloons[index];
             this.app.scene.remove(balloon.balloonGroup);
@@ -364,18 +402,18 @@ class MyContents {
         }
     }
 
-    checkGameOver(){
-        if(this.players[this.PLAYER_TYPE.HUMAN].currentLap > this.totalLaps){
+    checkGameOver() {
+        if (this.players[this.PLAYER_TYPE.HUMAN].currentLap > this.totalLaps) {
             this.winner = this.menu.currentTypedUsername;
             this.loser = this.menu.nameOponentBalloon;
             return true;
-        } 
-        else if(this.players[this.PLAYER_TYPE.AI].currentLap > this.totalLaps){
+        }
+        else if (this.players[this.PLAYER_TYPE.AI].currentLap > this.totalLaps) {
             this.winner = this.menu.nameOponentBalloon;
             this.loser = this.menu.currentTypedUsername;
             return true;
         }
-        return false; 
+        return false;
     }
 
     changeObjectPosition(obj, position = null) {
@@ -483,7 +521,7 @@ class MyContents {
         this.loser = null;
 
         this.menu.updateBlimpMenu();
-        const initialCameraState = { position: new THREE.Vector3(-56.911910092428265, 18.53264621864038, -83.07926277580806), target: new THREE.Vector3(-71.5, 18.53264621864038, -91.50558), fov: 100, near: 0.1, far: 1000};
+        const initialCameraState = { position: new THREE.Vector3(-56.911910092428265, 18.53264621864038, -83.07926277580806), target: new THREE.Vector3(-71.5, 18.53264621864038, -91.50558), fov: 100, near: 0.1, far: 1000 };
 
         const initMenu = new THREE.PerspectiveCamera(
             initialCameraState.fov,
@@ -504,7 +542,7 @@ class MyContents {
 
         this.players[this.PLAYER_TYPE.HUMAN] = null;
         this.players[this.PLAYER_TYPE.AI] = null;
-        
+
         this.menu.updateUsernameText();
         this.menu.updatePenaltyText();
         this.menu.updateLapsTextInitalMenu();
@@ -534,7 +572,7 @@ class MyContents {
         this.loser = null;
 
         this.menu.updateBlimpMenu();
-        const startCameraState = { position: new THREE.Vector3(22, 20, 0), target: new THREE.Vector3(22, 0, -20), fov: 60, near: 0.1, far: 1000};
+        const startCameraState = { position: new THREE.Vector3(22, 20, 0), target: new THREE.Vector3(22, 0, -20), fov: 60, near: 0.1, far: 1000 };
 
         const start = new THREE.PerspectiveCamera(
             startCameraState.fov,
@@ -745,8 +783,7 @@ class MyContents {
         }
     }
 
-    animateObstaclesAndPowerUps(){
-
+    animateObstaclesAndPowerUps() {
         this.track.powerUps.forEach(powerUp => {
             powerUp.animate();
         });
@@ -830,15 +867,15 @@ class MyContents {
         }
 
         let t = this.app.clock.getElapsedTime()
-        if (this.obstacleShader !== undefined && this.obstacleShader !== null) {
-            if (this.obstacleShader.hasUniform("timeFactor")) {
-                this.obstacleShader.updateUniformsValue("timeFactor", t / 10);
+        if (this.shaders["obstacleShader"] !== undefined && this.shaders["obstacleShader"] !== null) {
+            if (this.shaders["obstacleShader"].hasUniform("timeFactor")) {
+                this.shaders["obstacleShader"].updateUniformsValue("timeFactor", t / 10);
             }
         }
 
-        if (this.powerUpShader !== undefined && this.powerUpShader !== null) {
-            if (this.powerUpShader.hasUniform("timeFactor")) {
-                this.powerUpShader.updateUniformsValue("timeFactor", t / 10);
+        if (this.shaders["powerUpShader"] !== undefined && this.shaders["powerUpShader"] !== null) {
+            if (this.shaders["powerUpShader"].hasUniform("timeFactor")) {
+                this.shaders["powerUpShader"].updateUniformsValue("timeFactor", t / 10);
             }
         }
     }

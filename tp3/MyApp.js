@@ -56,7 +56,7 @@ class MyApp {
         this.minimap.createMinimap();
 
         // Create a renderer with Antialiasing
-        this.renderer = new THREE.WebGLRenderer({ antialias: true });
+        this.renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.setClearColor("#000000");
         this.renderer.shadowMap.enabled = true;
