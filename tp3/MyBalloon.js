@@ -4,41 +4,60 @@ import { MyRoute } from "./MyRoute.js";
 
 class MyBalloon {
     constructor(app, type, index, xPos, yPos, zPos, textureN) {
+        //initializes the app
         this.app = app;
+        //initializes the type
         this.type = type;
+        //initializes the index
         this.index = index;
+        // intializes the xpos
         this.xPos = xPos;
+        // intializes the ypos
         this.yPos = yPos;
+        // intializes the zpos
         this.zPos = zPos;
+        // initilaizs the texture
         this.textureN = textureN;
 
+        // offsets for x,y & z
         this.offsetX = 0;
         this.offsetY = 0;
         this.offsetZ = 0;
 
+        // max height for the balloon
         this.maxHeight = 18;
+        // min height for the balloon
         this.minHeight = 4;
 
+        //balloon radius
         this.radius = 0.5;
         this.slices = 64;
         this.stacks = 64;
         this.nMeshes = 6;
 
+        //texture values
         this.samplesU = 64;
         this.samplesV = 64;
 
+        //initializes the nurbsbuilder for surfaces
         this.builder = new MyNurbsBuilder();
 
+        //creates the balloonGroup
         this.balloonGroup = new THREE.Group();
         this.balloonGroup.type = this.type;
         this.balloonGroup.index = this.index;
 
+        // Creates the up part of the balloon
         this.upPartGroup = new THREE.Group();
+        // creates the down part of the balloon
         this.downPartGroup = new THREE.Group();
 
+        // initializes trackpoints
         this.trackPoints = null;
+        //distance treshold
         this.distanceTreshold = 5.0;
 
+        //directions
         this.DIRECTIONS = {
             NORTH: 0,
             EAST: 1,
@@ -46,8 +65,11 @@ class MyBalloon {
             WEST: 3
         };
 
+
+        // first direction is north
         this.direction = this.DIRECTIONS.NORTH;
 
+        // attributes related to the menu 
         this.checkpoints = null;
         this.currentCheckpointIndex = 0;
         this.distanceCheckpoint = 8.0;
@@ -62,6 +84,7 @@ class MyBalloon {
         this.targetScale = 1;
         this.restoreTimer = null;
 
+        // attributes related to the AI ballon
         this.startTimeAi = null;
         this.initialPosition = null;
         this.multiplierFactor = 1;
@@ -456,35 +479,49 @@ class MyBalloon {
         }
     } 
 
+    //moves balloon left
     moveLeft() {
+        //position in x decreases
         this.xPos -= 0.1;
         this.direction = this.DIRECTIONS.WEST;
         this.marker.position.x -= 0.1;
+        // change balloonGroup
         this.balloonGroup.position.x -= 0.1;
     }
 
+    // moves balloon right
     moveRight() {
+        //position in x increases
         this.xPos += 0.1;
         this.direction = this.DIRECTIONS.EAST;
         this.marker.position.x += 0.1;
+        // change balloonGrou
         this.balloonGroup.position.x += 0.1;
     }
 
+    // moves balloon forward
     moveForward() {
+        //position in z decreases
         this.zPos -= 0.1;
         this.direction = this.DIRECTIONS.NORTH;
         this.marker.position.z -= 0.1;
+        // change balloonGroup
         this.balloonGroup.position.z -= 0.1;
     }
 
+    // move balloon backwards
     moveBackward() {
+        //position in z increases
         this.zPos += 0.1;
+        // direction south
         this.direction = this.DIRECTIONS.SOUTH;
+        //change marker
         this.marker.position.z += 0.1;
+        // change balloonGroup
         this.balloonGroup.position.z += 0.1;
     }
 
-
+    // updates the first person camera and the third person camera
     update() {
         if (this.camera) {
             switch (this.app.activeCameraName) {
@@ -500,14 +537,18 @@ class MyBalloon {
         }
     }
 
+    // function to update the lod from the ballon
     updateLOD(camera) {
+        // distance where the lod updates
         const distanceThreshold = 50;
     
         const balloonPosition = new THREE.Vector3();
         this.balloonGroup.getWorldPosition(balloonPosition); // Get world position of the balloon group
     
+        //  distance from the camera to the balloon
         const distance = balloonPosition.distanceTo(camera.position);
     
+        //shows the highly detailed view if close
         if (distance > distanceThreshold) {
             this.upPartGroup.visible = false;
             this.downPartGroup.visible = false;

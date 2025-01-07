@@ -240,9 +240,12 @@ class MyApp {
         this.stats.end();
     }
 
+    // Updates the minimap with the player position
     updateMinimap() {
+        // creates the constant player    
         const player = this.contents.players[this.contents.PLAYER_TYPE.HUMAN];
         if (this.contents && player) {
+            // CHanges the position of the player in the minimap
             this.minimap.minimapMarker.position.set(0, player.yPos - 3, 0);
         }
     }

@@ -2,9 +2,12 @@ import * as THREE from "three";
 
 class MyRoute {
     constructor(app, initialPosition) {
+        // INitilizes the app
         this.app = app;
+        // Initializes the initial position to determine the route
         this.initialPosition = initialPosition;
 
+        // Route if initial position is blue
         this.keyPointsBlue = [
             new THREE.Vector3(21, 5, -15),
             new THREE.Vector3(21, 6, -25),
@@ -26,6 +29,7 @@ class MyRoute {
             new THREE.Vector3(21, 5, -15)
         ];
         
+        // Route if initial position is REd
         this.keyPointsRed = [
             new THREE.Vector3(27, 5, -15),
             new THREE.Vector3(27, 12, -25),
@@ -47,26 +51,32 @@ class MyRoute {
             new THREE.Vector3(27, 5, -15)
         ];
 
+        // Function to create the keyframes
         this.setupKeyFrames();
     }
 
 
     setupKeyFrames() {
 
+        //Initializes the keyframes
         this.keyframes = [];
 
+        //Initializes the points
         this.points = null;
 
-        if(this.initialPosition == "BLUE"){
+        //Changes the points accordying to the initial position
+        if(this.initialPosition == "BLUE"){ // IF blue keyPointsBlue are assigned
             this.points = this.keyPointsBlue;
-        } else if(this.initialPosition == "RED"){
+        } else if(this.initialPosition == "RED"){ // IF RED keyPointsRed are assigned
             this.points = this.keyPointsRed;
         }
 
+        // Assigns time and values to the points
         for (let i = 0; i < this.points.length; i++) {
             this.keyframes.push({time: 200*i, value: this.points[i]});
         }
 
+        // Creates a path with the catmullROmCUrve3
         this.spline = new THREE.CatmullRomCurve3(this.keyframes.map(kf => kf.value));
     }
 
