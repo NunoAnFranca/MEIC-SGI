@@ -116,15 +116,11 @@ Spritesheets were used and can already be seen in Image 3, 6 & 8. Where they wer
 
 ### Shaders
 
-Shaders were used for the powerups and obstacles. As well as to take a snapshot of the scene and create the following paint.
+Shaders were used for the powerups and obstacles. As well as to take a snapshot of the scene.
 
 |![image9](readImages/i9.png)              |
 |:----------------------------------------:|
 | Image 9 -  Shaders          |
-
-|![image10](readImages/i10.png)              |
-|:----------------------------------------:|
-| Image 10 -  Shaders          |
 
 
 ### Particles system
@@ -148,3 +144,5 @@ Here can be seen the implemented LOD for the autonomous bullons once it stray fu
 - Every point from the guide was implemented.
 
 - Currently there are no known problems, with extra time, new and more detailed objects would be added to the scene (airplanes, boats, etc...). The plan was to have those objects have key-frame animation.
+
+- Currently the game is not 100% optimized, and it's also a plan for the future work.

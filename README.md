@@ -8,22 +8,49 @@
 
 ----
 
+- **Final Grade**: 19
+
 ## Projects
 
-### [TP1 - ThreeJS Basics](tp1)
+### [TP1 - Room](tp1)
 
-- (items briefly describing main strong points)
-- Scene
-  - (Brief description of the created scene)
-  - (relative link to the scene)
+### **Grade**: 19.5
+
+
+|![image1](tp1/images/image1.png)                |
+|:------------------------------------------:|
+| Image 1 - The scene                          |
+
+|![image2](tp1/images/image2.png)                |
+|:------------------------------------------:|
+| Image 2 - The scene                          |
+
 
 -----
 
-### [TP2 - ...](tp2)
-- (items briefly describing main strong points)
+### [TP2 - Super Mario](tp2)
+
+- **Grade**: 17.5
+
+|![image1](tp2/image/image1.png)                |
+|:------------------------------------------:|
+| Image 1 - The scene                          |
+
+|![image2](tp2/image/image2.png)                |
+|:------------------------------------------:|
+| Image 2 - The scene                          |
 
 ----
 
-### [TP3 - ...](tp3)
-- (items briefly describing main strong points)
+### [TP3 - Balloon Game](tp3)
+
+- **Grade**: 19.6
+
+|![image1](tp3/readImages/i1.png)                |
+|:------------------------------------------:|
+| Image 1 - The scene                          |
+
+|![image2](tp3/readImages/i2.png)                |
+|:------------------------------------------:|
+| Image 2 - The scene                          |
 
